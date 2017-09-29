@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="去登录"
+        android:textColor="@color/main_yellow" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/re_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actionBar"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txt_product_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/order_title_selector"
+            android:paddingBottom="@dimen/DIMEN_5DP"
+            android:paddingLeft="@dimen/DIMEN_20DP"
+            android:paddingRight="@dimen/DIMEN_20DP"
+            android:paddingTop="@dimen/DIMEN_5DP"
+            android:text="@string/pro"
+            android:textColor="@drawable/text_selector_color" />
+
+        <TextView
+            android:id="@+id/txt_service_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/txt_product_order"
+            android:background="@drawable/order_title_selector"
+            android:paddingBottom="@dimen/DIMEN_5DP"
+            android:paddingLeft="@dimen/DIMEN_20DP"
+            android:paddingRight="@dimen/DIMEN_20DP"
+            android:paddingTop="@dimen/DIMEN_5DP"
+            android:text="@string/ser"
+            android:textColor="@drawable/text_selector_color" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/actionBar"
+        android:background="@color/white"></FrameLayout>
+    <!--<android.support.design.widget.TabLayout-->
+    <!--android:background="@drawable/tablayout_bg"-->
+    <!--android:id="@+id/order_tab_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="45dp"-->
+    <!--android:layout_marginLeft="@dimen/DIMEN_20DP"-->
+    <!--android:layout_marginRight="@dimen/DIMEN_20DP"-->
+    <!--android:layout_below="@+id/re_title"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--app:tabIndicatorColor="@color/main_yellow"-->
+    <!--app:tabMode="scrollable"-->
+    <!--app:tabSelectedTextColor="@color/main_yellow"-->
+    <!--app:tabTextColor="@drawable/sel_tab_color" />-->
+
+    <!--<android.support.v4.view.ViewPager-->
+    <!--android:id="@+id/order_view_pager"-->
+    <!--android:layout_below="@+id/order_tab_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_weight="1" />-->
+</RelativeLayout>

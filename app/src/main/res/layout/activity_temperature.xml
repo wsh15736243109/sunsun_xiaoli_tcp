@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txt_day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/shenlv"
+            android:gravity="center"
+            android:padding="@dimen/DIMEN_20DP"
+            android:text="@string/day"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/txt_week"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_1DP"
+            android:layout_weight="1"
+            android:background="@color/gray_a1"
+            android:gravity="center"
+            android:padding="@dimen/DIMEN_20DP"
+            android:text="@string/week"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/txt_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_1DP"
+            android:layout_weight="1"
+            android:background="@color/gray_a1"
+            android:gravity="center"
+            android:padding="@dimen/DIMEN_20DP"
+            android:text="@string/month"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <sunsun.xiaoli.jiarebang.custom.XScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txt_type"
+                android:text=""
+                android:padding="@dimen/DIMEN_10DP"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                ></TextView>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <LinearLayout
+                        android:id="@+id/viewContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/DIMEN_20DP"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/txt_ph_max"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:gravity="center"
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <TextView
+                    android:id="@+id/txt_ph_max_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_ph_max"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <TextView
+                    android:id="@+id/txt_ph_max_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:textColor="@color/type_7"
+                    android:text=""
+                    android:textSize="@dimen/DIMEN_16DP" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_1DP"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/txt_ph_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:gravity="center"
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <TextView
+                    android:id="@+id/txt_ph_min_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_ph_min"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <TextView
+                    android:id="@+id/txt_ph_min_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:textColor="@color/type_2"
+                    android:textSize="@dimen/DIMEN_16DP" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_1DP"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/txt_ph_avg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:gravity="center"
+                    android:textSize="@dimen/DIMEN_16DP" />
+
+                <TextView
+                    android:id="@+id/txt_ph_avg_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/txt_ph_avg"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="10:00"
+                    android:textSize="@dimen/DIMEN_20DP"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/txt_ph_avg_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text=""
+                    android:textColor="@color/main_green"
+                    android:textSize="@dimen/DIMEN_16DP"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+        </LinearLayout>
+    </sunsun.xiaoli.jiarebang.custom.XScrollView>
+</LinearLayout>

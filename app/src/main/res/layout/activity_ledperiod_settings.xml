@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sunsun.xiaoli.jiarebang.device.led.LEDPeriodSettings">
+    <include layout="@layout/incude_titlebar"></include>
+    <com.itboye.pondteam.custom.swipexpandlistview.expandablelistview.SwipeMenuExpandableListView
+        android:layout_below="@+id/li_title"
+        android:id="@+id/exListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/txt_zhuyi"
+        android:childIndicator="@null"
+        android:groupIndicator="@null"
+        android:scrollbars="none"
+        android:visibility="visible"></com.itboye.pondteam.custom.swipexpandlistview.expandablelistview.SwipeMenuExpandableListView>
+
+    <TextView
+        android:id="@+id/txt_zhuyi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:childIndicator="@null"
+        android:padding="@dimen/DIMEN_15DP"
+        android:text="@string/tipsofperiod"></TextView>
+</RelativeLayout>

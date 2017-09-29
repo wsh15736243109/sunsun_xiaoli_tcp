@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="posts_image_disk_max_height">100dp</dimen>
+</resources>

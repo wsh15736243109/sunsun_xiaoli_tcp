@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/incude_titlebar"></include>
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@+id/li_title"
+        android:id="@+id/list_album"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+    <TextView
+        android:id="@+id/img_nodata"
+        android:layout_width="wrap_content"
+        android:text="@string/img_empty"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

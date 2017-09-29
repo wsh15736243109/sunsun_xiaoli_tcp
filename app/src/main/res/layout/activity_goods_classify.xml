@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <LinearLayout
+        android:id="@+id/li_storeinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView
+        android:id="@+id/lunbo"
+        app:ratio="2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>
+        <TextView
+            android:id="@+id/txt_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_5DP"
+            android:drawableLeft="@drawable/lianxiren" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_5DP">
+
+            <TextView
+                android:id="@+id/txt_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/dianhua" />
+
+            <TextView
+                android:id="@+id/txt_boda"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_toRightOf="@+id/txt_mobile"
+                android:background="@drawable/bg_white_border_pink"
+                android:paddingBottom="@dimen/DIMEN_2DP"
+                android:paddingLeft="@dimen/DIMEN_5DP"
+                android:paddingRight="@dimen/DIMEN_5DP"
+                android:paddingTop="@dimen/DIMEN_2DP"
+                android:singleLine="true"
+                android:text="拨打"
+                android:textColor="@color/pink" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_5DP">
+
+            <TextView
+                android:id="@+id/txt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txt_peisongfei"
+                android:drawableLeft="@drawable/dizhi"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/txt_peisongfei"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/DIMEN_5DP"
+                android:drawableLeft="@drawable/dizhi"
+                android:text="配送费" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/list_item_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:scrollbars="none"></ListView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/list_item_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="2dp"
+            android:layout_weight="3"
+            android:numColumns="2"
+            android:scrollbars="none"
+            android:visibility="visible"></GridView>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="toastbg">@color/colorAccent</color>
+    <color name="item_public_msg_content">#ffffff</color>
+    <color name="main_green">#45B380</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#f3f3f3</color>
+    <color name="gray_divider">#e6e6e6</color>
+    <color name="gray_A1">#A1A1A1</color>
+    <color name="login_color">#EEEEEE</color>
+    <color name="blue">#009ff0</color>
+    <color name="red">#ff00ff</color>
+    <color name="black">#000000</color>
+    <color name="gray_eee">#EEEEEE</color>
+    <color name="device_param">#54A7BB</color>
+    <color name="device_blue">#1493DF</color>
+    <color name="next">#54AAB7</color>
+
+    <color name="shen_red">#E64750</color>
+
+    <color name="progressbar_bg_color_1">#737373</color>
+    <color name="progress_color_1">#3CB371</color>
+    <color name="percent_text_color_2">#A2CD5A</color>
+    <color name="d">#ffff00</color>
+    <color name="gray_BBB">#BBBBBB</color>
+
+
+    <color name="red500">#F44336</color>
+    <color name="blue500">#2196f3</color>
+    <color name="gray_c9">#C9C9C9</color>
+    <color name="orange500">#FF9800</color>
+    <color name="black_dft">#3c3c3c</color>
+    <color name="translate">#00000000</color>
+    <color name="bg_main">#f0eff4</color>
+    <color name="gray_dft">#888888</color>
+    <color name="dividing_light">#f0f0f0</color>
+    <color name="dividing_dark">#c9c9c9</color>
+
+    <color name="yunkacolor">#c8ff59a5</color>
+    <color name="txt_color">#231714</color>
+    <color name="colorSecondaryText">#727272</color>
+    <color name="main_yellow">#F5805C</color>
+    <color name="gray_EEEE">#EEEEEE</color>
+    <color name="daifukuan">#B45C5C</color>
+    <color name="page_backgroup">#f2f2f2</color>
+    <color name="goods_detail_title_color">#1a1a1a</color>
+    <color name="gray_color1">#333333</color>
+    <color name="main_lingshou_orange">#F5805C</color>
+</resources>

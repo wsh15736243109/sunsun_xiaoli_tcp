@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cb="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <com.itboye.pondteam.custom.XScrollView
+        android:id="@+id/scroll"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.itboye.pondteam.custom.LoweRelaLayout
+                android:id="@+id/re_alreadynew"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                cb:ratio="1.5">
+
+                <ImageView
+                    android:id="@+id/imgver"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/version_img" />
+
+                <TextView
+                    android:id="@+id/tvNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imgver"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/already_most_new"
+                    android:textColor="#353130"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:id="@+id/tvVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNews"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:text=""
+                    android:textColor="#3A3839"
+                    android:textSize="16dp" />
+            </com.itboye.pondteam.custom.LoweRelaLayout>
+
+            <RelativeLayout
+                android:id="@+id/re_wait_update"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.itboye.pondteam.custom.LoweRelaLayout
+                    android:id="@+id/re_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    cb:ratio="1.5">
+
+                    <TextView
+                        android:id="@+id/txt_tips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="100dp"
+                        android:text=""
+                        android:gravity="center"
+                        android:textColor="#353130"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/tv_currentVersion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txt_tips"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:text=""
+                        android:textColor="#3A3839"
+                        android:textSize="16dp" />
+                    <TextView
+                        android:id="@+id/txt_current_status"
+                        android:text=""
+                        android:layout_width="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/DIMEN_20DP"
+                        android:layout_height="wrap_content" />
+
+                </com.itboye.pondteam.custom.LoweRelaLayout>
+
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:layout_below="@+id/re_2"
+                    android:background="@color/gray_A1"></View>
+
+                <TextView
+                    android:id="@+id/txt_shuoming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/line1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
+                    android:text="" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp">
+
+                <com.itboye.pondteam.custom.CustomProgressBarSingle
+                    android:id="@+id/my_progress2"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:max="100"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:progress="0"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:progressDrawable="@drawable/progressbar_color"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </com.itboye.pondteam.custom.XScrollView>
+</LinearLayout>

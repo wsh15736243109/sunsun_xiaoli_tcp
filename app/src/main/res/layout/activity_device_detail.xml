@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1.2"
+                    android:background="@drawable/bg">
+
+                    <TextView
+                        android:id="@+id/txt_wendu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_20DP"
+                        android:layout_centerHorizontal="true"
+                        android:drawableLeft="@drawable/wendu_white"
+                        android:gravity="center"
+                        android:text="@string/current_temperture"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <TextView
+                        android:id="@+id/wendu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_60DP" />
+
+                    <sunsun.xiaoli.jiarebang.custom.SpringProgressView
+                        android:id="@+id/img_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/DIMEN_20DP"
+                        android:visibility="gone"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="@dimen/DIMEN_20DP"
+                        android:layout_marginLeft="@dimen/DIMEN_20DP"
+                        android:layout_marginRight="@dimen/DIMEN_20DP"
+                        android:paddingLeft="@dimen/DIMEN_10DP"
+                        android:paddingRight="@dimen/DIMEN_10DP" />
+                    <RelativeLayout
+                        android:id="@+id/param"
+                        android:layout_width="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_below="@+id/wendu"
+                        android:layout_marginTop="@dimen/DIMEN_10DP"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txt_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/DIMEN_20DP" />
+                        <TextView
+                            android:id="@+id/txt_gonglv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/white"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/txt_status"
+                            android:text=""
+                            android:textSize="@dimen/DIMEN_20DP" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:id="@+id/re_zhuangtai"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_gonglv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/jiarebang" />
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/txt_status"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_marginLeft="@dimen/DIMEN_5DP"-->
+                            <!--android:layout_toRightOf="@+id/icon_gonglv"-->
+                            <!--android:text=""-->
+                            <!--android:textSize="@dimen/DIMEN_20DP" />-->
+
+                        <!--<TextView-->
+                            <!--android:id="@+id/txt_gonglv"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_centerVertical="true"-->
+                            <!--android:layout_marginLeft="@dimen/DIMEN_5DP"-->
+                            <!--android:layout_toRightOf="@+id/txt_status"-->
+                            <!--android:text=""-->
+                            <!--android:textSize="@dimen/DIMEN_20DP" />-->
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/re_settemperature"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_wendu_setting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/wendusheding60" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_wendu_setting"
+                            android:text="@string/tem_setting"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <TextView
+                            android:id="@+id/txt_wendu_setting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_marginRight="@dimen/DIMEN_10DP"
+                            android:text=""
+                            android:textColor="@color/text_yellow"
+                            android:textSize="@dimen/DIMEN_20DP" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_wendu_warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/wendubaojing" />
+
+                        <TextView
+                            android:id="@+id/txt_wendu_warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_wendu_warn"
+                            android:text="@string/wendu_baojing"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <ImageView
+                            android:id="@+id/wendu_baojing"
+                            android:layout_width="@dimen/DIMEN_55DP"
+                            android:layout_height="@dimen/DIMEN_27DP"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/DIMEN_10DP"></ImageView>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/re_gaowen_sheding"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_wendu_warn_high"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/gaowenbaojing" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_wendu_warn_high"
+                            android:text="@string/wendu_high"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <TextView
+                            android:id="@+id/txt_wendu_sheding_high"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_marginRight="@dimen/DIMEN_10DP"
+                            android:text=""
+                            android:textColor="@color/text_yellow"
+                            android:textSize="@dimen/DIMEN_20DP" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/re_diwen_sheding"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_wendu_warn_low"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/diwenbaojing" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_wendu_warn_low"
+                            android:text="@string/wendu_low"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <TextView
+                            android:id="@+id/txt_wendu_sheding_low"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_marginRight="@dimen/DIMEN_10DP"
+                            android:text=""
+                            android:textColor="@color/text_yellow"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/re_wendu_history"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_wendu_history"
+                            android:layout_width="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/lishi" />
+
+                        <TextView
+                            android:id="@+id/txt_wendu_history"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_wendu_history"
+                            android:text="@string/lishishuiwen"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/DIMEN_10DP"
+                            android:background="@drawable/right_arrow_green" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:id="@+id/icon_receive_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/jieshoutongzhi" />
+
+                        <TextView
+                            android:id="@+id/txt_receive_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_receive_status"
+                            android:text="接收工作状态通知"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <ImageView
+                            android:id="@+id/toggle_jieshoustatus"
+                            android:layout_width="@dimen/DIMEN_55DP"
+                            android:layout_height="@dimen/DIMEN_27DP"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/DIMEN_10DP" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/re_yichang"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_marginTop="@dimen/DIMEN_1DP"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_10DP">
+
+                        <ImageView
+                            android:id="@+id/icon_exception_warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/yichangbaojing" />
+
+                        <TextView
+                            android:id="@+id/txt_exception_warn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:layout_toRightOf="@+id/icon_exception_warn"
+                            android:text="@string/yichangbaojing"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <ImageView
+                            android:id="@+id/toggle_exception_warn"
+                            android:layout_width="@dimen/DIMEN_55DP"
+                            android:layout_height="@dimen/DIMEN_27DP"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/DIMEN_10DP" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+</LinearLayout>

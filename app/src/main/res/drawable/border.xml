@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">--><!--&lt;!&ndash; border color 边框的颜色&ndash;&gt;--><!--<item>--><!--<shape>--><!--<solid android:color="@android:color/transparent" />--><!--</shape>--><!--</item>--><!--&lt;!&ndash; content background 内容背景色 其中android:left="3dp" 意为左边框 &ndash;&gt;--><!--<item android:top="@dimen/DIMEN_1DP">--><!--<shape>--><!--<stroke--><!--android:width="@dimen/DIMEN_1DP"--><!--android:color="@color/black"></stroke>--><!--<solid android:color="@android:color/white" />--><!--<padding--><!--android:bottom="1dp"--><!--android:left="1dp"--><!--android:right="1dp"--><!--android:top="1dp" />--><!--<corners--><!--android:topLeftRadius="@dimen/DIMEN_50DP"--><!--android:topRightRadius="@dimen/DIMEN_50DP"></corners>-->
+
+<!--</shape>--><!--</item>--><!--</layer-list>-->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- border color 边框的颜色-->
+    <item>
+        <shape>
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+    <!-- content background 内容背景色 其中android:left="3dp" 意为左边框 -->
+    <item
+
+        android:top="3dp">
+
+        <shape>
+            <stroke
+                android:width="@dimen/DIMEN_1DP"
+                android:color="@color/red500"></stroke>
+            <!--<solid android:color="@android:color/black" />-->
+            <padding
+                android:bottom="1dp"
+                android:left="1dp"
+                android:right="1dp"
+                android:top="1dp" />
+        </shape>
+    </item>
+</layer-list>

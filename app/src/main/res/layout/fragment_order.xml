@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/re_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/actionBar"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/txt_product_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/order_title_selector"
+            android:paddingBottom="@dimen/DIMEN_5DP"
+            android:paddingLeft="@dimen/DIMEN_20DP"
+            android:paddingRight="@dimen/DIMEN_20DP"
+            android:paddingTop="@dimen/DIMEN_5DP"
+            android:text="@string/pro_order"
+            android:textColor="@drawable/text_selector_color" />
+
+        <TextView
+            android:id="@+id/txt_service_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/txt_product_order"
+            android:background="@drawable/order_title_selector"
+            android:paddingBottom="@dimen/DIMEN_5DP"
+            android:paddingLeft="@dimen/DIMEN_20DP"
+            android:paddingRight="@dimen/DIMEN_20DP"
+            android:paddingTop="@dimen/DIMEN_5DP"
+            android:text="@string/ser_order"
+            android:textColor="@drawable/text_selector_color" />
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/re_title"
+        android:background="@color/white"></FrameLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="去登录"
+        android:layout_centerInParent="true"
+        android:id="@+id/btn_login"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="uik_price" format="float" />
+
+    <declare-styleable name="XPriceTextView">
+        <attr name="uik_price" />
+    </declare-styleable>
+    
+         <!-- TBSearchView attrs-->
+    <declare-styleable name="XSearchView">
+        <attr name="uik_showSearchButton" format="boolean" />
+        <attr name="uik_editable" format="boolean" />
+        <attr name="uik_text" format="string" />
+        <attr name="uik_hit" format="string" />
+    </declare-styleable>
+
+</resources>

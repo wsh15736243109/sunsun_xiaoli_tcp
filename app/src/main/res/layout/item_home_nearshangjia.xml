@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/re_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/DIMEN_10DP"
+    android:background="@drawable/bg_white_border_dark"
+    android:padding="@dimen/DIMEN_10DP">
+
+    <ImageView
+        android:id="@+id/img_shangjia"
+        android:layout_width="@dimen/DIMEN_50DP"
+        android:layout_height="@dimen/DIMEN_50DP" />
+
+    <RelativeLayout
+        android:id="@+id/re_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_shangjia"
+        android:layout_margin="@dimen/DIMEN_5DP"
+        android:layout_toRightOf="@+id/img_shangjia">
+
+        <TextView
+            android:id="@+id/txt_shangjianame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XXXXXX商家" />
+
+        <RatingBar
+            style="@style/roomRatingBar"
+            android:layout_width="wrap_content"
+            android:numStars="5"
+            android:layout_below="@+id/txt_shangjianame"
+            android:layout_height="wrap_content"
+            android:rating="4"
+            android:id="@+id/score" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/re_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/img_shangjia"
+        android:layout_margin="@dimen/DIMEN_5DP"
+        android:layout_toRightOf="@+id/re_1">
+
+        <TextView
+            android:id="@+id/txt_people"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系人" />
+
+        <TextView
+            android:id="@+id/txt_juli"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_people"
+            android:gravity="center"
+            android:text="距离" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/re_1"
+        android:layout_marginLeft="@dimen/margin_5"
+        android:layout_toRightOf="@+id/img_shangjia">
+
+        <TextView
+            android:id="@+id/txt_phone"
+            android:layout_width="wrap_content"
+            android:layout_alignBottom="@+id/txt_boda"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:text="手机" />
+
+        <TextView
+            android:id="@+id/txt_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_toRightOf="@+id/txt_phone"
+            android:gravity="center"
+            android:layout_alignBottom="@+id/txt_boda"
+            android:text="电话" />
+        <TextView
+            android:id="@+id/txt_boda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_toRightOf="@+id/txt_mobile"
+            android:text="拨打"
+            android:paddingTop="@dimen/DIMEN_2DP"
+            android:paddingBottom="@dimen/DIMEN_2DP"
+            android:singleLine="true"
+            android:paddingLeft="@dimen/DIMEN_5DP"
+            android:paddingRight="@dimen/DIMEN_5DP"
+            android:background="@drawable/bg_white_border_pink"
+            android:textColor="@color/pink" />
+        <TextView
+            android:id="@+id/txt_addr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_phone"
+            android:layout_marginTop="@dimen/DIMEN_5DP"
+            android:text="地址" />
+    </RelativeLayout>
+</RelativeLayout>

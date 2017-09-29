@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/device_item_id"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="8dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
+    android:paddingTop="8dp"
+	>
+
+    <ImageView
+        android:id="@+id/imageView_dev_logo"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_aplacher" />
+
+    <TextView
+        android:id="@+id/textView_dev_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/imageView_dev_logo"
+        android:layout_toRightOf="@+id/imageView_dev_logo"
+        android:paddingLeft="12dp"
+        android:text="AQ805设备"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+		android:textColor="#FF5F5D5D"/>
+
+    <TextView
+        android:id="@+id/textView_dev_did"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView_dev_logo"
+        android:layout_alignLeft="@+id/textView_dev_name"
+        android:layout_alignRight="@+id/textView_dev_name"
+        android:paddingLeft="12dp"
+        android:text="DID : 0"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+		android:textColor="#FF5F5D5D"/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="未添加"
+		android:id="@+id/textView_dev_state1"
+		android:textColor="#FF008FD7"
+		android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		/>
+
+	<TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:text="已添加"
+		android:id="@+id/textView_dev_state2"
+		android:textColor="#FF5F5D5D"
+		android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		/>
+
+	<ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="16dp"
+		android:id="@+id/imageView_dev_right_arrow"
+		android:visibility="visible"
+		android:layout_centerVertical="true"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true"
+		android:src="@drawable/ic_right_arrow"/>
+
+</RelativeLayout>

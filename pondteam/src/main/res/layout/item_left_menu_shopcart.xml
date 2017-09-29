@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.itboye.pondteam.custom.swiprecyclerview.SwipeItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_layout"
+    android:descendantFocusability="blocksDescendants"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/DIMEN_10DP"
+    android:layout_height="@dimen/DIMEN_100DP">
+
+    <TextView
+        android:id="@+id/left_menu"
+        android:layout_width="@dimen/swipe_item_menu_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@color/red500"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/white"/>
+
+    <include layout="@layout/item_shopcart"/>
+
+</com.itboye.pondteam.custom.swiprecyclerview.SwipeItemLayout>

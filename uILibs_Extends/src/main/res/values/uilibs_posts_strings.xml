@@ -1,0 +1,9 @@
+<resources>
+    <string name="posts_image_picker_folder_btn">全部图片</string>
+    <string name="posts_image_picker_complete_btn">完成  %1$s</string>
+    <string name="posts_edit_hint">开始为自己的作品备述，如有转载，请说明作品出处，尊重原创作者。。。</string>
+    <string name="posts_edit_max_count_hint">最多只能选择%1$d张</string>
+   <!--  <string name="posts_image_max_count_hint">添加图片\n最多6张</string> -->
+    <string name="posts_folder_complete">完成</string>
+    <string name="tf_please_insert_sd">请插入SD卡</string>
+</resources>

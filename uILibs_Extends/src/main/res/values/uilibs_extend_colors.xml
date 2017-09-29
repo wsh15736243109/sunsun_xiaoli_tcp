@@ -1,0 +1,23 @@
+<resources>
+
+    <color name="uikit_B_A">#F9F9F9</color>
+    <color name="uikit_transparent">#00000000</color>
+    <color name="uikit_B_F">#FFFFFF</color>
+    <color name="uikit_G_black_light_5">#CCCCCC</color>
+    <color name="uikit_H_orange_light_1">#FFE55245</color>
+    <color name="uikit_A_orange">#FFFF4400</color>
+    <color name="uikit_C_white">#FFFFFFFF</color>
+    <color name="uikit_K_black_light_6">#FFE5E5E5</color>
+    <color name="uikit_F_black_light_4">#FF999999</color>
+    
+      <!-- 视觉统一化以后的文字大小 -->
+  	<dimen name="uikit_TS_0">24dp</dimen> 
+    <dimen name="uikit_TS_1">20dp</dimen>
+    <dimen name="uikit_TS_2">18dp</dimen>
+    <dimen name="uikit_TS_3">16dp</dimen>
+    <dimen name="uikit_TS_4">14dp</dimen>
+    <dimen name="uikit_TS_5">12dp</dimen>
+    <dimen name="uikit_TS_6">11dp</dimen>
+    <dimen name="uikit_TS_7">10dp</dimen>
+
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+     <style name="ProgressBar.BallonGreen" parent="@android:Widget.ProgressBar">
+        <item name="android:indeterminateDrawable">@drawable/uilibs_progress_ballon_green</item>
+        <item name="android:minWidth">18dp</item>
+        <item name="android:maxWidth">18dp</item>
+        <item name="android:minHeight">7dp</item>
+        <item name="android:maxHeight">7dp</item>
+    </style>
+    
+</resources>

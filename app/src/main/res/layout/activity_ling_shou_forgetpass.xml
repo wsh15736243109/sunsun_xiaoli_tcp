@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/main_lingshou_orange"
+    android:layout_height="match_parent"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity">
+
+
+    <LinearLayout
+        android:id="@+id/re_loginpart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/login_bg_2"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/DIMEN_20DP"
+        android:background="@drawable/btn_border_white_bg_white"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/ed_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:hint="手机号码"
+            android:inputType="textPassword" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_20DP">
+
+            <EditText
+                android:id="@+id/ed_yzm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:hint="验证码"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/txt_sendyzm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:text="发送验证" />
+        </RelativeLayout>
+
+
+        <EditText
+            android:id="@+id/ed_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:hint="重置密码"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:background="@drawable/btn_border_white_bg_orangle"
+            android:text="确认"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</RelativeLayout>

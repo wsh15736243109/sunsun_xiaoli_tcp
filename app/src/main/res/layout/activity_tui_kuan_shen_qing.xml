@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_tui_kuan_shen_qing"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.TuiKuanShenQingActivity">
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_margin="@dimen/DIMEN_10DP"
+        android:layout_height="wrap_content"
+        app:ratio="2">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txt_makesure"
+                android:layout_width="wrap_content"
+                android:text="是否确认退款？"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/DIMEN_10DP"
+                android:textColor="@color/red500"
+                android:textSize="@dimen/DIMEN_15SP"
+                android:gravity="center"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txt_totalmoney"
+                android:layout_width="wrap_content"
+                android:text="合计："
+                android:textSize="@dimen/DIMEN_14SP"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_makesure"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+
+
+    <EditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="250px"
+        android:layout_below="@+id/relyout"
+        android:layout_margin="@dimen/DIMEN_10DP"
+        android:background="@color/white"
+        android:gravity="top"
+        android:hint="请输入退货理由"
+        android:textColor="@color/gray_a1"
+        android:maxLength="1000"
+        android:padding="@dimen/DIMEN_5DP"
+        android:textSize="15sp" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_no"
+            android:layout_width="@dimen/DIMEN_50DP"
+            android:layout_height="wrap_content"
+            android:text="否"
+            android:padding="@dimen/DIMEN_6DP"
+            android:gravity="center"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:layout_toLeftOf="@+id/txt_ok"
+            android:background="@drawable/bg_white_border_dark_tuoyuan" />
+        <TextView
+            android:id="@+id/txt_ok"
+            android:layout_width="@dimen/DIMEN_50DP"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="确认"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:background="@drawable/bg_red_border_dark_tuoyuan"
+            android:padding="@dimen/DIMEN_6DP"
+            android:textColor="@color/white"/>
+    </RelativeLayout>
+
+</LinearLayout>

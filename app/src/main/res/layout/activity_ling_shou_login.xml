@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                android:id="@+id/login_bg_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_lingshou_orange"
+                app:ratio="2.5">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/lingshou_logo"
+                    android:layout_centerInParent="true"
+                    android:layout_height="wrap_content" />
+            </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+
+            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                android:id="@+id/login_bg_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_bg_1"
+                android:background="@color/main_lingshou_orange"
+                app:ratio="5"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/re_loginpart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/login_bg_2"
+                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:background="@drawable/btn_border_white_bg_white"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/ed_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:hint="手机号码"
+                    android:inputType="number" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/DIMEN_10DP">
+
+                    <EditText
+                        android:id="@+id/ed_pwd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="密码"
+                        android:inputType="textPassword" />
+
+                    <TextView
+                        android:id="@+id/txt_lingshou_forget_pass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="忘记密码"
+                        android:textColor="@color/main_lingshou_orange" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/DIMEN_10DP"
+                    android:background="@drawable/btn_border_white_bg_orangle"
+                    android:text="登录"
+                    android:gravity="center"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/re_loginpart"
+                android:layout_centerHorizontal="true"
+                android:text="第三方登录" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_login"
+                android:layout_centerHorizontal="true">
+
+                <ImageView
+                    android:id="@+id/login_by_QQ"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/DIMEN_10DP"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/qq_login" />
+
+                <ImageView
+                    android:id="@+id/login_by_WX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/DIMEN_10DP"
+                    android:layout_toRightOf="@+id/login_by_QQ"
+                    android:background="@drawable/weixin_login" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

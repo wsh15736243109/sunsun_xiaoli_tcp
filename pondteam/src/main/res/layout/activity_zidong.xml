@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.itboye.pondteam.custom.XScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="@string/zidongqingxi_title" />
+
+                    <ImageView
+                        android:id="@+id/toggle_dingshi"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:button="@null"
+                        android:checked="true"
+                        android:textOff=""
+                        android:textOn="" />
+                </RelativeLayout>
+
+                <com.itboye.pondteam.custom.LoweRelaLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_zidong"
+                    android:orientation="vertical"
+                    app:ratio="1.5">
+                    <TextView
+                        android:id="@+id/txt_not_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/not_time"
+                        android:textSize="@dimen/DIMEN_25DP"
+                        android:textColor="@color/white"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"></TextView>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true">
+
+
+                        <TextView
+                            android:id="@+id/txt_moshi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="bottom"
+                            android:text="@string/shebei_will"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/DIMEN_20DP" />
+
+                        <LinearLayout
+                            android:id="@+id/li_time"
+                            android:layout_below="@+id/txt_moshi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_margin="@dimen/DIMEN_10DP"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/days"
+                                    android:text=""
+                                    android:layout_gravity="right"
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/DIMEN_30DP"
+                                    android:maxLines="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <TextView
+                                    android:id="@+id/mins"
+                                    android:text=""
+                                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                                    android:textColor="@color/white"
+                                    android:layout_marginTop="@dimen/DIMEN_10DP"
+                                    android:textSize="@dimen/DIMEN_30DP"
+                                    android:maxLines="1"
+                                    android:layout_gravity="left"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_margin="@dimen/DIMEN_10DP"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/hours"
+                                    android:text=""
+                                    android:textColor="@color/white"
+                                    android:textSize="@dimen/DIMEN_30DP"
+                                    android:layout_gravity="right"
+                                    android:maxLines="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <TextView
+                                    android:id="@+id/secs"
+                                    android:text=""
+                                    android:layout_gravity="left"
+                                    android:layout_marginTop="@dimen/DIMEN_10DP"
+                                    android:textColor="@color/white"
+                                    android:maxLines="1"
+                                    android:textSize="@dimen/DIMEN_30DP"
+                                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/txt_ph"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/li_time"
+                            android:text="@string/clean"
+                            android:textColor="@color/white"
+                            android:layout_centerHorizontal="true"
+                            android:textSize="@dimen/DIMEN_20DP" />
+                    </RelativeLayout>
+                </com.itboye.pondteam.custom.LoweRelaLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/re_setperiod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="@color/white"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <ImageView
+                        android:id="@+id/icon_open_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/img_period_setting" />
+
+                    <TextView
+                        android:id="@+id/txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/icon_open_time"
+                        android:gravity="center|left"
+                        android:textSize="@dimen/DIMEN_14DP"
+                        android:text="@string/zhouqi" />
+
+                    <RelativeLayout
+                        android:layout_toRightOf="@+id/txt"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/txt_zhouqi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/DIMEN_5DP"
+                            android:text=""
+                            android:layout_alignParentRight="true"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@color/main_green"
+                            android:textSize="@dimen/DIMEN_14DP" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_settime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="@color/white"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <ImageView
+                        android:id="@+id/icon_close_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/img_time_setting" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/icon_close_time"
+                        android:text="@string/shijian_setting" />
+
+                    <TextView
+                        android:id="@+id/txt_shijiansheding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text=""
+                        android:textColor="@color/main_green"
+                        android:textSize="@dimen/DIMEN_14DP" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/re_savewatermode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="@color/white"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <ImageView
+                        android:id="@+id/icon_savewatermode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/water_mode" />
+
+                    <TextView
+                        android:id="@+id/txt_savewatermode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/icon_savewatermode"
+                        android:text="@string/savewatermode" />
+
+                    <TextView
+                        android:id="@+id/savewatermode"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:text=""
+                        android:gravity="right"
+                        android:textColor="@color/main_green"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/re_shuiweibaojing"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="@color/white"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <ImageView
+                        android:id="@+id/icon_genghuanweihu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/img_wash_warn" />
+
+                    <TextView
+                        android:id="@+id/txt_shuiwei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/icon_genghuanweihu"
+                        android:text="@string/qingxi_tishi" />
+
+                    <ImageView
+                        android:id="@+id/qingxitishi"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_shebeisuoding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="@color/white"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <ImageView
+                        android:id="@+id/icon_yichangbaojing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/img_war_alert" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/icon_yichangbaojing"
+                        android:text="@string/yichangbaojing" />
+
+                    <ImageView
+                        android:id="@+id/toggle_exception_warn"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="@string/tips2" />
+            </LinearLayout>
+        </com.itboye.pondteam.custom.XScrollView>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+</LinearLayout>

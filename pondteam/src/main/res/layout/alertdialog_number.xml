@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aigestudio="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.itboye.pondteam.custom.wheelview.view.WheelPicker
+        android:id="@+id/number_picker1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        aigestudio:wheel_atmospheric="true"
+        aigestudio:wheel_curved="true"
+        aigestudio:wheel_cyclic="true"
+        aigestudio:wheel_item_align="center"
+        aigestudio:wheel_item_text_color="#A7A7DB"
+        aigestudio:wheel_item_text_size="24sp"
+        aigestudio:wheel_selected_item_text_color="#536D8A" />
+</RelativeLayout>

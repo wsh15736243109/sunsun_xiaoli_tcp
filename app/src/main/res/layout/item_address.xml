@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/DIMEN_10DP"
+    android:id="@+id/rootView"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/re_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/DIMEN_10DP">
+
+        <TextView
+            android:id="@+id/txt_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="李四" />
+
+        <TextView
+            android:id="@+id/txt_moren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_name"
+            android:textColor="@color/red500"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:text="[默认]" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/re_right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/DIMEN_10DP"
+        android:layout_toLeftOf="@+id/txt_update"
+        android:layout_toRightOf="@+id/re_left">
+
+        <TextView
+            android:id="@+id/txt_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="电话" />
+
+
+        <TextView
+            android:id="@+id/txt_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_phone"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:text="详细地址" />
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/txt_update"
+        android:text="修改"
+        android:textColor="@color/blue500"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/arrow_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/DIMEN_10DP"
+        android:background="@drawable/address_unselect"
+        android:text="李四" />
+</RelativeLayout>

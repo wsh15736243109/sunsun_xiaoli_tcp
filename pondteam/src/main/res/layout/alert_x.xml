@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/edit_content"
+        android:layout_width="match_parent"
+        android:hint="@string/add_new_weishi"
+        android:background="@drawable/bg_white"
+        android:layout_marginTop="@dimen/DIMEN_15DP"
+        android:padding="@dimen/DIMEN_10DP"
+        android:layout_marginLeft="@dimen/DIMEN_15DP"
+        android:layout_marginRight="@dimen/DIMEN_15DP"
+        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/ok"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:gravity="center"
+            android:background="@drawable/bg_green"
+            android:textColor="#ffffff"
+            android:padding="@dimen/DIMEN_10DP"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/cancel"
+            android:background="@drawable/bg_gray_a1"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:padding="@dimen/DIMEN_10DP"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>

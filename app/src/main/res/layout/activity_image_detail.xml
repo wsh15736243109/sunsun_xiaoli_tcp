@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/li_title"
+        android:layout_above="@+id/view"
+        android:layout_height="match_parent">
+
+        <sunsun.xiaoli.jiarebang.custom.RatioImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:background="@color/blue"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:layout_above="@+id/re_share"
+        android:background="@color/gray_divider"></View>
+
+    <RelativeLayout
+        android:id="@+id/re_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/share_wx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:drawableTop="@drawable/share_wx"
+            android:gravity="center"
+            android:text="@string/wx" />
+
+        <TextView
+            android:id="@+id/share_CircleFriends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:layout_toRightOf="@+id/share_wx"
+            android:drawableTop="@drawable/share_pengyouquan"
+            android:gravity="center"
+            android:text="@string/pengyouquan" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

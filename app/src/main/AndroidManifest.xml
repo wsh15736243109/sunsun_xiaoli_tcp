@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="sunsun.xiaoli.jiarebang">
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <application
+        android:name=".app.App"
+        android:allowBackup="true"
+        android:icon="${app_icon}"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon,android:name,android:theme,android:label">
+        <activity android:name=".SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+        <!-- 正式版 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.baidu.lbsapi.API_KEY" -->
+        <!-- android:value="ex8OrzircWcpWZSYlzHDL3Wtjm3Ybam3" /> -->
+        <!-- 测试版 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="SPamVZyiWMqzsUqOFd5LplTxNKsU2Zd5" />
+
+        <!-- String UMENG_APPKEY_VALUE_XIAOLI = "58cb6076677baa0aa300014f"; -->
+        <!-- String UMENG_MESSAGE_SECRET_XIAOLI = "af2c2bd3297da0dfd34bb23f14db362b"; -->
+
+
+        <!-- String UMENG_APPKEY_VALUE_MIANYANG = "593a05b107fe6503860006d2"; -->
+        <!-- String UMENG_MESSAGE_SECRET_MIANYANG = "1a027af744788535fb3a388755c01dfd"; -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="${UMENG_APPKEY}" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="${UMENG_MESSAGE_SECRET}" />
+        <!-- <meta-data -->
+        <!-- android:name="UMENG_CHANNEL" -->
+        <!-- android:value="" /> -->
+
+        <activity android:name=".device.DeviceActivity" />
+        <activity android:name=".device.AddDeviceActivity" />
+        <activity android:name=".device.jinligang.AddDeviceNewActivity" />
+        <activity android:name=".device.ActivityStepFirst" />
+        <activity android:name=".device.ActivityStepThree" />
+        <activity android:name=".device.ActivityInputWifiAndPass" />
+        <activity android:name=".device.FeedbackActivity" />
+        <activity android:name=".device.VersionUpdateActivity" />
+        <activity android:name=".device.ActivityTemperature" />
+        <activity
+            android:name=".device.jinligang.JinLiGangDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".device.jinligang.PeriodActivity" />
+        <activity
+            android:name=".device.jinligang.VideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity android:name=".device.jinligang.LoginActivity" />
+        <activity android:name=".device.jinligang.RegisterActivity" />
+        <activity android:name=".device.jinligang.ForgetPasswordActivity" />
+        <activity android:name=".device.phdevice.DevicePHDetailActivity" />
+        <activity android:name=".device.jiarebang.DeviceJiaReBangDetailActivity" />
+        <activity android:name=".device.phdevice.PhJiaoZhunActivity" />
+        <activity android:name=".device.shuibeng.DeviceShuiBengDetailActivity" />
+        <activity android:name=".device.ManualAddDeviceActivity" />
+        <activity android:name=".device.jinligang.DeviceAq806TemperatureActivity" />
+        <activity android:name=".device.jinligang.PhotoAlbumActivity" />
+        <activity android:name=".device.jinligang.ImageDetailActivity" />
+        <activity android:name=".device.camera.CameraDeviceListActivity" />
+        <activity android:name=".sunsunlingshou.activity.GoodsClassifyActivity" />
+        <activity
+            android:name=".sunsunlingshou.LingShouMainActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".sunsunlingshou.activity.SettingActivity" />
+        <activity android:name=".sunsunlingshou.activity.AddAddressOrMymessageActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.MyPublishActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.AddPublishActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.AdviceActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.MyPublishDetailActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.ServiceIntroduceActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.AppointmentInstallStepOneActivity" />
+        <activity android:name=".device.pondteam.AddPondDevice" />
+        <activity
+            android:name=".sunsunlingshou.activity.home.AppointmentInstallConfirmOrderActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".sunsunlingshou.activity.me.AddressListActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.PayTypeActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.ChooseTimeActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.GoodDetailActivity" />
+        <activity android:name=".device.led.LEDDetailActivity" />
+        <activity android:name=".device.led.TiaoGuangActivity" />
+        <activity android:name=".device.led.LEDPeriodSettings" />
+        <activity android:name=".device.jinligang.DeviceAq806PhActivity" />
+        <activity android:name=".device.jinligang.Ph806JiaoZhunActivity" />
+        <activity
+            android:name=".sunsunlingshou.activity.me.LingShouLoginActivity"
+            android:label="@string/title_activity_ling_shou_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".sunsunlingshou.activity.me.LingShouRegisterActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.LingShouForgetPassActivity" />
+        <activity android:name=".sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity" />
+
+        <receiver android:name=".utils.WifiReceiver">
+            <intent-filter>
+                <action android:name="android.NET.wifi.RSSI_CHANGED" />
+                <action android:name="android.net.wifi.STATE_CHANGE" />
+                <action android:name="android.Net.wifi.WIFI_STATE_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".sunsunlingshou.activity.shopcart.MakeSureOrderActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.ChooseStoreActivity" />
+        <activity android:name=".sunsunlingshou.activity.OrderDetailActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.LiuYanBanActivity" />
+        <activity
+            android:name=".sunsunlingshou.activity.home.ChatActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name=".sunsunlingshou.activity.TuiKuanShenQingActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".sunsunlingshou.activity.StorePingJiaActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".device.qibeng.DeviceQiBengBatteryDetailActivity" />
+        <activity android:name=".device.qibeng.DeviceQiBengDetailActivity" />
+        <activity android:name=".device.pondteam.ActivityPondDeviceDetail" />
+        <activity android:name=".sunsunlingshou.activity.ArticleActivity" />
+        <activity android:name=".sunsunlingshou.activity.home.RedBagAcitivty" />
+    </application>
+
+</manifest>

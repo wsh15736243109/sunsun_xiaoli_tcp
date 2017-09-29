@@ -1,0 +1,9 @@
+<resources>
+    <string name="posts_image_picker_folder_btn">all Photo</string>
+    <string name="posts_image_picker_complete_btn">complete  %1$s</string>
+    <string name="posts_edit_hint">Begin to prepare for your work. Please show the source and respect the original author。。。</string>
+    <string name="posts_edit_max_count_hint">At best%1$d</string>
+   <!--  <string name="posts_image_max_count_hint">添加图片\n最多6张</string> -->
+    <string name="posts_folder_complete">finish</string>
+    <string name="tf_please_insert_sd">Please insert the SD card</string>
+</resources>

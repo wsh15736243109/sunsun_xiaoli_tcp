@@ -1,0 +1,85 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>
+    </style>
+
+    <style name="anim_view">
+        <item name="@android:windowEnterAnimation">@anim/top_in</item>
+        <item name="@android:windowExitAnimation">@anim/top_out</item>
+    </style>
+
+    <style name="AnimBottom" parent="@android:style/Animation">
+        <!--
+        <item name="android:windowEnterAnimation">@anim/push_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/push_bottom_out</item>
+        -->
+    </style>
+    <!--UI-->
+    <style name="UIAlertViewStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style> <!-- 加载框样式 -->
+    <style name="dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <!-- 边框 -->
+        <item name="android:windowIsFloating">true</item>
+        <!-- 是否浮现在activity之上 -->
+        <item name="android:backgroundDimEnabled">false</item>
+        <!-- 模糊 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <!-- 半透明 -->
+        <item name="android:windowNoTitle">true</item>
+        <!-- 无标题 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 背景透明 -->
+    </style>
+
+    <style name="style0">
+        <item name="android:textSize">20dip</item>
+    </style>
+
+    <style name="style1">
+        <item name="android:textSize">40dip</item>
+    </style>
+
+    <style name="my_proceeebar">
+
+
+        　　
+        <item name="android:indeterminateDrawable">@drawable/processbar_rotate</item>
+
+
+        　　
+        <item name="android:minWidth">30dip</item>
+
+
+        　　
+        <item name="android:maxWidth">30dip</item>
+
+
+        　　
+        <item name="android:minHeight">30dip</item>
+
+
+        　　
+        <item name="android:maxHeight">30dip</item>
+    </style>
+
+    <!-- checkbox -->
+    <style name="MyCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_selector</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:maxHeight">20dp</item>
+    </style>
+</resources>

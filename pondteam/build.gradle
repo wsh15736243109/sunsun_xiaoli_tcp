@@ -1,0 +1,54 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    /**默认debug模式下的使用的keystore文件*/
+    signingConfigs {
+        debug {
+            storeFile file("../sunsunxiaoli.jks")
+            storePassword "android"
+            keyAlias "森森小鲤"
+            keyPassword "android"
+        }
+
+
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    testCompile 'junit:junit:4.12'
+    compile files('libs/nineoldandroids-2.4.0.jar')
+    compile files('libs/volley.jar')
+    compile files('libs/gson-2.2.2.jar')
+    compile 'com.android.support:recyclerview-v7:25.2.0'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'in.srain.cube:ptr-load-more:1.0.2'
+    compile 'com.umeng.analytics:analytics:6.1.1'
+    compile 'com.orhanobut:logger:1.15'
+//    compile '__local_jars__:F:\\SunsunXiaoLi\\PushSDK\\libs\\com.umeng.message_3.1.1a.jar'
+
+}

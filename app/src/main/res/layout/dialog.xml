@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+
+    <LinearLayout
+        android:id="@+id/camera_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="15dp"
+        android:background="@drawable/round_bg_shape"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txt_jiaozhunsuccess"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:text="@string/jiaozhu_success"
+            android:gravity="center"
+            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:id="@+id/re_jiaozhuning"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/DIMEN_15DP"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/progress"
+                style="@style/my_proceeebar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:visibility="visible"
+                android:layout_marginLeft="@dimen/DIMEN_5DP"
+                android:layout_toRightOf="@+id/txt_register" />
+            <TextView
+                android:id="@+id/txt_seconds"
+                android:text=""
+                android:textColor="@color/main_green"
+                android:textSize="@dimen/DIMEN_20DP"
+                android:layout_toRightOf="@+id/progress"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txt_tips"
+            android:drawableLeft="@drawable/ph_dianji"
+            android:text="@string/sure_jiaozhun"
+            android:gravity="center"
+            android:layout_margin="@dimen/DIMEN_15DP"
+            android:textSize="@dimen/DIMEN_20DP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:id="@+id/line1"
+            android:layout_width="match_parent"
+            android:background="@color/gray_A1"
+            android:layout_height="@dimen/DIMEN_1DP"></View>
+
+        <LinearLayout
+            android:id="@+id/li_btn"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_yes"
+                android:layout_width="@dimen/DIMEN_0DP"
+                android:layout_weight="1"
+                android:text="@string/yes"
+                android:background="@null"
+                android:padding="@dimen/DIMEN_15DP"
+                android:gravity="center"
+                android:textColor="@color/main_green"
+                android:layout_height="wrap_content" />
+            <View
+                android:id="@+id/line_2"
+                android:layout_width="1dp"
+                android:background="@color/gray_A1"
+                android:layout_height="match_parent"></View>
+            <Button
+                android:id="@+id/btn_no"
+                android:layout_width="@dimen/DIMEN_0DP"
+                android:layout_weight="1"
+                android:background="@null"
+                android:padding="@dimen/DIMEN_15DP"
+                android:gravity="center"
+                android:text="@string/no"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close_window"
+        android:layout_gravity="top|right" />
+
+</FrameLayout>

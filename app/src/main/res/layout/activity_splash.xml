@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+     >
+   <ImageView
+       android:id="@+id/img_splash"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_centerHorizontal="true"
+       android:scaleType="centerCrop"/>
+   <!--  <ImageView
+        android:layout_marginTop="120dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:visibility="gone"
+       android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_lanuch_logo"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="20dp"
+        >
+        
+   
+    <TextView 
+         android:layout_width="match_parent"
+         android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="只为提升您的生活品质"
+        android:visibility="gone"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_text_size"/>
+    
+    <TextView 
+         android:layout_width="match_parent"
+         android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome"
+        android:textColor="#a4a4a4"
+        android:visibility="gone"
+        android:textSize="12sp"/>
+    
+     </LinearLayout> -->
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="toastbg">@color/colorAccent</color>
+    <color name="item_public_msg_content">#ffffff</color>
+    <color name="main_green">#45B380</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#f3f3f3</color>
+    <color name="gray_divider">#e6e6e6</color>
+    <color name="gray_A1">#DCDEDD</color>
+    <color name="login_color">#EEEEEE</color>
+    <color name="blue">#009ff0</color>
+    <color name="red">#ff00ff</color>
+    <color name="black">#000000</color>
+    <color name="gray_eee">#EEEEEE</color>
+    <color name="btn_open">#f08619</color>
+    <color name="text_yellow">#EE8926</color>
+
+    <color name="type_1">#30318B</color>
+    <color name="type_2">#0061AE</color>
+    <color name="type_3">#008ED6</color>
+    <color name="type_4">#A0D9F6</color>
+    <color name="type_5">#FFF9B1</color>
+    <color name="type_6">#FDD100</color>
+    <color name="type_7">#F08619</color>
+    <color name="type_8">#E6212A</color>
+    <color name="shenlv">#00ADA1</color>
+    <color name="gray_a1">#A1A1A1</color>
+    <color name="gray_DC">#DCDEDD</color>
+
+
+    <color name="shen_red">#E64750</color>
+    <color name="progressbar_bg_color_1">#737373</color>
+
+    <color name="next">#54AAB7</color>
+    <color name="progress_color_1">#3CB371</color>
+    <color name="aq_orange">#F49636</color>
+
+    <color name="xuanzhong">#49B985</color>
+    <color name="beijing">#DCDEDD</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="page_backgroup">#f2f2f2</color>
+    <color name="goods_detail_title_color">#1a1a1a</color>
+    <color name="gray_color1">#333333</color>
+    <color name="main_black">#9B9B9B</color>
+    <color name="pink">#CDA0C7</color>
+</resources>

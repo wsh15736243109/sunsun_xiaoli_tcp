@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressListActivity">
+
+
+        <RelativeLayout
+            android:layout_above="@+id/btn_sure_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+                android:id="@+id/actionBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+            <LinearLayout
+                android:id="@+id/li_mylocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/actionBar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:text="当前位置" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingBottom="@dimen/DIMEN_20DP"
+                    android:paddingLeft="@dimen/DIMEN_10DP"
+                    android:paddingRight="@dimen/DIMEN_10DP"
+                    android:paddingTop="@dimen/DIMEN_20DP">
+
+                    <TextView
+                        android:id="@+id/txt_current_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/txt_relocation"
+                        android:text="浙江省杭州市" />
+
+                    <TextView
+                        android:id="@+id/txt_relocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:text="重新定位" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="收货地址" />
+
+                    <TextView
+                        android:id="@+id/txt_add_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/blue"
+                        android:padding="@dimen/margin_5"
+                        android:text="新增地址"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_address"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/li_mylocation">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_sure_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/main_yellow"
+        android:text="确认地址"
+        android:textColor="@color/white" />
+</RelativeLayout>

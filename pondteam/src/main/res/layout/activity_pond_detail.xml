@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.itboye.pondteam.custom.LoweRelaLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_zidong"
+                    android:orientation="vertical"
+                    app:ratio="1.5">
+                    <TextView
+                        android:id="@+id/txt"
+                        android:layout_centerHorizontal="true"
+                        android:layout_above="@+id/txt_wendu"
+                        android:text="@string/water_temperature"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_20DP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/txt_wendu"
+                        android:layout_centerInParent="true"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_25DP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </com.itboye.pondteam.custom.LoweRelaLayout>
+                <RelativeLayout
+                    android:id="@+id/re_dingshi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_5DP"
+                        android:background="@drawable/pond_clean_dingshi" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@+id/icon_setting_1"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/icon_1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/zidongqingxi"
+                            android:textColor="@color/main_green"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:id="@+id/txt_dingshi_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/dingshi"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+                        <TextView
+                            android:id="@+id/txt_last_cleantime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/last_clean_time"
+                            android:maxLines="1"
+                            android:visibility="gone"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+                        <TextView
+                            android:id="@+id/txt_next_cleantime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            android:text="@string/next_clean_time"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/icon_setting_1"
+                        android:layout_width="@dimen/DIMEN_15DP"
+                        android:layout_height="@dimen/DIMEN_25DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:background="@drawable/ic_right_arrow" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:background="@color/gray_divider"></View>
+
+                <RelativeLayout
+                    android:id="@+id/re_shoudong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_5DP"
+                        android:background="@drawable/pond_clean_shoudong" />
+
+                    <LinearLayout
+                        android:layout_toLeftOf="@+id/icon_setting_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/icon_2"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/shoudong"
+                            android:textColor="@color/main_green"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:id="@+id/txt_shoudong_clean_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/per_hour"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/icon_setting_2"
+                        android:layout_width="@dimen/DIMEN_15DP"
+                        android:layout_height="@dimen/DIMEN_25DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:background="@drawable/ic_right_arrow" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:background="@color/gray_divider"></View>
+
+                <RelativeLayout
+                    android:id="@+id/re_uvlamp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_5DP"
+                        android:background="@drawable/pond_uv_lamp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/icon_setting_3"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/icon_3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/UVLANMP"
+                            android:textColor="@color/main_green"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:id="@+id/txt_uv_open_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            android:text="@string/open_time" />
+
+                        <TextView
+                            android:id="@+id/txt_uv_total_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="visible"
+                            android:text="@string/total_time" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/icon_setting_3"
+                        android:layout_width="@dimen/DIMEN_15DP"
+                        android:layout_height="@dimen/DIMEN_25DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:background="@drawable/ic_right_arrow" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:background="@color/gray_divider"></View>
+
+                <RelativeLayout
+                    android:id="@+id/re_chazuo_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_5DP"
+                        android:background="@drawable/pond_clean_chazuo_a" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/img_a_arrow"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/icon_4"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_chazuoA_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/main_green"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:id="@+id/chazuo_A_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="@string/current_power"
+                            android:visibility="gone"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+                        <TextView
+                            android:id="@+id/chazuo_A_total_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="visible"
+                            android:text="@string/total_power"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/icon_setting_A"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:visibility="gone"
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:textOff=""
+                        android:checked="false"
+                        android:textOn="" />
+                    <ImageView
+                        android:id="@+id/img_a_arrow"
+                        android:layout_width="@dimen/DIMEN_15DP"
+                        android:layout_height="@dimen/DIMEN_25DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:background="@drawable/ic_right_arrow" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:background="@color/gray_divider"></View>
+
+                <RelativeLayout
+                    android:id="@+id/re_chazuo_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/icon_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_5DP"
+                        android:background="@drawable/pond_clean_chazuo_b" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_toLeftOf="@+id/img_b_arrow"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/icon_5"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txt_chazuoB_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:textColor="@color/main_green"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:id="@+id/chazuo_B_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="gone"
+                            android:text="@string/current_power"
+                            android:textSize="@dimen/DIMEN_16DP" />
+
+                        <TextView
+                            android:id="@+id/chazuo_B_total_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:visibility="visible"
+                            android:text="@string/total_power"
+                            android:textSize="@dimen/DIMEN_14DP" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/icon_setting_B"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:visibility="gone"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textOn=""
+                        android:textOff=""
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:checked="false" />
+                    <ImageView
+                        android:id="@+id/img_b_arrow"
+                        android:layout_width="@dimen/DIMEN_15DP"
+                        android:layout_height="@dimen/DIMEN_25DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/DIMEN_20DP"
+                        android:background="@drawable/ic_right_arrow" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:background="@color/gray_divider"></View>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/DIMEN_30DP"
+                    android:text="@string/touch_long" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_divider"></View>
+            </LinearLayout>
+        </ScrollView>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+</LinearLayout>

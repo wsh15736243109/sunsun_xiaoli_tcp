@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:layout_marginLeft="@dimen/DIMEN_20DP"
+        android:layout_marginRight="@dimen/DIMEN_20DP"
+        android:id="@+id/editIntPart"
+        android:hint=""
+        android:layout_centerVertical="true"
+        android:minWidth="@dimen/DIMEN_60DP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

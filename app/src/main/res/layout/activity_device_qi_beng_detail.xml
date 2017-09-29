@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_device_shui_beng_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/gray_c9"></View>
+
+    <in.srain.cube.views.ptr.PtrFrameLayout
+        android:id="@+id/ptr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <sunsun.xiaoli.jiarebang.custom.XScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_10DP">
+
+                    <TextView
+                        android:id="@+id/txt_current_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:text="@string/current_status"
+                        android:textColor="@color/main_green"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <TextView
+                        android:id="@+id/txt_current_status_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/txt_current_status"
+                        android:text=""
+                        android:textColor="@color/main_green"
+                        android:textSize="@dimen/DIMEN_20DP" />
+                </RelativeLayout>
+
+                <sunsun.xiaoli.jiarebang.custom.LoweRelaLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/DIMEN_50DP"
+                    android:background="@drawable/weishi_bg"
+                    app:ratio="1.35">
+
+                    <ImageView
+                        android:id="@+id/shuibeng_wiget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true" />
+                    <TextView
+                        android:id="@+id/txt_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/DIMEN_30DP"
+                        android:layout_centerInParent="true" />
+                    <!--<sunsun.xiaoli.jiarebang.custom.ShuiBengButtomImageView-->
+                    <!--android:id="@+id/shuibeng_wiget"-->
+                    <!--android:layout_width="150dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--app:ratio="1" />-->
+
+                </sunsun.xiaoli.jiarebang.custom.LoweRelaLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_c9"></View>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginStart="12dp"
+                        android:drawableLeft="@drawable/shuibeng_liuliang"
+                        android:gravity="center"
+                        android:text="@string/shuibengliuliang"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <TextView
+                        android:id="@+id/txt_shuibengliuliang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:text=""
+                        android:textColor="@color/orange500"></TextView>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_leijitime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:text="@string/qibeng_leiji_time"
+                    android:textSize="@dimen/DIMEN_20DP" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
+
+                <RelativeLayout
+                    android:id="@+id/re_chuqiliang_choose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_5DP">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/txt_liuliangchoose"
+                        android:drawableLeft="@drawable/shuibeng_liuliang"
+                        android:gravity="center|left"
+                        android:text="@string/chuqiliang_choose"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <TextView
+                        android:id="@+id/txt_chuqiliangchoose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:text="4"
+                        android:textColor="@color/main_green"
+                        android:textSize="@dimen/DIMEN_20DP" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
+
+                <RelativeLayout
+                    android:id="@+id/re_workmode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_5DP">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/txt_workmode"
+                        android:drawableLeft="@drawable/qibeng_workmode"
+                        android:gravity="center|left"
+                        android:drawablePadding="@dimen/DIMEN_5DP"
+                        android:text="@string/workmode_choose"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <TextView
+                        android:id="@+id/txt_workmode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:text=""
+                        android:textColor="@color/main_green"
+                        android:textSize="@dimen/DIMEN_20DP" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
+                <RelativeLayout
+                    android:id="@+id/re_battery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_5DP">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/txt_weishitime"
+                        android:drawableLeft="@drawable/qibeng_battery"
+                        android:gravity="center|left"
+                        android:drawablePadding="@dimen/DIMEN_5DP"
+                        android:text="@string/batteryinformation"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <ImageView
+                        android:id="@+id/img_arrow"
+                        android:layout_width="10dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:background="@drawable/ic_right_arrow"/>
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_5DP">
+
+
+                    <TextView
+                        android:id="@+id/txt_workstatustips"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/qibeng_workstatus"
+                        android:gravity="center"
+                        android:text="@string/workstatustips"
+                        android:drawablePadding="@dimen/DIMEN_5DP"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <ImageView
+                        android:id="@+id/img_workstatustips"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:background="@drawable/mytogglebutton"
+                        android:textOff=""
+                        android:textOn="" />
+                </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_5DP">
+
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:drawableLeft="@drawable/yichangbaojing"
+                        android:gravity="center"
+                        android:text="@string/yichangbaojing"
+                        android:drawablePadding="@dimen/DIMEN_5DP"
+                        android:textSize="@dimen/DIMEN_20DP" />
+
+                    <ImageView
+                        android:id="@+id/img_yichangbaojing"
+                        android:layout_width="@dimen/DIMEN_55DP"
+                        android:layout_height="@dimen/DIMEN_27DP"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:background="@drawable/mytogglebutton"
+                        android:textOff=""
+                        android:textOn="" />
+                </RelativeLayout>
+
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
+            </LinearLayout>
+        </sunsun.xiaoli.jiarebang.custom.XScrollView>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+</LinearLayout>

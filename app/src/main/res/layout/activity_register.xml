@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/gray_divider"></View>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_marginRight="@dimen/DIMEN_10DP"
+        android:background="@drawable/rounded_edittext"
+        android:layout_marginTop="@dimen/DIMEN_20DP">
+
+        <TextView
+            android:id="@+id/tvEmailAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:text=""
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvEmailXinhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_5DP"
+            android:layout_toRightOf="@+id/tvEmailAddress"
+            android:text="*"
+            android:textColor="@color/red"
+            android:visibility="gone" />
+
+        <sunsun.xiaoli.jiarebang.custom.ClearEditText
+            android:id="@+id/cleMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/mobile"
+            android:layout_margin="@dimen/DIMEN_5DP"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:layout_toLeftOf="@+id/btn_country"
+            android:layout_toRightOf="@+id/tvEmailXinhao"
+            android:textSize="@dimen/DIMEN_14DP" />
+        <TextView
+            android:id="@+id/btn_country"
+            android:layout_width="wrap_content"
+            android:text="+86"
+            android:background="@null"
+            android:textSize="@dimen/DIMEN_14DP"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP">
+
+        <TextView
+            android:id="@+id/tvYzm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:text="@string/yzm"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvyzmXinhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_5DP"
+            android:layout_toRightOf="@+id/tvYzm"
+            android:text="*"
+            android:textColor="@color/red"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:layout_toRightOf="@+id/tvyzmXinhao"
+            android:background="@drawable/rounded_edittext">
+
+
+            <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                android:id="@+id/cleYzm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/yzm"
+                android:inputType="number"
+                android:maxEms="6"
+                android:layout_toLeftOf="@+id/txt_getYzm"
+                android:gravity="center_vertical"
+                android:layout_margin="@dimen/DIMEN_5DP"
+                android:background="@null"
+                android:textSize="@dimen/DIMEN_14DP" />
+
+            <TextView
+                android:id="@+id/txt_getYzm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:background="@drawable/sign_in_button"
+                android:padding="@dimen/DIMEN_5DP"
+                android:text="@string/getYzm"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <!--登录密码-->
+    <RelativeLayout
+        android:background="@drawable/rounded_edittext"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_marginRight="@dimen/DIMEN_10DP"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvSignPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:text=""
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tvPasswordlXinhao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_5DP"
+            android:layout_toRightOf="@+id/tvSignPassword"
+            android:text="*"
+            android:textColor="@color/red"
+            android:visibility="gone" />
+
+        <sunsun.xiaoli.jiarebang.custom.ClearEditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sign_password"
+            android:background="@null"
+            android:layout_margin="@dimen/DIMEN_5DP"
+            android:layout_centerVertical="true"
+            android:inputType="textPassword"
+            android:layout_toRightOf="@+id/tvPasswordlXinhao"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+
+
+    <!--用户呢称-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_30DP"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:text="@string/user_name_register" />
+
+
+        <sunsun.xiaoli.jiarebang.custom.ClearEditText
+            android:id="@+id/clearUserName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:layout_marginRight="@dimen/DIMEN_20DP"
+            android:layout_toRightOf="@+id/tvUserName"
+            android:background="@drawable/rounded_edittext"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+
+    <!--地址信息-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_30DP"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:text="@string/address_information" />
+
+
+        <sunsun.xiaoli.jiarebang.custom.ClearEditText
+            android:id="@+id/clearAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:layout_marginRight="@dimen/DIMEN_20DP"
+            android:layout_toRightOf="@+id/tvAddress"
+            android:background="@drawable/rounded_edittext"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+    <!--联息电话-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_30DP"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tvCantact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:text="@string/cantact_number" />
+
+        <sunsun.xiaoli.jiarebang.custom.ClearEditText
+            android:id="@+id/clearPhone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:layout_marginRight="@dimen/DIMEN_20DP"
+            android:layout_toRightOf="@+id/tvCantact"
+            android:background="@drawable/rounded_edittext"
+            android:textSize="@dimen/DIMEN_14DP" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_marginTop="@dimen/DIMEN_20DP">
+
+        <TextView
+            android:id="@+id/btnOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/DIMEN_35DP"
+            android:paddingRight="@dimen/DIMEN_35DP"
+            android:paddingTop="@dimen/DIMEN_10DP"
+            android:paddingBottom="@dimen/DIMEN_10DP"
+            android:background="@drawable/sign_in_button"
+            android:text="@string/determine"
+            android:textSize="@dimen/DIMEN_14DP"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/DIMEN_35DP"
+            android:paddingRight="@dimen/DIMEN_35DP"
+            android:paddingTop="@dimen/DIMEN_10DP"
+            android:textSize="@dimen/DIMEN_14DP"
+            android:paddingBottom="@dimen/DIMEN_10DP"
+            android:layout_marginRight="@dimen/DIMEN_20DP"
+            android:background="@drawable/register_button"
+            android:text="@string/cancel"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+</LinearLayout>

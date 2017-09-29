@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/sure_order_root"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/sure_order_icon"
+        android:layout_width="@dimen/DIMEN_80DP"
+        android:layout_height="@dimen/DIMEN_80DP"
+        android:layout_margin="@dimen/DIMEN_5DP"
+        android:layout_centerVertical="true" />
+
+    <LinearLayout
+        android:layout_margin="@dimen/DIMEN_5DP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/txt_count"
+        android:layout_toRightOf="@+id/sure_order_icon"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_goodsname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_guige"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/red500" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_count"
+        android:layout_margin="@dimen/DIMEN_5DP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="" />
+</RelativeLayout>

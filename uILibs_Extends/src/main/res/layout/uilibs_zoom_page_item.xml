@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    >
+	<com.pobing.uilibs.extend.feature.view.XZoomImageView xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/img"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+		android:scaleType="fitCenter"
+		android:layout_centerInParent="true"
+	    />     
+	    
+	<ProgressBar 
+	    android:id="@+id/progressbar"
+	    android:layout_width="34dp"
+	    android:layout_height="34dp"
+	    android:layout_centerInParent="true"
+	    style="@style/loading_progressbar"/>
+	
+	<LinearLayout 
+	    android:id="@+id/error_view"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_centerInParent="true"
+	    android:gravity="center_horizontal"
+	    android:orientation="vertical"
+	    android:background="@android:color/transparent"
+	    android:visibility="gone"
+	   	>
+		<ImageView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/uilibs_error_img"
+		    android:background="@android:color/transparent"
+		    />
+		<TextView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/uik_image_load_error"
+		    android:textColor="@android:color/white"
+		    android:textSize="16sp"
+		    android:layout_marginTop="10dp"
+		    android:background="@android:color/transparent"
+		    />
+	</LinearLayout>	
+</RelativeLayout>

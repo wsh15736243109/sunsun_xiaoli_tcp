@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <sunsun.xiaoli.jiarebang.custom.LoweLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_wifi"
+        app:ratio="1.07">
+
+    </sunsun.xiaoli.jiarebang.custom.LoweLinearLayout>
+
+    <EditText
+        android:id="@+id/edit_wifiname"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_45DP"
+        android:layout_margin="@dimen/DIMEN_20DP"
+        android:gravity="center_vertical"
+        android:hint="@string/current_wifiname"
+        android:padding="@dimen/DIMEN_10DP"
+        android:background="@drawable/bg_gray"
+        android:text="" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/DIMEN_20DP"
+        android:background="@drawable/border_gray"
+        android:layout_height="@dimen/DIMEN_45DP">
+        <EditText
+            android:id="@+id/edit_wifipass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@null"
+            android:hint="@string/current_wifipass"
+            android:inputType="textPassword"
+            android:text=""
+            android:padding="@dimen/DIMEN_10DP" />
+        <ToggleButton
+            android:id="@+id/pass_hide_visible"
+            android:layout_width="@dimen/DIMEN_22DP"
+            android:layout_height="@dimen/DIMEN_22DP"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/DIMEN_10DP"
+            android:background="@drawable/mytogglebutton2"
+            android:button="@null"
+            android:checked="true"
+            android:textOff=""
+            android:textOn="" />
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_search_device"
+        android:text="@string/search_device"
+        android:textColor="@color/white"
+        android:background="@drawable/bgr_green"
+        android:layout_margin="@dimen/DIMEN_20DP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    </LinearLayout></ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:background="@drawable/back_bg_green"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textColor="@color/white"
+            android:text="@string/ConfirmWIFI"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:textSize="@dimen/DIMEN_20DP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

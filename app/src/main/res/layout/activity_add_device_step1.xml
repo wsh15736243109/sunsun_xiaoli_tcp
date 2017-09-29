@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ratio="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <sunsun.xiaoli.jiarebang.custom.XScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <sunsun.xiaoli.jiarebang.custom.RatioImageView
+                android:id="@+id/img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:background="@drawable/add_jiarebang"
+                ratio:ratio="1.5"></sunsun.xiaoli.jiarebang.custom.RatioImageView>
+
+            <TextView
+                android:id="@+id/txt_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_20DP"
+                android:gravity="left"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/smartconfig_tip"
+                android:textSize="@dimen/DIMEN_20DP" />
+
+            <Button
+                android:id="@+id/btn_next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_20DP"
+                android:gravity="center"
+                android:background="@drawable/bgr_green"
+                android:text="@string/next"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </sunsun.xiaoli.jiarebang.custom.XScrollView>
+</LinearLayout>

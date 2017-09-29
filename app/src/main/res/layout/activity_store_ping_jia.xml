@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_store_ping_jia"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.StorePingJiaActivity">
+
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_storeName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_20DP"
+                android:background="@drawable/bg_white_border_dark"
+                android:gravity="center"
+                android:padding="@dimen/DIMEN_20DP"
+                android:text="XXXXXXXXXXXXXXXXXX商家" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/DIMEN_10DP"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="请给商家大打分" />
+
+                <RelativeLayout
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/DIMEN_50DP"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_5DP"
+                        android:text="商家产品质量" />
+
+                    <RatingBar
+                        android:id="@+id/zhiliang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        style="@style/roomRatingBar"
+                        android:numStars="5"
+                        android:stepSize="1"
+                        android:layout_toRightOf="@+id/txt_1"
+                        android:rating="4" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/DIMEN_50DP"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_2"
+                        android:layout_marginTop="@dimen/DIMEN_5DP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="商家服务态度" />
+
+                    <RatingBar
+                        android:id="@+id/taidu"
+                        android:layout_toRightOf="@+id/txt_2"
+                        android:layout_width="wrap_content"
+                        style="@style/roomRatingBar"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:numStars="5"
+                        android:rating="4" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/DIMEN_50DP"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txt_3"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/DIMEN_5DP"
+                        android:layout_height="wrap_content"
+                        android:text="物流发货速度" />
+
+                    <RatingBar
+                        style="@style/roomRatingBar"
+                        android:layout_width="wrap_content"
+                        android:numStars="5"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/DIMEN_5DP"
+                        android:layout_toRightOf="@+id/txt_3"
+                        android:stepSize="0.15"
+                        android:rating="4"
+                        android:id="@+id/sudu" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:text="填写评价" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:background="@color/white"
+                android:gravity="left"
+                android:minHeight="250dp"
+                android:padding="@dimen/DIMEN_10DP"
+                android:textSize="@dimen/DIMEN_20DP" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/DIMEN_10DP"
+                android:layout_marginTop="@dimen/DIMEN_10DP">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/DIMEN_40DP"
+                    android:background="@drawable/bg_white_border_blue"
+                    android:paddingBottom="@dimen/DIMEN_5DP"
+                    android:paddingLeft="@dimen/DIMEN_30DP"
+                    android:paddingRight="@dimen/DIMEN_30DP"
+                    android:paddingTop="@dimen/DIMEN_5DP"
+                    android:text="@string/cancel" />
+
+                <Button
+                    android:id="@+id/btn_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/DIMEN_40DP"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_toRightOf="@+id/btn_cancel"
+                    android:background="@drawable/bg_blue_border_blue"
+                    android:paddingBottom="@dimen/DIMEN_5DP"
+                    android:paddingLeft="@dimen/DIMEN_30DP"
+                    android:paddingRight="@dimen/DIMEN_30DP"
+                    android:paddingTop="@dimen/DIMEN_5DP"
+                    android:text="@string/ok"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

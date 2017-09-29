@@ -1,0 +1,780 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffdcdddd">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/incude_titlebar"></include>
+
+    <sunsun.xiaoli.jiarebang.custom.XScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top">
+
+        <LinearLayout
+            android:id="@+id/period_linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="vertical">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/DIMEN_1DP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_zhaoming"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_change_green"
+                    android:textColor="@color/white"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="@string/light_zhaoming"
+                    android:textSize="@dimen/DIMEN_18DP"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/DIMEN_18DP"
+                    android:background="@drawable/border_gray"
+                    android:text="@string/light_shajun"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_shajundeng" />
+
+                <TextView
+                    android:id="@+id/txt_chonglangbeng"
+                    android:layout_width="0dp"
+                    android:gravity="center"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:textSize="@dimen/DIMEN_18DP"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:background="@drawable/border_gray"
+                    android:text="@string/chonglangbeng"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingLeft="@dimen/DIMEN_24DP"
+                android:paddingRight="@dimen/DIMEN_24DP"
+                android:layout_below="@+id/line1"
+                android:background="@color/white">
+
+                <TextView
+                    android:text="只在自动模式下有效"
+                    android:layout_margin="@dimen/DIMEN_10DP"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/DIMEN_16DP"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/textView"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/DIMEN_16DP"
+                    android:id="@+id/textView2" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_below="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#FFC9CACA">
+
+                <TextView
+                    android:id="@+id/period_textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:text="第1时间段"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF5F5D5D"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/period_switch1"
+                    android:layout_width="@dimen/DIMEN_45DP"
+                    android:layout_height="@dimen/DIMEN_22DP"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/guan"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:checked="false" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#FFEEEEEF">
+
+                <Button
+                    android:id="@+id/period_button1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bt_list_item" />
+
+                <TextView
+                    android:id="@+id/period_textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/period_relativeLayout1"
+                    android:layout_toRightOf="@+id/period_relativeLayout1"
+                    android:text="开启时间"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <RelativeLayout
+                    android:id="@+id/period_relativeLayout1"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/period_imageView1"
+                        android:layout_width="@dimen/DIMEN_30DP"
+                        android:layout_height="@dimen/DIMEN_30DP"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/period_textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="0:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/aq_orange" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/DIMEN_1DP"
+                android:layout_gravity="center_horizontal"
+                android:background="#FFEEEEEF">
+
+                <Button
+                    android:id="@+id/period_button2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bt_list_item" />
+
+                <RelativeLayout
+                    android:id="@+id/period_relativeLayout2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/period_imageView2"
+                        android:layout_width="@dimen/DIMEN_30DP"
+                        android:layout_height="@dimen/DIMEN_30DP"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/period_textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/period_relativeLayout2"
+                    android:layout_toRightOf="@+id/period_relativeLayout2"
+                    android:text="关闭时间"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <TextView
+                    android:id="@+id/period_textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="0:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/aq_orange"/>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#FFC9CACA">
+
+                <TextView
+                    android:id="@+id/period_textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:text="第2时间段"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF5F5D5D"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/period_switch2"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/guan"
+                    android:layout_width="@dimen/DIMEN_45DP"
+                    android:layout_height="@dimen/DIMEN_22DP"
+                    android:layout_marginRight="16dp"
+                    android:checked="false" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#FFEEEEEF">
+
+                <Button
+                    android:id="@+id/period_button3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bt_list_item" />
+
+                <RelativeLayout
+                    android:id="@+id/period_relativeLayout3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/period_imageView3"
+                        android:layout_width="@dimen/DIMEN_30DP"
+                        android:layout_height="@dimen/DIMEN_30DP"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/period_textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/period_relativeLayout3"
+                    android:text="开启时间"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <TextView
+                    android:id="@+id/period_textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="0:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/aq_orange" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/DIMEN_1DP"
+                android:background="#FFEEEEEF">
+
+                <Button
+                    android:id="@+id/period_button4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bt_list_item" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/period_imageView4"
+                        android:layout_width="@dimen/DIMEN_30DP"
+                        android:layout_height="@dimen/DIMEN_30DP"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/period_textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toEndOf="@+id/relativeLayout"
+                    android:layout_toRightOf="@+id/relativeLayout"
+                    android:text="关闭时间"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <TextView
+                    android:id="@+id/period_textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="0:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/aq_orange" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#FFC9CACA">
+
+                <TextView
+                    android:id="@+id/period_textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:text="第3时间段"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF5F5D5D"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/period_switch3"
+                    android:layout_width="@dimen/DIMEN_45DP"
+                    android:layout_height="@dimen/DIMEN_22DP"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/guan"
+                    android:layout_marginRight="16dp"
+                    android:checked="false" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#FFEEEEEF">
+
+                <Button
+                    android:id="@+id/period_button5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/bt_list_item" />
+
+                <RelativeLayout
+                    android:id="@+id/period_relativeLayout5"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/period_imageView5"
+                        android:layout_width="@dimen/DIMEN_30DP"
+                        android:layout_height="@dimen/DIMEN_30DP"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/period_textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/period_relativeLayout5"
+                    android:text="开启时间"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <TextView
+                    android:id="@+id/period_textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="0:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/aq_orange"
+                    android:layout_alignBaseline="@+id/period_button5"
+                    android:layout_alignBottom="@+id/period_button5"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="@dimen/DIMEN_1DP"
+                android:layout_gravity="center_horizontal"
+                android:background="#FFEEEEEF">
+
+                <RelativeLayout
+                    android:id="@+id/period_relativeLayout6"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/period_imageView6"
+                        android:layout_width="@dimen/DIMEN_30DP"
+                        android:layout_height="@dimen/DIMEN_30DP"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/period_textView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/period_relativeLayout6"
+                    android:text="关闭时间"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <TextView
+                    android:id="@+id/period_textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginRight="24dp"
+                    android:text="0:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/aq_orange" />
+
+                <Button
+                    android:id="@+id/period_button6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bt_list_item"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#DCDEDD">
+
+
+                <RelativeLayout
+                    android:id="@+id/re_dongtaitishi"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/img_dongtaitishi"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/img_wash_warn" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_dongtaitishi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/re_dongtaitishi"
+                    android:text="动态提示"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <ImageView
+                    android:id="@+id/switch_dongtaitishi"
+                    android:layout_width="@dimen/DIMEN_45DP"
+                    android:layout_height="@dimen/DIMEN_22DP"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:checked="false" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#CDCDCD"
+                android:layout_height="@dimen/DIMEN_1DP"></View>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#DCDEDD">
+
+                <RelativeLayout
+                    android:id="@+id/re_yichangbangjing"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/img_yichangbaojing"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/yichangbaojing" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_yichangbaojing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/re_yichangbangjing"
+                    android:text="异常报警"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <ImageView
+                    android:id="@+id/switch_yichangbaojing"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_width="@dimen/DIMEN_45DP"
+                    android:layout_height="@dimen/DIMEN_22DP"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"/>
+
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#CDCDCD"
+                android:layout_height="@dimen/DIMEN_1DP"></View>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="#DCDEDD">
+
+
+                <RelativeLayout
+                    android:id="@+id/re_qingling"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/img_qingling"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/img_leijishiyong" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txt_qingling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_toRightOf="@+id/re_qingling"
+                    android:text="累计使用时间清零"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#FF757475" />
+
+                <ImageView
+                    android:id="@+id/switch_qingling"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_width="@dimen/DIMEN_45DP"
+                    android:layout_height="@dimen/DIMEN_22DP"
+                    android:background="@drawable/guan"
+                    android:layout_marginRight="16dp"
+                    android:checked="false" />
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:background="#CDCDCD"
+                android:layout_height="@dimen/DIMEN_1DP"></View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/btn_ok"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_toLeftOf="@+id/btn_cancel"
+                    android:layout_weight="1"
+                    android:background="@drawable/bgr_green"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:padding="@dimen/DIMEN_6DP"
+                    android:text="确定"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/bg_gray"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:text="取消"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/btn_reset"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
+                    android:layout_marginBottom="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:layout_toRightOf="@+id/btn_cancel"
+                    android:background="@drawable/bg_gray_border_dark"
+                    android:gravity="center"
+                    android:padding="@dimen/DIMEN_6DP"
+                    android:text="恢复出厂设置"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </sunsun.xiaoli.jiarebang.custom.XScrollView>
+</RelativeLayout>

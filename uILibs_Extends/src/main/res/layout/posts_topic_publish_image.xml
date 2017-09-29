@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp">
+
+    <View
+        android:id="@+id/posts_topic_publish_mask"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000" />
+
+    <RelativeLayout
+        android:id="@+id/content_view"
+        android:layout_centerHorizontal="true"
+        android:layout_width="fill_parent"
+        android:background="@android:color/white"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/posts_publishImage_decText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="12dp"
+            android:textSize="20sp"
+            android:textColor="#333"
+            android:layout_centerHorizontal="true"
+            android:text="从哪里选照片" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_below="@id/posts_publishImage_decText">
+
+            <ImageView
+                android:id="@+id/publishImageByCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/posts_camera"
+                android:layout_marginBottom="20dp"
+                android:layout_marginRight="20dp" />
+
+            <ImageView
+                android:id="@+id/publishImageByGallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/posts_photo"
+
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

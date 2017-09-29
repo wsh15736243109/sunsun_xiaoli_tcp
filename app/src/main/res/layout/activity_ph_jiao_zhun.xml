@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_ph_jiao_zhun"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.device.phdevice.PhJiaoZhunActivity">
+
+    <include layout="@layout/incude_titlebar"></include>
+
+    <sunsun.xiaoli.jiarebang.custom.XScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:paddingLeft="@dimen/DIMEN_40DP"
+                android:paddingRight="@dimen/DIMEN_40DP">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_1"
+                    android:background="@color/gray_BBB"></View>
+
+                <TextView
+                    android:id="@+id/txt_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/DIMEN_5DP"
+                    android:gravity="center"
+                    android:text="@string/low_dianji" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/txt_1"
+                    android:background="@color/gray_BBB"></View>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_1"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:paddingLeft="@dimen/DIMEN_40DP"
+                android:paddingRight="@dimen/DIMEN_40DP"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_ph_di_1"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white"
+                    android:gravity="center"
+                    android:textSize="@dimen/DIMEN_25DP"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="4.00" />
+
+                <TextView
+                    android:id="@+id/txt_ph_di_2"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:textSize="@dimen/DIMEN_25DP"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white"
+                    android:gravity="center"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="4.01" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:paddingLeft="@dimen/DIMEN_40DP"
+                android:paddingRight="@dimen/DIMEN_40DP">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/txt_register"
+                    android:background="@color/gray_BBB"></View>
+
+                <TextView
+                    android:id="@+id/txt_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/DIMEN_5DP"
+                    android:gravity="center"
+                    android:text="@string/high_dianji" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/txt_register"
+                    android:background="@color/gray_BBB"></View>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:paddingLeft="@dimen/DIMEN_40DP"
+                android:paddingRight="@dimen/DIMEN_40DP"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txt_ph_gao_1"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_white"
+                    android:gravity="center"
+                    android:textSize="@dimen/DIMEN_25DP"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="6.86" />
+
+                <TextView
+                    android:id="@+id/txt_ph_gao_2"
+                    android:layout_width="@dimen/DIMEN_0DP"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/DIMEN_25DP"
+                    android:background="@drawable/bg_white"
+                    android:gravity="center"
+                    android:padding="@dimen/DIMEN_20DP"
+                    android:text="7.00" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_40DP"
+                android:layout_marginRight="@dimen/DIMEN_40DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP"
+                android:text="@string/jiaozhun_tips" />
+
+            <RelativeLayout
+                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ph_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/ph_dianji" />
+
+                <sunsun.xiaoli.jiarebang.custom.PhSeekBar
+                    android:id="@+id/ph_seekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/ph_icon"
+                    android:maxHeight="16dp"
+                    android:minHeight="16dp"
+                    android:max="14"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/seekbar_style"
+                    android:splitTrack="false"
+                    android:thumb="@drawable/circle4"
+                    app:img="@drawable/circle3"
+                    app:textcolor="#fff"
+                    app:textsize="14dp"
+                    />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_beginjiaozhun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_white"
+                android:text="@string/begin_jiaozhun"
+                android:layout_marginTop="19dp"
+                android:layout_margin="@dimen/DIMEN_20DP"
+                />
+
+            <TextView
+                android:id="@+id/shouci"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/first_jiaozhun"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/DIMEN_15DP" />
+
+            <TextView
+                android:id="@+id/shangci"
+                android:layout_width="wrap_content"
+                android:text="@string/last_jiaozhun"
+                android:layout_marginBottom="@dimen/DIMEN_20DP"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/DIMEN_5DP" />
+        </LinearLayout>
+    </sunsun.xiaoli.jiarebang.custom.XScrollView>
+</LinearLayout>

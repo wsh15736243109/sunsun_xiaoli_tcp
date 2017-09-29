@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/index_bottom"
+        android:background="@color/white"></FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/index_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/DIMEN_4DP"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_home_bottom_white">
+
+        <RelativeLayout
+            android:id="@+id/index_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/index_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/index_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/home"
+                    android:textColor="@color/main_yellow" />
+            </LinearLayout>
+        </RelativeLayout>
+           <RelativeLayout
+               android:id="@+id/order_layout"
+               android:layout_width="0dp"
+               android:layout_height="match_parent"
+               android:layout_weight="1">
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_centerVertical="true"
+                   android:orientation="vertical">
+
+                   <ImageView
+                       android:id="@+id/order_image"
+                       android:layout_width="30dp"
+                       android:layout_height="30dp"
+                       android:layout_gravity="center_horizontal"/>
+
+                   <TextView
+                       android:id="@+id/order_text"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_gravity="center_horizontal"
+                       android:text="@string/insurance"
+                       android:textColor="@color/main_black" />
+               </LinearLayout>
+           </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/consultation_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+        </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/shopcart_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/shopcart_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_horizontal" />
+
+                <TextView
+                    android:id="@+id/shopcart_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/shopcart"
+                    android:textColor="@color/main_black" />
+            </LinearLayout>
+        </RelativeLayout>
+         <RelativeLayout
+            android:id="@+id/me_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/me_image"
+                    android:layout_width="@dimen/DIMEN_30DP"
+                    android:layout_height="@dimen/DIMEN_30DP"
+                    android:layout_gravity="center_horizontal"/>
+
+                <TextView
+                    android:id="@+id/me_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/business"
+                    android:textColor="@color/main_black" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bottom_zixun"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/zixun_image"
+            android:layout_width="@dimen/DIMEN_50DP"
+            android:layout_height="@dimen/DIMEN_50DP"
+            android:src="@drawable/main_zixunbuy"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/DIMEN_5DP"/>
+
+        <TextView
+            android:id="@+id/zixun_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/pay"
+            android:textColor="@color/main_black" />
+    </LinearLayout>
+
+</RelativeLayout>

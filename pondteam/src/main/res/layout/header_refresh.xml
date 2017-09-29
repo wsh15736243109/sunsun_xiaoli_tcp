@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/img_loading"
+        android:layout_width="@dimen/DIMEN_20DP"
+        android:layout_marginTop="@dimen/DIMEN_3DP"
+        android:layout_centerHorizontal="true"
+        android:layout_height="@dimen/DIMEN_20DP" />
+    <TextView
+        android:id="@+id/refresh_time"
+        android:layout_below="@+id/img_loading"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:textColor="@color/gray_BBB"
+        android:text="@string/refreshing"
+        android:layout_marginTop="@dimen/DIMEN_3DP"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

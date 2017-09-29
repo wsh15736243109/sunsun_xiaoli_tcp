@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:background="@color/uikit_B_A" 
+              android:id="@+id/searchdoor_tabs"
+              android:paddingTop="7dp"
+              android:paddingRight="8dp" 
+              android:paddingBottom="4dp">
+              
+    
+    <LinearLayout
+            android:id="@+id/uikit_searchbar"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:layout_gravity="left"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/uikit_B_A" 
+            android:layout_marginRight="12dp">
+
+        <LinearLayout
+                android:id="@+id/searchbar_inner"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/uikit_tbsearch_fragment_edit_background"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal">
+            <View
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="0px"
+                    android:layout_height="0px"/>
+
+            <EditText
+                    android:id="@+id/uikit_searchedit"
+                    style="@style/UIKit.EditText.Normal"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="fill_parent"
+                    android:hint="@string/uikit_search_text"
+                    android:imeOptions="actionSearch"
+                    android:maxLength="128"
+                    android:paddingLeft="8dp"
+                    android:textSize="@dimen/uikit_TS_3"/>
+
+            
+            <ImageButton
+                    android:id="@+id/uikit_edit_del_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="fill_parent"
+                    android:background="@color/uikit_transparent"
+                    android:contentDescription="@string/uikit_search_text"
+                    android:padding="0dp"
+                    android:scaleType="center"
+                    android:src="@drawable/uilibs_input_delete"
+                    android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+             android:gravity="center_vertical" 
+            android:id="@+id/uikit_searchbtn_container">
+        <Button
+                android:id="@+id/uikit_searchbtn"
+                style="@style/UIKit.Button.Normal"
+                android:layout_width="48dp"
+                android:layout_height="28dp"
+                android:contentDescription="@string/uikit_search_text"
+                android:text="@string/uikit_search_text"
+                android:textColor="@color/uikit_B_F"
+                android:layout_margin="4dp"
+                android:textSize="16dp"
+                android:background="@drawable/uikit_tbsearch_search_btn" 
+                android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>
+

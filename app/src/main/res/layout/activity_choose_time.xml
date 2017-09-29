@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <RelativeLayout
+        android:padding="@dimen/DIMEN_20DP"
+        android:id="@+id/re_time_type"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txt_noZiTi"
+            android:layout_width="wrap_content"
+            android:background="@drawable/bg_white_border_blue"
+            android:paddingRight="@dimen/DIMEN_20DP"
+            android:paddingTop="@dimen/DIMEN_10DP"
+            android:paddingBottom="@dimen/DIMEN_10DP"
+            android:paddingLeft="@dimen/DIMEN_20DP"
+            android:layout_height="wrap_content"
+            android:text="选择时间" />
+
+        <TextView
+            android:id="@+id/txt_ziti"
+            android:layout_marginLeft="@dimen/DIMEN_20DP"
+            android:layout_width="wrap_content"
+            android:paddingRight="@dimen/DIMEN_20DP"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_blue_border_blue"
+            android:paddingTop="@dimen/DIMEN_10DP"
+            android:paddingBottom="@dimen/DIMEN_10DP"
+            android:paddingLeft="@dimen/DIMEN_20DP"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/txt_noZiTi"
+            android:text="自提" />
+    </RelativeLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/order_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/tablayout_bg"
+        app:tabIndicatorColor="@color/main_yellow"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/main_yellow"
+        app:tabTextColor="@drawable/sel_tab_color" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/order_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+</LinearLayout>

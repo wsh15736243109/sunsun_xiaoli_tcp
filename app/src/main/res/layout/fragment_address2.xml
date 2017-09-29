@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#88000000" >
+ 
+    
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.address.AddressSelectView
+        android:id="@+id/addressselect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#e0e0e0"/>
+</RelativeLayout>

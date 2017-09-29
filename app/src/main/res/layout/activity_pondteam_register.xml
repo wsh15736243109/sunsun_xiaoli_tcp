@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/login_color"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/incude_titlebar"></include>
+
+    <LinearLayout
+        android:id="@+id/li_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_1DP"
+                android:background="@color/gray_divider"></View>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP">
+
+                <TextView
+                    android:id="@+id/tvEmailAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:text="@string/e_mail_address" />
+
+                <TextView
+                    android:id="@+id/tvEmailXinhao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:layout_toRightOf="@+id/tvEmailAddress"
+                    android:text="*"
+                    android:textColor="@color/red" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <TextView
+                    android:id="@+id/tvCodeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:gravity="center"
+                    android:text="@string/yanzhengma" />
+
+                <TextView
+                    android:id="@+id/tvCodeXin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:layout_toRightOf="@+id/tvCodeText"
+                    android:text="*"
+                    android:textColor="@color/red" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <TextView
+                    android:id="@+id/tvSignPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:gravity="center"
+                    android:text="@string/sign_password" />
+
+                <TextView
+                    android:id="@+id/tvPasswordlXinhao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:layout_toRightOf="@+id/tvSignPassword"
+                    android:text="*"
+                    android:textColor="@color/red" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:text="@string/user_name_register" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <TextView
+                    android:id="@+id/tvAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:text="@string/address_information" />
+            </RelativeLayout>
+            <!--联息电话-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <TextView
+                    android:id="@+id/tvCantact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:text="@string/cantact_number" />
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP">
+
+                <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                    android:id="@+id/cleEdEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:background="@drawable/rounded_edittext"
+                    android:text=""
+                    android:textSize="@dimen/DIMEN_14DP" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                    android:id="@+id/edi_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:background="@drawable/rounded_edittext"
+                    android:text=""
+                    android:maxLength="6"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/DIMEN_14DP" />
+                <TextView
+                    android:id="@+id/txt_getYzm"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/DIMEN_5DP"
+                    android:textSize="@dimen/DIMEN_10DP"
+                    android:background="@drawable/bg_blue_border_blue"
+                    android:textColor="@color/white"
+                    android:layout_marginRight="@dimen/DIMEN_25DP"
+                    android:text="@string/getYzm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                    android:id="@+id/clearPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:background="@drawable/rounded_edittext"
+                    android:text=""
+                    android:inputType="textPassword"
+                    android:textSize="@dimen/DIMEN_14DP" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                    android:id="@+id/clearUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:background="@drawable/rounded_edittext"
+                    android:textSize="@dimen/DIMEN_14DP" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP">
+
+                <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                    android:id="@+id/clearAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:background="@drawable/rounded_edittext"
+                    android:textSize="@dimen/DIMEN_14DP" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/DIMEN_20DP"
+                android:layout_height="@dimen/DIMEN_30DP">
+                <sunsun.xiaoli.jiarebang.custom.ClearEditText
+                    android:id="@+id/clearPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:background="@drawable/rounded_edittext"
+                    android:textSize="@dimen/DIMEN_14DP" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/li_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/DIMEN_20DP">
+
+            <Button
+                android:id="@+id/btnDetermine"
+                android:layout_width="@dimen/DIMEN_100DP"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/DIMEN_80DP"
+                android:background="@drawable/sign_in_button"
+                android:text="@string/submit"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btncancel"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/DIMEN_30DP"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:background="@drawable/register_button"
+                android:text="@string/cancel"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/bottom_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bottom_icon" />
+</RelativeLayout>

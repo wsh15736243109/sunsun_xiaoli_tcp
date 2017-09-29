@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/tablayout_bg"
+    android:paddingTop="@dimen/DIMEN_10DP"
+    android:paddingBottom="@dimen/DIMEN_10DP"
+    android:paddingLeft="@dimen/DIMEN_10DP"
+    android:layout_height="match_parent">
+
+    <sunsun.xiaoli.jiarebang.custom.RatioImageView
+        app:ratio="1"
+        android:id="@+id/order_pro_img"
+        android:layout_width="@dimen/DIMEN_100DP"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/order_pro_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/order_pro_img"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_toRightOf="@+id/order_pro_img"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="goodsName"
+        android:textColor="#666666"
+        android:textSize="@dimen/DIMEN_20DP" />
+
+    <TextView
+        android:id="@+id/order_pro_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/order_pro_img"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="time"
+        android:textColor="#666666"
+        android:textSize="@dimen/DIMEN_10DP" />
+
+    <TextView
+        android:id="@+id/order_pro_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/order_pro_img"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_toLeftOf="@+id/order_cancel"
+        android:layout_toRightOf="@+id/order_pro_img"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="count"
+        android:textColor="#666666"
+        android:textSize="@dimen/DIMEN_15DP" />
+
+    <TextView
+        android:id="@+id/order_pro_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_toLeftOf="@+id/order_pro_status"
+        android:gravity="center|left"
+        android:singleLine="true"
+        android:text="price"
+        android:layout_alignTop="@+id/order_pro_num"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/DIMEN_10DP"
+        android:textColor="#666666"
+        android:textSize="@dimen/DIMEN_15DP" />
+</RelativeLayout>

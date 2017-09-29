@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.PayTypeActivity">
+<LinearLayout
+    android:layout_above="@+id/btn_sure_pay"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/DIMEN_10DP"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/DIMEN_10DP">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:text="支付剩余时间" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:text="支付剩余时间"
+            android:textSize="@dimen/DIMEN_20DP" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:background="@color/gray_EEEE"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txt_product_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/txt_price"
+                android:text="龙玉"
+                android:textSize="@dimen/DIMEN_16DP" />
+
+            <TextView
+                android:id="@+id/txt_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="详情￥12.00"
+                android:textSize="@dimen/DIMEN_16DP" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txt_jiamuzhongxin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:drawableLeft="@drawable/jiamucenter"
+        android:drawablePadding="@dimen/DIMEN_2DP"
+        android:text="价目中心" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/DIMEN_20DP"
+        android:layout_marginBottom="@dimen/DIMEN_10DP"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:text="选择支付方式"
+        android:textSize="@dimen/DIMEN_16DP" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/DIMEN_10DP"
+        android:layout_marginRight="@dimen/DIMEN_10DP"
+        android:background="@color/white">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:drawableLeft="@drawable/zfb"
+            android:drawablePadding="@dimen/margin_5"
+            android:text="支付宝支付" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:background="@color/gray_EEEE"></View>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:drawableLeft="@drawable/wx"
+            android:drawablePadding="@dimen/margin_5"
+            android:text="微信支付" />
+    </RadioGroup>
+</LinearLayout>
+    <Button
+        android:id="@+id/btn_sure_pay"
+        android:text="确认支付"
+        android:textColor="@color/white"
+        android:background="@color/red500"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

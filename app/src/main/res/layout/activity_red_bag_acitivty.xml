@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_red_bag_acitivty"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_redbag"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.RedBagAcitivty">
+    <Button
+        android:id="@+id/btn_getRedBag"
+        android:text="点击领券"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/DIMEN_40DP"
+        android:background="@drawable/btn_getredbag"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/DIMEN_22DP"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_order_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.OrderDetailActivity">
+
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+            android:id="@+id/actionBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+        <include layout="@layout/make_sure_header_order"></include>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_goods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txt_heji"
+        android:layout_below="@+id/top"></ListView>
+    <TextView
+        android:id="@+id/txt_heji"
+        android:layout_above="@+id/bottom"
+        android:layout_margin="@dimen/DIMEN_10DP"
+        android:layout_width="wrap_content"
+        android:text="合计"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/btn_contactKeFu"
+            android:layout_width="wrap_content"
+            android:text="联系客服"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:padding="@dimen/DIMEN_10DP"
+            android:background="@drawable/bg_white_border_dark_tuoyuan"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/btn_shenqingTuiKuan"
+            android:layout_width="wrap_content"
+            android:text="申请退款"
+            android:padding="@dimen/DIMEN_10DP"
+            android:background="@drawable/bg_white_border_dark_tuoyuan"
+            android:layout_toLeftOf="@+id/btn_sureReceive"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/btn_sureReceive"
+            android:layout_width="wrap_content"
+            android:text="确认收货"
+            android:padding="@dimen/DIMEN_10DP"
+            android:layout_margin="@dimen/DIMEN_10DP"
+            android:background="@drawable/bg_red_border_dark_tuoyuan"
+            android:textColor="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

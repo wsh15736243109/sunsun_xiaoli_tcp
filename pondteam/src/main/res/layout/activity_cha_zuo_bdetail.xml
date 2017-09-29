@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_cha_zuo_bdetail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/incude_titlebar"></include>
+
+    <!--<android.support.v7.widget.RecyclerView-->
+        <!--android:id="@+id/recyclerview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>-->
+    <com.itboye.pondteam.custom.swipexpandlistview.expandablelistview.SwipeMenuExpandableListView
+        android:id="@+id/exListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:childIndicator="@null"
+        android:groupIndicator="@null"
+        android:scrollbars="none"
+        android:visibility="visible"></com.itboye.pondteam.custom.swipexpandlistview.expandablelistview.SwipeMenuExpandableListView>
+</LinearLayout>

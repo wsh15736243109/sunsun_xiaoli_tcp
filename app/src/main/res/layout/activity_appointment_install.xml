@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.AppointmentInstallStepOneActivity">
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+    <RelativeLayout
+        android:id="@+id/re_xilie"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_xilie"
+            android:text="选择系列"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/ed_xilie"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/DIMEN_10DP"
+            android:text="无"
+            android:gravity="right"
+            android:layout_toRightOf="@+id/txt_xilie"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/img_xilie"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/img_xilie"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_5"
+            android:background="@drawable/ic_right_arrow"
+            android:layout_width="@dimen/DIMEN_10DP"
+            android:layout_height="@dimen/DIMEN_15DP" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/re_xuliehao"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/DIMEN_1DP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/txt_xuliehao"
+            android:text="选择序列号"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/ed_xuliehao"
+            android:layout_marginLeft="@dimen/DIMEN_10DP"
+            android:layout_marginTop="@dimen/DIMEN_10DP"
+            android:layout_marginBottom="@dimen/DIMEN_10DP"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/DIMEN_10DP"
+            android:text=""
+            android:gravity="right"
+            android:layout_toRightOf="@+id/txt_xuliehao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:text="下一步"
+        android:layout_marginTop="@dimen/DIMEN_5DP"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/DIMEN_20DP"
+        android:paddingTop="@dimen/DIMEN_10DP"
+        android:paddingLeft="@dimen/DIMEN_20DP"
+        android:paddingRight="@dimen/DIMEN_20DP"
+        android:paddingBottom="@dimen/DIMEN_10DP"
+        android:gravity="center"
+        android:background="@drawable/btn_border_blue_bg_blue"
+        android:textColor="@color/white"
+        android:layout_height="@dimen/DIMEN_40DP" />
+</LinearLayout>

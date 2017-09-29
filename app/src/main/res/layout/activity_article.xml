@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView
+        android:id="@+id/pullzoom_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_update"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/artical_iv"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_wifi"
+                />
+
+            <TextView
+                android:id="@+id/artical_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP"
+                />
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:orientation="horizontal"
+                 android:layout_marginTop="@dimen/DIMEN_20DP">
+                 <TextView
+                     android:layout_marginLeft="@dimen/DIMEN_10DP"
+                     android:id="@+id/artical_author"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     />
+                 <TextView
+                     android:layout_marginLeft="@dimen/DIMEN_10DP"
+                     android:id="@+id/artical_time"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+
+                     />
+             </LinearLayout>
+
+            <TextView
+                android:id="@+id/artical_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP"
+                />
+        </LinearLayout>
+
+    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView>
+    <TextView
+        android:id="@+id/artical_answer"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_50DP"
+        android:text="点击留言"
+        android:gravity="center"
+        android:background="@color/blue"
+        android:textColor="@color/white"/>
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ff00"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+
+</RelativeLayout>
