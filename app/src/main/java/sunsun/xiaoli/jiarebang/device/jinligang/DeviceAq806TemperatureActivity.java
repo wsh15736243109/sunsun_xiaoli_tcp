@@ -3,7 +3,6 @@ package sunsun.xiaoli.jiarebang.device.jinligang;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.presenter.UserPresenter;
-import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -87,6 +85,12 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         setDeviceData();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myApp.deviceAq806TemperatureUI=null;
+    }
+
     public void setLoadingIsVisible(boolean is) {
         if (is) {
             loading.setVisibility(View.VISIBLE);
@@ -122,7 +126,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 break;
             case R.id.re_gaowen_sheding:
             case R.id.txt_wendu_sheding_high:
-                if (deviceConnectstatus == false) {
+                if (myApp.jinLiGangdetailUI.isConnect) {
                     setWenDu(getString(R.string.wendu_high), txt_wendu_sheding_high, Double.parseDouble((txt_wendu_sheding_high.getText().toString().substring(0, txt_wendu_sheding_high.getText().toString().length() - 1))));
                 } else {
                     MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
@@ -130,7 +134,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 break;
             case R.id.re_diwen_sheding:
             case R.id.txt_wendu_sheding_low:
-                if (deviceConnectstatus == false) {
+                if (myApp.jinLiGangdetailUI.isConnect) {
                     setWenDu(getString(R.string.wendu_low), txt_wendu_sheding_low, Double.parseDouble((txt_wendu_sheding_low.getText().toString().substring(0, txt_wendu_sheding_low.getText().toString().length() - 1))));
                 } else {
                     MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
@@ -138,14 +142,14 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 break;
             case R.id.re_settemperature:
             case R.id.txt_wendu_setting:
-                if (deviceConnectstatus == false) {
+                if (myApp.jinLiGangdetailUI.isConnect) {
                     setWenDu(getString(R.string.wendu), txt_wendu_setting, Double.parseDouble((txt_wendu_setting.getText().toString().substring(0, txt_wendu_setting.getText().toString().length() - 1))));
                 } else {
                     MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
                 }
                 break;
             case R.id.wendu_baojing:
-                if (deviceConnectstatus == false) {
+                if (myApp.jinLiGangdetailUI.isConnect) {
                     showProgressDialog(CONNECTED_TEXT, false);
                     setCheckOrUnCheck(wendu_baojing, !wenDuBaoJingStatus);
                 } else {
@@ -242,26 +246,12 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 return;
             } else if (entity.getEventType() == UserPresenter.deviceSet_806success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                myApp.jinLiGangdetailUI.threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
+//                myApp.jinLiGangdetailUI.beginRequest();
             } else if (entity.getEventType() == UserPresenter.deviceSet_806fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update806ph_success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                myApp.jinLiGangdetailUI.threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
+                myApp.jinLiGangdetailUI.beginRequest();
             } else if (entity.getEventType() == UserPresenter.update806ph_fail) {
                 MAlert.alert(entity.getData());
             }
@@ -269,7 +259,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
     }
 
     public void setDeviceData() {
-        double wenduValue = myApp.jinLiGangdetailUI.deviceDetailModel.getT() / 10;
+        double wenduValue = myApp.jinLiGangdetailUI.detailModelTcp.getT() / 10;
         int startPo1 = ("" + wenduValue).length();
         int endPo1 = (wenduValue + "℃").length();
         ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
@@ -296,7 +286,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
             wenDuBaoJingStatus = false;
         }
         setImageViewCheckOrUnCheck(wendu_baojing);
-        mNewTempValue = Double.parseDouble(myApp.jinLiGangdetailUI.deviceDetailModel.getT_max()) / 10;
+        mNewTempValue = Double.parseDouble(myApp.jinLiGangdetailUI.detailModelTcp.getT_max()) / 10;
         txt_wendu_setting.setText(mNewTempValue + "℃");
         txt_wendu_sheding_high.setText(th / 10 + "℃");
         txt_wendu_sheding_low.setText(tl / 10 + "℃");
@@ -317,7 +307,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
             needHot = false;
         }
         txt_status.setText("加热棒工作状态:" + (needHot ? getString(R.string.open) : getString(R.string.alClose)));
-        if (myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+        if (myApp.jinLiGangdetailUI.detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
             re_settemperature.setVisibility(View.GONE);
         } else {
             re_settemperature.setVisibility(View.VISIBLE);

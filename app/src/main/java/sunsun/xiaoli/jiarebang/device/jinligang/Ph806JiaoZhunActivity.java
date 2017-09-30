@@ -61,6 +61,7 @@ public class Ph806JiaoZhunActivity extends BaseActivity implements Observer {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mApp.ph806JiaoZhunUI=null;
         handler.removeCallbacks(runnable);
     }
 

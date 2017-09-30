@@ -125,9 +125,9 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         re_chazuo_1.setOnLongClickListener(this);
         re_chazuo_2.setOnLongClickListener(this);
         uid = getSp(Const.UID);
-//        threadStart();
-        mTcpUtil = new TcpUtil(handData, did, uid, "101");
-        mTcpUtil.start();
+        threadStart();
+//        mTcpUtil = new TcpUtil(handData, did, uid, "101");
+//        mTcpUtil.start();
     }
 
 
@@ -218,56 +218,56 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mTcpUtil.releaseTcp();
-        handler.removeCallbacks(runnable);
-    }
+            protected void onDestroy() {
+                super.onDestroy();
+                mTcpUtil.releaseTcp();
+                handler.removeCallbacks(runnable);
+            }
 
-    @Override
-    public void onClick(View v) {
-        Intent intent = null;
-        if (v.getId() == R.id.img_back) {
-            finish();
-        } else if (v.getId() == R.id.re_uvlamp || v.getId() == R.id.txt_uv_open_time || v.getId() == R.id.txt_uv_total_time || v.getId() == R.id.icon_setting_3) {
-            intent = new Intent(this, ActivityUvLamp.class);
-            intent.putExtra("model", deviceDetailModel);
-            intent.putExtra("title", getString(R.string.UVLANMP));
-            intent.putExtra("did", did);
-            startActivity(intent);
-        } else if (v.getId() == R.id.re_shoudong || v.getId() == R.id.txt_shoudong_clean_time || v.getId() == R.id.icon_setting_2) {
-            intent = new Intent(this, ActivityShouDong.class);
-            intent.putExtra("model", deviceDetailModel);
-            intent.putExtra("title", getString(R.string.shoudong));
-            startActivity(intent);
-        } else if (v.getId() == R.id.re_dingshi || v.getId() == R.id.txt_dingshi_status || v.getId() == R.id.txt_last_cleantime || v.getId() == R.id.txt_next_cleantime || v.getId() == R.id.icon_setting_1) {
-            intent = new Intent(this, ActivityZiDong.class);
-            intent.putExtra("model", deviceDetailModel);
-            intent.putExtra("title", getString(R.string.zidongqingxi));
-            startActivity(intent);
-        } else if (v.getId() == R.id.img_right) {
-            onShowDlog();
-        } else if (v.getId() == R.id.icon_setting_A) {
-            if (!isConnect) {
-                MAlert.alert(getString(R.string.disconnect));
-                return;
-            }
-            showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1);
-        } else if (v.getId() == R.id.icon_setting_B) {
-            if (!isConnect) {
-                MAlert.alert(getString(R.string.disconnect));
-                return;
-            }
-            showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1);
-        } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
-            intent = new Intent(this, ActivityChaZuoBDetail.class);
-            intent.putExtra("title", txt_chazuoA_name.getText().toString());
-            intent.putExtra("chazuo_type", "A");
-            startActivity(intent);
-        } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
-            intent = new Intent(this, ActivityChaZuoBDetail.class);
+            @Override
+            public void onClick(View v) {
+                Intent intent = null;
+                if (v.getId() == R.id.img_back) {
+                    finish();
+                } else if (v.getId() == R.id.re_uvlamp || v.getId() == R.id.txt_uv_open_time || v.getId() == R.id.txt_uv_total_time || v.getId() == R.id.icon_setting_3) {
+                    intent = new Intent(this, ActivityUvLamp.class);
+                    intent.putExtra("model", deviceDetailModel);
+                    intent.putExtra("title", getString(R.string.UVLANMP));
+                    intent.putExtra("did", did);
+                    startActivity(intent);
+                } else if (v.getId() == R.id.re_shoudong || v.getId() == R.id.txt_shoudong_clean_time || v.getId() == R.id.icon_setting_2) {
+                    intent = new Intent(this, ActivityShouDong.class);
+                    intent.putExtra("model", deviceDetailModel);
+                    intent.putExtra("title", getString(R.string.shoudong));
+                    startActivity(intent);
+                } else if (v.getId() == R.id.re_dingshi || v.getId() == R.id.txt_dingshi_status || v.getId() == R.id.txt_last_cleantime || v.getId() == R.id.txt_next_cleantime || v.getId() == R.id.icon_setting_1) {
+                    intent = new Intent(this, ActivityZiDong.class);
+                    intent.putExtra("model", deviceDetailModel);
+                    intent.putExtra("title", getString(R.string.zidongqingxi));
+                    startActivity(intent);
+                } else if (v.getId() == R.id.img_right) {
+                    onShowDlog();
+                } else if (v.getId() == R.id.icon_setting_A) {
+                    if (!isConnect) {
+                        MAlert.alert(getString(R.string.disconnect));
+                        return;
+                    }
+                    showProgressDialog(getString(R.string.posting), true);
+                    userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1);
+                } else if (v.getId() == R.id.icon_setting_B) {
+                    if (!isConnect) {
+                        MAlert.alert(getString(R.string.disconnect));
+                        return;
+                    }
+                    showProgressDialog(getString(R.string.posting), true);
+                    userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1);
+                } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
+                    intent = new Intent(this, ActivityChaZuoBDetail.class);
+                    intent.putExtra("title", txt_chazuoA_name.getText().toString());
+                    intent.putExtra("chazuo_type", "A");
+                    startActivity(intent);
+                } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
+                    intent = new Intent(this, ActivityChaZuoBDetail.class);
             intent.putExtra("title", txt_chazuoB_name.getText().toString());
             intent.putExtra("chazuo_type", "B");
             startActivity(intent);

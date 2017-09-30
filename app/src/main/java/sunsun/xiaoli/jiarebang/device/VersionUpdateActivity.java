@@ -261,7 +261,7 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     smartConfigType = SmartConfigTypeSingle.UPDATE_ING;
                 }
             } else if (did.startsWith("S03")) {
-                if (myApp.jinLiGangdetailUI.deviceDetailModel.getUpd_state() <= 0 || myApp.jinLiGangdetailUI.deviceDetailModel.getUpd_state() == 100 || myApp.jinLiGangdetailUI.deviceDetailModel.getUpd_state() == 101) {
+                if (myApp.jinLiGangdetailUI.detailModelTcp.getUpd_state() <= 0 || myApp.jinLiGangdetailUI.detailModelTcp.getUpd_state() == 100 || myApp.jinLiGangdetailUI.detailModelTcp.getUpd_state() == 101) {
                     //当前设备还没有开始更新
                     smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
                 } else {

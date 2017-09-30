@@ -1487,6 +1487,22 @@ public class UserResponsitory extends BaseNetRepository implements
                 .desEncodeThenBuildAndSend();
     }
 
+    @Override
+    public void getDeviceOnLineState(String did) {
+        Type type = new TypeToken<DeviceDetailModel>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("did", did);
+        (new ByJsonRequest.Builder<DeviceDetailModel>())
+                .setTypeVerParamsAndReturnClass(getJinLiGangDetail, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<DeviceDetailModel>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
     public String getDeviceToken() {
         TelephonyManager tm = (TelephonyManager) MyApplication.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
         String DEVICE_ID = tm.getDeviceId();

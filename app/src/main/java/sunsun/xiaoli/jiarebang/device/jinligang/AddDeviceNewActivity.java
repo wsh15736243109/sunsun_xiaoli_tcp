@@ -142,6 +142,11 @@ public class AddDeviceNewActivity extends BaseActivity implements
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myApp.addDeviceUI = null;
+    }
 
     private void showPopwindow(final int position) {
         View popView = View.inflate(this, R.layout.add_menu_windss, null);

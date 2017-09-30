@@ -452,4 +452,10 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param send_type
      */
     void sendEmailCode(String customText, int code_type, int send_type);
+
+    /**
+     * 仅获取设备在线状态
+     * @param did
+     */
+    void getDeviceOnLineState(String did);
 }

@@ -302,6 +302,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         } catch (Exception e) {
 
         }
+        app.videoUI=null;
         intent = null;
         keepScreenOn(this, false);
         super.onDestroy();

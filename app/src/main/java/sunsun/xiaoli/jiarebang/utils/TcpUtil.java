@@ -179,24 +179,27 @@ public class TcpUtil {
                                 try {
                                     JSONObject jsonObject=new JSONObject(data);
                                     Gson gson=new Gson();
-                                    int tCode=jsonObject.getInt("t");
-                                    Message message=new Message();
-                                    message.arg1=tCode;
-                                    switch (tCode) {
-                                        case 101:
-                                            message.obj=data;
-                                            break;
-                                        case 102:
-                                            Type type = new TypeToken<DeviceDetailModel>() {
-                                            }.getType();
-                                            String dData=jsonObject.getString("d");
+                                    if (jsonObject.has("t")) {
+                                        int tCode=jsonObject.getInt("t");
+                                        Message message=new Message();
+                                        message.arg1=tCode;
+                                        switch (tCode) {
+                                            case 101:
+                                                message.obj=data;
+                                                break;
+                                            case 102:
+                                                Type type = new TypeToken<DeviceDetailModel>() {
+                                                }.getType();
+                                                String dData=jsonObject.getString("d");
 
-                                            System.out.println("TCP 接收数据 data2【"+dData);
-                                            DeviceDetailModel detailModel=gson.fromJson(dData,type);
-                                            message.obj=detailModel;
-                                            handler.sendMessage(message);
-                                            break;
+                                                System.out.println("TCP 接收数据 data2【"+dData);
+                                                DeviceDetailModel detailModel=gson.fromJson(dData,type);
+                                                message.obj=detailModel;
+                                                handler.sendMessage(message);
+                                                break;
+                                        }
                                     }
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                     System.out.println("TCP 接收数据 解析错误"+e.getMessage());

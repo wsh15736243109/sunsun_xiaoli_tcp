@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -231,6 +230,13 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 setTimePicker(period_textView15, 3, false);
             }
         });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        mApp.mPeriodUi = null;
+        super.onDestroy();
     }
 
     private void showPeriodTextViewValue(TextView periodTextView, int hour, int min) {
@@ -540,22 +546,21 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 //异常报警
                 switch (type) {
                     case 1://灯光照明异常报警
-                        cfg = mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() ^ (int) Math.pow(2, 2);
+                        cfg = mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() ^ (int) Math.pow(2, 2);
                         break;
                     case 2://杀菌灯照明异常报警
-                        cfg = mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() ^ (int) Math.pow(2, 3);
+                        cfg = mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() ^ (int) Math.pow(2, 3);
                         break;
                     case 3://冲浪泵异常报警
-                        cfg = mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() ^ (int) Math.pow(2, 0);
+                        cfg = mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() ^ (int) Math.pow(2, 0);
                         break;
                 }
-                if (Boolean.parseBoolean(switch_yichangbaojing.getTag() + "") == true) {
-                    switch_yichangbaojing.setBackgroundResource(R.drawable.guan);
-                } else {
-                    switch_yichangbaojing.setBackgroundResource(R.drawable.kai);
-                }
+//                if (Boolean.parseBoolean(switch_yichangbaojing.getTag() + "") == true) {
+//                    switch_yichangbaojing.setBackgroundResource(R.drawable.guan);
+//                } else {
+//                    switch_yichangbaojing.setBackgroundResource(R.drawable.kai);
+//                }
                 switch_yichangbaojing.setTag(!Boolean.parseBoolean(switch_yichangbaojing.getTag() + ""));
-                yanChiFinish = false;
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1);
                 break;
             case R.id.switch_qingling:
@@ -574,20 +579,20 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 cfg = 0;
                 switch (type) {
                     case 1://灯光照明异常报警
-                        cfg = mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() ^ (int) Math.pow(2, 6);
+                        cfg = mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() ^ (int) Math.pow(2, 6);
                         break;
                     case 2://杀菌灯照明异常报警
-                        cfg = mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() ^ (int) Math.pow(2, 7);
+                        cfg = mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() ^ (int) Math.pow(2, 7);
                         break;
                     case 3://冲浪泵异常报警
-                        cfg = mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() ^ (int) Math.pow(2, 8);
+                        cfg = mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() ^ (int) Math.pow(2, 8);
                         break;
                 }
-                if (Boolean.parseBoolean(switch_dongtaitishi.getTag() + "") == true) {
-                    switch_dongtaitishi.setBackgroundResource(R.drawable.guan);
-                } else {
-                    switch_dongtaitishi.setBackgroundResource(R.drawable.kai);
-                }
+//                if (Boolean.parseBoolean(switch_dongtaitishi.getTag() + "") == true) {
+//                    switch_dongtaitishi.setBackgroundResource(R.drawable.guan);
+//                } else {
+//                    switch_dongtaitishi.setBackgroundResource(R.drawable.kai);
+//                }
                 switch_dongtaitishi.setTag(!Boolean.parseBoolean(switch_dongtaitishi.getTag() + ""));
                 yanChiFinish = false;
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1);
@@ -796,12 +801,10 @@ public class PeriodActivity extends BaseActivity implements Observer {
 
     public void setCurrentItem(int type) {
         try {
-
-
-            if (mApp.jinLiGangdetailUI.deviceDetailModel != null) {
-                str1 = mApp.jinLiGangdetailUI.deviceDetailModel.getL_per();
-                str2 = mApp.jinLiGangdetailUI.deviceDetailModel.getUvc_per();
-                str3 = mApp.jinLiGangdetailUI.deviceDetailModel.getSp_per();
+            if (mApp.jinLiGangdetailUI.detailModelTcp != null) {
+                str1 = mApp.jinLiGangdetailUI.detailModelTcp.getL_per();
+                str2 = mApp.jinLiGangdetailUI.detailModelTcp.getUvc_per();
+                str3 = mApp.jinLiGangdetailUI.detailModelTcp.getSp_per();
                 txt_zhaoming.setBackgroundResource(R.drawable.border_gray);
                 txt_shajundeng.setBackgroundResource(R.drawable.border_gray);
                 txt_chonglangbeng.setBackgroundResource(R.drawable.border_gray);
@@ -809,7 +812,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 txt_shajundeng.setTextColor(getResources().getColor(R.color.black));
                 txt_chonglangbeng.setTextColor(getResources().getColor(R.color.black));
                 switch_qingling.setBackgroundResource(R.drawable.guan);
-                if (mApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+                if (mApp.jinLiGangdetailUI.detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
                     txt_chonglangbeng.setVisibility(View.GONE);
                     txt_shajundeng.setText(getString(R.string.shaju_chonglang));
                 } else {
@@ -823,15 +826,15 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         timer1 = gson.fromJson(str1, type1);
                         txt_zhaoming.setBackgroundResource(R.drawable.bg_change_green);
                         txt_zhaoming.setTextColor(getResources().getColor(R.color.white));
-                        setWhTime(mApp.jinLiGangdetailUI.deviceDetailModel.getL_wh());
-                        if ((mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() & (int) Math.pow(2, 2)) == Math.pow(2, 2)) {
+                        setWhTime(mApp.jinLiGangdetailUI.detailModelTcp.getL_wh());
+                        if ((mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() & (int) Math.pow(2, 2)) == Math.pow(2, 2)) {
                             zhaomingdengStatus = true;
                             switch_yichangbaojing.setBackgroundResource(R.drawable.kai);
                         } else {
                             zhaomingdengStatus = false;
                             switch_yichangbaojing.setBackgroundResource(R.drawable.guan);
                         }
-                        if ((mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() & (int) Math.pow(2, 6)) == Math.pow(2, 6)) {
+                        if ((mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() & (int) Math.pow(2, 6)) == Math.pow(2, 6)) {
                             zhaomingdengDongtai = true;
                             switch_dongtaitishi.setBackgroundResource(R.drawable.kai);
                         } else {
@@ -855,14 +858,14 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         timer1 = gson.fromJson(str2, type1);
                         txt_shajundeng.setBackgroundResource(R.drawable.bg_change_green);
                         txt_shajundeng.setTextColor(getResources().getColor(R.color.white));
-                        if ((mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() & (int) Math.pow(2, 3)) == Math.pow(2, 3)) {
+                        if ((mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() & (int) Math.pow(2, 3)) == Math.pow(2, 3)) {
                             shajundengStatus = true;
                             switch_yichangbaojing.setBackgroundResource(R.drawable.kai);
                         } else {
                             shajundengStatus = false;
                             switch_yichangbaojing.setBackgroundResource(R.drawable.guan);
                         }
-                        if ((mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() & (int) Math.pow(2, 7)) == Math.pow(2, 7)) {
+                        if ((mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() & (int) Math.pow(2, 7)) == Math.pow(2, 7)) {
                             shajundengDongtai = true;
                             switch_dongtaitishi.setBackgroundResource(R.drawable.kai);
                         } else {
@@ -871,8 +874,8 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         }
                         switch_yichangbaojing.setTag(shajundengStatus);
                         switch_dongtaitishi.setTag(shajundengDongtai);
-                        setWhTime(mApp.jinLiGangdetailUI.deviceDetailModel.getUv_wh());
-                        if (mApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+                        setWhTime(mApp.jinLiGangdetailUI.detailModelTcp.getUv_wh());
+                        if (mApp.jinLiGangdetailUI.detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
                             period_imageView1.setBackgroundResource(R.drawable.aq_500_select);
                             period_imageView2.setBackgroundResource(R.drawable.aq_500_unselect);
                             period_imageView3.setBackgroundResource(R.drawable.aq_500_select);
@@ -895,14 +898,14 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         timer1 = gson.fromJson(str3, type1);
                         txt_chonglangbeng.setBackgroundResource(R.drawable.bg_change_green);
                         txt_chonglangbeng.setTextColor(getResources().getColor(R.color.white));
-                        if ((mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
+                        if ((mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
                             chonglangbengStatus = true;
                             switch_yichangbaojing.setBackgroundResource(R.drawable.kai);
                         } else {
                             chonglangbengStatus = false;
                             switch_yichangbaojing.setBackgroundResource(R.drawable.guan);
                         }
-                        if ((mApp.jinLiGangdetailUI.deviceDetailModel.getPush_cfg() & (int) Math.pow(2, 8)) == Math.pow(2, 8)) {
+                        if ((mApp.jinLiGangdetailUI.detailModelTcp.getPush_cfg() & (int) Math.pow(2, 8)) == Math.pow(2, 8)) {
                             chonglangbengDongtai = true;
                             switch_dongtaitishi.setBackgroundResource(R.drawable.kai);
                         } else {
@@ -911,7 +914,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         }
                         switch_yichangbaojing.setTag(chonglangbengStatus);
                         switch_dongtaitishi.setTag(chonglangbengDongtai);
-                        setWhTime(mApp.jinLiGangdetailUI.deviceDetailModel.getP_wh());
+                        setWhTime(mApp.jinLiGangdetailUI.detailModelTcp.getP_wh());
 
                         period_imageView1.setBackgroundResource(R.drawable.chonglangbeng_select);
                         period_imageView2.setBackgroundResource(R.drawable.chonglangbeng_unselect2);
@@ -1033,25 +1036,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.deviceSet_806success) {
                 MAlert.alert(entity.getData());
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        yanChiFinish = true;
-                        mApp.jinLiGangdetailUI.beginRequest();
-                    }
-                }, 4000);
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mApp.jinLiGangdetailUI.setPeroidData();
-//                    }
-//                }, 2000);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mApp.jinLiGangdetailUI.setNewTimer();
-                    }
-                }, 2000);
+                yanChiFinish = true;
                 total1 = -1;
                 total2 = -1;
                 total3 = -1;

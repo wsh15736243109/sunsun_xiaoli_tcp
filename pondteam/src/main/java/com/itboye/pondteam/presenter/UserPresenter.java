@@ -152,6 +152,8 @@ public class UserPresenter extends BasePresenter implements
     public static String beginUpdatePondTeam_fail = "_beginUpdatePondTeam_fail";
     public static String shuibengExtraUpdate_success = "_shuibengExtraUpdate_success";
     public static String shuibengExtraUpdate_fail = "_shuibengExtraUpdate_fail";
+    public static String getDeviceOnLineState_success="_getDeviceOnLineState_success";
+    public static String getDeviceOnLineState_fail="_getDeviceOnLineState_success";
 
 
     public UserPresenter(Observer observer) {
@@ -1397,5 +1399,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.sendEmailCode( customText,  code_type,  send_type);
+    }
+
+    @Override
+    public void getDeviceOnLineState(String did) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(getDeviceOnLineState_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(getDeviceOnLineState_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.getDeviceOnLineState( did);
     }
 }

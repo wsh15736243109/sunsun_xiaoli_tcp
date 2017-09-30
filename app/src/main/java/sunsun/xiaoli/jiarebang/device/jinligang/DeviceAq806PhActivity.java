@@ -3,7 +3,6 @@ package sunsun.xiaoli.jiarebang.device.jinligang;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.base.IsNeedClick;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.presenter.UserPresenter;
-import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -66,6 +64,12 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mApp.deviceAq806PhActivity = null;
+    }
+
+    @Override
     public void onClick(View v) {
         Intent intent;
         switch (v.getId()) {
@@ -73,7 +77,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                 finish();
                 break;
             case R.id.re_806phzoushi:
-                if (deviceDetailModel == null) {
+                if (deviceDetailModel == null || !mApp.jinLiGangdetailUI.isConnect) {
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
@@ -98,7 +102,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                 userPresenter.deviceSet_806Ph(id, isOpen ? 0 : 1, -1, -1, -1, -1, -1);
                 break;
             case R.id.re_806phdiwei:
-                mNewTempValue= (int) (phL);
+                mNewTempValue = (int) (phL);
                 mPicker = new NumberPicker(
                         this);
                 mPicker.setMinValue(0);
@@ -115,7 +119,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                 showAlertDialog(getString(R.string.ph_low), mPicker, 2, null);
                 break;
             case R.id.re_806phgaowei:
-                mNewTempValue= (int) (phH);
+                mNewTempValue = (int) (phH);
                 mPicker = new NumberPicker(
                         this);
                 mPicker.setMinValue(0);
@@ -138,7 +142,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
 
     public void showAlertDialog(String title, View view, final int type, final EditText edit) {
         final AlertDialog alert = new AlertDialog.Builder(this).
-        setTitle(title).setView(view).setPositiveButton(getString(R.string.ok), null).setNegativeButton(getString(R.string.cancel), null).create();
+                setTitle(title).setView(view).setPositiveButton(getString(R.string.ok), null).setNegativeButton(getString(R.string.cancel), null).create();
         alert.show();
         alert.getButton(BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,8 +175,8 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
 
     public void set806pHData() {
         deviceDetailModel = mApp.jinLiGangdetailUI.deviceDetailModel;
+        txt_806ph.setText(String.format("%.2f", mApp.jinLiGangdetailUI.detailModelTcp.getPh() / 100));
         if (deviceDetailModel != null) {
-            txt_806ph.setText(String.format("%.2f", deviceDetailModel.getPh() / 100));
             extra = deviceDetailModel.getExtra();
             isOpen = false;
             phH = 0;
@@ -198,6 +202,8 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
             } else {
                 img_phbaojing.setBackgroundResource(R.drawable.guan);
             }
+        }else{
+            MAlert.alert(getString(R.string.device_error));
         }
     }
 
@@ -210,18 +216,10 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                 MAlert.alert(entity.getMsg());
                 return;
             }
-
-            if (entity.getEventType() != UserPresenter.update806ph_success) {
+            if (entity.getEventType() == UserPresenter.update806ph_success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                mApp.jinLiGangdetailUI.threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
-            } else if (entity.getEventType() != UserPresenter.update806ph_fail) {
+                mApp.jinLiGangdetailUI.beginRequest();
+            } else if (entity.getEventType() == UserPresenter.update806ph_fail) {
                 MAlert.alert(entity.getData());
             }
         }

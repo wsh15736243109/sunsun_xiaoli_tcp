@@ -15,6 +15,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -167,6 +169,7 @@ public class XJsonRequest<T> extends Request<T> {
     @Override
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         String parsed;
+        String resultData = "";
         try {
             parsed = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
         } catch (UnsupportedEncodingException e) {
@@ -181,7 +184,7 @@ public class XJsonRequest<T> extends Request<T> {
             JSONObject obj = new JSONObject(parsed);
             System.out.println("数据" + obj.toString());
             String type = obj.getString("type");
-            String resultData = obj.getString("data");
+            resultData = obj.getString("data");
             if (type.equals("E")) {
                 Log.d("request_params", "服务器出错!" + type);
                 return Response.error(new VolleyError("服务器出错!"));
@@ -210,11 +213,11 @@ public class XJsonRequest<T> extends Request<T> {
                 if (errorListener != null) {
                     String data = decodeJsonObj.getString("data");
                     if (data != null) {
-                        Log.v("request_params","-----------------------------------------请求失败-------------------------------2" + data);
+                        Log.v("request_params", "-----------------------------------------请求失败-------------------------------2" + data);
 //                        Logger.v("request_params", "-----------------------------------------请求失败-------------------------------2" + data);
                         handlerError(new CodeErrorException(data), code, data);
                     } else {
-                        Log.v("request_params","-----------------------------------------请求失败-------------------------------2" + data);
+                        Log.v("request_params", "-----------------------------------------请求失败-------------------------------2" + data);
 //                        Logger.v("request_params", "-------------------------------------请求失败----------------------------1!" + data);
                         handlerError(new CodeErrorException("请求失败!"), code, data);
                     }
@@ -223,31 +226,41 @@ public class XJsonRequest<T> extends Request<T> {
             }
 
             resultData = decodeJsonObj.getString("data");
-            Log.v("request_params","响应参数"+resultData);
+            Log.v("request_params", "响应参数" + resultData);
 //            Logger.json(resultData);
             Gson gson = new GsonBuilder()
                     .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .registerTypeAdapter(Spanned.class, new String2Spanned())
                     .create();
 
-            if (resultData.contains("短信已发送,请注意查收!")) {
-                resultData = "短信已发送";
-            }
+//            if (resultData.contains("短信已发送,请注意查收!")) {
+//                resultData = "短信已发送";
+//            }
             if (resultData.contains("device_tokens为空")) {
                 resultData = "操作成功";
             }
-            @SuppressWarnings("unchecked")
-
-            T res = gson.fromJson(resultData.replace("%s",""), this.expectReturnType);
-            Log.d("request_params", "--------------------------------------------请求结束-------------------------------------------------");
-            if (null != res) {
-                return Response.success(res, HttpHeaderParser.parseCacheHeaders(response));
-
+            try {
+                @SuppressWarnings("unchecked")
+                T res =null;
+                if(this.getExpectReturnType() == String.class){
+                    JsonElement jsonElement=gson.toJsonTree(resultData);
+                    res=gson.fromJson(jsonElement, this.expectReturnType);
+                }else{
+                    res=gson.fromJson(resultData, this.expectReturnType);
+                }
+                Log.d("request_params", "--------------------------------------------请求结束-------------------------------------------------");
+                if (null != res) {
+                    return Response.success(res, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            } catch (JsonSyntaxException exception) {
+                T res = gson.fromJson(gson.toJsonTree(resultData), this.expectReturnType);
+                Log.d("request_params", "--------------------------------------------请求结束-------------------------------------------------"+resultData);
+                if (null != res) {
+                    return Response.success(res, HttpHeaderParser.parseCacheHeaders(response));
+                }
             }
-
         } catch (JSONException e) {
-            Log.d("request_params","请求有点小问题----"+e.getCause().getMessage());
-            e.printStackTrace();
+            Log.d("request_params", "请求有点小问题----" + e.getCause().getMessage());
         }
         return Response.error(new VolleyError("请求异常!"));
 
@@ -305,4 +318,53 @@ public class XJsonRequest<T> extends Request<T> {
 
     }
 
+    /*
+     * 处理转义字符问题，防止json数据混乱，导致flexgrid显示不出来
+     * params:
+     *  str:需要处理的字符串
+     * return:
+     *  res:处理后的字符
+     */
+    public static String toGoodJsonStr(String str) {
+        StringBuffer res = new StringBuffer();
+
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            switch (c) {
+                case '\"':
+                    res.append("\\\"");
+                    break;
+                case '\\':
+                    res.append("\\\\");
+                    break;
+                case '/':
+                    str.replace("/", "\\/");
+                    break;
+                case '\b':
+                    res.append("\\b");
+                    break;
+                case '\f':
+                    res.append("\\f");
+                    break;
+                case '\n':
+                    res.append("\\n");
+                    break;
+                case '\r':
+                    res.append("\\r");
+                    break;
+                case '\t':
+                    res.append("\\t");
+                    break;
+                case '\'':
+                    res.append("\\\'");
+                    break;
+                case '=':
+                    str.replace("=", "");
+                    break;
+                default:
+                    res.append(c);
+            }
+        }
+        return res.toString();
+    }
 }

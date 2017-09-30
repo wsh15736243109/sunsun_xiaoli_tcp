@@ -71,6 +71,7 @@ import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.device.camera.CameraDeviceListActivity;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
@@ -137,7 +138,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     DBManager dbManager;
     private Handler handlerWifi;
     boolean isSetTime = false;//同步时间
-
+    public DeviceDetailModel detailModelTcp;
     //摄像头设备列表
     private ArrayList<DeviceListBean> arrayList = new ArrayList<>();
     private String chirdDid;
@@ -146,11 +147,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private String yesTerdayTime;
     private int totalFlow;
     private int[] flow;
-    boolean isRequestIng = false;
     boolean hasSyncTime = false;
     @IsNeedClick
     TextView txt_shajundeng;
     private String currentTime;
+    private TcpUtil mTcpUtil;
 
     private void clientCallBackListener() {
 
@@ -272,6 +273,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         mClient = new CHD_Client();
         keepScreenOn(this, true);
         app.jinLiGangdetailUI = this;
+        userPresenter = new UserPresenter(this);
+        currentTime = MyTimeUtil.getCurrentTime(System.currentTimeMillis() + "", "yyyyMMddHHmmss");
         txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_connecting));
         did = getIntent().getStringExtra("did");
         Window window = getWindow();
@@ -280,6 +283,33 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             window.setStatusBarColor(0xffdcdddd);
         }
         id = getIntent().getStringExtra("id");
+        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
+        if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+            //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
+            int push = deviceDetailModel.getPush_cfg();
+            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
+                push = push ^ (int) Math.pow(2, 4);
+            }
+            if ((push & (int) Math.pow(2, 8)) == (int) Math.pow(2, 8)) {
+                push = push ^ (int) Math.pow(2, 8);
+            }
+            /**
+             * currentTime:同时同步设备时间
+             */
+            userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+        } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
+            int push = deviceDetailModel.getPush_cfg();
+            //仅强制关闭水位报警提示
+            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
+                push = push ^ (int) Math.pow(2, 4);
+            }
+            /**
+             * currentTime:同时同步设备时间
+             */
+            userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+        } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ806")) {
+            userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+        }
         ptr.setPtrHandler(ptrHandler);
         img_right.setBackgroundResource(R.drawable.menu);
         Glide.with(getApplicationContext()).load(R.drawable.smartconfig_loading).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(loading);
@@ -292,15 +322,32 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         height = dm.heightPixels * dm.density;
         ratioW2H = height / width;
         setLoadingIsVisible(true);
-        userPresenter = new UserPresenter(this);
         new Thread(runnable).start();
-        currentTime = MyTimeUtil.getCurrentTime(System.currentTimeMillis() + "", "yyyyMMddHHmmss");
         getDeviceList();
-        //同步设备时间
-        Log.d("currentTime", "currentTime" + currentTime);
-//        userPresenter.deviceSet_806(getIntent().getStringExtra("did"), currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
+        mTcpUtil.start();
     }
 
+    Handler handData = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.arg1) {
+                case 101:
+                    System.out.println("TCP 接收数据 101" + msg.obj);
+                    break;
+                case 102:
+                    detailModelTcp = (DeviceDetailModel) msg.obj;
+                    setData();
+                    System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
+                    break;
+            }
+        }
+    };
+
+    private void setDeviceDataByTcp(DeviceDetailModel detailModelTcp) {
+
+    }
 
     public void beginRequest() {
         did = getIntent().getStringExtra("did");
@@ -317,8 +364,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.v("request_params",Const.intervalTime+"间隔时间");
-            beginRequest();
+            Log.v("request_params", Const.getOnlinStateIntervalTime + "间隔时间");
+            userPresenter.getDeviceOnLineState(did);
             String wangsu = mClient == null ? "0" : mClient.getVideoFrameBps();
             try {
                 if (wangsu.toLowerCase().endsWith("Kb/s".toLowerCase())) {
@@ -331,7 +378,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             } catch (Exception e) {
 
             }
-            handler.postDelayed(runnable, Const.intervalTime);
+            handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
 
@@ -363,6 +410,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
         }
         keepScreenOn(this, false);
+        app.jinLiGangdetailUI = null;
         super.onDestroy();
     }
 
@@ -372,6 +420,10 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         Intent intent = null;
         switch (v.getId()) {
             case R.id.re_shuiphsetting:
+                if (detailModelTcp == null) {
+                    MAlert.alert(getString(R.string.device_error));
+                    return;
+                }
                 intent = new Intent(this, DeviceAq806PhActivity.class);
                 intent.putExtra("did", did);
                 startActivity(intent);
@@ -426,10 +478,14 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.mode_ismanual));
                 } else {
                     showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet_806(did, "", "0", shajundeng_status ? "1" : "0", chonglangbeng_status ? "1" : "0", zhangmingdeng_status ? "1" : "0", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                    userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
                 }
                 break;
             case R.id.re_shuiph:
+                if (detailModelTcp == null) {
+                    MAlert.alert(getString(R.string.device_error));
+                    return;
+                }
                 intent = new Intent(this, ActivityTemperature.class);
                 intent.putExtra("isPh", true);
                 intent.putExtra("did", did);
@@ -447,7 +503,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.mode_isauto));
                 } else {
                     showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet_806(did, "", "1", shajundeng_status ? "1" : "0", chonglangbeng_status ? "1" : "0", zhangmingdeng_status ? "1" : "0", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                    userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
                 }
                 break;
             case R.id.re_shuiwenzoushi:
@@ -518,14 +574,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if (isRequestIng) {
-//                    MAlert.alert(getString(R.string.requesting));
-                    return;
-                }
                 showProgressDialog(getString(R.string.posting), true);
-                isRequestIng = true;
-//                re_chonglangbeng.setEnabled(false);
-                userPresenter.deviceSet_806(did, "", mode_status ? "1" : "0", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
                 break;
             case R.id.re_dengguangzhaoming:
                 if (!isConnect) {
@@ -536,14 +586,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if (isRequestIng) {
-//                    MAlert.alert(getString(R.string.requesting));
-                    return;
-                }
                 showProgressDialog(getString(R.string.posting), true);
-                isRequestIng = true;
-//                re_dengguangzhaoming.setEnabled(false);
-                userPresenter.deviceSet_806(did, "", mode_status ? "1" : "0", "", "", zhangmingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", "", zhangmingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
                 break;
             case R.id.re_shajundeng:
                 if (!isConnect) {
@@ -554,14 +598,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if (isRequestIng) {
-//                    MAlert.alert(getString(R.string.requesting));
-                    return;
-                }
-                isRequestIng = true;
                 showProgressDialog(getString(R.string.posting), true);
-//                re_shajundeng.setEnabled(false);
-                userPresenter.deviceSet_806(did, "", mode_status ? "1" : "0", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
                 break;
             case R.id.img_shuiweibaojing:
                 if (!isConnect) {
@@ -571,7 +609,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 //                pushStrs[4] = (shuiwei_status ? '0' : '1');
                 //水位报警
                 showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (deviceDetailModel.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1);
                 break;
             case R.id.img_shebeisuoding:
                 if (!isConnect) {
@@ -641,7 +679,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         } else {
             ((ImageView) findViewById(R.id.img_dengguang)).setBackgroundResource(R.drawable.light_unselect);
         }
-        if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+        if (detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
             if (shajundeng_status) {
                 ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_select2);
             } else {
@@ -651,7 +689,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             txt_shajundeng.setText(getString(R.string.shaju_chonglang));
             findViewById(R.id.re_shuiweibaojing).setVisibility(View.GONE);
             findViewById(R.id.re_chonglangbeng).setVisibility(View.GONE);
-        } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
+        } else if (detailModelTcp.getEx_dev().equalsIgnoreCase("AQ700")) {
             findViewById(R.id.re_shuiweibaojing).setVisibility(View.GONE);
         } else {
             findViewById(R.id.re_chonglangbeng).setVisibility(View.VISIBLE);
@@ -666,10 +704,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_unselect);
             }
         }
-        isRequestIng = false;
-//        re_chonglangbeng.setEnabled(true);
-//        re_shajundeng.setEnabled(true);
-//        re_dengguangzhaoming.setEnabled(true);
     }
 
     public void showAlertDialog(String title, View view, final int type, final EditText edit) {
@@ -868,10 +902,10 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 //            e.printStackTrace();
 //        }
 //    }
-
     public void threadStart() {
         RequestUtil.threadStart(handler, runnable);
     }
+
     @Override
     public void update(Observable o, Object data) {
         setLoadingIsVisible(false);
@@ -897,14 +931,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 finish();
             } else if (entity.getEventType() == UserPresenter.deviceSet_806success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
             } else if (entity.getEventType() == UserPresenter.deviceSet_806fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
@@ -947,23 +973,35 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 finish();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
                 MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+                DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
+                isConnect = detailModel.getIs_disconnect().equals("0");
+                DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
+                MAlert.alert(entity.getData());
             }
         }
     }
 
+    /**
+     * 2017/09/29
+     * 使用两种model进行UI更新
+     * deviceDetailModel 服务器保存的数据model
+     * detailModelTcp    硬件保存的数据model
+     */
     public void setData() {
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         //温度
-        txt_wendu.setText(deviceDetailModel.getT() / 10 + "℃");
+        txt_wendu.setText(detailModelTcp.getT() / 10 + "℃");
         //标题
         setDeviceName(deviceDetailModel.getDevice_nickname());
         //PH
-        txt_ph.setText("pH " + String.format("%.1f", deviceDetailModel.getPh() / 100));
+        txt_ph.setText("pH " + String.format("%.1f", detailModelTcp.getPh() / 100));
         /**
          * 灯光照明功率
          */
-        txt_dengguanggonglv.setText(deviceDetailModel.getL_p() + "W");
+        txt_dengguanggonglv.setText(detailModelTcp.getL_p() + "W");
         /**
          * out_ctr
          * Bit0：灯光继电器状态
@@ -975,11 +1013,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
          *Bit7：手动和自动模式状态
          *   0：手动模式，1：自动模式
          */
-        zhangmingdeng_status = (((deviceDetailModel.getOut_ctrl()) & (int) Math.pow(2, 0)) == Math.pow(2, 0));
-        shajundeng_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 4)) == Math.pow(2, 4));
-        chonglangbeng_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 1)) == Math.pow(2, 1));
-        mode_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
-        int fault = deviceDetailModel.getFault();
+        zhangmingdeng_status = (((detailModelTcp.getOut_ctrl()) & (int) Math.pow(2, 0)) == Math.pow(2, 0));
+        shajundeng_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 4)) == Math.pow(2, 4));
+        chonglangbeng_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 1)) == Math.pow(2, 1));
+        mode_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
+        int fault = detailModelTcp.getFault();
         /**
          *  Bit1 - 0：水温状态
          00：正常，01：过低，10：过高
@@ -1084,14 +1122,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 //        }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////直接根据值来判断正常异常////////////////////////////////////////
-        if (deviceDetailModel.getTh() > deviceDetailModel.getT() && deviceDetailModel.getTl() < deviceDetailModel.getT()) {
-            shuiwen_status_value = 0;//正常状态
-        } else if (deviceDetailModel.getTh() <= deviceDetailModel.getT()) {
-            shuiwen_status_value = 2;//过高状态
-        } else if (deviceDetailModel.getTh() >= deviceDetailModel.getT()) {
-            shuiwen_status_value = 1;//过低状态
-        }
-        int phh = 0, phl = 0;
+        int phh = 0, phl = 0, th = 0, tl = 0;
         try {
             JSONObject jsonObject = new JSONObject(deviceDetailModel.getExtra());
             if (jsonObject.has("ph_h")) {
@@ -1100,14 +1131,28 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             if (jsonObject.has("ph_h")) {
                 phl = jsonObject.getInt("ph_l");
             }
+            if (jsonObject.has("temp_h")) {
+                th = jsonObject.getInt("temp_h");
+            }
+            if (jsonObject.has("temp_l")) {
+                tl = jsonObject.getInt("temp_l");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (phh > deviceDetailModel.getPh() && phl < deviceDetailModel.getPh()) {
+        if (th > detailModelTcp.getT() && tl < detailModelTcp.getT()) {
+            shuiwen_status_value = 0;//正常状态
+        } else if (th <= detailModelTcp.getT()) {
+            shuiwen_status_value = 2;//过高状态
+        } else if (tl >= detailModelTcp.getT()) {
+            shuiwen_status_value = 1;//过低状态
+        }
+
+        if (phh > detailModelTcp.getPh() && phl < detailModelTcp.getPh()) {
             ph_status_value = 0;//正常状态
-        } else if (phh <= deviceDetailModel.getPh()) {
+        } else if (phh <= detailModelTcp.getPh()) {
             ph_status_value = 2;//过高状态
-        } else if (phl >= deviceDetailModel.getPh()) {
+        } else if (phl >= detailModelTcp.getPh()) {
             ph_status_value = 1;//过低状态
         }
         //酸碱度走势状态
@@ -1116,27 +1161,27 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         //温度状态
         switch (shuiwen_status_value) {
             case 0:
-                txt_wendustatus.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getT() != 0) ? getString(R.string.normal) : getString(R.string.video_disconnect)));
+                txt_wendustatus.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getT() != 0) ? getString(R.string.normal) : getString(R.string.video_disconnect)));
                 break;
             case 1:
-                txt_wendustatus.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getT() != 0) ? getString(R.string.guodi) : getString(R.string.video_disconnect)));
+                txt_wendustatus.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getT() != 0) ? getString(R.string.guodi) : getString(R.string.video_disconnect)));
                 break;
             case 2:
-                txt_wendustatus.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getT() != 0) ? getString(R.string.guogao) : getString(R.string.video_disconnect)));
+                txt_wendustatus.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getT() != 0) ? getString(R.string.guogao) : getString(R.string.video_disconnect)));
                 break;
         }
         switch (ph_status_value) {
             case 0:
-                txt_suanjiandu_status.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getPh() != 0) ? getString(R.string.normal) : getString(R.string.video_disconnect)));
-                txt_suanjiandu_status_setting.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getPh() != 0) ? getString(R.string.normal) : getString(R.string.video_disconnect)));
+                txt_suanjiandu_status.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getPh() != 0) ? getString(R.string.normal) : getString(R.string.video_disconnect)));
+                txt_suanjiandu_status_setting.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getPh() != 0) ? getString(R.string.normal) : getString(R.string.video_disconnect)));
                 break;
             case 1:
-                txt_suanjiandu_status.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getPh() != 0) ? getString(R.string.guodi) : getString(R.string.video_disconnect)));
-                txt_suanjiandu_status_setting.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getPh() != 0) ? getString(R.string.guodi) : getString(R.string.video_disconnect)));
+                txt_suanjiandu_status.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getPh() != 0) ? getString(R.string.guodi) : getString(R.string.video_disconnect)));
+                txt_suanjiandu_status_setting.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getPh() != 0) ? getString(R.string.guodi) : getString(R.string.video_disconnect)));
                 break;
             case 2:
-                txt_suanjiandu_status.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getPh() != 0) ? getString(R.string.guogao) : getString(R.string.video_disconnect)));
-                txt_suanjiandu_status_setting.setText(getString(R.string.current_status) + ((isConnect && deviceDetailModel.getPh() != 0) ? getString(R.string.guogao) : getString(R.string.video_disconnect)));
+                txt_suanjiandu_status.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getPh() != 0) ? getString(R.string.guogao) : getString(R.string.video_disconnect)));
+                txt_suanjiandu_status_setting.setText(getString(R.string.current_status) + ((isConnect && detailModelTcp.getPh() != 0) ? getString(R.string.guogao) : getString(R.string.video_disconnect)));
                 break;
         }
         //水位报警设定
@@ -1159,9 +1204,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         } else {
             txt_shuiwei_status.setText(getString(R.string.current_status) + (isConnect ? getString(R.string.normal) : getText(R.string.video_disconnect)));
         }
-        String pushCfg = getAppointNumber(Integer.toBinaryString(deviceDetailModel.getPush_cfg()), 9);
+        String pushCfg = getAppointNumber(Integer.toBinaryString(detailModelTcp.getPush_cfg()), 9);
         pushStrs = pushCfg.toCharArray();
-        if ((deviceDetailModel.getPush_cfg() & 16) == 16) {
+        if ((detailModelTcp.getPush_cfg() & 16) == 16) {
             shuiwei_status = true;
             img_shuiweibaojing.setBackgroundResource(R.drawable.kai);
         } else {
@@ -1169,74 +1214,74 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             img_shuiweibaojing.setBackgroundResource(R.drawable.guan);
         }
 
-        ///////////AQ-806 AQ-500
-        String dev = deviceDetailModel.getEx_dev();
-        if (dev.equalsIgnoreCase("AQ500")) {
-            //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
-            int push = deviceDetailModel.getPush_cfg();
-            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
-                push = push ^ (int) Math.pow(2, 4);
-            }
-            if ((push & (int) Math.pow(2, 8)) == (int) Math.pow(2, 8)) {
-                push = push ^ (int) Math.pow(2, 8);
-            }
-            if (hasSyncTime == false) {
-                /**
-                 * currentTime:同时同步设备时间
-                 */
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
-                hasSyncTime = true;
-            } else {
-                //仅仅同步设备时间
-                if (false == isSetTime) {
-                    userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
-                    isSetTime = true;
-                }
-
-            }
-
-        } else if (dev.equalsIgnoreCase("AQ700")) {
-            int push = deviceDetailModel.getPush_cfg();
-            //仅强制关闭水位报警提示
-            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
-                push = push ^ (int) Math.pow(2, 4);
-            }
-            if (hasSyncTime == false) {
-                /**
-                 * currentTime:同时同步设备时间
-                 */
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
-                hasSyncTime = true;
-            } else {
-                //仅仅同步设备时间
-                if (false == isSetTime) {
-                    userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
-                    isSetTime = true;
-                }
-
-            }
-        } else {
-            if (false == isSetTime) {
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
-                isSetTime = true;
-            }
-        }
+//        ///////////AQ-806 AQ-500
+//        String dev = detailModelTcp.getEx_dev();
+//        if (dev.equalsIgnoreCase("AQ500")) {
+//            //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
+//            int push = detailModelTcp.getPush_cfg();
+//            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
+//                push = push ^ (int) Math.pow(2, 4);
+//            }
+//            if ((push & (int) Math.pow(2, 8)) == (int) Math.pow(2, 8)) {
+//                push = push ^ (int) Math.pow(2, 8);
+//            }
+//            if (hasSyncTime == false) {
+//                /**
+//                 * currentTime:同时同步设备时间
+//                 */
+//                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+//                hasSyncTime = true;
+//            } else {
+//                //仅仅同步设备时间
+//                if (false == isSetTime) {
+//                    userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+//                    isSetTime = true;
+//                }
+//
+//            }
+//
+//        } else if (dev.equalsIgnoreCase("AQ700")) {
+//            int push = detailModelTcp.getPush_cfg();
+//            //仅强制关闭水位报警提示
+//            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
+//                push = push ^ (int) Math.pow(2, 4);
+//            }
+//            if (hasSyncTime == false) {
+//                /**
+//                 * currentTime:同时同步设备时间
+//                 */
+//                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+//                hasSyncTime = true;
+//            } else {
+//                //仅仅同步设备时间
+//                if (false == isSetTime) {
+//                    userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+//                    isSetTime = true;
+//                }
+//
+//            }
+//        } else {
+//            if (false == isSetTime) {
+//                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+//                isSetTime = true;
+//            }
+//        }
 
 
         //设备锁定状态
         //0：未锁机，可局域网查找
         //1：锁机，局域网隐藏
-        dev_lockStatus = deviceDetailModel.getDev_lock() == 1;
+        dev_lockStatus = detailModelTcp.getDev_lock() == 1;
         img_shebeisuoding.setBackgroundResource(dev_lockStatus ? R.drawable.kai : R.drawable.guan);
         //设置固件更新UI
         if (app.updateActivityUI != null) {
             if (app.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                app.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
+                app.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
             }
         }
         //时段设置更新UI
         if (app.mPeriodUi != null && app.mPeriodUi.yanChiFinish) {
-            app.mPeriodUi.yanChiFinish = false;
+//            app.mPeriodUi.yanChiFinish=false;
             app.mPeriodUi.setData();
         }
         setTemperature();//温度设置UI
@@ -1247,6 +1292,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         if (app.ph806JiaoZhunUI != null) {
             app.ph806JiaoZhunUI.setJiaoZhunTimes();
         }
+        //设置时段
+        setNewTimer();
     }
 
     private void setDeviceName(String device_nickname) {
