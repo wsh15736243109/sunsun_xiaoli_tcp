@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -26,7 +25,6 @@ import com.itboye.pondteam.custom.swipexpandlistview.swipemenulistview.SwipeMenu
 import com.itboye.pondteam.custom.swipexpandlistview.swipemenulistview.SwipeMenuItem;
 import com.itboye.pondteam.interfaces.IRecyclerviewclicklistener;
 import com.itboye.pondteam.presenter.UserPresenter;
-import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 import com.itboye.pondteam.volley.TimesUtils;
@@ -166,14 +164,14 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 return;
             }
             if (chazuo_type.equals("A")) {
-                if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_a()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+                if ((Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_a()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
 
                 } else {
                     MAlert.alert(getString(R.string.turn_to_auto_mode));
                     return;
                 }
             } else {
-                if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+                if ((Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
 
                 } else {
                     MAlert.alert(getString(R.string.turn_to_auto_mode));
@@ -190,7 +188,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
 
             } else {
                 MAlert.alert(getString(R.string.turn_to_auto_mode));
@@ -204,7 +202,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
 
             } else {
                 MAlert.alert(getString(R.string.turn_to_auto_mode));
@@ -218,7 +216,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
 
             } else {
                 MAlert.alert(getString(R.string.turn_to_auto_mode));
@@ -233,7 +231,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+            if ((Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
 
             } else {
                 MAlert.alert(getString(R.string.turn_to_auto_mode));
@@ -461,7 +459,11 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                     arrayListInner.get(groupPosition).setEt(hour + "" + mMinuteSpinner.getValue() + "" + mSecondSpinner.getValue());
                 }
                 String json = new Gson().toJson(arrayListInner);
-                userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1);
+                if (chazuo_type.equals("A")) {
+                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", json, -1, -1);
+                }else {
+                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1);
+                }
             }
         }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
@@ -630,11 +632,17 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
 
     boolean hasEx = false;
 
+    @Override
+    protected void onDestroy() {
+        myApplication.chazuoBDetail=null;
+        super.onDestroy();
+    }
+
     public void setChaZuoData() {
         if (chazuo_type.equals("A")) {
             //插座A数据
             ArrayList<WeiShiModel> arTemp = new ArrayList<>();
-            String period = myApplication.pondDeviceDetailUI.deviceDetailModel.getOa_per();
+            String period = myApplication.pondDeviceDetailUI.detailModelTcp.getOa_per();
             Type type = new TypeToken<ArrayList<WeiShiModel>>() {
             }.getType();
             arTemp = new Gson().fromJson(period, type);
@@ -664,7 +672,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             //插座B数据
             ArrayList<WeiShiModel> arTemp = new ArrayList<>();
             //设置喂食时间
-            String period = myApplication.pondDeviceDetailUI.deviceDetailModel.getOb_per();
+            String period = myApplication.pondDeviceDetailUI.detailModelTcp.getOb_per();
             Type type = new TypeToken<ArrayList<WeiShiModel>>() {
             }.getType();
             arTemp = new Gson().fromJson(period, type);
@@ -687,20 +695,19 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 if (arTemp != null) {
                     arrayListInner.addAll(arTemp);
                     swipWeiShiadapter.notifyDataSetChanged();
-
                 }
             }
         }
 
-        if (hasEx == false) {
+//        if (hasEx == false) {
             if (swipWeiShiadapter != null) {
                 for (int i = 0; i < swipWeiShiadapter.getGroupCount(); i++) {
                     exListView.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
-                    hasEx = true;
+//                    hasEx = true;
                 }
             }
 
-        }
+//        }
         setMode();
     }
 
@@ -708,9 +715,9 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
         int chaZuoBModeValue = 0;
         tempType = 0;
         if (chazuo_type.equals("A")) {
-            chaZuoBModeValue = Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_a());
+            chaZuoBModeValue = Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_a());
         } else {
-            chaZuoBModeValue = Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b());
+            chaZuoBModeValue = Integer.parseInt(myApplication.pondDeviceDetailUI.detailModelTcp.getOut_state_b());
         }
 
         if ((chaZuoBModeValue & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
@@ -741,14 +748,6 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             }
             if (entity.getEventType() == UserPresenter.deviceSet_success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                myApplication.pondDeviceDetailUI.threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
             } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(entity.getData());
             }

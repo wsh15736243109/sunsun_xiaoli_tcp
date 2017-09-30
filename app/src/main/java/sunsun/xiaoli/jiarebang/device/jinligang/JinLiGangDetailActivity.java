@@ -138,7 +138,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     DBManager dbManager;
     private Handler handlerWifi;
     boolean isSetTime = false;//同步时间
-    public DeviceDetailModel detailModelTcp;
+    public DeviceDetailModel detailModelTcp=new DeviceDetailModel();
     //摄像头设备列表
     private ArrayList<DeviceListBean> arrayList = new ArrayList<>();
     private String chirdDid;

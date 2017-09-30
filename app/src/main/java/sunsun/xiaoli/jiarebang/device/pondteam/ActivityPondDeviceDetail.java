@@ -90,16 +90,22 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     private int tempType;
     TcpUtil mTcpUtil;
     DeviceDetailModel detailModelByHttp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pond_detail);
-        setCurrentTitle(getIntent().getStringExtra("device"));
-        dbManager = new DBManager(this);
-        detailModelByHttp= (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
-        setDeviceData(detailModelByHttp);
         myApp = (App) getApplication();
         myApp.pondDeviceDetailUI = this;
+        setCurrentTitle(getIntent().getStringExtra("device"));
+        did = getIntent().getStringExtra("did");
+        id = getIntent().getStringExtra("ID");
+        psw = getIntent().getStringExtra("psw");
+        dbManager = new DBManager(this);
+        userPresenter = new UserPresenter(this);
+        uid = getSp(Const.UID);
+        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
+//        setDeviceData(deviceDetailModel);
         BasePtr.setRefreshOnlyStyle(ptr);
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -113,10 +119,6 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             }
         });
         img_right.setImageResource(R.drawable.menu);
-        userPresenter = new UserPresenter(this);
-        did = getIntent().getStringExtra("did");
-        id = getIntent().getStringExtra("ID");
-        psw = getIntent().getStringExtra("psw");
         Glide.with(this).load(R.drawable.loading).asGif().into(loading);
         chazuo_A_power.setOnLongClickListener(this);
         chazuo_B_power.setOnLongClickListener(this);
@@ -124,14 +126,13 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         chazuo_B_total_power.setOnLongClickListener(this);
         re_chazuo_1.setOnLongClickListener(this);
         re_chazuo_2.setOnLongClickListener(this);
-        uid = getSp(Const.UID);
         threadStart();
-//        mTcpUtil = new TcpUtil(handData, did, uid, "101");
-//        mTcpUtil.start();
+        mTcpUtil = new TcpUtil(handData, did, uid, "101");
+        mTcpUtil.start();
     }
 
 
-    private DeviceDetailModel detailModelTcp;
+    public DeviceDetailModel detailModelTcp;
     Handler handData = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -142,7 +143,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
                     break;
                 case 102:
                     detailModelTcp = (DeviceDetailModel) msg.obj;
-                    setDeviceDataByTcp(detailModelTcp);
+                    setDeviceData();
                     System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
                     break;
             }
@@ -178,8 +179,8 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            beginRequst();
-            handler.postDelayed(runnable, Const.intervalTime);
+            userPresenter.getDeviceOnLineState(did);
+            handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
 
@@ -218,56 +219,63 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
 
 
     @Override
-            protected void onDestroy() {
-                super.onDestroy();
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            if (mTcpUtil != null) {
                 mTcpUtil.releaseTcp();
-                handler.removeCallbacks(runnable);
             }
+        } catch (Exception e) {
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = null;
-                if (v.getId() == R.id.img_back) {
-                    finish();
-                } else if (v.getId() == R.id.re_uvlamp || v.getId() == R.id.txt_uv_open_time || v.getId() == R.id.txt_uv_total_time || v.getId() == R.id.icon_setting_3) {
-                    intent = new Intent(this, ActivityUvLamp.class);
-                    intent.putExtra("model", deviceDetailModel);
-                    intent.putExtra("title", getString(R.string.UVLANMP));
-                    intent.putExtra("did", did);
-                    startActivity(intent);
-                } else if (v.getId() == R.id.re_shoudong || v.getId() == R.id.txt_shoudong_clean_time || v.getId() == R.id.icon_setting_2) {
-                    intent = new Intent(this, ActivityShouDong.class);
-                    intent.putExtra("model", deviceDetailModel);
-                    intent.putExtra("title", getString(R.string.shoudong));
-                    startActivity(intent);
-                } else if (v.getId() == R.id.re_dingshi || v.getId() == R.id.txt_dingshi_status || v.getId() == R.id.txt_last_cleantime || v.getId() == R.id.txt_next_cleantime || v.getId() == R.id.icon_setting_1) {
-                    intent = new Intent(this, ActivityZiDong.class);
-                    intent.putExtra("model", deviceDetailModel);
-                    intent.putExtra("title", getString(R.string.zidongqingxi));
-                    startActivity(intent);
-                } else if (v.getId() == R.id.img_right) {
-                    onShowDlog();
-                } else if (v.getId() == R.id.icon_setting_A) {
-                    if (!isConnect) {
-                        MAlert.alert(getString(R.string.disconnect));
-                        return;
-                    }
-                    showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1);
-                } else if (v.getId() == R.id.icon_setting_B) {
-                    if (!isConnect) {
-                        MAlert.alert(getString(R.string.disconnect));
-                        return;
-                    }
-                    showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1);
-                } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
-                    intent = new Intent(this, ActivityChaZuoBDetail.class);
-                    intent.putExtra("title", txt_chazuoA_name.getText().toString());
-                    intent.putExtra("chazuo_type", "A");
-                    startActivity(intent);
-                } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
-                    intent = new Intent(this, ActivityChaZuoBDetail.class);
+        }
+
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = null;
+        if (v.getId() == R.id.img_back) {
+            finish();
+        } else if (v.getId() == R.id.re_uvlamp || v.getId() == R.id.txt_uv_open_time || v.getId() == R.id.txt_uv_total_time || v.getId() == R.id.icon_setting_3) {
+            intent = new Intent(this, ActivityUvLamp.class);
+            intent.putExtra("model", deviceDetailModel);
+            intent.putExtra("title", getString(R.string.UVLANMP));
+            intent.putExtra("did", did);
+            startActivity(intent);
+        } else if (v.getId() == R.id.re_shoudong || v.getId() == R.id.txt_shoudong_clean_time || v.getId() == R.id.icon_setting_2) {
+            intent = new Intent(this, ActivityShouDong.class);
+            intent.putExtra("model", deviceDetailModel);
+            intent.putExtra("title", getString(R.string.shoudong));
+            startActivity(intent);
+        } else if (v.getId() == R.id.re_dingshi || v.getId() == R.id.txt_dingshi_status || v.getId() == R.id.txt_last_cleantime || v.getId() == R.id.txt_next_cleantime || v.getId() == R.id.icon_setting_1) {
+            intent = new Intent(this, ActivityZiDong.class);
+            intent.putExtra("model", deviceDetailModel);
+            intent.putExtra("title", getString(R.string.zidongqingxi));
+            startActivity(intent);
+        } else if (v.getId() == R.id.img_right) {
+            onShowDlog();
+        } else if (v.getId() == R.id.icon_setting_A) {
+            if (!isConnect) {
+                MAlert.alert(getString(R.string.disconnect));
+                return;
+            }
+            showProgressDialog(getString(R.string.posting), true);
+            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1);
+        } else if (v.getId() == R.id.icon_setting_B) {
+            if (!isConnect) {
+                MAlert.alert(getString(R.string.disconnect));
+                return;
+            }
+            showProgressDialog(getString(R.string.posting), true);
+            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1);
+        } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
+            intent = new Intent(this, ActivityChaZuoBDetail.class);
+            intent.putExtra("title", txt_chazuoA_name.getText().toString());
+            intent.putExtra("chazuo_type", "A");
+            startActivity(intent);
+        } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
+            intent = new Intent(this, ActivityChaZuoBDetail.class);
             intent.putExtra("title", txt_chazuoB_name.getText().toString());
             intent.putExtra("chazuo_type", "B");
             startActivity(intent);
@@ -388,60 +396,47 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             if (resultEntity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 deviceDetailModel = (DeviceDetailModel) resultEntity.getData();
                 if (deviceDetailModel != null) {
-                    setDeviceData(deviceDetailModel);
+                    setDeviceData();
                 }
             } else if (resultEntity.getEventType() == UserPresenter.getdeviceinfofail) {
                 finish();
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.update_devicename_success) {//修改成功
-//                MyDeviceActivity.getInstance().deleteOrUpdateDevice(id, newDeviceName, false);
-//                myApp.devi.getMyDeviceList();
                 userPresenter.getDeviceDetailInfo(did, uid);
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.update_devicename_fail) {//修改失败
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.deleteDevice_success) {//删除成功
                 dbManager.deleteDeviceDataByDid(did, getSp(Const.UID));
-//                myApp.deviceListActivityUI.getMyDeviceList();
-                userPresenter.getDeviceDetailInfo(did, uid);
                 MAlert.alert(resultEntity.getData());
                 finish();
             } else if (resultEntity.getEventType() == UserPresenter.deleteDevice_fail) {//删除失败
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.deviceSet_success) {//设置成功
                 MAlert.alert(resultEntity.getData());
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-//                        userPresenter.getDeviceDetailInfo(did, uid);
-                    }
-                }, 5000);
             } else if (resultEntity.getEventType() == UserPresenter.deviceSet_fail) {//设置失败
                 MAlert.alert(resultEntity.getData());
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        userPresenter.getDeviceDetailInfo(did, uid);
-                    }
-                }, 2000);
+            }else if(resultEntity.getEventType()==UserPresenter.getDeviceOnLineState_success){
+                DeviceDetailModel detailModel= (DeviceDetailModel) resultEntity.getData();
+                isConnect=detailModel.getIs_disconnect().equals("0");
+                DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+            }else if(resultEntity.getEventType()==UserPresenter.getDeviceOnLineState_fail){
+                isConnect=false;
             }
         }
     }
 
     int count = 0;
 
-    private void setDeviceData(DeviceDetailModel deviceDetailModel) {
+    private void setDeviceData() {
         count++;
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         device_status.setTextColor(isConnect ? getResources().getColor(R.color.main_green) : getResources().getColor(R.color.shen_red));
         if (isConnect) {
             txt.setVisibility(View.VISIBLE);
-            String str = deviceDetailModel.getT() / 10 + "℃";
-            int startPo = (deviceDetailModel.getT() / 10 + "").length();
+            String str = detailModelTcp.getT() / 10 + "℃";
+            int startPo = (detailModelTcp.getT() / 10 + "").length();
             int endPo = str.length();
             setDifferentSizeForTextView(startPo, endPo, str, txt_wendu);
         } else {
@@ -454,25 +449,23 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             hasSetJieNeng = true;
         }
         //定时清洗数据
-        setDingShiQingXi(deviceDetailModel);
+        setDingShiQingXi(detailModelTcp);
         //手动清洗数据
-        setShouDongQingXi(deviceDetailModel);
+        setShouDongQingXi(detailModelTcp);
         //UV LAMP数据
-        setUVLamp(deviceDetailModel);
+        setUVLamp(detailModelTcp);
         //插座A数据
-        setChaZuoA(deviceDetailModel);
+        setChaZuoA(detailModelTcp);
         //插座B数据
-        setChaZuoB(deviceDetailModel);
+        setChaZuoB(detailModelTcp);
 
 
         setCurrentTitle(deviceDetailModel.getDevice_nickname());
 
-        //VersionUpdateActivity更新进度
-        System.out.println(">>>>>count外面" + deviceDetailModel.getCl_sche());
         //设置固件更新UI
         if (myApp.updateActivityUI != null) {
             if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                myApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
+                myApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
             }
         }
         //设置自动清洗UI;
@@ -493,8 +486,8 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     }
 
     private void setDefaultJieNengMode() {
-        int outA = Integer.parseInt(deviceDetailModel.getOut_state_a());
-        int outB = Integer.parseInt(deviceDetailModel.getOut_state_b());
+        int outA = Integer.parseInt(detailModelTcp.getOut_state_a());
+        int outB = Integer.parseInt(detailModelTcp.getOut_state_b());
         //设置初始状态下的插座A和插座B的节能模式
         if ((outA & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2)) {
 
@@ -515,14 +508,14 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     private void setChaZuoB(DeviceDetailModel deviceDetailModel) {
         socketB = deviceDetailModel.getOut_state_b().equals("0") ? false : true;
         icon_setting_B.setBackgroundResource(socketB ? R.drawable.kai : R.drawable.guan);
-        txt_chazuoB_name.setText(deviceDetailModel.getNickname_b());
+        txt_chazuoB_name.setText(this.deviceDetailModel.getNickname_b());
         setMode("B", chazuo_B_total_power);
     }
 
     private void setChaZuoA(DeviceDetailModel deviceDetailModel) {
         socketA = deviceDetailModel.getOut_state_a().equals("0") ? false : true;
         icon_setting_A.setBackgroundResource(socketA ? R.drawable.kai : R.drawable.guan);
-        txt_chazuoA_name.setText(deviceDetailModel.getNickname_a());
+        txt_chazuoA_name.setText(this.deviceDetailModel.getNickname_a());
 //        chazuo_A_power.setText(getString(R.string.current_power)+":"+deviceDetailModel.get);
 //        chazuo_A_total_power.setText(getString(R.string.status)+(socketA?getString(R.string.chazuo_open):getString(R.string.chazuo_close)));
 //        chazuo_B_total_power.setText(getString(R.string.status)+(socketB?getString(R.string.chazuo_open):getString(R.string.chazuo_close)));
@@ -531,7 +524,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
 
     private void setUVLamp(DeviceDetailModel deviceDetailModel) {
         int startPo = getString(R.string.open_time).length();
-        String timeStr = utc2Local(myApp.pondDeviceDetailUI.deviceDetailModel.getUv_on(), "HHmm", "HH:mm") + "-" + utc2Local(myApp.pondDeviceDetailUI.deviceDetailModel.getUv_off(), "HHmm", "HH:mm");
+        String timeStr = utc2Local(deviceDetailModel.getUv_on(), "HHmm", "HH:mm") + "-" + utc2Local(deviceDetailModel.getUv_off(), "HHmm", "HH:mm");
         int endPo = (getString(R.string.open_time) + timeStr).length();
         setColorfulValue(startPo, endPo, R.color.device_blue, (getString(R.string.open_time) + timeStr), txt_uv_open_time);
 
@@ -542,8 +535,8 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     }
 
     private void setMode() {
-        int uvState = deviceDetailModel.getUv_state();
-        int uvCfg = Integer.parseInt(deviceDetailModel.getUv_cfg());
+        int uvState = detailModelTcp.getUv_state();
+        int uvCfg = Integer.parseInt(detailModelTcp.getUv_cfg());
         if ((uvCfg & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2)) {
             //手动模式
             if (uvState == 0) {
@@ -582,7 +575,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             txt_next_cleantime.setVisibility(View.GONE);
         } else {
             txt_next_cleantime.setVisibility(View.GONE);
-            tempTime = jiSuanNextTime(Integer.valueOf(deviceDetailModel.getCl_week()), getCurrentWeek(true), myApp.pondDeviceDetailUI.deviceDetailModel.getCl_tm());
+            tempTime = jiSuanNextTime(Integer.valueOf(deviceDetailModel.getCl_week()), getCurrentWeek(true), deviceDetailModel.getCl_tm());
             startPo = getString(R.string.next_clean_time).length();
             endPo = (getString(R.string.next_clean_time) + tempTime).length();
             setColorfulValue(startPo, endPo, R.color.device_blue, getString(R.string.next_clean_time) + tempTime, txt_next_cleantime);
@@ -594,9 +587,9 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         int chaZuoBModeValue = 0;
         tempType = 0;
         if (chazuo_type.equals("A")) {
-            chaZuoBModeValue = Integer.parseInt(deviceDetailModel.getOut_state_a());
+            chaZuoBModeValue = Integer.parseInt(detailModelTcp.getOut_state_a());
         } else {
-            chaZuoBModeValue = Integer.parseInt(deviceDetailModel.getOut_state_b());
+            chaZuoBModeValue = Integer.parseInt(detailModelTcp.getOut_state_b());
         }
 
         if ((chaZuoBModeValue & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {

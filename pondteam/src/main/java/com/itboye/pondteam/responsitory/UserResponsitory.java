@@ -1493,9 +1493,31 @@ public class UserResponsitory extends BaseNetRepository implements
         }.getType();
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
+        String typeKey=getJinLiGangDetail;
+        if (did.startsWith("S03")) {
+            //806获取设备详情
+            typeKey = getJinLiGangDetail;
+        }
+        if (did.startsWith("S02")) {
+            //806获取设备详情
+            typeKey = getDeviceJiaReBangDetail;
+        }
+        if (did.startsWith("S01")) {
+            //806获取设备详情
+            typeKey = getDeviceGuoLvTongDeviceDetail;
+        }
+        if (did.startsWith("S04")) {
+            typeKey = getDevicePhdetail;
+        }
+        if (did.startsWith("S05")) {
+            typeKey = getDeviceWaterPunmpDetail;
+        }
+        if (did.startsWith("S06")) {
+            typeKey = getDeviceLedLightDetail;
+        }
         map.put("did", did);
         (new ByJsonRequest.Builder<DeviceDetailModel>())
-                .setTypeVerParamsAndReturnClass(getJinLiGangDetail, apiVer, map, type)
+                .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
                                 getListener()))

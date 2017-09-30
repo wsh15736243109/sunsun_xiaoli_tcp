@@ -44,6 +44,7 @@ import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.utils.ColoTextUtil;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 
 import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
@@ -86,6 +87,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
     private String deviceType;
     DBManager dbManager;
     TextView txt_status;
+    private TcpUtil tcp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         userPresenter = new UserPresenter(this);
         dbManager = new DBManager(this);
         myApp = (App) getApplication();
+        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -115,7 +118,27 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         id = getIntent().getStringExtra("id");
         setDeviceTitle(getIntent().getStringExtra("title"));
         threadStart();
+        tcp=new TcpUtil(handData,did,getSp(Const.UID),"101");
+        tcp.start();
     }
+
+    private DeviceDetailModel detailModelTcp;
+    Handler handData = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.arg1) {
+                case 101:
+                    System.out.println("TCP 接收数据 101" + msg.obj);
+                    break;
+                case 102:
+                    detailModelTcp = (DeviceDetailModel) msg.obj;
+                    setDeviceData();
+                    System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
+                    break;
+            }
+        }
+    };
 
     public void threadStart() {
         RequestUtil.threadStart(handler, runnable);
@@ -146,8 +169,8 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            userPresenter.getDeviceDetailInfo(did, myApp.mDeviceUi.uid);
-            handler.postDelayed(runnable, Const.intervalTime);
+            userPresenter.getDeviceOnLineState(did);
+            handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
 
@@ -429,32 +452,23 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
             if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 deviceDetailModel = (DeviceDetailModel) entity.getData();
                 if (deviceDetailModel != null) {
-                    setDeviceData(deviceDetailModel);
+                    setDeviceData();
                 }
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
                 finish();
             } else if (entity.getEventType() == UserPresenter.deviceSet_success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
             } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
                 myApp.mDeviceUi.getDeviceList();
-                userPresenter.getDeviceDetailInfo(did, myApp.mDeviceUi.uid);
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
                 MAlert.alert(entity.getData());
-                dbManager.deleteDeviceDataByDid(did, getSp(Const.UID));
                 myApp.mDeviceUi.getDeviceList();
                 finish();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
@@ -462,29 +476,28 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_success) {
                 MAlert.alert(entity.getData());
                 myApp.mDeviceUi.getDeviceList();
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
+            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_success){
+                DeviceDetailModel detailModel= (DeviceDetailModel) entity.getData();
+                isConnect=detailModel.getIs_disconnect().equals("0");
+                DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_fail){
+                isConnect=false;
             }
         }
     }
 
-    private void setDeviceData(DeviceDetailModel deviceDetailModel) {
+    private void setDeviceData() {
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         setDeviceTitle(deviceDetailModel.getDevice_nickname());
-        double wenduValue = deviceDetailModel.getT() / 10;
+        double wenduValue = detailModelTcp.getT() / 10;
         int startPo1 = ("" + wenduValue).length();
         int endPo1 = (wenduValue + "℃").length();
         ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
-        int fault = Integer.parseInt(Integer.toBinaryString(deviceDetailModel.getFault()));
+        int fault = Integer.parseInt(Integer.toBinaryString(detailModelTcp.getFault()));
         String strFault = getAppointNumber(fault, 4);
         char[] faultBinary = strFault.toCharArray();
         StringBuffer str = new StringBuffer();
@@ -528,15 +541,15 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
             strTemp = getString(R.string.run_error);
         } else {
             int startPo3 = getString(R.string.total_power).length(), endPo3 = 0;
-            endPo3 = getString(R.string.total_power).length() + (deviceDetailModel.getPwr() + "").length();
-            if (deviceDetailModel.getPwr() == 0) {
+            endPo3 = getString(R.string.total_power).length() + (detailModelTcp.getPwr() + "").length();
+            if (detailModelTcp.getPwr() == 0) {
                 //恒温状态
                 strTemp = getString(R.string.run_hengwen) + " ";
             } else {
                 //加热棒运行正常
                 strTemp = getString(R.string.run_normal) + " ";
             }
-            setColorfulValue(startPo3, endPo3, R.color.aq_orange, getString(R.string.total_power) + deviceDetailModel.getPwr() + "W", txt_gonglv);
+            setColorfulValue(startPo3, endPo3, R.color.aq_orange, getString(R.string.total_power) + detailModelTcp.getPwr() + "W", txt_gonglv);
         }
         int startPo2 = getString(R.string.jiarebang).length();
         int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
@@ -546,10 +559,10 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
 //        Bit2：温度传感器2异常
 //        Bit3：加热丝开路异常
 
-        String finalStr = getString(R.string.jiarebang) + (str.toString().contains(getString(R.string.paichu)) ? str : str + "," + getString(R.string.total_power) + deviceDetailModel.getPwr() + "W");
+        String finalStr = getString(R.string.jiarebang) + (str.toString().contains(getString(R.string.paichu)) ? str : str + "," + getString(R.string.total_power) + detailModelTcp.getPwr() + "W");
         int endPo3 = (finalStr).length();
 //        ColoTextUtil.setColorfulValue2(startPo2, endPo2, startPo3, endPo3, R.color.text_yellow, finalStr, txt_gonglv);
-        int cfg = Integer.parseInt(deviceDetailModel.getCfg());
+        int cfg = Integer.parseInt(detailModelTcp.getCfg());
         wenDuBaoJingStatus = (deviceDetailModel.getTemp_alert()==1 ? true : false);
         gongZuoZhuangTaiTongtZhiStatus = (deviceDetailModel.getIs_state_notify() == 1 ? true : false);
         try {
@@ -563,7 +576,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         }
 
         setImageViewCheckOrUnCheck(toggle_exception_warn, wendu_baojing, toggle_jieshoustatus);
-        mNewTempValue = Double.parseDouble(deviceDetailModel.getT_set()) / 10;
+        mNewTempValue = Double.parseDouble(detailModelTcp.getT_set()) / 10;
         txt_wendu_setting.setText(mNewTempValue + "℃");
         txt_wendu_sheding_high.setText(Float.parseFloat(deviceDetailModel.getTemp_max() + "") / 10 + "℃");
         txt_wendu_sheding_low.setText(Float.parseFloat(deviceDetailModel.getTemp_min() + "") / 10 + "℃");
@@ -580,7 +593,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         //设置固件更新UI
         if (myApp.updateActivityUI != null) {
             if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                myApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
+                myApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
             }
         }
 //        if (myApp.updateActivityUI != null) {

@@ -23,7 +23,6 @@ import com.itboye.pondteam.enums.SetType;
 import com.itboye.pondteam.popwindow.CustomTimePickerDialog;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.CaculateDays;
-import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.MyTimeUtil;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -86,7 +85,6 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
         });
         myApp = (App) getApplication();
         myApp.ziDongUI = this;
-//        model = (DeviceDetailModel) getIntent().getSerializableExtra("model");
         userPresenter = new UserPresenter(this);
         setZiDongData();
         txt_title.setText(getString(R.string.cleabytimer));
@@ -172,10 +170,12 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         if (handler != null && runnable != null) {
             handler.removeCallbacks(runnable);
         }
+        myApp.ziDongUI = null;
+        super.onDestroy();
+
     }
 
     private void setCheckOrUnCheck(SetType setType, boolean isChecked) {
@@ -300,19 +300,19 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 
     public void setZiDongData() {
         stringWeek = new StringBuffer();
-        if (myApp.pondDeviceDetailUI.deviceDetailModel.getCl_week().equals("0")) {
+        if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_week().equals("0")) {
             txt_not_time.setVisibility(View.VISIBLE);
-            if (!myApp.pondDeviceDetailUI.deviceDetailModel.getIs_disconnect().equals("0")) {
+            if (!myApp.pondDeviceDetailUI.detailModelTcp.getIs_disconnect().equals("0")) {
                 txt_moshi.setVisibility(View.GONE);
                 txt_ph.setVisibility(View.GONE);
                 txt_not_time.setVisibility(View.VISIBLE);
                 txt_not_time.setText(getString(R.string.cleabytimer) + ":" + getString(R.string.close));
-            } else if (myApp.pondDeviceDetailUI.deviceDetailModel.getCl_en().equals("0")) {
+            } else if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_en().equals("0")) {
                 txt_moshi.setVisibility(View.GONE);
                 txt_ph.setVisibility(View.GONE);
                 txt_not_time.setVisibility(View.VISIBLE);
                 txt_not_time.setText(getString(R.string.cleabytimer) + ":" + getString(R.string.close));
-            } else if (myApp.pondDeviceDetailUI.deviceDetailModel.getCl_en().equals("1")) {
+            } else if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_en().equals("1")) {
                 days.setVisibility(View.VISIBLE);
                 hours.setVisibility(View.VISIBLE);
                 mins.setVisibility(View.VISIBLE);
@@ -340,7 +340,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 
                 }
             }
-            int week = Integer.parseInt(myApp.pondDeviceDetailUI.deviceDetailModel.getCl_week());
+            int week = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getCl_week());
             String binaryWeek = Integer.toBinaryString(week);
             if (binaryWeek.length() < 7) {
                 if (binaryWeek.length() == 6) {
@@ -366,10 +366,10 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 //            new Thread(runnable).start();
 //            txt_moshi.setVisibility(View.VISIBLE);
         }
-        String tempTime = utc2Local(myApp.pondDeviceDetailUI.deviceDetailModel.getCl_tm(), "HHmm", "HH:mm");
+        String tempTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm(), "HHmm", "HH:mm");
         txt_shijiansheding.setText(tempTime);
         //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
-        String cfg = myApp.pondDeviceDetailUI.deviceDetailModel.getCl_cfg();
+        String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
         if (cfg.equals("0")) {
             //数据格式 00
             isQingXiTiShi = false;
@@ -387,68 +387,68 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
             isQingXiTiShi = true;
             isYiChangBaoJing = true;
         }
-        isdingshiqingxi = myApp.pondDeviceDetailUI.deviceDetailModel.getCl_en().equals("0") ? false : true;
+        isdingshiqingxi = myApp.pondDeviceDetailUI.detailModelTcp.getCl_en().equals("0") ? false : true;
         setCheck(qingxitishi, isQingXiTiShi);
         setCheck(toggle_exception_warn, isYiChangBaoJing);
         setCheck(toggle_dingshi, isdingshiqingxi);
-        int onT = myApp.pondDeviceDetailUI.deviceDetailModel.getWs_on_tm();
-        int offT = myApp.pondDeviceDetailUI.deviceDetailModel.getWs_off_tm();
+        int onT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_on_tm();
+        int offT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_off_tm();
         //开启30秒关闭30秒为节能50%。   开启30秒关闭15秒为节能30%。
-        int seconds = myApp.pondDeviceDetailUI.deviceDetailModel.getCl_dur();
+        int seconds = myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur();
         String percent = "";
         switch (seconds) {
             case 60:
                 if (onT == 12 && offT == 18) {
                     percent = "30%";
-                    tempType=3;
+                    tempType = 3;
                 } else if (onT == 18 && offT == 12) {
                     percent = "50%";
-                    tempType=2;
-                }else{
+                    tempType = 2;
+                } else {
                     percent = "other";
                 }
                 break;
             case 120:
                 if (onT == 24 && offT == 36) {
                     percent = "30%";
-                    tempType=3;
+                    tempType = 3;
                 } else if (onT == 24 && offT == 16) {
                     percent = "50%";
-                    tempType=2;
-                }else{
+                    tempType = 2;
+                } else {
                     percent = "other";
                 }
                 break;
             case 180:
                 if (onT == 24 && offT == 36) {
                     percent = "30%";
-                    tempType=3;
+                    tempType = 3;
                 } else if (onT == 36 && offT == 24) {
                     percent = "50%";
-                    tempType=2;
-                }else{
+                    tempType = 2;
+                } else {
                     percent = "other";
                 }
                 break;
             case 240:
                 if (onT == 24 && offT == 36) {
                     percent = "30%";
-                    tempType=3;
+                    tempType = 3;
                 } else if (onT == 36 && offT == 24) {
                     percent = "50%";
-                    tempType=2;
-                }else{
+                    tempType = 2;
+                } else {
                     percent = "other";
                 }
                 break;
             case 300:
                 if (onT == 29 && offT == 46) {
                     percent = "30%";
-                    tempType=3;
+                    tempType = 3;
                 } else if (onT == 43 && offT == 32) {
                     percent = "50%";
-                    tempType=2;
-                }else{
+                    tempType = 2;
+                } else {
                     percent = "other";
                 }
                 break;
@@ -456,7 +456,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 
         if (onT == 60 && offT == 0) {
             savewatermode.setText("100%");
-            tempType=1;
+            tempType = 1;
         } else {
             savewatermode.setText(percent);
         }
@@ -593,7 +593,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
         alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                int seconds = myApp.pondDeviceDetailUI.deviceDetailModel.getCl_dur();
+                int seconds = myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur();
                 int onT = 0;
                 int offT = 0;
                 switch (seconds) {
@@ -660,17 +660,17 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                 }
 
                 //30 % 50 %百分比设置的时候   A 设置成 手动打开模式
-                int a_state= Integer.parseInt(myApp.pondDeviceDetailUI.deviceDetailModel.getOut_state_a());
-                if((a_state&(int)Math.pow(2,0))==(int)Math.pow(2,0)){
+                int a_state = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getOut_state_a());
+                if ((a_state & (int) Math.pow(2, 0)) == (int) Math.pow(2, 0)) {
                     //打开模式
-                }else{
+                } else {
                     //关闭模式
-                    a_state=a_state^(int)Math.pow(2,0);//更改为打开模式
+                    a_state = a_state ^ (int) Math.pow(2, 0);//更改为打开模式
                 }
-                if((a_state&(int)Math.pow(2,1))==(int)Math.pow(2,1)){
+                if ((a_state & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
                     //定时模式
-                    a_state=a_state^(int)Math.pow(2,1);//改为手动模式
-                }else{
+                    a_state = a_state ^ (int) Math.pow(2, 1);//改为手动模式
+                } else {
                     //手动模式
                 }
                 userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "", "", "", a_state, -1, "", "", "", "", onT, offT);
@@ -810,14 +810,6 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
             }
             if (entity.getEventType() == UserPresenter.deviceSet_success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime=500;
-                myApp.pondDeviceDetailUI.threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime=10000;
-                    }
-                },5000);
             } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(entity.getData());
                 setZiDongData();
