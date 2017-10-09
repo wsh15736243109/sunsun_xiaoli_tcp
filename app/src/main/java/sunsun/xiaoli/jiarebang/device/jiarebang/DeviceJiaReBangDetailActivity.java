@@ -97,8 +97,10 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         userPresenter = new UserPresenter(this);
         dbManager = new DBManager(this);
         myApp = (App) getApplication();
+
         deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         ptr.setPtrHandler(new PtrDefaultHandler() {
+
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 if (myApp.deviceJiaReBangUI.deviceDetailModel != null) {
@@ -116,13 +118,15 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 DeviceJiaReBangDetailActivity.this, this);
         did = getIntent().getStringExtra("did");
         id = getIntent().getStringExtra("id");
+        userPresenter.deviceSet_jiarebang(did, "", "", "", "");
         setDeviceTitle(getIntent().getStringExtra("title"));
         threadStart();
         tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
         tcp.start();
     }
 
-    private DeviceDetailModel detailModelTcp;
+
+    public DeviceDetailModel detailModelTcp;
     Handler handData = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -257,24 +261,37 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 break;
             case R.id.re_gaowen_sheding:
                 if (isConnect) {
-                    mNewTempValue = Double.parseDouble((txt_wendu_sheding_high.getText().toString().substring(0, txt_wendu_sheding_high.getText().toString().length() - 1)));
-                    setWenDu(getString(R.string.wendu_high), txt_wendu_sheding_high, mNewTempValue);
+                    try {
+                        mNewTempValue = Double.parseDouble((txt_wendu_sheding_high.getText().toString().substring(0, txt_wendu_sheding_high.getText().toString().length() - 1)));
+                        setWenDu(getString(R.string.wendu_high), txt_wendu_sheding_high, mNewTempValue);
+                    }catch (Exception e){
+
+                    }
+
+
                 } else {
                     MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
             case R.id.re_diwen_sheding:
                 if (isConnect) {
+                    try {
                     mNewTempValue = Double.parseDouble((txt_wendu_sheding_low.getText().toString().substring(0, txt_wendu_sheding_low.getText().toString().length() - 1)));
-                    setWenDu(getString(R.string.wendu_low), txt_wendu_sheding_low, mNewTempValue);
+                    setWenDu(getString(R.string.wendu_low), txt_wendu_sheding_low, mNewTempValue); }catch (Exception e){
+
+                    }
                 } else {
                     MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
             case R.id.re_settemperature:
                 if (isConnect) {
+
+                    try {
                     mNewTempValue = Double.parseDouble((txt_wendu_setting.getText().toString().substring(0, txt_wendu_setting.getText().toString().length() - 1)));
-                    setWenDu(getString(R.string.wendu), txt_wendu_setting, mNewTempValue);
+                    setWenDu(getString(R.string.wendu), txt_wendu_setting, mNewTempValue); }catch (Exception e){
+
+                    }
                 } else {
                     MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }

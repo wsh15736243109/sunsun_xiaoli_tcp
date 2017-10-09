@@ -42,7 +42,13 @@ public class TcpUtil {
 
 
     // For heart Beat
-    private Handler mHandler = new Handler();
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
+        }
+    };
 
     /**
      * @param handler 更新UI通信
@@ -56,40 +62,32 @@ public class TcpUtil {
     }
 
     public void start() {
-        new TcpAsycTask().execute();
+
+//        initSocket();
+        new InitSocketThread().start();
     }
 
-    class TcpAsycTask extends AsyncTask{
+    class TcpAsnycTask extends AsyncTask {
 
         @Override
         protected Object doInBackground(Object[] params) {
-            initSocket();
             return null;
         }
 
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
-                boolean isSuccess = sendMsg(msg);//就发送一个\r\n过去 如果发送失败，就重新初始化一个socket
-                if (!isSuccess) {
-                    mHandler.removeCallbacks(heartBeatRunnable);
-                    mReadThread.release();
-                    releaseLastSocket(mSocket);
-                    new TcpAsycTask().execute();
-                }
-            }
+            initSocket();
         }
-
     }
 
-//    class InitSocketThread extends Thread {
-//        @Override
-//        public void run() {
-//            super.run();
-//
-//        }
-//    }
+    class InitSocketThread extends Thread {
+        @Override
+        public void run() {
+            super.run();
+            initSocket();
+        }
+    }
 
     private void initSocket() {
         try {
@@ -110,7 +108,18 @@ public class TcpUtil {
 
         @Override
         public void run() {
-            mHandler.postDelayed(this, HEART_BEAT_RATE);
+            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
+                boolean isSuccess = sendMsg(TcpUtil.this.msg);//就发送一个\r\n过去 如果发送失败，就重新初始化一个socket
+                if (!isSuccess) {
+//                    mHandler.removeCallbacks(heartBeatRunnable);
+//                    mReadThread.release();
+//                    releaseLastSocket(mSocket);
+                    initSocket();
+                }
+
+            }
+            mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
+//            (this, HEART_BEAT_RATE);
         }
     };
 
@@ -120,17 +129,33 @@ public class TcpUtil {
         mReadThread.release();
     }
 
+    Socket soc;
+    OutputStream os;
+    String message;
+
     public boolean sendMsg(String msg) {
         if (null == mSocket || null == mSocket.get()) {
             return false;
         }
-        Socket soc = mSocket.get();
+        soc = mSocket.get();
         try {
             if (!soc.isClosed() && !soc.isOutputShutdown()) {
-                OutputStream os = soc.getOutputStream();
-                String message = msg + "\r\n";
-                os.write(message.getBytes());
-                os.flush();
+                os = soc.getOutputStream();
+                message = msg + "\r\n";
+                new Thread() {
+                    @Override
+                    public void run() {
+                        try {
+                            os.write(message.getBytes());
+                            os.flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            System.out.println("TCP 接收数据  数据发送失败");
+                            //Sockect数据发送失败，则重新初始化Socket建立连接
+                            initSocket();
+                        }
+                    }
+                }.start();
                 sendTime = System.currentTimeMillis();//每次发送成数据，就改一下最后成功发送的时间，节省心跳间隔时间
             } else {
                 return false;
@@ -189,7 +214,7 @@ public class TcpUtil {
                         if (length > 0) {
                             String data = new String(Arrays.copyOf(buffer,
                                     length)).trim();
-                            System.out.println("TCP 接收数据 data【" + data);
+                            System.out.println(TcpUtil.this.msg + "TCP 接收数据 data【" + data);
                             //收到服务器过来的消息，就通过Broadcast发送出去
                             if (data.equals("ok")) {//处理心跳回复
 //                                Intent intent=new Intent(HEART_BEAT_ACTION);
@@ -199,9 +224,11 @@ public class TcpUtil {
                                 try {
                                     JSONObject jsonObject = new JSONObject(data);
                                     Gson gson = new Gson();
+                                    int tCode = -1;
+                                    Message message = new Message();
+                                    message.arg1 = tCode;
                                     if (jsonObject.has("t")) {
-                                        int tCode = jsonObject.getInt("t");
-                                        Message message = new Message();
+                                        tCode = jsonObject.getInt("t");
                                         message.arg1 = tCode;
                                         switch (tCode) {
                                             case 101:
@@ -212,17 +239,20 @@ public class TcpUtil {
                                                 }.getType();
                                                 String dData = jsonObject.getString("d");
 
-                                                System.out.println("TCP 接收数据 data2【" + dData);
+                                                System.out.println(TcpUtil.this.msg + "TCP 接收数据 data2【" + dData);
                                                 DeviceDetailModel detailModel = gson.fromJson(dData, type);
                                                 message.obj = detailModel;
                                                 handler.sendMessage(message);
                                                 break;
                                         }
+                                    } else {
+                                        message.obj = data;
+                                        handler.sendMessage(message);
                                     }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    System.out.println("TCP 接收数据 解析错误" + e.getMessage());
+                                    System.out.println(TcpUtil.this.msg + "TCP 接收数据 解析错误" + e.getMessage());
                                 }
 
 //                                Intent intent=new Intent(MESSAGE_ACTION);

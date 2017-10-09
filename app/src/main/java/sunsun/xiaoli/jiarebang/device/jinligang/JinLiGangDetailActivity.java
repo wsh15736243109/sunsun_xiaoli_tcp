@@ -324,9 +324,12 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         setLoadingIsVisible(true);
         new Thread(runnable).start();
         getDeviceList();
+
         mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
         mTcpUtil.start();
     }
+
+
 
     Handler handData = new Handler() {
         @Override

@@ -245,7 +245,7 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
             txt_shuoming.setText(getString(R.string.update_desciption) + model.getVersion_desc());
             //当前不是最新的版本，需要更新  udp_state=100:上次更新已经完成 101：上次更新失败
             if (did.startsWith("S01")) {
-                if (myApp.pondDeviceDetailUI.deviceDetailModel.getUpd_state() <= 0 || myApp.pondDeviceDetailUI.deviceDetailModel.getUpd_state() == 100 || myApp.pondDeviceDetailUI.deviceDetailModel.getUpd_state() == 101) {
+                if (myApp.pondDeviceDetailUI.detailModelTcp.getUpd_state() <= 0 || myApp.pondDeviceDetailUI.detailModelTcp.getUpd_state() == 100 || myApp.pondDeviceDetailUI.detailModelTcp.getUpd_state() == 101) {
                     //当前设备还没有开始更新
                     smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
                 } else {

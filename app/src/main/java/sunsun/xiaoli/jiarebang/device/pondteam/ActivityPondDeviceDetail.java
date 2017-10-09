@@ -150,11 +150,6 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         }
     };
 
-    private void setDeviceDataByTcp(DeviceDetailModel detailModelTcp) {
-
-    }
-
-
     public void threadStart() {
         RequestUtil.threadStart(handler, runnable);
     }
@@ -191,21 +186,6 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     private void setCurrentTitle(String device) {
         txt_title.setText(device);
     }
-
-//    //toggleButton选择/反选事件
-//    private void setCheckLisenter() {
-//        icon_setting_A.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//            }
-//        });
-//        icon_setting_B.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//            }
-//        });
-//    }
 
     private void onShowDlog() {
         if (dialog == null) {
@@ -355,7 +335,9 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
 
     @Override
     public void gujiangengxin() {
-        dialog.dismiss();
+        if (dialog != null) {
+            dialog.dismiss();
+        }
         Intent intent = new Intent(this, VersionUpdateActivity.class);
         intent.putExtra("did", did);
         intent.putExtra("version", deviceDetailModel.getVer());
@@ -373,9 +355,6 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         intent.putExtra("device_type", 1);
         startActivity(intent);
     }
-
-    int countTest = 0;
-    String deviceType = "S01";
 
     @Override
     public void update(Observable o, Object data) {

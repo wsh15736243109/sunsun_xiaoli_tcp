@@ -585,8 +585,10 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                         arA.add(password);
                     }else{
                         try {
+                            //昵称数组大于时段数组
                             arA.add(arrayListInner.size(),password);
                         }catch (Exception e){
+                            //昵称数组小于时段数组
                             for (int i = 0; i < arrayListInner.size() - arA.size(); i++) {
                                 if (i!=arrayListInner.size()-1) {
                                     arA.add("");
@@ -595,7 +597,6 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                                 }
                             }
                         }
-
                     }
                 } else {
                     if (arrayListInner.size()==arB.size()) {
@@ -748,6 +749,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             }
             if (entity.getEventType() == UserPresenter.deviceSet_success) {
                 MAlert.alert(entity.getData());
+                myApplication.pondDeviceDetailUI.threadStart();
             } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(entity.getData());
             }
