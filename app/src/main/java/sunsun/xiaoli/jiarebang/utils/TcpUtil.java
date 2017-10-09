@@ -1,6 +1,7 @@
 package sunsun.xiaoli.jiarebang.utils;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
@@ -32,7 +33,7 @@ public class TcpUtil {
     public static final String HOST = "101.37.37.167";
     public static final int PORT = 8300;
 
-    private String baseStr="{\"t\": \"%1$s\",\"did\": \"%2$s\",\"token\": \"123456\",\"uid\": \"%3$s\"}";
+    private String baseStr = "{\"t\": \"%1$s\",\"did\": \"%2$s\",\"token\": \"123456\",\"uid\": \"%3$s\"}";
 
     private String msg;
     private Handler handler;
@@ -44,26 +45,52 @@ public class TcpUtil {
     private Handler mHandler = new Handler();
 
     /**
-     *
      * @param handler 更新UI通信
-     * @param msg 0：did  1:uid  2:t
+     * @param msg     0：did  1:uid  2:t
      */
-    public TcpUtil(Handler handler,String... msg){
-        this.msg=String.format(baseStr,msg[2],msg[0],msg[1]);
+    public TcpUtil(Handler handler, String... msg) {
+        this.msg = String.format(baseStr, msg[2], msg[0], msg[1]);
 //        "{\"t\": \""+msg[3]+"\",\"did\": \""+msg[0]+"\",\"token\": \"123456\",\"uid\": \""+msg[1]+"\"}";
-        this.handler=handler;
+        this.handler = handler;
 
     }
-    public void start(){
-        new InitSocketThread().start();
+
+    public void start() {
+        new TcpAsycTask().execute();
     }
-    class InitSocketThread extends Thread {
+
+    class TcpAsycTask extends AsyncTask{
+
         @Override
-        public void run() {
-            super.run();
+        protected Object doInBackground(Object[] params) {
             initSocket();
+            return null;
         }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
+                boolean isSuccess = sendMsg(msg);//就发送一个\r\n过去 如果发送失败，就重新初始化一个socket
+                if (!isSuccess) {
+                    mHandler.removeCallbacks(heartBeatRunnable);
+                    mReadThread.release();
+                    releaseLastSocket(mSocket);
+                    new TcpAsycTask().execute();
+                }
+            }
+        }
+
     }
+
+//    class InitSocketThread extends Thread {
+//        @Override
+//        public void run() {
+//            super.run();
+//
+//        }
+//    }
+
     private void initSocket() {
         try {
             Socket so = new Socket(HOST, PORT);
@@ -83,20 +110,11 @@ public class TcpUtil {
 
         @Override
         public void run() {
-            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
-                boolean isSuccess = sendMsg(msg);//就发送一个\r\n过去 如果发送失败，就重新初始化一个socket
-                if (!isSuccess) {
-                    mHandler.removeCallbacks(heartBeatRunnable);
-                    mReadThread.release();
-                    releaseLastSocket(mSocket);
-                    new InitSocketThread().start();
-                }
-            }
             mHandler.postDelayed(this, HEART_BEAT_RATE);
         }
     };
 
-    public void releaseTcp(){
+    public void releaseTcp() {
         releaseLastSocket(mSocket);
         mHandler.removeCallbacks(heartBeatRunnable);
         mReadThread.release();
@@ -128,7 +146,7 @@ public class TcpUtil {
         try {
             if (null != mSocket) {
                 Socket sk = mSocket.get();
-                if (sk!=null) {
+                if (sk != null) {
                     if (!sk.isClosed()) {
                         sk.close();
                     }
@@ -154,7 +172,9 @@ public class TcpUtil {
             isStart = false;
             releaseLastSocket(mWeakSocket);
         }
-        @SuppressLint("NewApi") @Override
+
+        @SuppressLint("NewApi")
+        @Override
         public void run() {
             super.run();
             Socket socket = mWeakSocket.get();
@@ -169,32 +189,32 @@ public class TcpUtil {
                         if (length > 0) {
                             String data = new String(Arrays.copyOf(buffer,
                                     length)).trim();
-                            System.out.println("TCP 接收数据 data【"+data);
+                            System.out.println("TCP 接收数据 data【" + data);
                             //收到服务器过来的消息，就通过Broadcast发送出去
-                            if(data.equals("ok")){//处理心跳回复
+                            if (data.equals("ok")) {//处理心跳回复
 //                                Intent intent=new Intent(HEART_BEAT_ACTION);
 //                                mLocalBroadcastManager.sendBroadcast(intent);
-                            }else{
+                            } else {
                                 //其他消息回复
                                 try {
-                                    JSONObject jsonObject=new JSONObject(data);
-                                    Gson gson=new Gson();
+                                    JSONObject jsonObject = new JSONObject(data);
+                                    Gson gson = new Gson();
                                     if (jsonObject.has("t")) {
-                                        int tCode=jsonObject.getInt("t");
-                                        Message message=new Message();
-                                        message.arg1=tCode;
+                                        int tCode = jsonObject.getInt("t");
+                                        Message message = new Message();
+                                        message.arg1 = tCode;
                                         switch (tCode) {
                                             case 101:
-                                                message.obj=data;
+                                                message.obj = data;
                                                 break;
                                             case 102:
                                                 Type type = new TypeToken<DeviceDetailModel>() {
                                                 }.getType();
-                                                String dData=jsonObject.getString("d");
+                                                String dData = jsonObject.getString("d");
 
-                                                System.out.println("TCP 接收数据 data2【"+dData);
-                                                DeviceDetailModel detailModel=gson.fromJson(dData,type);
-                                                message.obj=detailModel;
+                                                System.out.println("TCP 接收数据 data2【" + dData);
+                                                DeviceDetailModel detailModel = gson.fromJson(dData, type);
+                                                message.obj = detailModel;
                                                 handler.sendMessage(message);
                                                 break;
                                         }
@@ -202,7 +222,7 @@ public class TcpUtil {
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    System.out.println("TCP 接收数据 解析错误"+e.getMessage());
+                                    System.out.println("TCP 接收数据 解析错误" + e.getMessage());
                                 }
 
 //                                Intent intent=new Intent(MESSAGE_ACTION);

@@ -138,7 +138,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     DBManager dbManager;
     private Handler handlerWifi;
     boolean isSetTime = false;//同步时间
-    public DeviceDetailModel detailModelTcp=new DeviceDetailModel();
+    public DeviceDetailModel detailModelTcp = new DeviceDetailModel();
     //摄像头设备列表
     private ArrayList<DeviceListBean> arrayList = new ArrayList<>();
     private String chirdDid;
@@ -851,7 +851,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             int innerheight = getWindowManager().getDefaultDisplay().getHeight() / 2;
 //            //md 设置为全屏为什么底部会有条间隔线
 //            FrameLayout.LayoutParams layout = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-            mStreamView.getHolder().setFixedSize(innerwidth, innerheight);
+            if (mStreamView != null) {
+                mStreamView.getHolder().setFixedSize(innerwidth, innerheight);
+            }
             other_view.setVisibility(View.GONE);
             li_header.setVisibility(View.GONE);
             img_quanping.setVisibility(View.VISIBLE);

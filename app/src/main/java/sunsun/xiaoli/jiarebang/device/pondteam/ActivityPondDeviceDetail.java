@@ -416,12 +416,12 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.deviceSet_fail) {//设置失败
                 MAlert.alert(resultEntity.getData());
-            }else if(resultEntity.getEventType()==UserPresenter.getDeviceOnLineState_success){
-                DeviceDetailModel detailModel= (DeviceDetailModel) resultEntity.getData();
-                isConnect=detailModel.getIs_disconnect().equals("0");
+            } else if (resultEntity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+                DeviceDetailModel detailModel = (DeviceDetailModel) resultEntity.getData();
+                isConnect = detailModel.getIs_disconnect().equals("0");
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
-            }else if(resultEntity.getEventType()==UserPresenter.getDeviceOnLineState_fail){
-                isConnect=false;
+            } else if (resultEntity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
+                isConnect = false;
             }
         }
     }

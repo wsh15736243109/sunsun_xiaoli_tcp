@@ -118,7 +118,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         id = getIntent().getStringExtra("id");
         setDeviceTitle(getIntent().getStringExtra("title"));
         threadStart();
-        tcp=new TcpUtil(handData,did,getSp(Const.UID),"101");
+        tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
         tcp.start();
     }
 
@@ -479,12 +479,12 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
-            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_success){
-                DeviceDetailModel detailModel= (DeviceDetailModel) entity.getData();
-                isConnect=detailModel.getIs_disconnect().equals("0");
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+                DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
+                isConnect = detailModel.getIs_disconnect().equals("0");
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
-            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_fail){
-                isConnect=false;
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
+                isConnect = false;
             }
         }
     }
@@ -563,7 +563,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         int endPo3 = (finalStr).length();
 //        ColoTextUtil.setColorfulValue2(startPo2, endPo2, startPo3, endPo3, R.color.text_yellow, finalStr, txt_gonglv);
         int cfg = Integer.parseInt(detailModelTcp.getCfg());
-        wenDuBaoJingStatus = (deviceDetailModel.getTemp_alert()==1 ? true : false);
+        wenDuBaoJingStatus = (deviceDetailModel.getTemp_alert() == 1 ? true : false);
         gongZuoZhuangTaiTongtZhiStatus = (deviceDetailModel.getIs_state_notify() == 1 ? true : false);
         try {
             JSONObject jsonObject = new JSONObject(deviceDetailModel.getExtra());
