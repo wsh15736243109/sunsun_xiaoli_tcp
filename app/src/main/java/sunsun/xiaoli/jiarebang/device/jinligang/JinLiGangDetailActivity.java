@@ -330,7 +330,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     }
 
 
-
     Handler handData = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -414,6 +413,13 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         }
         keepScreenOn(this, false);
         app.jinLiGangdetailUI = null;
+        try {
+            if (mTcpUtil != null) {
+                mTcpUtil.releaseTcp();
+            }
+        } catch (Exception e) {
+
+        }
         super.onDestroy();
     }
 
@@ -984,6 +990,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
             } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
                 MAlert.alert(entity.getData());
+                isConnect = false;
+                DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
         }
     }

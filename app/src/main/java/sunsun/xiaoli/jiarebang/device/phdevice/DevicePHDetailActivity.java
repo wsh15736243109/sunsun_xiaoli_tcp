@@ -21,7 +21,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.custom.ptr.BasePtr;
-import com.itboye.pondteam.db.DBManager;
 import com.itboye.pondteam.interfaces.SmartConfigTypeSingle;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
@@ -44,6 +43,7 @@ import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.popwindow.PHUpdate;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 
 import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
@@ -62,7 +62,6 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     private String id;
     private String did;
     public DeviceDetailModel deviceDetailModel;
-    private DBManager dbManager;
 
     TextView txt_ph, txt_wendu, ph_high, ph_low, wendu_high, wendu_di;
     public boolean isConnect;
@@ -75,6 +74,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     private double ph_h;
     private double temp_h;
     private double temp_l;
+    private TcpUtil tcp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,14 +95,34 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         });
         Glide.with(getApplicationContext()).load(R.drawable.smartconfig_loading).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(loading);
         setLoadingIsVisible(true);
-//        txt_title.setText(getIntent().getStringExtra("title") == null ? "" : getIntent().getStringExtra("title"));
         img_right.setBackgroundResource(R.drawable.menu);
         userPresenter = new UserPresenter(this);
         did = getIntent().getStringExtra("did");
         id = getIntent().getStringExtra("id");
-        dbManager = new DBManager(this);
+        tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
+        tcp.start();
+        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
+        userPresenter.deviceSet_300Ph(did, -1,-1,-1,-1,-1,-1,-1,-1,-1);
         threadStart();
     }
+
+    public DeviceDetailModel detailModelTcp;
+    Handler handData = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.arg1) {
+                case 101:
+                    System.out.println("TCP 接收数据 101" + msg.obj);
+                    break;
+                case 102:
+                    detailModelTcp = (DeviceDetailModel) msg.obj;
+                    setData();
+                    System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
+                    break;
+            }
+        }
+    };
 
     Runnable runnable = new Runnable() {
         @Override
@@ -151,20 +171,27 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        txt_ph.setText(String.format("%.2f ", deviceDetailModel.getPh() / 100));
-        txt_wendu.setText(String.format("%.1f ", deviceDetailModel.getT() / 10) + "℃");
-        img_wendubaojing.setBackgroundResource(isWenDuBaoJing ? R.drawable.kai : R.drawable.guan);
-        img_phbaojing.setBackgroundResource(isPhBaoJing ? R.drawable.kai : R.drawable.guan);
-        //设置固件更新UI
-        if (myApp.updateActivityUI != null) {
-            if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                myApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
+        if (detailModelTcp!=null) {
+            txt_ph.setText(String.format("%.2f ", detailModelTcp.getPh() / 100));
+            txt_wendu.setText(String.format("%.1f ", detailModelTcp.getT() / 10) + "℃");
+            //设置固件更新UI
+            if (myApp.updateActivityUI != null) {
+                if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                    myApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
+                }
+            }
+
+            if (myApp.phJiaoZhunUI!=null) {
+                myApp.phJiaoZhunUI.setData();
             }
         }
+        img_wendubaojing.setBackgroundResource(isWenDuBaoJing ? R.drawable.kai : R.drawable.guan);
+        img_phbaojing.setBackgroundResource(isPhBaoJing ? R.drawable.kai : R.drawable.guan);
+
     }
 
     private void beginRequest() {
-        userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
+        userPresenter.getDeviceOnLineState(did);
     }
 
     @Override
@@ -199,7 +226,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                         DevicePHDetailActivity.this.mNewTempValue = newVal;
                     }
                 });
-                MAlert.alert("mNewTempValue"+mNewTempValue);
+                showAlertDialog(getString(R.string.ph_high), mPicker, 1, null);
                 break;
             case R.id.re_phdiwei:
                 mNewTempValue = (int) (ph_l / 100);
@@ -458,14 +485,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deviceSet_300success) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.deviceSet_300fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
@@ -476,22 +496,22 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
                 myApp.mDeviceUi.getDeviceList();
-                beginRequest();
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_success) {
                 MAlert.alert(entity.getData());
                 myApp.mDeviceUi.getDeviceList();
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_fail) {
                 MAlert.alert(entity.getData());
+            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_success){
+                DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
+                isConnect = detailModel.getIs_disconnect().equals("0");
+                DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_fail){
+                isConnect = false;
+                DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
         }
     }
@@ -499,6 +519,13 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     @Override
     protected void onDestroy() {
         handler.removeCallbacks(runnable);
+        try {
+            if (tcp != null) {
+                tcp.releaseTcp();
+            }
+        } catch (Exception e) {
+
+        }
         super.onDestroy();
     }
 }

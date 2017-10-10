@@ -49,6 +49,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     TextView shouci, shangci;
 
     boolean isFirst = true;
+    private boolean beginJiaoZhun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
         mApp.phJiaoZhunUI = this;
         txt_title.setText(getString(R.string.ph_jiaozhun));
         userPresenter = new UserPresenter(this);
+        beginJiaoZhun = false;
         setJiaoZhunTimes();
 //        userPresenter.
     }
@@ -189,11 +191,24 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     }
 
     public void setData() {
-        DeviceDetailModel deviceDetailModel = mApp.devicePhUI.deviceDetailModel;
-//        txt_ph_di_1.setText(deviceDetailModel.);
-//        txt_ph_di_2.setText();
-//        txt_ph_gao_1.setText();
-//        txt_ph_gao_2.setText();
+        if (beginJiaoZhun) {
+            mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_ING);
+            mydialog.txt_tips.setText("电极正在校准中");
+            int remainSeconds = mApp.devicePhUI.detailModelTcp.getPh_dly() - mApp.devicePhUI.detailModelTcp.getPh_sche();
+            if (remainSeconds > 0) {
+                mydialog.txt_seconds.setText("剩余" + (remainSeconds) + "秒");
+            } else {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    handler.removeCallbacks(runnable);
+                    mydialog.txt_tips.setText("电极校准成功");
+                    beginJiaoZhun = false;
+                    mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_FINISH);
+                    userPresenter.updateJiaoZhunTime(mApp.mDeviceUi.mSelectDeviceInfo.getId(), -1, -1, -1, -1, -1, -1, System.currentTimeMillis());
+                }
+            }
+        }
     }
 
     @Override
@@ -206,26 +221,11 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.deviceSet_300success) {
                 MAlert.alert(entity.getData());
-                new Thread(runnable).start();
-            } else if (entity.getEventType() == UserPresenter.deviceSet_300success) {
+                beginJiaoZhun = true;
+            } else if (entity.getEventType() == UserPresenter.deviceSet_300fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 DeviceDetailModel deviceDetailModel = (DeviceDetailModel) entity.getData();
-                mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_ING);
-                mydialog.txt_tips.setText("电极正在校准中");
-                int remainSeconds = deviceDetailModel.getPh_dly() - deviceDetailModel.getPh_sche();
-                if (remainSeconds > 0) {
-                    mydialog.txt_seconds.setText("剩余" + (remainSeconds) + "秒");
-                } else {
-                    if (isFirst) {
-                        isFirst = false;
-                    } else {
-                        handler.removeCallbacks(runnable);
-                        mydialog.txt_tips.setText("电极校准成功");
-                        mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_FINISH);
-                        userPresenter.updateJiaoZhunTime(mApp.mDeviceUi.mSelectDeviceInfo.getId(), -1, -1, -1, -1, -1, -1, System.currentTimeMillis());
-                    }
-                }
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 handler.removeCallbacks(runnable);
                 MAlert.alert(entity.getData());
@@ -241,7 +241,6 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     public void setJiaoZhunTimes() {
         String times = mApp.mDeviceUi.mSelectDeviceInfo.getExtra();
         try {
-//            {"first_upd":"1496729834","last_upd":"1496729834"}
             JSONObject jsonObject = new JSONObject(times);
             String firstTime = jsonObject.getString("first_upd");
             String lastTime = jsonObject.getString("last_upd");

@@ -126,8 +126,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="#EEEEEE"
                     android:padding="@dimen/DIMEN_10DP"
-
-                    android:text="@string/leiji_time"
+                    android:text=""
                     android:textSize="@dimen/DIMEN_20DP" />
 
                 <View
@@ -162,7 +161,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_10DP"
-                        android:text="4"
+                        android:text=""
                         android:textColor="@color/main_green"
                         android:textSize="@dimen/DIMEN_20DP" />
                 </RelativeLayout>

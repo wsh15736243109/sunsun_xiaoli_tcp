@@ -42,6 +42,7 @@ import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.PopupShuiBeng;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -74,7 +75,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     @IsNeedClick
     TextView txt_status, txt_leijitime;
     int seconds = 0;
-
+    private TcpUtil tcp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,11 +89,33 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 beginRequest();
             }
         });
-        did = getIntent().getStringExtra("did");
-        img_right.setBackgroundResource(R.drawable.menu);
+        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         userPresenter = new UserPresenter(this);
+        did = getIntent().getStringExtra("did");
+        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1,-1);
+        img_right.setBackgroundResource(R.drawable.menu);
         new Thread(runnable).start();
+        tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
+        tcp.start();
     }
+
+    public DeviceDetailModel detailModelTcp;
+    Handler handData = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.arg1) {
+                case 101:
+                    System.out.println("TCP 接收数据 101" + msg.obj);
+                    break;
+                case 102:
+                    detailModelTcp = (DeviceDetailModel) msg.obj;
+                    setData();
+                    System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
+                    break;
+            }
+        }
+    };
 
     Runnable runnable = new Runnable() {
         @Override
@@ -111,12 +134,19 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     };
 
     private void beginRequest() {
-        userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
+        userPresenter.getDeviceOnLineState(did);
     }
 
     @Override
     protected void onDestroy() {
         handler.removeCallbacks(runnable);
+        try {
+            if (tcp != null) {
+                tcp.releaseTcp();
+            }
+        } catch (Exception e) {
+
+        }
         super.onDestroy();
     }
 
@@ -342,26 +372,20 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             }
             if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 deviceDetailModel = (DeviceDetailModel) entity.getData();
-                setData();
+                if (deviceDetailModel!=null) {
+                    setData();
+                }
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deviceSet_shuiBengsuccess) {
                 MAlert.alert(entity.getData());
-                Const.intervalTime = 500;
-                threadStart();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Const.intervalTime = 10000;
-                    }
-                }, 5000);
-
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.deviceSet_shuiBengfail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
                 mApp.mDeviceUi.getDeviceList();
-                beginRequest();
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
@@ -372,9 +396,17 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_success) {
                 MAlert.alert(entity.getData());
                 mApp.mDeviceUi.getDeviceList();
-                beginRequest();
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
+            }else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+                DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
+                isConnect = detailModel.getIs_disconnect().equals("0");
+                DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+            }else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
+                MAlert.alert(entity.getData());
+                isConnect=false;
+                DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
         }
     }
@@ -396,51 +428,50 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             e.printStackTrace();
         }
         img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-        txt_gonglv.setText(deviceDetailModel.getPwr() + "W");
-        String strState = "";
-        //运行状态
-        state = deviceDetailModel.getState();
-        switch (state) {
-            case 0:
-                //停机
-                txt_status.setText(getString(R.string.stop));
-                strState = String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1) + "," + getString(R.string.stop);
+        if (detailModelTcp!=null) {
+            txt_gonglv.setText(detailModelTcp.getPwr() + "W");
+            String strState = "";
+            //运行状态
+            state = detailModelTcp.getState();
+            switch (state) {
+                case 0:
+                    //停机
+                    txt_status.setText(getString(R.string.stop));
+                    strState = String.format(getString(R.string.dang), detailModelTcp.getGear() + 1) + "," + getString(R.string.stop);
 //                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-            case 1:
-                //运行
-                strState = (deviceDetailModel.getGear() + 1) + getString(R.string.status_running);
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-            case 2:
-                //故障
-                strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-            case 3:
-                strState = String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
+                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+                    Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    break;
+                case 1:
+                    //运行
+                    strState = (detailModelTcp.getGear() + 1) + getString(R.string.status_running);
+                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
+                    Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    break;
+                case 2:
+                    //故障
+                    strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
+                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
+                    Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    break;
+                case 3:
+                    strState = String.format(getString(R.string.device_will), caculcateSeconds(detailModelTcp.getFcd()));
 //                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-        }
-        txt_liuliangchoose.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1));
-        txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
-
-        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getOnline_time() / 3600.0));
-//        shuibeng_wiget.setDangWei(deviceDetailModel.getGear());
-//        shuibeng_wiget.setState(state);
-        txt_current_status_value.setText(strState);
-//        getLiuLiang();
-        if (mApp.updateActivityUI != null) {
-            if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                mApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
+                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+                    Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    break;
+            }
+            txt_current_status_value.setText(strState);
+            txt_liuliangchoose.setText(String.format(getString(R.string.dang), detailModelTcp.getGear() + 1));
+            if (mApp.updateActivityUI != null) {
+                if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                    mApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
+                }
             }
         }
+
+        txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
+        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getOnline_time() / 3600.0));
     }
 
     private String caculcateSeconds(int fcd) {

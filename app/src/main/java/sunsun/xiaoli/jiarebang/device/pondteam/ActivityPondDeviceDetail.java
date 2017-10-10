@@ -405,6 +405,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
             } else if (resultEntity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
                 isConnect = false;
+                DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
         }
     }

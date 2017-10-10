@@ -253,7 +253,7 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     smartConfigType = SmartConfigTypeSingle.UPDATE_ING;
                 }
             } else if (did.startsWith("S02")) {
-                if (myApp.deviceJiaReBangUI.deviceDetailModel.getUpd_state() <= 0 || myApp.deviceJiaReBangUI.deviceDetailModel.getUpd_state() == 100 || myApp.deviceJiaReBangUI.deviceDetailModel.getUpd_state() == 101) {
+                if (myApp.deviceJiaReBangUI.detailModelTcp.getUpd_state() <= 0 || myApp.deviceJiaReBangUI.detailModelTcp.getUpd_state() == 100 || myApp.deviceJiaReBangUI.detailModelTcp.getUpd_state() == 101) {
                     //当前设备还没有开始更新
                     smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
                 } else {
@@ -269,7 +269,7 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     smartConfigType = SmartConfigTypeSingle.UPDATE_ING;
                 }
             } else if (did.startsWith("S04")) {
-                if (myApp.devicePhUI.deviceDetailModel.getUpd_state() <= 0 || myApp.devicePhUI.deviceDetailModel.getUpd_state() == 100 || myApp.devicePhUI.deviceDetailModel.getUpd_state() == 101) {
+                if (myApp.devicePhUI.detailModelTcp.getUpd_state() <= 0 || myApp.devicePhUI.detailModelTcp.getUpd_state() == 100 || myApp.devicePhUI.detailModelTcp.getUpd_state() == 101) {
                     //当前设备还没有开始更新
                     smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
                 } else {
@@ -277,7 +277,7 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     smartConfigType = SmartConfigTypeSingle.UPDATE_ING;
                 }
             }else if (did.startsWith("S05")) {
-                if (myApp.deviceShuiBengUI.deviceDetailModel.getUpd_state() <= 0 || myApp.deviceShuiBengUI.deviceDetailModel.getUpd_state() == 100 || myApp.deviceShuiBengUI.deviceDetailModel.getUpd_state() == 101) {
+                if (myApp.deviceShuiBengUI.detailModelTcp.getUpd_state() <= 0 || myApp.deviceShuiBengUI.detailModelTcp.getUpd_state() == 100 || myApp.deviceShuiBengUI.detailModelTcp.getUpd_state() == 101) {
                     //当前设备还没有开始更新
                     smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
                 } else {
