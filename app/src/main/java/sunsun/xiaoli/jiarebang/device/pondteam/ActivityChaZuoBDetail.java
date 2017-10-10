@@ -63,7 +63,8 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
     RelativeLayout re_mode_selection;
     TextView chazuoA_mode;
     private int tempType;
-    ArrayList<String> arB = new ArrayList<>(), arA = new ArrayList<>();
+    public ArrayList<String> arB = new ArrayList<>(), arA = new ArrayList<>();
+    private boolean isOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,24 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 // Create different menus depending on the view type
             }
         };
+        exListView.setOnSwipeListener(new SwipeMenuExpandableListView.OnSwipeListener() {
+            @Override
+            public void onSwipeStart(int position) {
+                if (position!=-1) {
+                    //position!=-1代表有一栏已经打开
+                    isOpen=true;
+                }
+
+            }
+
+            @Override
+            public void onSwipeEnd(int position) {
+                if (position==-1) {
+                    //position==-1代表没有有任何一栏打开，即所有分组全部是关闭状态
+                    isOpen=false;
+                }
+            }
+        });
         exListView.setMenuCreator(creator);
         exListView.setOnMenuItemClickListener(new SwipeMenuExpandableListView.OnMenuItemClickListenerForExpandable() {
             @Override
@@ -110,17 +129,18 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                     } else {
                         arB.remove(groupPosition);
                     }
-                } catch (Exception e) {
 
-                }
-                arrayListInner.remove(groupPosition);
-                String str1 = new Gson().toJson(arA);
-                String str2 = new Gson().toJson(arB);
-                String str3 = new Gson().toJson(arrayListInner);
-                if (chazuo_type.equals("A")) {
-                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, str1, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", str3, -1, -1);
-                } else {
-                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, str2, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", str3, "", -1, -1);
+                    arrayListInner.remove(groupPosition);
+                    String str1 = new Gson().toJson(arA);
+                    String str2 = new Gson().toJson(arB);
+                    String str3 = new Gson().toJson(arrayListInner);
+                    if (chazuo_type.equals("A")) {
+                        userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, str1, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", str3, -1, -1);
+                    } else {
+                        userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, str2, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", str3, "", -1, -1);
+                    }
+                } catch (Exception e) {
+                    MAlert.alert("eror"+e.getMessage());
                 }
                 return true;
             }
@@ -304,6 +324,10 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
         alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (!myApplication.pondDeviceDetailUI.isConnect) {
+                    MAlert.alert(getString(R.string.disconnect));
+                    return;
+                }
                 /**
                  * outStateA  outStateB
                  *     Bit0：插座通电状态
@@ -451,6 +475,10 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
         alert.setTitle(type ? getString(R.string.chazuoA_opentime) : getString(R.string.chazuoA_closetime)).setView(viewPicker).setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                if (!myApplication.pondDeviceDetailUI.isConnect) {
+                    MAlert.alert(getString(R.string.disconnect));
+                    return;
+                }
                 String hour = mHourSpinner.getValue() + "";
                 hour = TimesUtils.localToUTC(hour + "", "HH", "HH");
                 if (type) {
@@ -461,7 +489,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 String json = new Gson().toJson(arrayListInner);
                 if (chazuo_type.equals("A")) {
                     userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", json, -1, -1);
-                }else {
+                } else {
                     userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1);
                 }
             }
@@ -506,7 +534,10 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101 && resultCode == 102) {
+        if (requestCode == 101 && resultCode == 102) {if (!myApplication.pondDeviceDetailUI.isConnect) {
+            MAlert.alert(getString(R.string.disconnect));
+            return;
+        }
             int weekBinary = data.getIntExtra("weekBinary", 0);
             arrayListInner.get(groupPosition).setWeek(weekBinary);
             String json = new Gson().toJson(arrayListInner);
@@ -545,28 +576,29 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             if (xAlertDialog.getType() == 1) {
                 arrayListInner.get(groupPosition).setNick_name(password);
                 if (chazuo_type.equals("A")) {
-                    if (arrayListInner.size()==arA.size()) {
+//                    if (arrayListInner.size() == arA.size()) {
                         arA.set(groupPosition, password);
-                    }else if(arrayListInner.size()>arA.size()){
-                        for (int i = 0; i < arrayListInner.size() - arA.size(); i++) {
-                            arA.add("");
-                        }
-                        arA.set(groupPosition, password);
-                    }else if(arrayListInner.size()<arA.size()){
-
-                    }
+//                    } else if (arrayListInner.size() > arA.size()) {
+//                        for (int i = 0; i < arrayListInner.size() - arA.size(); i++) {
+//                            arA.add("");
+//                        }
+//                        arA.set(groupPosition, password);
+//                    } else if (arrayListInner.size() < arA.size()) {
+//
+//                    }
                 } else {
-                    if (arrayListInner.size()==arB.size()) {
+                   // if (arrayListInner.size() == arB.size()) {
                         arB.set(groupPosition, password);
-                    }else if(arrayListInner.size()>arB.size()){
-                        for (int i = 0; i < arrayListInner.size() - arB.size(); i++) {
-                            arB.add("");
-                        }
-                        arB.set(groupPosition, password);
-                    }else if(arrayListInner.size()<arB.size()){
-
-                    }
+//                    } else if (arrayListInner.size() > arB.size()) {
+//                        for (int i = 0; i < arrayListInner.size() - arB.size(); i++) {
+//                            arB.add("");
+//                        }
+//                        arB.set(groupPosition, password);
+//                    } else if (arrayListInner.size() < arB.size()) {
+//
+//                    }
                 }
+                arrayTemp=arrayListInner;
             } else {
 
                 String hour = TimesUtils.localToUTC(8 + "", "HH", "HH");
@@ -581,34 +613,34 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 arrayTemp.add(weishi);
 
                 if (chazuo_type.equals("A")) {
-                    if (arrayListInner.size()==arA.size()) {
+                    if (arrayListInner.size() == arA.size()) {
                         arA.add(password);
-                    }else{
+                    } else {
                         try {
                             //昵称数组大于时段数组
-                            arA.add(arrayListInner.size(),password);
-                        }catch (Exception e){
+                            arA.add(arrayListInner.size(), password);
+                        } catch (Exception e) {
                             //昵称数组小于时段数组
                             for (int i = 0; i < arrayListInner.size() - arA.size(); i++) {
-                                if (i!=arrayListInner.size()-1) {
+                                if (i != arrayListInner.size() - 1) {
                                     arA.add("");
-                                }else{
+                                } else {
                                     arA.add(password);
                                 }
                             }
                         }
                     }
                 } else {
-                    if (arrayListInner.size()==arB.size()) {
+                    if (arrayListInner.size() == arB.size()) {
                         arB.add(password);
-                    }else{
+                    } else {
                         try {
-                            arB.add(arrayListInner.size(),password);
-                        }catch (Exception e){
+                            arB.add(arrayListInner.size(), password);
+                        } catch (Exception e) {
                             for (int i = 0; i < arrayListInner.size() - arB.size(); i++) {
-                                if (i!=arrayListInner.size()-1) {
+                                if (i != arrayListInner.size() - 1) {
                                     arB.add("");
-                                }else{
+                                } else {
                                     arB.add(password);
                                 }
                             }
@@ -635,11 +667,17 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
 
     @Override
     protected void onDestroy() {
-        myApplication.chazuoBDetail=null;
+        myApplication.chazuoBDetail = null;
         super.onDestroy();
     }
 
     public void setChaZuoData() {
+
+        if (isOpen) {
+            System.out.println("展开  true");
+            return;
+        }
+        System.out.println("展开  false");
         if (chazuo_type.equals("A")) {
             //插座A数据
             ArrayList<WeiShiModel> arTemp = new ArrayList<>();
@@ -701,13 +739,12 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
         }
 
 //        if (hasEx == false) {
-            if (swipWeiShiadapter != null) {
-                for (int i = 0; i < swipWeiShiadapter.getGroupCount(); i++) {
-                    exListView.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
+        if (swipWeiShiadapter != null) {
+            for (int i = 0; i < swipWeiShiadapter.getGroupCount(); i++) {
+                exListView.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
 //                    hasEx = true;
-                }
             }
-
+        }
 //        }
         setMode();
     }
@@ -749,7 +786,8 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             }
             if (entity.getEventType() == UserPresenter.deviceSet_success) {
                 MAlert.alert(entity.getData());
-                myApplication.pondDeviceDetailUI.threadStart();
+                isOpen=false;
+                myApplication.pondDeviceDetailUI.beginRequst();
             } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(entity.getData());
             }

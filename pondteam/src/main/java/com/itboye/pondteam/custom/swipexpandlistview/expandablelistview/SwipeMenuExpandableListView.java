@@ -265,6 +265,7 @@ public class SwipeMenuExpandableListView extends ExpandableListView implements S
                     if (mTouchState == TOUCH_STATE_X) {
                         if (mTouchView != null) {
                             mTouchView.onSwipe(ev);
+                            System.out.println("触摸事件--开始");
                         }
                         getSelector().setState(new int[] { 0 });
                         ev.setAction(MotionEvent.ACTION_CANCEL);
@@ -291,6 +292,7 @@ public class SwipeMenuExpandableListView extends ExpandableListView implements S
                             }
                         }
                         if (mOnSwipeListener != null) {
+                            System.out.println("触摸事件--结束");
                             mOnSwipeListener.onSwipeEnd(mTouchPosition);
                         }
                         ev.setAction(MotionEvent.ACTION_CANCEL);
@@ -300,6 +302,7 @@ public class SwipeMenuExpandableListView extends ExpandableListView implements S
                     }
                     break;
             }
+            System.out.println("触摸事件");
         // }
         return super.onTouchEvent(ev);
     }
@@ -319,6 +322,7 @@ public class SwipeMenuExpandableListView extends ExpandableListView implements S
                 // }
             }
         }
+        System.out.println("开启侧滑");
     }
 
     private int dp2px(int dp) {

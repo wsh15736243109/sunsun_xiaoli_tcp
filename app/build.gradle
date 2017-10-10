@@ -6,12 +6,12 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 114
-        versionName "1.1.4"
+        versionCode 115
+        versionName "1.1.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        applicationId "com.itboye.lingshou"
+        applicationId "sunsun.xiaoli.jiarebang"
 //        manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
-//        manifestPlaceholders = [str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang",ENVIRONMENT: "xiaoli",app_icon   : "@drawable/device_002",UMENG_APPKEY:"58cb6076677baa0aa300014f",UMENG_MESSAGE_SECRET:"af2c2bd3297da0dfd34bb23f14db362b"]
+        manifestPlaceholders = [str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang",ENVIRONMENT: "xiaoli",app_icon   : "@drawable/device_002",UMENG_APPKEY:"58cb6076677baa0aa300014f",UMENG_MESSAGE_SECRET:"af2c2bd3297da0dfd34bb23f14db362b"]
 //        applicationId "sunsun.xiaoli.jiarebang"
 //        resValue "string", "app_name", "小鲤智能"
 //        resValue "bool", "isrRank", 'true'

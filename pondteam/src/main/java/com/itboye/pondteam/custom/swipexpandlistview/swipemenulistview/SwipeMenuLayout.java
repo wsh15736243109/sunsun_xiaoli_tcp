@@ -265,12 +265,14 @@ public class SwipeMenuLayout extends FrameLayout {
         mBaseX = -mContentView.getLeft();
         mCloseScroller.startScroll(0, 0, mBaseX, 0, 350);
         postInvalidate();
+        System.out.println("关闭侧滑");
     }
 
     public void smoothOpenMenu() {
         state = STATE_OPEN;
         mOpenScroller.startScroll(-mContentView.getLeft(), 0, mMenuView.getWidth(), 0, 350);
         postInvalidate();
+        System.out.println("开启侧滑");
     }
 
     public void closeMenu() {
@@ -281,6 +283,7 @@ public class SwipeMenuLayout extends FrameLayout {
             state = STATE_CLOSE;
             swipe(0);
         }
+//        System.out.println("开启侧滑");
     }
 
     public void openMenu() {
@@ -289,6 +292,7 @@ public class SwipeMenuLayout extends FrameLayout {
             swipe(mMenuView.getWidth());
             postInvalidate();
         }
+//        System.out.println("关闭侧滑");
     }
 
     public View getContentView() {

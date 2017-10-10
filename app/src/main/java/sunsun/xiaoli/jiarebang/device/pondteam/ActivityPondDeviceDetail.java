@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.itboye.pondteam.R;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.bean.DeviceDetailModel;
@@ -28,6 +30,8 @@ import com.itboye.pondteam.utils.loadingutil.UIAlertView;
 import com.itboye.pondteam.utils.popupwindow.SaveAlertView;
 import com.itboye.pondteam.volley.ResultEntity;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -99,7 +103,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         myApp.pondDeviceDetailUI = this;
         setCurrentTitle(getIntent().getStringExtra("device"));
         did = getIntent().getStringExtra("did");
-        id = getIntent().getStringExtra("ID");
+        id = getIntent().getStringExtra("id");
         psw = getIntent().getStringExtra("psw");
         dbManager = new DBManager(this);
         userPresenter = new UserPresenter(this);
@@ -489,16 +493,25 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         icon_setting_B.setBackgroundResource(socketB ? R.drawable.kai : R.drawable.guan);
         txt_chazuoB_name.setText(this.deviceDetailModel.getNickname_b());
         setMode("B", chazuo_B_total_power);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        ArrayList<String> arTemp = new Gson().fromJson(this.deviceDetailModel.getOb_per_name(), type);
+        if (myApp.chazuoBDetail != null) {
+            myApp.chazuoBDetail.arB = arTemp;
+        }
     }
 
     private void setChaZuoA(DeviceDetailModel deviceDetailModel) {
         socketA = deviceDetailModel.getOut_state_a().equals("0") ? false : true;
         icon_setting_A.setBackgroundResource(socketA ? R.drawable.kai : R.drawable.guan);
         txt_chazuoA_name.setText(this.deviceDetailModel.getNickname_a());
-//        chazuo_A_power.setText(getString(R.string.current_power)+":"+deviceDetailModel.get);
-//        chazuo_A_total_power.setText(getString(R.string.status)+(socketA?getString(R.string.chazuo_open):getString(R.string.chazuo_close)));
-//        chazuo_B_total_power.setText(getString(R.string.status)+(socketB?getString(R.string.chazuo_open):getString(R.string.chazuo_close)));
         setMode("A", chazuo_A_total_power);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        ArrayList<String> arTemp = new Gson().fromJson(this.deviceDetailModel.getOa_per_name(), type);
+        if (myApp.chazuoBDetail != null) {
+            myApp.chazuoBDetail.arA = arTemp;
+        }
     }
 
     private void setUVLamp(DeviceDetailModel deviceDetailModel) {

@@ -1,7 +1,6 @@
 package sunsun.xiaoli.jiarebang.utils;
 
 import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 
@@ -67,20 +66,6 @@ public class TcpUtil {
         new InitSocketThread().start();
     }
 
-    class TcpAsnycTask extends AsyncTask {
-
-        @Override
-        protected Object doInBackground(Object[] params) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-            super.onPostExecute(o);
-            initSocket();
-        }
-    }
-
     class InitSocketThread extends Thread {
         @Override
         public void run() {
@@ -100,6 +85,10 @@ public class TcpUtil {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("TCP 接收数据 error" + e.getMessage());
+//            mReadThread.interrupt();
+            mReadThread.release();
         }
     }
 
@@ -111,9 +100,9 @@ public class TcpUtil {
             if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
                 boolean isSuccess = sendMsg(TcpUtil.this.msg);//就发送一个\r\n过去 如果发送失败，就重新初始化一个socket
                 if (!isSuccess) {
-//                    mHandler.removeCallbacks(heartBeatRunnable);
-//                    mReadThread.release();
-//                    releaseLastSocket(mSocket);
+                    mHandler.removeCallbacks(heartBeatRunnable);
+                    mReadThread.release();
+                    releaseLastSocket(mSocket);
                     initSocket();
                 }
 

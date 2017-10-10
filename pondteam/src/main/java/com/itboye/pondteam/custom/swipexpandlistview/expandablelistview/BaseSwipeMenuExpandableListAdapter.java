@@ -14,7 +14,7 @@ import com.itboye.pondteam.custom.swipexpandlistview.swipemenulistview.ContentVi
 public abstract class BaseSwipeMenuExpandableListAdapter extends BaseExpandableListAdapter {
     private static final String TAG = "BaseSwipeMenuExpandableListAdapter";
     public SwipeMenuExpandableListAdapter wrapperAdapter;
-
+    public boolean isOpen=false;
     public abstract boolean isGroupSwipable(int groupPosition);
 
     public abstract boolean isChildSwipable(int groupPosition, int childPosition);
@@ -49,5 +49,6 @@ public abstract class BaseSwipeMenuExpandableListAdapter extends BaseExpandableL
     	}else{
     		this.notifyDataSetChanged();
     	}
+//        isOpen=ifKeepMenuOpen;
     }
 }

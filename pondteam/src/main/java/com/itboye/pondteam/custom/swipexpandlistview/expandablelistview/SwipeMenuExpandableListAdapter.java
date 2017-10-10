@@ -22,26 +22,27 @@ import com.itboye.pondteam.custom.swipexpandlistview.swipemenulistview.SwipeMenu
 
 
 /**
- * 
  * @author yuchentang
- * 
  */
 public class SwipeMenuExpandableListAdapter implements ExpandableListAdapter, SwipeMenuViewForExpandable.OnSwipeItemClickListenerForExpandable {
 
     public static final int GROUP_INDEX = -1991;// when a group's swipe menu was
-                                                // clicked, it fires an onclick
-                                                // event which childPostion is
-                                                // -1991
+    // clicked, it fires an onclick
+    // event which childPostion is
+    // -1991
+    public boolean isOpen = false;
     private SwipeMenuExpandableListView mList;
     Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 0:
                     mList.smoothOpenMenu(msg.arg1);
+                    isOpen = true;
                     remove();
                     // this.sendEmptyMessageDelayed(1, 0);
                     break;
                 case 1:
+                    isOpen = false;
                     if (v != null) {
                         remove();
                     }
@@ -103,6 +104,7 @@ public class SwipeMenuExpandableListAdapter implements ExpandableListAdapter, Sw
         } else {
             mList.setTouchView(null);
         }
+        isOpen=ifKeepMenuOpen;
     }
 
     private Drawable getDrawable(View v) {
@@ -117,7 +119,7 @@ public class SwipeMenuExpandableListAdapter implements ExpandableListAdapter, Sw
     private SwipeMenuExpandableListView.OnMenuItemClickListenerForExpandable onMenuItemClickListener;
 
     public SwipeMenuExpandableListAdapter(Context context, BaseSwipeMenuExpandableListAdapter adapter,
-            SwipeMenuExpandableListView lv) {
+                                          SwipeMenuExpandableListView lv) {
         mAdapter = adapter;
         mContext = context;
         mList = lv;
@@ -233,7 +235,7 @@ public class SwipeMenuExpandableListAdapter implements ExpandableListAdapter, Sw
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
-            ViewGroup parent) {
+                             ViewGroup parent) {
         if (!mAdapter.isChildSwipable(groupPosition, childPosition)) {
             return mAdapter.getChildViewAndReUsable(groupPosition, childPosition, isLastChild, convertView, parent).view;
         }

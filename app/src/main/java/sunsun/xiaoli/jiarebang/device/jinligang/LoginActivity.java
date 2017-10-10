@@ -87,6 +87,7 @@ public class LoginActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.username_empty));
                     return;
                 }
+                showProgressDialog(getString(R.string.requesting),true);
                 userPresenter.login(country, userName, userPass, "");
 //                intent = new Intent(LoginActivity.this, AddPondDevice.class);
 //                startActivity(intent);
@@ -115,6 +116,11 @@ public class LoginActivity extends BaseActivity implements Observer {
     @Override
     public void update(Observable o, Object data) {
         ResultEntity resultEntity = handlerError(data);
+        try {
+            closeProgressDialog();
+        }catch (Exception e){
+
+        }
         if (resultEntity != null) {
             if (resultEntity.getCode() != 0) {
                 MAlert.alert(resultEntity.getMsg());
