@@ -212,7 +212,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     }
 
     private void initLocation() {
-        new LocationUtil(getApplicationContext(), this);
+//        new LocationUtil(getApplicationContext(), this);
     }
 
     private void initLanguage() {

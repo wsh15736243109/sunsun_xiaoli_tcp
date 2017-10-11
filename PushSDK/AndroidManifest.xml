@@ -160,7 +160,7 @@
         <!--com.itboye.pondlink-->
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
-            android:authorities="sunsun.xiaoli.jiarebang.message"
+            android:authorities="sunsun.xiaoli.jiarebang.umeng.message"
             android:exported="false">
             <grant-uri-permission android:pathPattern=".*" />
         </provider>

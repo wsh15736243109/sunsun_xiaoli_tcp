@@ -9,7 +9,7 @@ android {
         versionCode 116
         versionName "1.1.6"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-//        applicationId "sunsun.xiaoli.jiarebang"
+//        applicationId "com.itboye.lingshou"
 //        manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
 //        manifestPlaceholders = [str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang",ENVIRONMENT: "xiaoli",app_icon   : "@drawable/device_002",UMENG_APPKEY:"58cb6076677baa0aa300014f",UMENG_MESSAGE_SECRET:"af2c2bd3297da0dfd34bb23f14db362b"]
 //        applicationId "sunsun.xiaoli.jiarebang"
@@ -94,7 +94,7 @@ android {
         leihu {
             manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd"]
             applicationId "com.itboye.xiaomianyang"
-            resValue "string", "app_name", "宜虎"
+            resValue "string", "app_name", "雷虎"
             resValue "bool", "isrRank", 'true'
             buildConfigField("String", "WX_APP_ID", '"wx60f47b0798e9850e"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaomianyang"')
@@ -152,7 +152,6 @@ android {
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
             buildConfigField("String", "APP_TYPE", '"小鲤智能"')
 //            buildConfigField("String", "APP_TYPE", '"森森新零售"')
-//            buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
 //            buildConfigField("boolean", "IS_CHINESE", 'true')
         }
     }
