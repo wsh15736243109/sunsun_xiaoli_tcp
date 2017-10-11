@@ -172,10 +172,10 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         } catch (Exception e) {
 
         }
-        if (hasRe == false) {
-            lingShouPresenter.getNearStore(CITY_CODE, lng + "", lat + "", "", "", pageIndex, 10);
-            hasRe = true;
-        }
+//        if (hasRe == false) {
+//            lingShouPresenter.getNearStore(CITY_CODE, lng + "", lat + "", "", "", pageIndex, 10);
+//            hasRe = true;
+//        }
     }
 
     @Override
@@ -257,8 +257,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 break;
             case R.id.txt_boda:
                 listEntity1 = (StoreListBean.ListEntity) v.getTag();
-                alert = new Dialog(getActivity());
+                alert = new Dialog(getActivity(),R.style.callphonedialog);
                 View view = View.inflate(getActivity(), R.layout.poup_home_callphone, null);
+                view.setMinimumWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth()-100);
                 tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
                 tvTitle.setChecked(true);
                 tvTitle.setText("手机:" + listEntity1.getPhone());

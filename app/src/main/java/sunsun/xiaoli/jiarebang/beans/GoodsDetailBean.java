@@ -1,6 +1,7 @@
 package sunsun.xiaoli.jiarebang.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,7 +86,81 @@ public class GoodsDetailBean implements Serializable {
     private String is_fav;
     private int selectPositon;
     private int count;
+    private ArrayList<DetailImage> detail_img;
 
+    public ArrayList<DetailImage> getDetail_img() {
+        return detail_img;
+    }
+
+    public void setDetail_img(ArrayList<DetailImage> detail_img) {
+        this.detail_img = detail_img;
+    }
+
+    public static class DetailImage implements Serializable{
+
+        /**
+         * update_time : 1503022250
+         * create_time : 1503022250
+         * pid : 23
+         * img_id : 1
+         * id : 57
+         * type : 6216
+         */
+        private String update_time;
+        private String create_time;
+        private String pid;
+        private String img_id;
+        private String id;
+        private String type;
+
+        public void setUpdate_time(String update_time) {
+            this.update_time = update_time;
+        }
+
+        public void setCreate_time(String create_time) {
+            this.create_time = create_time;
+        }
+
+        public void setPid(String pid) {
+            this.pid = pid;
+        }
+
+        public void setImg_id(String img_id) {
+            this.img_id = img_id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
+
+        public String getUpdate_time() {
+            return update_time;
+        }
+
+        public String getCreate_time() {
+            return create_time;
+        }
+
+        public String getPid() {
+            return pid;
+        }
+
+        public String getImg_id() {
+            return img_id;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public String getType() {
+            return type;
+        }
+    }
     public int getSelectPositon() {
         return selectPositon;
     }

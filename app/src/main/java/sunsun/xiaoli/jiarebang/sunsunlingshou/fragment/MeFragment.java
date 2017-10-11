@@ -25,6 +25,7 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.SettingActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AdviceActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -110,6 +111,12 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
                 break;
             case R.id.re_advice:
                 startActivity(new Intent(getActivity(), AdviceActivity.class));
+                break;
+            case R.id.img_head:
+            case R.id.txt_nickname:
+                if (getSp(Const.UID).equals("")) {
+                    startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
+                }
                 break;
         }
     }

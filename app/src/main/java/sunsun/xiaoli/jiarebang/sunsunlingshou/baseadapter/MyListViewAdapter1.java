@@ -1,7 +1,6 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -17,17 +16,18 @@ import sunsun.xiaoli.jiarebang.beans.ClassifyBean;
 /**
  * Created by a on 2016/5/12.
  */
-public class MyListViewAdapter1 extends BaseAdapter{
+public class MyListViewAdapter1 extends BaseAdapter {
 
     private final ArrayList<ClassifyBean> mMenus;
     private final Context context;
     private int selectIndex;
 
-    public MyListViewAdapter1(ArrayList<ClassifyBean> mMenus, Context context, int selectIndex){
-        this.mMenus=mMenus;
-        this.context=context;
-        this.selectIndex=selectIndex;
+    public MyListViewAdapter1(ArrayList<ClassifyBean> mMenus, Context context, int selectIndex) {
+        this.mMenus = mMenus;
+        this.context = context;
+        this.selectIndex = selectIndex;
     }
+
     @Override
     public int getCount() {
         return mMenus.size();
@@ -46,27 +46,29 @@ public class MyListViewAdapter1 extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
-        if(convertView==null){
-            convertView=View.inflate(context, R.layout.item_listview_1,null);
-            vh=new ViewHolder();
-            vh.tv= (TextView) convertView.findViewById(R.id.textview);
+        if (convertView == null) {
+            convertView = View.inflate(context, R.layout.item_listview_1, null);
+            vh = new ViewHolder();
+            vh.tv = (TextView) convertView.findViewById(R.id.textview);
             convertView.setTag(vh);
-        }else {
-            vh= (ViewHolder) convertView.getTag();
+        } else {
+            vh = (ViewHolder) convertView.getTag();
         }
 
         LinearLayout.LayoutParams selectParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-       //左上右下
-        selectParams.setMargins(1,1,0,0);
+        //左上右下
+        selectParams.setMargins(1, 1, 0, 0);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.setMargins(1,1,1,0);
+        params.setMargins(1, 1, 1, 0);
 
-        if(position==selectIndex){
-            vh.tv.setBackgroundColor(Color.parseColor("#ffffff"));
+        if (position == selectIndex) {
+//            vh.tv.setBackgroundColor(Color.parseColor("#ffffff"));
             vh.tv.setLayoutParams(selectParams);
-        }else {
-            vh.tv.setBackgroundColor(Color.parseColor("#dedede"));
+            vh.tv.setTextColor(context.getResources().getColor(R.color.orange));
+        } else {
+//            vh.tv.setBackgroundColor(Color.parseColor("#dedede"));
+            vh.tv.setTextColor(context.getResources().getColor(R.color.black));
             vh.tv.setLayoutParams(params);
         }
 
@@ -75,11 +77,11 @@ public class MyListViewAdapter1 extends BaseAdapter{
         return convertView;
     }
 
-    public void setIndex(int index){
+    public void setIndex(int index) {
         selectIndex = index;
     }
 
-    class ViewHolder{
+    class ViewHolder {
         TextView tv;
     }
 }

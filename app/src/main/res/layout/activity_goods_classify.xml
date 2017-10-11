@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
@@ -15,16 +15,20 @@
         android:id="@+id/li_storeinfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="vertical">
+
         <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView
-        android:id="@+id/lunbo"
-        app:ratio="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>
+            android:id="@+id/lunbo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ratio="2"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>
+
         <TextView
             android:id="@+id/txt_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/DIMEN_5DP"
             android:layout_marginLeft="@dimen/DIMEN_10DP"
             android:layout_marginTop="@dimen/DIMEN_5DP"
             android:drawableLeft="@drawable/lianxiren" />
@@ -38,6 +42,7 @@
             <TextView
                 android:id="@+id/txt_mobile"
                 android:layout_width="wrap_content"
+                android:drawablePadding="@dimen/DIMEN_5DP"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/dianhua" />
 
@@ -68,6 +73,7 @@
                 android:id="@+id/txt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/DIMEN_5DP"
                 android:layout_toLeftOf="@+id/txt_peisongfei"
                 android:drawableLeft="@drawable/dizhi"
                 android:text="" />
@@ -78,14 +84,25 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="@dimen/DIMEN_5DP"
+                android:drawablePadding="@dimen/DIMEN_5DP"
                 android:drawableLeft="@drawable/dizhi"
                 android:text="配送费" />
         </RelativeLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/gray"
+        android:layout_height="@dimen/DIMEN_1DP"></View>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/DIMEN_1DP"
+        android:background="@color/gray"
+        android:layout_marginTop="@dimen/DIMEN_10DP"></View>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -98,7 +115,6 @@
                 android:id="@+id/list_item_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@null"
                 android:scrollbars="none"></ListView>
 
             <View

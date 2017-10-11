@@ -1293,8 +1293,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             }
         }
         //时段设置更新UI
-        if (app.mPeriodUi != null && app.mPeriodUi.yanChiFinish) {
-//            app.mPeriodUi.yanChiFinish=false;
+        if (app.mPeriodUi != null) {
             app.mPeriodUi.setData();
         }
         setTemperature();//温度设置UI

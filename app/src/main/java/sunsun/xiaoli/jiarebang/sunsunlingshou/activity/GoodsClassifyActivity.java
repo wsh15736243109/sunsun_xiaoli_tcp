@@ -26,6 +26,7 @@ import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.MyListViewAdapter1;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.MyListViewAdapter2;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 
@@ -67,11 +68,13 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
         if (model == null) {
             li_storeinfo.setVisibility(View.GONE);
         } else {
+            actionBar.setTitle(model.getName());
             li_storeinfo.setVisibility(View.VISIBLE);
             txt_contact.setText("联系人"+model.getContacts());
-            txt_mobile.setText(Html.fromHtml("手机："+model.getPhone()+"<br />电话"+model.getMobile()));
+            txt_mobile.setText(Html.fromHtml("手机："+model.getPhone()+"<br />电话："+model.getMobile()));
             txt_address.setText("地址"+model.getAddress());
             txt_peisongfei.setText("配送费￥"+model.getPay());
+            new LunBoHelper().setLunBoData(this,lunbo,model.getLogo());
         }
 //        adapter2=new MyListViewAdapter2(allData,this,selectIndex);
 //        list_item_2.setAdapter(adapter2);
@@ -125,7 +128,12 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
                 bean = (ArrayList<ClassifyBean>) entity.getData();
                 adapter1 = new MyListViewAdapter1(bean, this, selectIndex);
                 list_item_1.setAdapter(adapter1);
-                list_item_1.addFooterView(new View(GoodsClassifyActivity.this));
+                if (bean!=null) {
+                    if (bean.size()>0) {
+                        lingShouPresenter.getGoodsList("", bean.get(0).getId(), "", 1, 10);
+                    }
+                }
+//                list_item_1.addFooterView(new View(GoodsClassifyActivity.this));
             } else if (entity.getEventType() == LingShouPresenter.getMainClassify_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getSeconfClassify_success) {

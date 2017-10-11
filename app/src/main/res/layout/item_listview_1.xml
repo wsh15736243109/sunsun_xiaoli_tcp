@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:minHeight="48sp"
-    android:background="#000000"
+    android:background="@color/gray"
     >
 
     <TextView
@@ -15,6 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="12sp"
-        android:text="手机"/>
+        android:text=""/>
 
 </LinearLayout>

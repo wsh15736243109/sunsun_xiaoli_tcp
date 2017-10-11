@@ -3,8 +3,6 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home;
 import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,6 +23,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.AddShopCartFragment;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
@@ -128,34 +127,41 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
     }
 
     private class WebAdapter extends BaseAdapter {
-        WebView webview;
-
+//        WebView webview;
+//
+//        public WebAdapter() {
+//
+//            webview = new WebView(GoodDetailActivity.this);
+//            webview.getSettings().setJavaScriptEnabled(true);
+//
+//            webview.setWebViewClient(new WebViewClient() {
+//                @Override
+//                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                    view.loadUrl(url);
+//                    return true;
+//                }
+//            });
+//
+//            webview.loadUrl("http://sunsun.8raw.com/index.php/Webview/Product/detail?id=55");
+//        }
+        ImageView webview;
         public WebAdapter() {
+//
+            webview = new ImageView(GoodDetailActivity.this);
 
-            webview = new WebView(GoodDetailActivity.this);
-            webview.getSettings().setJavaScriptEnabled(true);
 
-            webview.setWebViewClient(new WebViewClient() {
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return true;
-                }
-            });
-
-            webview.loadUrl("http://sunsun.8raw.com/index.php/Webview/Product/detail?id=55");
         }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-
+            webview = new ImageView(GoodDetailActivity.this);
+            GlidHelper.glidLoad(webview,Const.imgurl+bean.getDetail_img().get(position).getImg_id());
             return webview;
         }
 
         @Override
         public long getItemId(int position) {
 
-            return 0;
+            return position;
         }
 
         @Override

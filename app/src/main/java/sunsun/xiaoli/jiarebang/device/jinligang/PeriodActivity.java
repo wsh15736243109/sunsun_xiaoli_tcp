@@ -112,7 +112,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
     private int total2;//杀菌灯累计时间
     private int total3;//冲浪泵累计时间
 
-    public boolean yanChiFinish = false;//设备返回数据延迟可能性
+//    public boolean yanChiFinish = false;//设备返回数据延迟可能性
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +121,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
         mApp = (App) getApplication();
         txt_title.setText("");
         mApp.mPeriodUi = this;
-        yanChiFinish = false;
+//        yanChiFinish = false;
         gson = new Gson();
         type = 1;
         str1 = mApp.jinLiGangdetailUI.deviceDetailModel.getL_per();
@@ -250,7 +250,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String str = (hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + (minute < 10 ? ("0" + minute) : minute);
-                text.setText(str);
+//                text.setText(str);
                 switch (text.getId()) {
                     case R.id.period_textView3:
                         if (!(Boolean.parseBoolean(period_switch1.getTag() + ""))) {
@@ -308,7 +308,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         break;
                 }
                 saveConfig();
-                yanChiFinish = false;
+//                yanChiFinish = false;
                 switch (type) {
                     case 1:
 //                        str1 = gson.toJson(timer1);
@@ -411,7 +411,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         setCancelTime(0, 2);
                     }
                 }
-                yanChiFinish = false;
+//                yanChiFinish = false;
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
                 break;
             case R.id.period_switch2:
@@ -463,7 +463,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         setCancelTime(1, 2);
                     }
                 }
-                yanChiFinish = false;
+//                yanChiFinish = false;
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
                 break;
             case R.id.period_switch3:
@@ -514,7 +514,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         setCancelTime(2, 1);
                     }
                 }
-                yanChiFinish = false;
+//                yanChiFinish = false;
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
                 break;
             case R.id.btn_ok:
@@ -568,7 +568,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
-                yanChiFinish = false;
+//                yanChiFinish = false;
                 qingLing();
                 break;
             case R.id.switch_dongtaitishi:
@@ -594,7 +594,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    switch_dongtaitishi.setBackgroundResource(R.drawable.kai);
 //                }
                 switch_dongtaitishi.setTag(!Boolean.parseBoolean(switch_dongtaitishi.getTag() + ""));
-                yanChiFinish = false;
+//                yanChiFinish = false;
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1);
                 break;
         }
@@ -745,10 +745,10 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    setCurrentItem(type);
 //                }
                 if (i == 3) {
-                    yanChiFinish = true;
+//                    yanChiFinish = true;
                     restoreFactorySettings();
                 } else if (i == 4) {
-                    yanChiFinish = true;
+//                    yanChiFinish = true;
                     setWhTime(0);
                     switch (type) {
                         case 1://灯光照明累计时间清零
@@ -1036,7 +1036,6 @@ public class PeriodActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.deviceSet_806success) {
                 MAlert.alert(entity.getData());
-                yanChiFinish = true;
                 total1 = -1;
                 total2 = -1;
                 total3 = -1;
@@ -1044,7 +1043,6 @@ public class PeriodActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.deviceSet_806fail) {
                 MAlert.alert(entity.getData());
-                yanChiFinish = true;
                 switch_qingling.setBackgroundResource(R.drawable.guan);
             }
         }

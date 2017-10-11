@@ -1,8 +1,10 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me;
 
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -86,6 +88,11 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                 if (mApp.lingShouSwitchRL!=null) {
                     mApp.lingShouSwitchRL.finish();
                 }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(ed_phone,InputMethodManager.SHOW_FORCED);
+                imm.hideSoftInputFromWindow(ed_phone.getWindowToken(), 0); //强制隐藏键盘
+                imm.showSoftInput(ed_pwd,InputMethodManager.SHOW_FORCED);
+                imm.hideSoftInputFromWindow(ed_pwd.getWindowToken(), 0); //强制隐藏键盘
                 finish();
             }else if (entity.getEventType()== UserPresenter.login_fail) {
                 MAlert.alert(entity.getData());

@@ -44,7 +44,7 @@ public class HomeNearShangJiaAdapter extends BaseAdapter {
         holder.setText(R.id.txt_phone,"手机:"+list.getPhone());
         holder.setText(R.id.txt_mobile,"电话:"+list.getMobile());
         holder.setText(R.id.txt_addr,"地址:"+list.getAddress());
-        XGlideLoader.displayImage(context.getActivity(),list.getLogo(), (ImageView) holder.getView(R.id.img_shangjia));
+        XGlideLoader.displayImageCircular(context.getActivity(),list.getLogo(), (ImageView) holder.getView(R.id.img_shangjia));
         holder.setOnclickListener(R.id.re_root, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

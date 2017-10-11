@@ -7,5 +7,5 @@ import sunsun.xiaoli.jiarebang.BuildConfig;
  */
 
 public class SpContants {
-    public static final String APP_TYPE= BuildConfig.APP_TYPE;
+    public static String APP_TYPE= BuildConfig.APP_TYPE;
 }

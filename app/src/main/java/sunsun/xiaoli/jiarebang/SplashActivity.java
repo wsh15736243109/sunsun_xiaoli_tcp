@@ -49,8 +49,10 @@ public class SplashActivity extends BaseActivity {
             img_splash.setBackgroundResource(R.drawable.splash_leihu);
         } else if (SpContants.APP_TYPE.equals("pondTeam")) {
             img_splash.setBackgroundResource(R.drawable.splash_pondteam);
+        }else if (SpContants.APP_TYPE.equals("森森新零售")) {
+            img_splash.setBackgroundResource(R.drawable.splash_pondteam);
         }
-        System.out.println("getPackageName()"+getPackageName());
+        System.out.println(SpContants.APP_TYPE+"getPackageName()"+getPackageName());
         if (getPackageName().contains("pondlink")) {
             img_splash.setBackgroundResource(R.drawable.pondlink_splash);
         }
