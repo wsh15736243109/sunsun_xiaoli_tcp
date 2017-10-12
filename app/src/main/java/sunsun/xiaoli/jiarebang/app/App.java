@@ -227,7 +227,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 //        config.locale = curLocale;
 //        getBaseContext().getResources().updateConfiguration(config,
 //                getBaseContext().getResources().getDisplayMetrics());
-        String sta = "ch";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
+        String sta = "en";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
         if (BuildConfig.APP_TYPE.toLowerCase().equals("PondTeam".toLowerCase())) {
             sta = "en";
         }
@@ -236,7 +236,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
+//        conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
     }
 

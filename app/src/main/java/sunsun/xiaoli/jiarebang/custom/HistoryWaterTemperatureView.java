@@ -9,6 +9,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.utils.NumberUtils;
@@ -17,12 +18,15 @@ import java.util.ArrayList;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
+import sunsun.xiaoli.jiarebang.device.ActivityTemperature;
+import sunsun.xiaoli.jiarebang.utils.ScreenUtil;
 
 import static com.itboye.pondteam.utils.CaculateDays.formatTimesYMD2MD;
 import static com.itboye.pondteam.utils.CaculateDays.formatTimesYMDH2H;
 import static com.itboye.pondteam.utils.CaculateDays.getWeek;
 import static com.itboye.pondteam.utils.CaculateDays.judgeIsToday2;
 import static com.itboye.pondteam.utils.NumberUtils.parse2Float;
+import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
 
 /**
  * Created by Mr.w on 2017/3/4.
@@ -59,6 +63,9 @@ public class HistoryWaterTemperatureView extends View {
     private int dataType = 1;
     private int bottomTemperatue, topTemperature;
     private boolean isPh = false;
+    private ActivityTemperature activityTemperature;
+    float maxX;
+    public boolean setIsUpdate = true;
 
     public HistoryWaterTemperatureView(Context context) {
         super(context);
@@ -135,7 +142,7 @@ public class HistoryWaterTemperatureView extends View {
         super.onDraw(canvas);
         maxPoint_Y = getBottom();
         System.out.println("我有执行了-----------" + maxPoint_Y);
-        int innerMaxY=maxY * 2;
+        int innerMaxY = maxY * 2;
         if (!isPh) {
             keduX = 120;
             min_left_x = keduX / 2;
@@ -147,15 +154,18 @@ public class HistoryWaterTemperatureView extends View {
             //画Y轴
             for (int i = 0; i < 10; i++) {
                 pointY += keduY;
-//            canvas.drawText(start_Y + "", min_left_x, pointY, paintPoint_normal);
-//            canvas.drawLine(10, pointY, getWidth(), pointY, paintLine);
                 start_Y -= keduY2;
             }
+
             //画X轴
             for (int i = 0; i < array.size(); i++) {
                 float y = ((innerMaxY - Float.parseFloat(array.get(i).getAvg_temp()) / 10.f) / (float) keduY2 * (float) keduY + keduY) - 100;
 
-                float x = (i) * keduX + min_left_x;
+                Rect rectMessure = new Rect();
+                text_normal_or_no.getTextBounds(App.getInstance().getString(R.string.error), 0, 1, rectMessure);
+                int width = getDimension(activityTemperature, rectMessure.width());
+                System.out.println("文字宽度" + width);
+                float x = (i) * (keduX + rectMessure.width()) + min_left_x;
                 PointF pointF = new PointF(x, y);
                 ar.add(pointF);
 //                canvas.drawText(i + "", i * keduX + min_left_x, maxPoint_Y, paintPoint_normal);
@@ -166,9 +176,9 @@ public class HistoryWaterTemperatureView extends View {
                     y = 230;
                 }
                 String value = parse2Float(array.get(i).getAvg_temp(), true);
-                RectF rect = new RectF((int) (ar.get(i).x - min_left_x + 10), (int) (maxPoint_Y - min_left_x), (int) (ar.get(i).x + min_left_x - 10), (int) (maxPoint_Y));
+                RectF rect = new RectF((int) (ar.get(i).x) - keduX / 2 + 10, (int) (maxPoint_Y - min_left_x), (int) (ar.get(i).x + min_left_x * 2 + 10) - keduX / 2+10, (int) (maxPoint_Y));
                 Rect rectMessure = new Rect();
-                float pointX = i * (float) keduX + min_left_x;
+                float pointX = ar.get(i).x;
                 if (Float.parseFloat(array.get(i).getAvg_temp()) / 10.f < topTemperature && Float.parseFloat(array.get(i).getAvg_temp()) / 10.f > bottomTemperatue) {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);
@@ -183,10 +193,10 @@ public class HistoryWaterTemperatureView extends View {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_yichang);
                     rectMessure = new Rect();
-                    paint_yichang.getTextBounds(App.getInstance().getString(R.string.error), 0, 1, rectMessure);
+                    text_normal_or_no.getTextBounds(App.getInstance().getString(R.string.error), 0, 1, rectMessure);
                     canvas.drawRoundRect(rect, 10, 10, paint_yichang);//画圆角矩形
 //                    canvas.drawText("abnormal", rect.left, rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
-                    canvas.drawText("异常", rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
+                    canvas.drawText(App.getInstance().getString(R.string.error), rect.centerX()-rectMessure.width()/2-keduX/2+5, rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
 
                     rectMessure = new Rect();
                     paint_yichang.getTextBounds(value, 0, value.length(), rectMessure);
@@ -206,7 +216,7 @@ public class HistoryWaterTemperatureView extends View {
                     //当天(区分今天、昨天)
                     String today = judgeIsToday2(array.get(i).getHis_date());
                     if (today.equals("yesterday")) {
-                        today="ytd";
+                        today = "ytd";
                     }
                     paint.getTextBounds(today, 0, today.length(), rectDate);
                     date = formatTimesYMDH2H(array.get(i).getHis_date());
@@ -221,7 +231,9 @@ public class HistoryWaterTemperatureView extends View {
                 if (i != 0) {
                     canvas.drawLine(ar.get(i).x, ar.get(i).y, ar.get(i - 1).x, ar.get(i - 1).y, paintLianXian);
                 }
-                canvas.drawLine(ar.get(i).x + keduX / 2, min_left_x, ar.get(i).x + keduX / 2, maxPoint_Y, paintY_shuxian);
+                maxX = ar.get(i).x + keduX / 2 + 20;
+                canvas.drawLine(maxX, min_left_x, maxX, maxPoint_Y, paintY_shuxian);
+
             }
         } else {
 //            ------------------------------------------------ph分割线--------------------------------------------------------------------------
@@ -308,5 +320,15 @@ public class HistoryWaterTemperatureView extends View {
                 canvas.drawLine(ar.get(i).x + keduX / 2, min_left_x, ar.get(i).x + keduX / 2, maxPoint_Y, paintY_shuxian);
             }
         }
+        if (setIsUpdate) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams((int) maxX, ScreenUtil.getPhoneSize(activityTemperature)[1] / 2);
+            setLayoutParams(layoutParams);
+            setIsUpdate = false;
+        }
+
+    }
+
+    public void setAtivity(ActivityTemperature activityTemperature) {
+        this.activityTemperature = activityTemperature;
     }
 }

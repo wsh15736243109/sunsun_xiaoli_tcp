@@ -86,7 +86,8 @@ public class ActivityTemperature extends BaseActivity implements Observer {
 //            } else if (did.startsWith("S03")) {
 //                userPresenter.getHistoryTemper(did, dataType + "", isPh);
 //            }else if (did.startsWith("S04")) {
-            userPresenter.getHistoryTemper(did, dataType + "", isPh);
+            setCurrentItem(1);
+//            userPresenter.getHistoryTemper(did, dataType + "", isPh);
 //            }
         }
 
@@ -185,6 +186,8 @@ public class ActivityTemperature extends BaseActivity implements Observer {
     }
 
     public void setCurrentItem(int index) {
+        temperatureView = new HistoryWaterTemperatureView(this);
+        temperatureView.setIsUpdate = true;
         setUnselected();
         switch (index) {
             case 1:
@@ -238,8 +241,8 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 viewContainer.removeAllViews();
                 //补充数据
                 supplementData();
-                temperatureView = new HistoryWaterTemperatureView(this);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(120 * temperatureHistoryBeanArrayList.size(), ScreenUtil.getPhoneSize(this)[1] / 2);
+                temperatureView.setAtivity(this);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(180 * temperatureHistoryBeanArrayList.size(), ScreenUtil.getPhoneSize(this)[1] / 2);
                 viewContainer.addView(temperatureView, layoutParams);
                 //qiu
                 getMax(temperatureHistoryBeanArrayList);
@@ -251,6 +254,7 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 setOtherData(dataType);
             } else if (entity.getEventType() == UserPresenter.getHistoryTemper_fail) {
                 MAlert.alert("获取失败");
+                temperatureView.setIsUpdate = false;
             }
         }
     }
@@ -598,12 +602,13 @@ public class ActivityTemperature extends BaseActivity implements Observer {
         drawable_yellow.setBounds(0, 0, drawable_yellow.getMinimumWidth(), drawable_yellow.getMinimumHeight());
         drawable_green.setBounds(0, 0, drawable_green.getMinimumWidth(), drawable_green.getMinimumHeight());
         drawable_blue.setBounds(0, 0, drawable_blue.getMinimumWidth(), drawable_blue.getMinimumHeight());
-        boolean isTodayPhMax = false;boolean isTodayPhMin = false;
+        boolean isTodayPhMax = false;
+        boolean isTodayPhMin = false;
         boolean isTodayWendu = false;
         if (arCopy.size() > 0) {
             try {
-                isTodayPhMax=IsToday2(arCopy.get(maxPosition).getHis_date());
-                isTodayPhMin=IsToday2(arCopy.get(minPosition).getHis_date());
+                isTodayPhMax = IsToday2(arCopy.get(maxPosition).getHis_date());
+                isTodayPhMin = IsToday2(arCopy.get(minPosition).getHis_date());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -619,8 +624,8 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                     break;
             }
             if (isPh) {
-                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax?"今天":"昨天") : "历史") + "pH最高数值");
-                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin?"今天":"昨天") : "历史") + "pH最低数值");
+                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax ? "今天" : "昨天") : "历史") + "pH最高数值");
+                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin ? "今天" : "昨天") : "历史") + "pH最低数值");
                 txt_ph_avg.setText((dataType == 1 ? ("历史") : "历史") + "pH平均数值");
                 txt_ph_max.setCompoundDrawables(drawable_yellow, null, null, null);
                 txt_ph_min.setCompoundDrawables(drawable_blue, null, null, null);
@@ -632,8 +637,8 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 txt_ph_max.setCompoundDrawables(drawable_yellow, null, null, null);
                 txt_ph_min.setCompoundDrawables(drawable_blue, null, null, null);
                 txt_ph_avg.setCompoundDrawables(drawable_green, null, null, null);
-                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax?"今天":"昨天") : "历史") + "温度最高数值");
-                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin?"今天":"昨天") : "历史") + "温度最低数值");
+                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax ? "今天" : "昨天") : "历史") + "温度最高数值");
+                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin ? "今天" : "昨天") : "历史") + "温度最低数值");
                 txt_ph_avg.setText((dataType == 1 ? ("24小时") : "历史") + "温度平均数值");
                 txt_ph_max_value.setText(parse2Float(max + "", false) + "℃");
                 txt_ph_min_value.setText(parse2Float(min + "", false) + "℃");
@@ -656,7 +661,7 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 txt_ph_avg.setCompoundDrawables(drawable_green, null, null, null);
                 txt_ph_max.setText((dataType == 1 ? "今天" : "历史") + "温度最高数值");
                 txt_ph_min.setText((dataType == 1 ? "今天" : "历史") + "温度最低数值");
-                txt_ph_avg.setText((dataType == 1 ?"24小时" : "历史") + "温度平均数值");
+                txt_ph_avg.setText((dataType == 1 ? "24小时" : "历史") + "温度平均数值");
                 txt_ph_max_value.setText(parse2Float(0 + "", false) + "℃");
                 txt_ph_min_value.setText(parse2Float(0 + "", false) + "℃");
                 txt_ph_avg_value.setText(parse2Float(0 + "", true) + "℃");
