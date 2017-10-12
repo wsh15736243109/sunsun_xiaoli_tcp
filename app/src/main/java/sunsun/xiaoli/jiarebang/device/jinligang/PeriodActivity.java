@@ -81,8 +81,8 @@ public class PeriodActivity extends BaseActivity implements Observer {
 
     TextView txt_chonglangbeng, txt_shajundeng, txt_zhaoming;
 
-    String titlesBegin[] = {"照明灯开始时间", "杀菌灯开始时间", "冲浪泵开始时间"};
-    String titlesEnd[] = {"照明灯关闭时间", "杀菌灯关闭时间", "冲浪泵关闭时间"};
+    String titlesBegin[] = {getString(R.string.light_zhaoming)+getString(R.string.open_time2), getString(R.string.light_shajun)+getString(R.string.open_time2), getString(R.string.chonglangbeng)+getString(R.string.open_time2)};
+    String titlesEnd[] = {getString(R.string.light_zhaoming)+getString(R.string.close_time2), getString(R.string.light_shajun)+getString(R.string.close_time2), getString(R.string.chonglangbeng)+getString(R.string.close_time2)};
     Gson gson;
     JSONArray jsonObject = null;
     String[] l_times = new String[]{};

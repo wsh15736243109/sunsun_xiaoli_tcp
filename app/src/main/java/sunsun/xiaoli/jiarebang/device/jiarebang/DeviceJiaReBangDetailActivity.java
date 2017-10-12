@@ -204,6 +204,10 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                         | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.re_wendu_history:
+
+                if (txt_wendu_sheding_high.getText().toString().equals("")||txt_wendu_sheding_low.getText().toString().equals("")) {
+                    return;
+                }
                 intent = new Intent(this, ActivityTemperature.class);
                 intent.putExtra("did", did);
                 intent.putExtra("isPh", false);
@@ -550,11 +554,11 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                     //加热棒运行正常
                     strTemp = getString(R.string.run_normal) + " ";
                 }
-                setColorfulValue(startPo3, endPo3, R.color.aq_orange, getString(R.string.total_power) + detailModelTcp.getPwr() + "W", txt_gonglv);
+//                setColorfulValue(startPo3, endPo3, R.color.aq_orange,, txt_gonglv);
             }
             int startPo2 = getString(R.string.jiarebang).length();
             int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
-            setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) : ""), txt_status);
+            setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) :  getString(R.string.total_power) + detailModelTcp.getPwr() + "W"), txt_status);
             img_progress.setMaxCount(35);
             if (wenduValue < 20) {
                 img_progress.setCurrentCount(20);

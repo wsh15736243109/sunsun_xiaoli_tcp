@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 116
-        versionName "1.1.6"
+        versionCode 117
+        versionName "1.1.7"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        applicationId "com.itboye.lingshou"
 //        manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
@@ -88,7 +88,7 @@ android {
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaoli"')
             buildConfigField("String", "APP_TYPE", '"小鲤智能"')
-            buildConfigField("boolean", "IS_CHINESE", 'true')
+            buildConfigField("boolean", "IS_CHINESE", 'false')
         }
 
         leihu {

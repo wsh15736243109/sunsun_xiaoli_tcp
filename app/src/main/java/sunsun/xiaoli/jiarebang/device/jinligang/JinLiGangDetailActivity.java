@@ -335,6 +335,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.arg1) {
+                case -1:
+                    System.out.println("TCP 接收数据 -1" + msg.obj);
+                    break;
                 case 101:
                     System.out.println("TCP 接收数据 101" + msg.obj);
                     break;

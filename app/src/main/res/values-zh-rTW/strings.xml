@@ -317,7 +317,7 @@
     <string name="errcode_unknown">发送返回</string>
     <string name="ph_low">pH低位报警设定</string>
     <string name="ph_history">历史pH走势表</string>
-    <string name="wendu">温度设置</string>
+    <string name="wendu">溫度設置</string>
     <string name="lowest">当前已经是最低档位</string>
     <string name="highest">当前已经是最高档位</string>
     <string name="breakline">断线</string>

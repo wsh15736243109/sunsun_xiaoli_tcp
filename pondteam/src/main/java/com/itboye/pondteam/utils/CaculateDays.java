@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import static com.itboye.pondteam.R.string.Monday;
 import static com.itboye.pondteam.volley.TimesUtils.getCurrentWeek;
 import static com.itboye.pondteam.volley.TimesUtils.getNumByWeek;
 
@@ -164,7 +165,7 @@ public class CaculateDays {
 
 //  String pTime = "20120312";
     public static String getWeek(String pTime) {
-        String Week = "周";
+        String Week = "";
         Calendar c = Calendar.getInstance();
         int currentTime = 0;
         try {
@@ -175,32 +176,39 @@ public class CaculateDays {
             e.printStackTrace();
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            Week += "日";
+//            Week += "日";
+            Week = MyApplication.getInstance().getString(R.string.Sunday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-            Week += "一";
+            Week = MyApplication.getInstance().getString(R.string.Monday);
+//            Week += "一";
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
-            Week += "二";
+//            Week += "二";
+            Week = MyApplication.getInstance().getString(R.string.Tuesday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-            Week += "三";
+//            Week += "三";
+            Week = MyApplication.getInstance().getString(R.string.Wednesday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
-            Week += "四";
+//            Week += "四";
+            Week = MyApplication.getInstance().getString(R.string.Thursday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-            Week += "五";
+//            Week += "五";
+            Week = MyApplication.getInstance().getString(R.string.Friday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-            Week += "六";
+//            Week += "六";
+            Week = MyApplication.getInstance().getString(R.string.Saturday);
         }
         try {
             if (IsToday(pTime)) {
-                Week = "今天";
+                Week = MyApplication.getInstance().getString(R.string.today);
             }
             if (IsYesterday(pTime)) {
-                Week = "昨天";
+                Week = MyApplication.getInstance().getString(R.string.yesterday);
             }
 
         } catch (ParseException e) {
@@ -214,9 +222,9 @@ public class CaculateDays {
         String week = time;
         try {
             if (IsToday2(time)) {
-                week = "今天";
+                week = MyApplication.getInstance().getString(R.string.today);
             } else {
-                week = "昨天";
+                week = MyApplication.getInstance().getString(R.string.yesterday);
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -560,7 +568,7 @@ public class CaculateDays {
         StringBuffer stringBuffer = new StringBuffer();
         if ((binary & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
             //星期一
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Monday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(Monday)+",");
         }
         if ((binary & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
             //星期二

@@ -35,6 +35,7 @@
                     android:textColor="@color/white"
                     android:padding="@dimen/DIMEN_20DP"
                     android:text="@string/light_zhaoming"
+                    android:singleLine="true"
                     android:textSize="@dimen/DIMEN_18DP"
                     android:layout_height="wrap_content" />
 
@@ -43,6 +44,7 @@
                     android:gravity="center"
                     android:padding="@dimen/DIMEN_20DP"
                     android:layout_weight="1"
+                    android:singleLine="true"
                     android:textSize="@dimen/DIMEN_18DP"
                     android:background="@drawable/border_gray"
                     android:text="@string/light_shajun"
@@ -56,6 +58,7 @@
                     android:padding="@dimen/DIMEN_20DP"
                     android:textSize="@dimen/DIMEN_18DP"
                     android:layout_weight="1"
+                    android:singleLine="true"
                     android:visibility="visible"
                     android:background="@drawable/border_gray"
                     android:text="@string/chonglangbeng"
@@ -107,7 +110,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="24dp"
                     android:layout_marginStart="24dp"
-                    android:text="第1时间段"
+                    android:text="@string/period_1"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF5F5D5D"
                     android:textSize="16sp" />
@@ -151,7 +154,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_toEndOf="@+id/period_relativeLayout1"
                     android:layout_toRightOf="@+id/period_relativeLayout1"
-                    android:text="开启时间"
+                    android:text="@string/open_time2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -233,7 +236,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_toEndOf="@+id/period_relativeLayout2"
                     android:layout_toRightOf="@+id/period_relativeLayout2"
-                    android:text="关闭时间"
+                    android:text="@string/close_time2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -261,15 +264,15 @@
                     android:id="@+id/period_textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="24dp"
                     android:layout_marginStart="24dp"
-                    android:text="第2时间段"
+                    android:text="@string/period_2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF5F5D5D"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:layout_alignBottom="@+id/period_switch2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
 
                 <ImageView
                     android:id="@+id/period_switch2"
@@ -327,7 +330,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_toRightOf="@+id/period_relativeLayout3"
-                    android:text="开启时间"
+                    android:text="@string/open_time2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -391,7 +394,7 @@
                     android:layout_marginStart="4dp"
                     android:layout_toEndOf="@+id/relativeLayout"
                     android:layout_toRightOf="@+id/relativeLayout"
-                    android:text="关闭时间"
+                    android:text="@string/close_time2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -424,7 +427,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="24dp"
                     android:layout_marginStart="24dp"
-                    android:text="第3时间段"
+                    android:text="@string/period_3"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF5F5D5D"
                     android:textSize="16sp" />
@@ -485,7 +488,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_toRightOf="@+id/period_relativeLayout5"
-                    android:text="开启时间"
+                    android:text="@string/open_time2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -537,7 +540,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_toRightOf="@+id/period_relativeLayout6"
-                    android:text="关闭时间"
+                    android:text="@string/close_time2"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -599,7 +602,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_toRightOf="@+id/re_dongtaitishi"
-                    android:text="动态提示"
+                    android:text="@string/dongtai_tips"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -650,7 +653,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_toRightOf="@+id/re_yichangbangjing"
-                    android:text="异常报警"
+                    android:text="@string/yichangbaojing"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 
@@ -702,7 +705,7 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginStart="4dp"
                     android:layout_toRightOf="@+id/re_qingling"
-                    android:text="累计使用时间清零"
+                    android:text="@string/qingling"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#FF757475" />
 

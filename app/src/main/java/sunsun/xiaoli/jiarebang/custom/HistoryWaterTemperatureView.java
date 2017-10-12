@@ -16,6 +16,7 @@ import com.itboye.pondteam.utils.NumberUtils;
 import java.util.ArrayList;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.app.App;
 
 import static com.itboye.pondteam.utils.CaculateDays.formatTimesYMD2MD;
 import static com.itboye.pondteam.utils.CaculateDays.formatTimesYMDH2H;
@@ -172,9 +173,9 @@ public class HistoryWaterTemperatureView extends View {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);
                     rectMessure = new Rect();
-                    text_normal_or_no.getTextBounds("正常", 0, 1, rectMessure);
+                    text_normal_or_no.getTextBounds(App.getInstance().getString(R.string.normal), 0, 1, rectMessure);
                     canvas.drawRoundRect(rect, 10, 10, paintPoint_normal);//画圆角矩形
-                    canvas.drawText("正常", rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
+                    canvas.drawText(App.getInstance().getString(R.string.normal), rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
                     rectMessure = new Rect();
                     paintPoint_normal.getTextBounds(value, 0, value.length(), rectMessure);
                     canvas.drawText(value, (i + 1) * keduX - min_left_x - rectMessure.width() / 2, y + rectMessure.height() + 10, paintPoint_normal);
@@ -182,9 +183,11 @@ public class HistoryWaterTemperatureView extends View {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_yichang);
                     rectMessure = new Rect();
-                    paint_yichang.getTextBounds("异常", 0, 1, rectMessure);
+                    paint_yichang.getTextBounds(App.getInstance().getString(R.string.error), 0, 1, rectMessure);
                     canvas.drawRoundRect(rect, 10, 10, paint_yichang);//画圆角矩形
+//                    canvas.drawText("abnormal", rect.left, rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
                     canvas.drawText("异常", rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
+
                     rectMessure = new Rect();
                     paint_yichang.getTextBounds(value, 0, value.length(), rectMessure);
                     canvas.drawText(value + "", (i + 1) * keduX - min_left_x - rectMessure.width() / 2, y + rectMessure.height() + 10, paint_yichang);
@@ -202,6 +205,10 @@ public class HistoryWaterTemperatureView extends View {
                 if (dataType == 1) {
                     //当天(区分今天、昨天)
                     String today = judgeIsToday2(array.get(i).getHis_date());
+                    if (today.equals("yesterday")) {
+                        today="ytd";
+                    }
+                    paint.getTextBounds(today, 0, today.length(), rectDate);
                     date = formatTimesYMDH2H(array.get(i).getHis_date());
                     canvas.drawText(today, pointX - rectDate.width() / 2, min_left_x, paint);
                 } else {
@@ -255,9 +262,9 @@ public class HistoryWaterTemperatureView extends View {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);
                     rectMessure = new Rect();
-                    text_normal_or_no.getTextBounds("正常", 0, 1, rectMessure);
+                    text_normal_or_no.getTextBounds(App.getInstance().getString(R.string.normal), 0, 1, rectMessure);
                     canvas.drawRoundRect(rect, 10, 10, paintPoint_normal);//画圆角矩形
-                    canvas.drawText("正常", rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
+                    canvas.drawText(App.getInstance().getString(R.string.normal), rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
                     rectMessure = new Rect();
                     paintPoint_normal.getTextBounds(value + "", 0, (value + "").length(), rectMessure);
                     canvas.drawText(value + "", (i + 1) * keduX - min_left_x - rectMessure.width() / 2, y + rectMessure.height() + 10, paintPoint_normal);
@@ -265,9 +272,9 @@ public class HistoryWaterTemperatureView extends View {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_yichang);
                     rectMessure = new Rect();
-                    paint_yichang.getTextBounds("异常", 0, 1, rectMessure);
+                    paint_yichang.getTextBounds(App.getInstance().getString(R.string.error), 0, 1, rectMessure);
                     canvas.drawRoundRect(rect, 10, 10, paint_yichang);//画圆角矩形
-                    canvas.drawText("异常", rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
+                    canvas.drawText(App.getInstance().getString(R.string.error), rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
                     rectMessure = new Rect();
                     paint_yichang.getTextBounds(value + "", 0, ("" + value).length(), rectMessure);
                     canvas.drawText(value + "", (i + 1) * keduX - min_left_x - rectMessure.width() / 2, y + rectMessure.height() + 10, paint_yichang);
@@ -285,6 +292,7 @@ public class HistoryWaterTemperatureView extends View {
                 if (dataType == 1) {
                     //当天(区分今天、昨天)
                     String today = judgeIsToday2(array.get(i).getHis_date());
+                    paint.getTextBounds(today, 0, today.length(), rectDate);
                     date = formatTimesYMDH2H(array.get(i).getHis_date());
                     canvas.drawText(today, pointX - rectDate.width() / 2, min_left_x, paint);
                 } else {

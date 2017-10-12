@@ -236,6 +236,7 @@ public class TcpUtil {
                                         }
                                     } else {
                                         message.obj = data;
+                                        message.arg2=-1;
                                         handler.sendMessage(message);
                                     }
 
