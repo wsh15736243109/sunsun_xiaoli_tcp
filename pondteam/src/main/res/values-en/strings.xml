@@ -304,7 +304,7 @@
     <string name="video_disconnect">disconnect</string>
     <string name="video_connect">connect</string>
     <string name="shexiangtou">camera</string>
-    <string name="open_fail">open fail</string>
+    <string name="open_fail">No information about the camera</string>
     <string name="get_imging">For the image information, please later</string>
     <string name="make_sure_delete_picture">Determine to delete the selected photo？</string>
     <string name="img_empty">image is empty</string>
@@ -512,4 +512,27 @@
     <string name="trend_normal">nor</string>
     <string name="trend_abnormal">abn</string>
     <string name="txt_chuchangshezhi">restore factory settings</string>
+    <string name="trendofph_hourof24">The pH of 24 hours</string>
+    <string name="trendoftemperature_hourof24">24 hours of water temperature</string>
+    <string name="trendofph_lastweek">The pH of the last week</string>
+    <string name="trendoftemperature_lastweek">The water temperature trend in the last week</string>
+    <string name="trendofph_last30days">The recent 30 days of pH</string>
+    <string name="trendoftemperature_last30days">The temperature of the last 30 days</string>
+
+    <string name="maxValueofph_today">The highest pH value of today</string>
+    <string name="maxValueOfPh_yesterday">The highest pH value of yesterday</string>
+    <string name="minValueOfph_today">The lowest pH value of today</string>
+    <string name="minValueOfPh_yesterday">The lowest pH value of yesterday</string>
+    <string name="maxValuePh_history">The highest pH value of history</string>
+    <string name="minValuePh_history">The lowest value of the pH of history</string>
+    <string name="avgValuePh_history">The average value of the pH of history</string>
+    <string name="maxValueofTemperature_history">The highest value of temperature of history</string>
+    <string name="minValueofTemperature_history">The lowest value of temperature of history</string>
+    <string name="avgValueTemperature_history">The average temperature of history</string>
+    <string name="maxValueofTempterature_today">The highest value of temperature of today</string>
+    <string name="minValueofTemperature_yesterday">The lowest value of temperature of yesterday</string>
+    <string name="maxValueofTemperature_yesterday">The highest value of temperature of today</string>
+    <string name="minValueofTemperature_today">The lowest value of temperature of today</string>
+    <string name="avgValueTemperature_24hours">24小时温度平均数值</string>
+    <string name="avgValuePh_24Hours">24小时pH历史平均值</string>
 </resources>

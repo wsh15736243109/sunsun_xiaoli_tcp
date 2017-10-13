@@ -111,7 +111,7 @@
                 <!--com.itboye.xiaomianyang-->
                 <!--com.itboye.pondteam-->
                 <!--com.itboye.lingshou-->
-                <!--com.itboye.pondLink-->
+                <!--com.itboye.pondlink-->
                 <action android:name="sunsun.xiaoli.jiarebang.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>

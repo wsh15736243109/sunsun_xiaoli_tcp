@@ -58,6 +58,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
     String aq_did;
     int position;
     TextView txt_title_2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,10 +219,16 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                     }
                     break;
                 case 8:
+                    if (!deviceInfo.getDid().startsWith("S06")) {
+                        continue;
+                    }
+                    break;
+                case 9:
                     if (!deviceInfo.getDid().startsWith("S07")) {
                         continue;
                     }
                     break;
+
 
             }
 
@@ -273,6 +280,8 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 map.put("ItemIcon", R.drawable.device_shuibeng);
             } else if (deviceInfo.getType().equalsIgnoreCase("S06")) {
                 map.put("ItemIcon", R.drawable.device_shuizudeng);
+            } else if (deviceInfo.getType().equalsIgnoreCase("S07")) {
+                map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);
             } else if (deviceInfo.getType().equalsIgnoreCase("SCHD")) {
                 map.put("ItemIcon", R.drawable.device_shexiangtou);
             } else {

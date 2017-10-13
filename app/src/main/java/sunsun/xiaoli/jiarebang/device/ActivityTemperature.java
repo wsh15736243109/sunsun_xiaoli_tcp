@@ -81,14 +81,7 @@ public class ActivityTemperature extends BaseActivity implements Observer {
         dataType = 1;
         txt_type.setText("24小时走势");
         if (did != null) {
-//            if (did.startsWith("S02")) {
-//                userPresenter.getHistoryTemper(did, dataType + "", isPh);
-//            } else if (did.startsWith("S03")) {
-//                userPresenter.getHistoryTemper(did, dataType + "", isPh);
-//            }else if (did.startsWith("S04")) {
-            setCurrentItem(1);
-//            userPresenter.getHistoryTemper(did, dataType + "", isPh);
-//            }
+            setCurrentItem(dataType);
         }
 
     }
@@ -194,25 +187,36 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 txt_day.setBackgroundColor(getResources().getColor(R.color.shenlv));
                 txt_week.setBackgroundColor(getResources().getColor(R.color.gray_a1));
                 txt_month.setBackgroundColor(getResources().getColor(R.color.gray_a1));
-                txt_type.setText("24小时" + (isPh ? "pH" : "水温") + "走势");
+                if (isPh) {
+                    txt_type.setText(getString(R.string.trendofph_hourof24));
+                } else {
+                    txt_type.setText(getString(R.string.trendoftemperature_hourof24));
+
+                }
                 break;
             case 2:
                 txt_day.setBackgroundColor(getResources().getColor(R.color.gray_a1));
                 txt_week.setBackgroundColor(getResources().getColor(R.color.shenlv));
                 txt_month.setBackgroundColor(getResources().getColor(R.color.gray_a1));
-                txt_type.setText("最近一周" + (isPh ? "pH" : "水温") + "走势");
+                if (isPh) {
+                    txt_type.setText(getString(R.string.trendofph_lastweek));
+                } else {
+                    txt_type.setText(getString(R.string.trendoftemperature_lastweek));
+                }
                 break;
             case 3:
                 txt_day.setBackgroundColor(getResources().getColor(R.color.gray_a1));
                 txt_week.setBackgroundColor(getResources().getColor(R.color.gray_a1));
                 txt_month.setBackgroundColor(getResources().getColor(R.color.shenlv));
-                txt_type.setText("最近30天" + (isPh ? "pH" : "水温") + "走势");
+                if (isPh) {
+                    txt_type.setText(getString(R.string.trendofph_last30days));
+                } else {
+                    txt_type.setText(getString(R.string.trendoftemperature_last30days));
+                }
 
                 break;
         }
-//        if (did.startsWith("S02")) {
         userPresenter.getHistoryTemper(did, dataType + "", isPh);
-//        }
     }
 
     private void setUnselected() {
@@ -253,7 +257,7 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 temperatureView.setArray(temperatureHistoryBeanArrayList);//水温集合
                 setOtherData(dataType);
             } else if (entity.getEventType() == UserPresenter.getHistoryTemper_fail) {
-                MAlert.alert("获取失败");
+                MAlert.alert(getString(R.string.getDetail_fail));
                 temperatureView.setIsUpdate = false;
             }
         }
@@ -624,9 +628,24 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                     break;
             }
             if (isPh) {
-                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax ? "今天" : "昨天") : "历史") + "pH最高数值");
-                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin ? "今天" : "昨天") : "历史") + "pH最低数值");
-                txt_ph_avg.setText((dataType == 1 ? ("历史") : "历史") + "pH平均数值");
+                if (dataType == 1) {
+                    if (isTodayPhMax) {
+                        txt_ph_max.setText(getString(R.string.maxValueofph_today));
+                    } else {
+                        txt_ph_max.setText(getString(R.string.maxValueOfPh_yesterday));
+                    }
+                    if (isTodayPhMin) {
+                        txt_ph_min.setText(getString(R.string.minValueOfph_today));
+                    } else {
+                        txt_ph_min.setText(getString(R.string.minValueOfPh_yesterday));
+                    }
+                } else {
+                    txt_ph_max.setText(getString(R.string.maxValuePh_history));
+                    txt_ph_min.setText(getString(R.string.minValuePh_history));
+                }
+//                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax ? "今天" : "昨天") : "历史") + "pH最高数值");
+//                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin ? "今天" : "昨天") : "历史") + "pH最低数值");
+                txt_ph_avg.setText(getString(R.string.avgValuePh_history));
                 txt_ph_max.setCompoundDrawables(drawable_yellow, null, null, null);
                 txt_ph_min.setCompoundDrawables(drawable_blue, null, null, null);
                 txt_ph_avg.setCompoundDrawables(drawable_green, null, null, null);
@@ -637,18 +656,44 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 txt_ph_max.setCompoundDrawables(drawable_yellow, null, null, null);
                 txt_ph_min.setCompoundDrawables(drawable_blue, null, null, null);
                 txt_ph_avg.setCompoundDrawables(drawable_green, null, null, null);
-                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax ? "今天" : "昨天") : "历史") + "温度最高数值");
-                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin ? "今天" : "昨天") : "历史") + "温度最低数值");
-                txt_ph_avg.setText((dataType == 1 ? ("24小时") : "历史") + "温度平均数值");
+                if (dataType == 1) {
+                    if (isTodayPhMax) {
+                        txt_ph_max.setText(getString(R.string.maxValueofTempterature_today));
+                    } else {
+                        txt_ph_max.setText(getString(R.string.maxValueofTemperature_yesterday));
+                    }
+                    if (isTodayPhMin) {
+                        txt_ph_min.setText(getString(R.string.minValueofTemperature_today));
+                    } else {
+                        txt_ph_min.setText(getString(R.string.minValueofTemperature_yesterday));
+                    }
+                    txt_ph_avg.setText(getString(R.string.avgValueTemperature_24hours));
+                } else {
+                    txt_ph_max.setText(getString(R.string.maxValueofTemperature_history));
+                    txt_ph_min.setText(getString(R.string.minValueofTemperature_history));
+                    txt_ph_avg.setText(getString(R.string.avgValueTemperature_history));
+                }
+//                txt_ph_max.setText((dataType == 1 ? (isTodayPhMax ? "今天" : "昨天") : "历史") + "温度最高数值");
+//                txt_ph_min.setText((dataType == 1 ? (isTodayPhMin ? "今天" : "昨天") : "历史") + "温度最低数值");
+//                txt_ph_avg.setText((dataType == 1 ? ("24小时") : "历史") + "温度平均数值");
                 txt_ph_max_value.setText(parse2Float(max + "", false) + "℃");
                 txt_ph_min_value.setText(parse2Float(min + "", false) + "℃");
                 txt_ph_avg_value.setText(parse2Float(avg + "", true) + "℃");
             }
         } else {
             if (isPh) {
-                txt_ph_max.setText((dataType == 1 ? "今天" : "历史") + "pH最高数值");
-                txt_ph_min.setText((dataType == 1 ? "今天" : "历史") + "pH最低数值");
-                txt_ph_avg.setText((dataType == 1 ? "24小时" : "历史") + "pH平均数值");
+                if (dataType == 1) {
+                    txt_ph_max.setText(getString(R.string.maxValueofph_today));
+                    txt_ph_min.setText(getString(R.string.minValueOfph_today));
+                    txt_ph_avg.setText(getString(R.string.avgValuePh_24Hours));
+                } else {
+                    txt_ph_max.setText(getString(R.string.maxValuePh_history));
+                    txt_ph_min.setText(getString(R.string.minValuePh_history));
+                    txt_ph_avg.setText(getString(R.string.avgValuePh_history));
+                }
+//                txt_ph_max.setText((dataType == 1 ? "今天" : "历史") + "pH最高数值");
+//                txt_ph_min.setText((dataType == 1 ? "今天" : "历史") + "pH最低数值");
+//                txt_ph_avg.setText((dataType == 1 ? "24小时" : "历史") + "pH平均数值");
                 txt_ph_max.setCompoundDrawables(drawable_yellow, null, null, null);
                 txt_ph_min.setCompoundDrawables(drawable_blue, null, null, null);
                 txt_ph_avg.setCompoundDrawables(drawable_green, null, null, null);
@@ -656,12 +701,21 @@ public class ActivityTemperature extends BaseActivity implements Observer {
                 txt_ph_min_value.setText(parse2Float(0 + "", false));
                 txt_ph_avg_value.setText(parse2AnyFloat(0 + "", 1));
             } else {
+                if (dataType == 1) {
+                    txt_ph_max.setText(getString(R.string.maxValueofTempterature_today));
+                    txt_ph_min.setText(getString(R.string.minValueofTemperature_today));
+                    txt_ph_avg.setText(getString(R.string.avgValueTemperature_24hours));
+                } else {
+                    txt_ph_max.setText(getString(R.string.maxValueofTemperature_history));
+                    txt_ph_min.setText(getString(R.string.minValueofTemperature_history));
+                    txt_ph_avg.setText(getString(R.string.avgValueTemperature_history));
+                }
                 txt_ph_max.setCompoundDrawables(drawable_yellow, null, null, null);
                 txt_ph_min.setCompoundDrawables(drawable_blue, null, null, null);
                 txt_ph_avg.setCompoundDrawables(drawable_green, null, null, null);
-                txt_ph_max.setText((dataType == 1 ? "今天" : "历史") + "温度最高数值");
-                txt_ph_min.setText((dataType == 1 ? "今天" : "历史") + "温度最低数值");
-                txt_ph_avg.setText((dataType == 1 ? "24小时" : "历史") + "温度平均数值");
+//                txt_ph_max.setText((dataType == 1 ? "今天" : "历史") + "温度最高数值");
+//                txt_ph_min.setText((dataType == 1 ? "今天" : "历史") + "温度最低数值");
+//                txt_ph_avg.setText((dataType == 1 ? "24小时" : "历史") + "温度平均数值");
                 txt_ph_max_value.setText(parse2Float(0 + "", false) + "℃");
                 txt_ph_min_value.setText(parse2Float(0 + "", false) + "℃");
                 txt_ph_avg_value.setText(parse2Float(0 + "", true) + "℃");

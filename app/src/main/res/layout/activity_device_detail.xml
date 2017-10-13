@@ -310,6 +310,7 @@
                         android:id="@+id/txt_wendu_history"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@+id/icon_arrow"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/DIMEN_5DP"
                         android:singleLine="true"
@@ -318,6 +319,7 @@
                         android:textSize="@dimen/DIMEN_20DP" />
 
                     <ImageView
+                        android:id="@+id/icon_arrow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

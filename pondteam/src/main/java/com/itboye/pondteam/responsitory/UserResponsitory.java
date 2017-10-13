@@ -122,6 +122,8 @@ public class UserResponsitory extends BaseNetRepository implements
     private String adtExtraUpdate = "By_SunsunUserDevice_updateAdtExtra";
     private String shuibengExtraUpdate = "By_SunsunUserDevice_updateWaterPumpExtra";
     private String sendEmailCode = "By_SecurityCode_sendEmail";
+    private String authDevicePwd_CP="By_SunsunCp1000_auth";//CP1000验证接口
+    private String getDeviceCP1000Detail="By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -712,6 +714,9 @@ public class UserResponsitory extends BaseNetRepository implements
         if (did.startsWith("S06")) {
             typeKey = getDeviceLedLightDetail;
         }
+        if (did.startsWith("S07")) {
+            typeKey = getDeviceCP1000Detail;
+        }
         (new ByJsonRequest.Builder<DeviceDetailModel>())
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
@@ -1054,6 +1059,9 @@ public class UserResponsitory extends BaseNetRepository implements
         } else if (deviceType.startsWith("S06")) {
             //adt验证
             typekey = authDevicePwd_Adt;
+        }else if (deviceType.startsWith("S07")) {
+            //CP1000验证
+            typekey = authDevicePwd_CP;
         }
         (new ByJsonRequest.Builder<String>())
                 .setTypeVerParamsAndReturnClass(typekey, apiVer, map, type)
@@ -1514,6 +1522,8 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (did.startsWith("S06")) {
             typeKey = getDeviceLedLightDetail;
+        }if (did.startsWith("S07")) {
+            typeKey = getDeviceCP1000Detail;
         }
         map.put("did", did);
         (new ByJsonRequest.Builder<DeviceDetailModel>())

@@ -274,7 +274,7 @@
     <string name="shexiangtou">摄像头</string>
     <string name="smartconfig_tip">接通电源，长按匹配键3秒至红灯灭,绿灯快闪状态。</string>
     <string name="smartconfig_tip_jiarebang">接通电源，长按匹配键3秒至黄灯快闪状态。</string>
-    <string name="open_fail">open fail</string>
+    <string name="open_fail">未获取到摄像头相关信息</string>
     <string name="get_imging">正在获取图片信息中，请稍后</string>
     <string name="make_sure_delete_picture">确定删除选中照片？</string>
     <string name="img_empty">空空如也</string>
@@ -511,4 +511,26 @@
     <string name="trend_normal">正常</string>
     <string name="trend_abnormal">异常</string>
     <string name="txt_chuchangshezhi">恢复出厂设置</string>
+    <string name="trendofph_hourof24">24小时pH走势</string>
+    <string name="trendoftemperature_hourof24">24小时水温走势</string>
+    <string name="trendofph_lastweek">最近一周pH走势</string>
+    <string name="trendoftemperature_lastweek">最近一周水温走势</string>
+    <string name="trendofph_last30days">最近30天pH走势</string>
+    <string name="trendoftemperature_last30days">最近30天水温走势</string>
+    <string name="maxValueofph_today">今天pH最高数值</string>
+    <string name="maxValueOfPh_yesterday">昨天pH最高数值</string>
+    <string name="minValueOfph_today">今天pH最低数值</string>
+    <string name="minValueOfPh_yesterday">昨天pH最低数值</string>
+    <string name="maxValuePh_history">历史pH最高数值</string>
+    <string name="minValuePh_history">历史pH最低数值</string>
+    <string name="avgValuePh_history">历史pH平均数值</string>
+    <string name="maxValueofTemperature_history">历史温度最高数值</string>
+    <string name="minValueofTemperature_history">历史温度最低数值</string>
+    <string name="avgValueTemperature_history">历史温度平均数值</string>
+    <string name="maxValueofTempterature_today">今天温度最高数值</string>
+    <string name="minValueofTemperature_yesterday">昨天温度最高数值</string>
+    <string name="maxValueofTemperature_yesterday">昨天温度最高数值</string>
+    <string name="minValueofTemperature_today">今天温度最低数值</string>
+    <string name="avgValueTemperature_24hours">24小时温度平均数值</string>
+    <string name="avgValuePh_24Hours">24小时pH历史平均值</string>
 </resources>

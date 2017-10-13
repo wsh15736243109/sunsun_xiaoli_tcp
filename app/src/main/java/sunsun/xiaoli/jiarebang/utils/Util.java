@@ -312,6 +312,10 @@ public class Util {
             return MyApplication.getInstance().getResources().getString(R.string.yuancheng_ph);
         }else if (did.startsWith("S05")) {
             return MyApplication.getInstance().getResources().getString(R.string.zhinengbianpinshuibeng);
+        }else if (did.startsWith("S06")) {
+            return MyApplication.getInstance().getResources().getString(R.string.shuizudeng);
+        }else if (did.startsWith("S07")) {
+            return MyApplication.getInstance().getResources().getString(R.string.zhinengqibeng);
         }else if (did.startsWith("SCHD")) {
             return MyApplication.getInstance().getResources().getString(R.string.zhinengshexiangtou);
         }

@@ -533,6 +533,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 }
                 break;
             case 8:
+                if (!did.startsWith("S06")) {
+                    return;
+                }
+                break;
+            case 9:
                 if (!did.startsWith("S07")) {
                     return;
                 }

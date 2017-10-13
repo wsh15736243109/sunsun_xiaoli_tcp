@@ -62,6 +62,7 @@ import sunsun.xiaoli.jiarebang.device.led.LEDDetailActivity;
 import sunsun.xiaoli.jiarebang.device.phdevice.DevicePHDetailActivity;
 import sunsun.xiaoli.jiarebang.device.pondteam.ActivityPondDeviceDetail;
 import sunsun.xiaoli.jiarebang.device.pondteam.AddPondDevice;
+import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
@@ -427,7 +428,9 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                     map.put("ItemIcon", R.drawable.device_shuibeng);
                 }else if (arrayList.get(i).getDevice_type().startsWith("S06")) {
                     map.put("ItemIcon", R.drawable.device_shuizudeng);
-                } else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
+                } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S07")) {
+                    map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);
+                }else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
                     map.put("ItemIcon", R.drawable.device_shexiangtou);
                 } else {
                     map.put("ItemIcon", R.drawable.ic_aplacher);
@@ -671,20 +674,20 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                     //过滤桶
                     intent = new Intent(DeviceActivity.this, ActivityPondDeviceDetail.class);
                 } else if (deviceType.contains("S03")) {
-                    //变频水泵
+                    //806
                     intent = new Intent(DeviceActivity.this, JinLiGangDetailActivity.class);
                 } else if (deviceType.contains("S04")) {
-                    //变频水泵
+                    //aph
                     intent = new Intent(DeviceActivity.this, DevicePHDetailActivity.class);
                 } else if (deviceType.contains("S05")) {
                     //变频水泵
                     intent = new Intent(DeviceActivity.this, DeviceShuiBengDetailActivity.class);
                 } else if (deviceType.contains("S06")) {
-                    //变频水泵
+                    //Led水族灯
                     intent = new Intent(DeviceActivity.this, LEDDetailActivity.class);
                 } else if (deviceType.contains("S07")) {
-                    //变频水泵
-                    intent = new Intent(DeviceActivity.this, DeviceShuiBengDetailActivity.class);
+                    //CP1000
+                    intent = new Intent(DeviceActivity.this, DeviceQiBengDetailActivity.class);
                 } else if (deviceType.contains("S08")) {
                     //变频水泵
                     intent = new Intent(DeviceActivity.this, DeviceShuiBengDetailActivity.class);
