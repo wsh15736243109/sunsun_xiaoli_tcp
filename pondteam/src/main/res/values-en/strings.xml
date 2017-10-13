@@ -509,4 +509,7 @@
     <string name="temper_avg">The average value of temperature</string>
     <string name="tempTopValue">Maximum temperature</string>
     <string name="tempBottomValue">Minimum temperature</string>
+    <string name="trend_normal">nor</string>
+    <string name="trend_abnormal">abn</string>
+    <string name="txt_chuchangshezhi">restore factory settings</string>
 </resources>

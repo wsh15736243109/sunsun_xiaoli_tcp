@@ -773,7 +773,7 @@
                     android:background="@drawable/bg_gray_border_dark"
                     android:gravity="center"
                     android:padding="@dimen/DIMEN_6DP"
-                    android:text="恢复出厂设置"
+                    android:text="@string/txt_chuchangshezhi"
                     android:textColor="@color/black" />
             </LinearLayout>
 

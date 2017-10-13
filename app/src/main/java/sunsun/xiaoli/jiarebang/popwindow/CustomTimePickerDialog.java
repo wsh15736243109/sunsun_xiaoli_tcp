@@ -38,9 +38,9 @@ public class CustomTimePickerDialog extends TimePickerDialog {
         this.title = titleText;
         this.setButton(BUTTON_NEGATIVE, App.getInstance().getString(R.string.ok), new Message());
         this.setButton(BUTTON_POSITIVE, App.getInstance().getString(R.string.cancel), this);
-        this.setTitle(titleText);
-
+//        this.setTitle(titleText);
     }
+
 
     public void setTimerOtherTwo(ArrayList<com.itboye.pondteam.bean.DeviceDetailModel.TimePeriod> str1, int position, boolean isKaiQi) {
         this.str1 = str1;
@@ -86,13 +86,13 @@ public class CustomTimePickerDialog extends TimePickerDialog {
             mHourSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    setTitle(title);
+//                    setTitle("");
                 }
             });
             mMinuteSpinner.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
                 @Override
                 public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    setTitle(title);
+//                    setTitle(title);
                 }
             });
         } catch (Exception e) {
@@ -105,16 +105,16 @@ public class CustomTimePickerDialog extends TimePickerDialog {
                 int currentMinute = timePicker.getCurrentMinute();
                 boolean hasTheSame = false;
                 for (int i = 0; i < str1.size(); i++) {
-                    if (i != position-1) {//不能与自身相比较
+                    if (i != position - 1) {//不能与自身相比较
                         if (isKaiQi) {
-                            if ((str1.get(i).getH0()) == (currentHour) && (str1.get(i).getM0()) == (currentMinute)&&str1.get(i).getH1()==str1.get(position-1).getH1()&&str1.get(i).getM1()==str1.get(position-1).getM1()) {
+                            if ((str1.get(i).getH0()) == (currentHour) && (str1.get(i).getM0()) == (currentMinute) && str1.get(i).getH1() == str1.get(position - 1).getH1() && str1.get(i).getM1() == str1.get(position - 1).getM1()) {
                                 hasTheSame = true;
                                 break;
                             } else {
                                 hasTheSame = false;
                             }
                         } else {
-                            if ((str1.get(i).getH1()) == (currentHour) && (str1.get(i).getM1()) == (currentMinute)&&str1.get(i).getH0()==str1.get(position-1).getH0()&&str1.get(i).getM0()==str1.get(position-1).getM0()) {
+                            if ((str1.get(i).getH1()) == (currentHour) && (str1.get(i).getM1()) == (currentMinute) && str1.get(i).getH0() == str1.get(position - 1).getH0() && str1.get(i).getM0() == str1.get(position - 1).getM0()) {
                                 hasTheSame = true;
                                 break;
                             } else {
@@ -135,4 +135,5 @@ public class CustomTimePickerDialog extends TimePickerDialog {
             }
         });
     }
+
 }

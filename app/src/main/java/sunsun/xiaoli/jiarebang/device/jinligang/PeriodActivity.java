@@ -81,8 +81,8 @@ public class PeriodActivity extends BaseActivity implements Observer {
 
     TextView txt_chonglangbeng, txt_shajundeng, txt_zhaoming;
 
-    String titlesBegin[] = {getString(R.string.light_zhaoming)+getString(R.string.open_time2), getString(R.string.light_shajun)+getString(R.string.open_time2), getString(R.string.chonglangbeng)+getString(R.string.open_time2)};
-    String titlesEnd[] = {getString(R.string.light_zhaoming)+getString(R.string.close_time2), getString(R.string.light_shajun)+getString(R.string.close_time2), getString(R.string.chonglangbeng)+getString(R.string.close_time2)};
+    String titlesBegin[];
+    String titlesEnd[];
     Gson gson;
     JSONArray jsonObject = null;
     String[] l_times = new String[]{};
@@ -119,6 +119,8 @@ public class PeriodActivity extends BaseActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_period);
         mApp = (App) getApplication();
+        titlesBegin = new String[]{getString(R.string.light_zhaoming) + getString(R.string.open_time2), getString(R.string.light_shajun) + getString(R.string.open_time2), getString(R.string.chonglangbeng) + getString(R.string.open_time2)};
+        titlesEnd = new String[]{getString(R.string.light_zhaoming) + getString(R.string.close_time2), getString(R.string.light_shajun) + getString(R.string.close_time2), getString(R.string.chonglangbeng) + getString(R.string.close_time2)};
         txt_title.setText("");
         mApp.mPeriodUi = this;
 //        yanChiFinish = false;
@@ -337,7 +339,8 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         break;
                 }
             }
-        }, Integer.parseInt(times[0]), Integer.parseInt(times[1]), true, "时段" + position + (isKaiQi ? "开启" : "关闭") + "时间");
+        }, Integer.parseInt(times[0]), Integer.parseInt(times[1]), true, "");
+        mPicker.setTitle(null);
         mPicker.setTimerOtherTwo(timer1, position, isKaiQi);
         mPicker.setCanceledOnTouchOutside(false);
         mPicker.show();

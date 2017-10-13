@@ -260,7 +260,7 @@
     <string name="guogao">过高</string>
     <string name="requesting">数据请求中,请稍后</string>
     <string name="chuchangshezhi">确定恢复出厂设置?</string>
-    <string name="clear_wh_time">Make sure to clear?</string>
+    <string name="clear_wh_time">确定清零?</string>
     <string name="avoid_delete">防止其他客户端误删</string>
     <string name="changeshodongatfirst">请先将模式调整为手动模式</string>
     <string name="alreay_submit">我已提交</string>
@@ -486,8 +486,8 @@
     <string name="addnew_address">添加地址</string>
     <string name="choose_address_at_first">请先选择地址</string>
     <string name="current_params">当前参数</string>
-    <string name="open_time2">open time</string>
-    <string name="close_time2">close time</string>
+    <string name="open_time2">开启时间</string>
+    <string name="close_time2">关闭时间</string>
     <string name="dongtai_tips">动态提示</string>
     <string name="period_1">第1时间段</string>
     <string name="period_2">第二时间段</string>
@@ -498,8 +498,8 @@
     <string name="last_week">最近一周</string>
     <string name="lat_30days">最近30天</string>
     <string name="error_get">获取失败</string>
-    <string name="today">today</string>
-    <string name="yesterday">yesterday</string>
+    <string name="today">今天</string>
+    <string name="yesterday">昨天</string>
     <string name="history">历史</string>
     <string name="phTopValue">pH最高数值</string>
     <string name="phBottomValue">pH最低数值</string>
@@ -508,4 +508,7 @@
     <string name="temper_avg">温度平均数值</string>
     <string name="tempTopValue">温度最高数值</string>
     <string name="tempBottomValue">温度最低数值</string>
+    <string name="trend_normal">正常</string>
+    <string name="trend_abnormal">异常</string>
+    <string name="txt_chuchangshezhi">恢复出厂设置</string>
 </resources>
