@@ -37,8 +37,6 @@ import static android.content.DialogInterface.BUTTON_POSITIVE;
  */
 
 public class DeviceAq806TemperatureActivity extends BaseActivity implements Observer {
-    private static final String CONNECTED_TEXT = "数据请求中,请稍后";
-    private static final String DISCONNECTED_TEXT = "当前设备已断开,请稍后重试";
     ImageView img_back;
     TextView txt_title;
     CameraConsolePopupWindow popupWindow;
@@ -81,7 +79,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         popupWindow = new CameraConsolePopupWindow(
                 DeviceAq806TemperatureActivity.this, this);
         img_progress.setMaxCount(35);
-        setDeviceTitle("温度设置");
+        setDeviceTitle(getString(R.string.wendu));
         setDeviceData();
     }
 
@@ -129,7 +127,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 if (myApp.jinLiGangdetailUI.isConnect) {
                     setWenDu(getString(R.string.wendu_high), txt_wendu_sheding_high, Double.parseDouble((txt_wendu_sheding_high.getText().toString().substring(0, txt_wendu_sheding_high.getText().toString().length() - 1))));
                 } else {
-                    MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
+                    MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
             case R.id.re_diwen_sheding:
@@ -137,7 +135,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 if (myApp.jinLiGangdetailUI.isConnect) {
                     setWenDu(getString(R.string.wendu_low), txt_wendu_sheding_low, Double.parseDouble((txt_wendu_sheding_low.getText().toString().substring(0, txt_wendu_sheding_low.getText().toString().length() - 1))));
                 } else {
-                    MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
+                    MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
             case R.id.re_settemperature:
@@ -145,15 +143,15 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 if (myApp.jinLiGangdetailUI.isConnect) {
                     setWenDu(getString(R.string.wendu), txt_wendu_setting, Double.parseDouble((txt_wendu_setting.getText().toString().substring(0, txt_wendu_setting.getText().toString().length() - 1))));
                 } else {
-                    MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
+                    MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
             case R.id.wendu_baojing:
                 if (myApp.jinLiGangdetailUI.isConnect) {
-                    showProgressDialog(CONNECTED_TEXT, false);
+                    showProgressDialog(getString(R.string.requesting), false);
                     setCheckOrUnCheck(wendu_baojing, !wenDuBaoJingStatus);
                 } else {
-                    MAlert.alert(DISCONNECTED_TEXT, Gravity.CENTER);
+                    MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
         }
@@ -241,7 +239,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         ResultEntity entity = handlerError(data);
         if (entity != null) {
             if (entity.getCode() != 0) {
-                MAlert.alert(entity.getMsg() + "设备信息有误");
+                MAlert.alert(entity.getMsg() );
                 finish();
                 return;
             } else if (entity.getEventType() == UserPresenter.deviceSet_806success) {

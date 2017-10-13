@@ -79,7 +79,7 @@ public class ActivityTemperature extends BaseActivity implements Observer {
         isPh = getIntent().getBooleanExtra("isPh", false);
         userPresenter = new UserPresenter(this);
         dataType = 1;
-        txt_type.setText("24小时走势");
+//        txt_type.setText(getString(R.string.trend_24hours));
         if (did != null) {
             setCurrentItem(dataType);
         }

@@ -316,7 +316,7 @@
     <string name="did_error">The device did not have length</string>
     <string name="video_connecting">In connection</string>
     <string name="wendu_baojing">Temperature alarm</string>
-        <string name="ph_baojing">pH value alarm</string>
+    <string name="ph_baojing">pH value alarm</string>
     <string name="wendu">Temperature setting</string>
     <string name="lowest">It\'s already the lowest</string>
     <string name="highest">It\'s already the top gear</string>
@@ -533,6 +533,15 @@
     <string name="minValueofTemperature_yesterday">The lowest value of temperature of yesterday</string>
     <string name="maxValueofTemperature_yesterday">The highest value of temperature of today</string>
     <string name="minValueofTemperature_today">The lowest value of temperature of today</string>
-    <string name="avgValueTemperature_24hours">24小时温度平均数值</string>
-    <string name="avgValuePh_24Hours">24小时pH历史平均值</string>
+    <string name="avgValueTemperature_24hours">The average temperature of 24 hours</string>
+    <string name="avgValuePh_24Hours">The average ph of 24 hours</string>
+
+    <string name="trend_Monday">Mon.</string>
+    <string name="trend_Tuesday">Tues.</string>
+    <string name="trend_Wednesday">Wed.</string>
+    <string name="trend_Thursday">Thur.</string>
+    <string name="trend_Friday">Fri.</string>
+    <string name="trend_Saturday">Sat.</string>
+    <string name="trend_Sunday">Sun.</string>
+    <string name="ph_setting_title">The pH quality setting</string>
 </resources>

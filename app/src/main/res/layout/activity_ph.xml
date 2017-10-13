@@ -137,8 +137,6 @@
                     android:layout_centerVertical="true"
                     android:layout_margin="@dimen/DIMEN_10DP"
                     android:textColor="@color/text_yellow"
-                    android:textSize="@dimen/DIMEN_20DP"
-                    android:text="8.0"
                     />
             </RelativeLayout>
             <RelativeLayout

@@ -134,13 +134,13 @@
     <string name="Year">Y</string>
     <string name="Month">M</string>
     <string name="Day">D</string>
-    <string name="Monday">Mon</string>
-    <string name="Tuesday">Tue</string>
-    <string name="Wednesday">Wed</string>
-    <string name="Thursday">Thu</string>
-    <string name="Friday">Fri</string>
-    <string name="Saturday">Sat</string>
-    <string name="Sunday">Sun</string>
+    <string name="Monday">周一</string>
+    <string name="Tuesday">周二</string>
+    <string name="Wednesday">周三</string>
+    <string name="Thursday">周四</string>
+    <string name="Friday">周五</string>
+    <string name="Saturday">周六</string>
+    <string name="Sunday">周日</string>
     <string name="update_chazuoA">修改插座A名称</string>
     <string name="update_chazuoB">修改插座B名称</string>
     <string name="alert">提示信息</string>
@@ -533,4 +533,13 @@
     <string name="minValueofTemperature_today">今天温度最低数值</string>
     <string name="avgValueTemperature_24hours">24小时温度平均数值</string>
     <string name="avgValuePh_24Hours">24小时pH历史平均值</string>
+
+    <string name="trend_Monday">周一</string>
+    <string name="trend_Tuesday">周二</string>
+    <string name="trend_Wednesday">周三</string>
+    <string name="trend_Thursday">周四</string>
+    <string name="trend_Friday">周五</string>
+    <string name="trend_Saturday">周六</string>
+    <string name="trend_Sunday">周日</string>
+    <string name="ph_setting_title">pH水质酸碱度设置</string>
 </resources>

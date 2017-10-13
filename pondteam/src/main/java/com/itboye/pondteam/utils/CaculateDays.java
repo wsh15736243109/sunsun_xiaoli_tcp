@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TimeZone;
 
 import static com.itboye.pondteam.R.string.Monday;
@@ -177,31 +176,31 @@ public class CaculateDays {
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
 //            Week += "日";
-            Week = MyApplication.getInstance().getString(R.string.Sunday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Sunday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-            Week = MyApplication.getInstance().getString(R.string.Monday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Monday);
 //            Week += "一";
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
 //            Week += "二";
-            Week = MyApplication.getInstance().getString(R.string.Tuesday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Tuesday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
 //            Week += "三";
-            Week = MyApplication.getInstance().getString(R.string.Wednesday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Wednesday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
 //            Week += "四";
-            Week = MyApplication.getInstance().getString(R.string.Thursday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Thursday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
 //            Week += "五";
-            Week = MyApplication.getInstance().getString(R.string.Friday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Friday);
         }
         if (c.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
 //            Week += "六";
-            Week = MyApplication.getInstance().getString(R.string.Saturday);
+            Week = MyApplication.getInstance().getString(R.string.trend_Saturday);
         }
         try {
             if (IsToday(pTime)) {
@@ -354,38 +353,38 @@ public class CaculateDays {
         return "00/00";
     }
 
-    public static String caculateWeek(String binaryWeek, String currentWeek) {
-        int bytenum = 0;
-        stringWeek = new StringBuffer();
-        char[] chars = binaryWeek.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            int index = i;
-            char string = chars[i];
-            if (string == '1' || (string + "").equals("1")) {
-                bytenum += Math.pow(2, (chars.length - 1 - i));
-                getWeek(index);
-            }
-        }
-        System.out.println(stringWeek.toString() + "z");
-        return caculateWeeks(stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.length() - 1) : stringWeek.toString(), currentWeek);
-    }
+//    public static String caculateWeek(String binaryWeek, String currentWeek) {
+//        int bytenum = 0;
+//        stringWeek = new StringBuffer();
+//        char[] chars = binaryWeek.toCharArray();
+//        for (int i = 0; i < chars.length; i++) {
+//            int index = i;
+//            char string = chars[i];
+//            if (string == '1' || (string + "").equals("1")) {
+//                bytenum += Math.pow(2, (chars.length - 1 - i));
+//                getWeek(index);
+//            }
+//        }
+//        System.out.println(stringWeek.toString() + "z");
+//        return caculateWeeks(stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.length() - 1) : stringWeek.toString(), currentWeek);
+//    }
 
-    //    ------------------------------找出最近的星期数---------------------------------//
-    public static String caculateWeek(String binaryWeek) {
-        int bytenum = 0;
-        stringWeek = new StringBuffer();
-        char[] chars = binaryWeek.toCharArray();
-        for (int i = 0; i < chars.length; i++) {
-            int index = i;
-            char string = chars[i];
-            if (string == '1' || (string + "").equals("1")) {
-                bytenum += Math.pow(2, (chars.length - 1 - i));
-                getWeek(index);
-            }
-        }
-        System.out.println(stringWeek.toString() + "我是星期");
-        return caculateWeeks(stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.length() - 1) : stringWeek.toString(), "星期一");
-    }
+//    //    ------------------------------找出最近的星期数---------------------------------//
+//    public static String caculateWeek(String binaryWeek) {
+//        int bytenum = 0;
+//        stringWeek = new StringBuffer();
+//        char[] chars = binaryWeek.toCharArray();
+//        for (int i = 0; i < chars.length; i++) {
+//            int index = i;
+//            char string = chars[i];
+//            if (string == '1' || (string + "").equals("1")) {
+//                bytenum += Math.pow(2, (chars.length - 1 - i));
+//                getWeek(index);
+//            }
+//        }
+//        System.out.println(stringWeek.toString() + "我是星期");
+//        return caculateWeeks(stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.length() - 1) : stringWeek.toString(), "星期一");
+//    }
 
     static StringBuffer stringWeek = new StringBuffer();
 
@@ -421,99 +420,99 @@ public class CaculateDays {
     }
 
 
-    public static String getWeekByIndex(int position) {
+//    public static String getWeekByIndex(int position) {
+//
+//        switch (position) {
+//            case 0:
+//                stringWeek.insert(0, "星期日");
+//                break;
+//            case 1:
+//                stringWeek.insert(0, "星期六");
+//                break;
+//            case 2:
+//                stringWeek.insert(0, "星期五");
+//                break;
+//            case 3:
+//                stringWeek.insert(0, "星期四");
+//                break;
+//            case 4:
+//                stringWeek.insert(0, "星期三");
+//                break;
+//            case 5:
+//                stringWeek.insert(0, "星期二");
+//                break;
+//            case 6:
+//                stringWeek.insert(0, "星期一");
+//                break;
+//            default:
+//                break;
+//        }
+//        return stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.toString().length() - 1) : stringWeek.toString();
+//    }
 
-        switch (position) {
-            case 0:
-                stringWeek.insert(0, "星期日");
-                break;
-            case 1:
-                stringWeek.insert(0, "星期六");
-                break;
-            case 2:
-                stringWeek.insert(0, "星期五");
-                break;
-            case 3:
-                stringWeek.insert(0, "星期四");
-                break;
-            case 4:
-                stringWeek.insert(0, "星期三");
-                break;
-            case 5:
-                stringWeek.insert(0, "星期二");
-                break;
-            case 6:
-                stringWeek.insert(0, "星期一");
-                break;
-            default:
-                break;
-        }
-        return stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.toString().length() - 1) : stringWeek.toString();
-    }
-
-    private static String caculateWeeks(String weeks, String currentWeek) {
-        String[] weekBinay = null;
-        if (weeks.contains("、")) {
-            weekBinay = weeks.split("、");
-        } else {
-            weekBinay = new String[]{weeks};
-        }
-        HashMap<String, Integer> hashMap = new HashMap<>();
-        hashMap.put("星期一", 1);
-        hashMap.put("星期二", 2);
-        hashMap.put("星期三", 3);
-        hashMap.put("星期四", 4);
-        hashMap.put("星期五", 5);
-        hashMap.put("星期六", 6);
-        hashMap.put("星期日", 7);
-        int currentIndex = hashMap.get(currentWeek);
-        ArrayList<Integer> ar = new ArrayList<>();
-        for (int i = 0; i < weekBinay.length; i++) {
-            String string = weekBinay[i];
-            ar.add(hashMap.get(string));
-        }
-        int min = ar.get(0);
-        int minPosition = 0;
-        int max = ar.get(0);
-        int maxPosition = 0;
-        for (int i = 0; i < ar.size(); i++) {
-            int string = Math.abs(ar.get(i));
-            if (min >= string) {
-                min = string;
-                minPosition = i;
-            }
-            if (max <= string) {
-                max = string;
-                maxPosition = i;
-            }
-        }
-        int num = 0;
-        int startIndex = hashMap.get(weekBinay[0]);
-        int endIndex = hashMap.get(weekBinay[weekBinay.length - 1]);
-        if (currentIndex >= endIndex || currentIndex <= startIndex) {
-            minPosition = 0;
-        } else {
-            int tempNum = currentIndex;
-            int tempPosition = 0;
-            while (true) {
-                minPosition = ar.indexOf(tempNum);
-                if (minPosition != -1) {
-                    break;
-                }
-                tempNum++;
-            }
-        }
-        num = hashMap.get(weekBinay[minPosition]) - currentIndex;
-        String currentYear = new SimpleDateFormat("yyyy").format(System.currentTimeMillis());
-        String currentMonth = new SimpleDateFormat("MM").format(System.currentTimeMillis());
-        String currentDay = new SimpleDateFormat("dd").format(System.currentTimeMillis());
-        try {
-            return new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(currentYear + "-" + currentMonth + "-" + (Integer.parseInt(currentDay) + num + "")));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+//    private static String caculateWeeks(String weeks, String currentWeek) {
+//        String[] weekBinay = null;
+//        if (weeks.contains("、")) {
+//            weekBinay = weeks.split("、");
+//        } else {
+//            weekBinay = new String[]{weeks};
+//        }
+//        HashMap<String, Integer> hashMap = new HashMap<>();
+//        hashMap.put("星期一", 1);
+//        hashMap.put("星期二", 2);
+//        hashMap.put("星期三", 3);
+//        hashMap.put("星期四", 4);
+//        hashMap.put("星期五", 5);
+//        hashMap.put("星期六", 6);
+//        hashMap.put("星期日", 7);
+//        int currentIndex = hashMap.get(currentWeek);
+//        ArrayList<Integer> ar = new ArrayList<>();
+//        for (int i = 0; i < weekBinay.length; i++) {
+//            String string = weekBinay[i];
+//            ar.add(hashMap.get(string));
+//        }
+//        int min = ar.get(0);
+//        int minPosition = 0;
+//        int max = ar.get(0);
+//        int maxPosition = 0;
+//        for (int i = 0; i < ar.size(); i++) {
+//            int string = Math.abs(ar.get(i));
+//            if (min >= string) {
+//                min = string;
+//                minPosition = i;
+//            }
+//            if (max <= string) {
+//                max = string;
+//                maxPosition = i;
+//            }
+//        }
+//        int num = 0;
+//        int startIndex = hashMap.get(weekBinay[0]);
+//        int endIndex = hashMap.get(weekBinay[weekBinay.length - 1]);
+//        if (currentIndex >= endIndex || currentIndex <= startIndex) {
+//            minPosition = 0;
+//        } else {
+//            int tempNum = currentIndex;
+//            int tempPosition = 0;
+//            while (true) {
+//                minPosition = ar.indexOf(tempNum);
+//                if (minPosition != -1) {
+//                    break;
+//                }
+//                tempNum++;
+//            }
+//        }
+//        num = hashMap.get(weekBinay[minPosition]) - currentIndex;
+//        String currentYear = new SimpleDateFormat("yyyy").format(System.currentTimeMillis());
+//        String currentMonth = new SimpleDateFormat("MM").format(System.currentTimeMillis());
+//        String currentDay = new SimpleDateFormat("dd").format(System.currentTimeMillis());
+//        try {
+//            return new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("yyyy-MM-dd").parse(currentYear + "-" + currentMonth + "-" + (Integer.parseInt(currentDay) + num + "")));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        return "";
+//    }
 
     /**
      * 计算两时间的小时差值 如2006072612

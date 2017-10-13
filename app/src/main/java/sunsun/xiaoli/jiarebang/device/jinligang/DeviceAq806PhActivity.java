@@ -59,7 +59,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
         userPresenter = new UserPresenter(this);
         mApp.deviceAq806PhActivity = this;
         mApp.jinLiGangdetailUI.beginRequest();
-        txt_title.setText("pH水质酸碱度设置");
+        txt_title.setText(getString(R.string.ph_setting_title));
         set806pHData();
     }
 
