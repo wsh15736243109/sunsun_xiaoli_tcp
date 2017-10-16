@@ -264,7 +264,7 @@
     <string name="avoid_delete">防止其他客户端误删</string>
     <string name="changeshodongatfirst">请先将模式调整为手动模式</string>
     <string name="alreay_submit">我已提交</string>
-    <string name="current_album">当前共</string>
+    <string name="current_album">当前共%1$d张照片</string>
     <string name="zhang">张照片</string>
     <string name="video_view">视频观看</string>
     <string name="album_title">我的相册</string>
@@ -458,11 +458,11 @@
     <string name="chuqiliang_choose">出气量选择</string>
     <string name="workmode_choose">工作模式选择</string>
     <string name="qibeng_leiji_time">此气泵已累计使用%1$.2f小时</string>
-    <string name="qibengbattery_chongdian_time">剩余充电时间约:%1$.2s</string>
+    <string name="qibengbattery_chongdian_time">剩余充电时间约:%1$d</string>
     <string name="batteryinformation">电池信息</string>
     <string name="workstatustips">工作状态提示</string>
     <string name="qibengbatter_leijichongdiancount">电池累计充电已达%1$d次</string>
-    <string name="qibengbattery_shouming">电池使用寿命:%1$s</string>
+    <string name="qibengbattery_shouming">电池使用寿命:%1$d</string>
     <string name="qibengbattery_tingjiwarn">停机警告设置</string>
     <string name="status">当前状态:</string>
     <string name="chazuo_open">已打开</string>
@@ -542,4 +542,18 @@
     <string name="trend_Saturday">周六</string>
     <string name="trend_Sunday">周日</string>
     <string name="ph_setting_title">pH水质酸碱度设置</string>
+    <string name="mode_normal">正常模式</string>
+    <string name="mode_jianxie">间歇模式</string>
+    <string name="mode_yingji">应急模式</string>
+    <string name="work_status_jiarebang">加热棒工作状态:</string>
+    <string name="total_flow">视频累计流量:</string>
+    <string name="qingxi_pu">普清</string>
+    <string name="qingxi_biao">标清</string>
+    <string name="qingxi_gao">高清</string>
+    <string name="qingxi_chao">超清</string>
+    <string name="mode_change">模式切换</string>
+    <string name="period_setting">灯光时段设置</string>
+    <string name="shoudong_tiaoguang">手动调光设置</string>
+    <string name="zhuangtai_tuisong">状态推送\"</string>
+    <string name="user_time">使用时间</string>
 </resources>

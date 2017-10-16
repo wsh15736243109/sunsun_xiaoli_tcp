@@ -451,6 +451,63 @@ public class DeviceDetailModel implements Serializable {
     private String extra;
 
     /**
+     * 充电次数
+     */
+    private int ch_cnt;
+
+    /**
+     * 电池寿命
+     */
+    private int b_life;
+
+    /**
+     * 剩余充电时间
+     */
+    private int rct;
+    private int wh;//当气泵使用使用时间
+    private int batt;//当前电量
+
+    public int getBatt() {
+        return batt;
+    }
+
+    public void setBatt(int batt) {
+        this.batt = batt;
+    }
+
+    public int getWh() {
+        return wh;
+    }
+
+    public void setWh(int wh) {
+        this.wh = wh;
+    }
+
+    public int getCh_cnt() {
+        return ch_cnt;
+    }
+
+    public void setCh_cnt(int ch_cnt) {
+        this.ch_cnt = ch_cnt;
+    }
+
+    public int getB_life() {
+        return b_life;
+    }
+
+    public void setB_life(int b_life) {
+        this.b_life = b_life;
+    }
+
+    public int getRct() {
+        return rct;
+    }
+
+    public void setRct(int rct) {
+        this.rct = rct;
+    }
+
+    /**
      * 固件更新状态	0 - 100：更新进度百分比，更新成功为100
      * 101：更新失败，硬件重启后该字段隐藏
      */

@@ -151,7 +151,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/DIMEN_5DP"
                         android:singleLine="true"
@@ -191,11 +191,11 @@
                     <TextView
                         android:id="@+id/txt_wendu_warn"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/DIMEN_5DP"
                         android:singleLine="true"
-                        android:layout_toLeftOf="@+id/wendu_baojing"
+                        android:drawablePadding="@dimen/DIMEN_5DP"
                         android:layout_toRightOf="@+id/icon_wendu_warn"
                         android:text="@string/wendu_baojing"
                         android:textSize="@dimen/DIMEN_20DP" />
@@ -227,7 +227,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/DIMEN_5DP"
                         android:singleLine="true"

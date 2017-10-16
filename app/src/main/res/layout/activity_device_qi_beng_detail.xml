@@ -126,7 +126,7 @@
                     android:layout_centerHorizontal="true"
                     android:background="#EEEEEE"
                     android:padding="@dimen/DIMEN_10DP"
-                    android:text="@string/qibeng_leiji_time"
+                    android:text=""
                     android:textSize="@dimen/DIMEN_20DP" />
 
                 <View
@@ -147,9 +147,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toLeftOf="@+id/txt_liuliangchoose"
+                        android:layout_toLeftOf="@+id/txt_chuqiliangchoose"
                         android:drawableLeft="@drawable/shuibeng_liuliang"
                         android:gravity="center|left"
+                        android:singleLine="true"
                         android:text="@string/chuqiliang_choose"
                         android:textSize="@dimen/DIMEN_20DP" />
 
@@ -161,7 +162,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_10DP"
-                        android:text="4"
+                        android:text=""
                         android:textColor="@color/main_green"
                         android:textSize="@dimen/DIMEN_20DP" />
                 </RelativeLayout>
@@ -187,6 +188,7 @@
                         android:layout_toLeftOf="@+id/txt_workmode"
                         android:drawableLeft="@drawable/qibeng_workmode"
                         android:gravity="center|left"
+                        android:singleLine="true"
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:text="@string/workmode_choose"
                         android:textSize="@dimen/DIMEN_20DP" />
@@ -225,6 +227,7 @@
                         android:drawableLeft="@drawable/qibeng_battery"
                         android:gravity="center|left"
                         android:drawablePadding="@dimen/DIMEN_5DP"
+                        android:singleLine="true"
                         android:text="@string/batteryinformation"
                         android:textSize="@dimen/DIMEN_20DP" />
 
@@ -255,8 +258,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/img_workstatustips"
                         android:drawableLeft="@drawable/qibeng_workstatus"
-                        android:gravity="center"
+                        android:gravity="center|left"
+                        android:singleLine="true"
                         android:text="@string/workstatustips"
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:textSize="@dimen/DIMEN_20DP" />
@@ -290,9 +296,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
                         android:drawableLeft="@drawable/yichangbaojing"
-                        android:gravity="center"
+                        android:layout_toLeftOf="@+id/img_yichangbaojing"
+                        android:gravity="center|left"
                         android:text="@string/yichangbaojing"
+                        android:singleLine="true"
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:textSize="@dimen/DIMEN_20DP" />
 

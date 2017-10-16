@@ -111,7 +111,7 @@
                         android:drawableLeft="@drawable/qibengbattery_half"
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:gravity="center_vertical"
-                        android:text="@string/qibengbattery_chongdian_time"
+                        android:text=""
                         android:textSize="@dimen/DIMEN_20DP" />
                 </RelativeLayout>
 
@@ -141,7 +141,7 @@
                         android:drawableLeft="@drawable/qibengbattery_leijicount"
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:gravity="center|left"
-                        android:text="@string/qibengbatter_leijichongdiancount"
+                        android:text=""
                         android:textSize="@dimen/DIMEN_20DP" />
 
                 </RelativeLayout>
@@ -171,7 +171,7 @@
                         android:drawableLeft="@drawable/qibengbattery_half"
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:gravity="center|left"
-                        android:text="@string/qibengbattery_shouming"
+                        android:text=""
                         android:textSize="@dimen/DIMEN_20DP" />
 
                 </RelativeLayout>
@@ -240,7 +240,9 @@
                         android:layout_centerVertical="true"
                         android:drawableLeft="@drawable/img_leijishiyong"
                         android:drawablePadding="@dimen/DIMEN_5DP"
-                        android:gravity="center"
+                        android:gravity="center|left"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toLeftOf="@+id/img_qingling"
                         android:text="@string/qingling"
                         android:textSize="@dimen/DIMEN_20DP" />
 

@@ -93,8 +93,11 @@
                     android:id="@+id/txt_ph_max"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:maxEms="12"
+                    android:singleLine="true"
                     android:text=""
+                    android:layout_centerVertical="true"
                     android:gravity="center"
                     android:textSize="@dimen/DIMEN_16DP" />
 
@@ -103,7 +106,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/txt_ph_max"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:maxEms="14"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
                     android:text=""
                     android:textSize="@dimen/DIMEN_16DP" />
 
@@ -112,7 +117,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:layout_centerVertical="true"
+                    android:padding="@dimen/DIMEN_10DP"
                     android:textColor="@color/type_7"
                     android:text=""
                     android:textSize="@dimen/DIMEN_16DP" />
@@ -128,7 +134,10 @@
                     android:id="@+id/txt_ph_min"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:maxEms="12"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
                     android:text=""
                     android:gravity="center"
                     android:textSize="@dimen/DIMEN_16DP" />
@@ -138,7 +147,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/txt_ph_min"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:maxEms="10"
+                    android:layout_centerVertical="true"
+                    android:singleLine="true"
                     android:text=""
                     android:textSize="@dimen/DIMEN_16DP" />
 
@@ -147,7 +158,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:layout_centerVertical="true"
                     android:text=""
                     android:textColor="@color/type_2"
                     android:textSize="@dimen/DIMEN_16DP" />
@@ -163,8 +175,11 @@
                     android:id="@+id/txt_ph_avg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:padding="@dimen/DIMEN_10DP"
+                    android:layout_centerVertical="true"
                     android:text=""
+                    android:maxEms="12"
+                    android:singleLine="true"
                     android:gravity="center"
                     android:textSize="@dimen/DIMEN_16DP" />
 
@@ -173,8 +188,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/txt_ph_avg"
-                    android:padding="@dimen/DIMEN_20DP"
-                    android:text="10:00"
+                    android:maxEms="14"
+                    android:text=""
+                    android:layout_centerVertical="true"
                     android:textSize="@dimen/DIMEN_20DP"
                     android:visibility="gone" />
 
@@ -182,8 +198,9 @@
                     android:id="@+id/txt_ph_avg_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/DIMEN_20DP"
+                    android:padding="@dimen/DIMEN_10DP"
                     android:text=""
+                    android:layout_centerVertical="true"
                     android:textColor="@color/main_green"
                     android:textSize="@dimen/DIMEN_16DP"
                     android:layout_alignParentTop="true"

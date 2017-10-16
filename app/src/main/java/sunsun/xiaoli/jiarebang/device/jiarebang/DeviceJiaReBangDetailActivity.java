@@ -88,7 +88,6 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
     DBManager dbManager;
     TextView txt_status;
     private TcpUtil tcp;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.base.IsNeedClick;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.custom.ptr.BasePtr;
-import com.itboye.pondteam.interfaces.SmartConfigTypeSingle;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.DeviceStatusShow;
@@ -53,7 +51,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
 
     UserPresenter userPresenter;
 
-    TextView txt_title, txt_shuibengliuliang, txt_gonglv;
+    TextView txt_title;
     App mApp;
     public DeviceQiBengBatteryDetailActivity shuibengUI;
     private String did;
@@ -69,7 +67,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
     RelativeLayout re_liuliang_choose;
     RelativeLayout re_gif;
     @IsNeedClick
-    TextView txt_leijitime;
+    TextView txt_leijitime, qibengbattery_leijicount, txt_shouming;
     int seconds = 0;
     RelativeLayout re_battery, re_chuqiliang_choose, re_workmode;
     MyBattery battery_wiget;
@@ -93,7 +91,6 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
         img_right.setBackgroundResource(R.drawable.menu);
         userPresenter = new UserPresenter(this);
         battery_wiget.setBatteryValue(80);
-//        new Thread(runnable).start();
     }
 
     @Override
@@ -102,21 +99,6 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
 
     }
 
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            beginRequest();
-            handler.sendEmptyMessage(1);
-        }
-    };
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            handler.postDelayed(runnable, Const.intervalTime);
-        }
-    };
 
     private void beginRequest() {
         userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
@@ -124,7 +106,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
 
     @Override
     protected void onDestroy() {
-        handler.removeCallbacks(runnable);
+        mApp.deviceQiBengBatteryUI = null;
         super.onDestroy();
     }
 
@@ -390,8 +372,9 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
         }
     }
 
-    private void setData() {
-        txt_title.setText(mApp.mDeviceUi.mSelectDeviceInfo.getDevice_nickname());
+    public void setData() {
+        deviceDetailModel = mApp.deviceQiBengUI.deviceDetailModel;
+        txt_title.setText(deviceDetailModel.getDevice_nickname());
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         seconds = 0;
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
@@ -406,145 +389,9 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-        txt_gonglv.setText(deviceDetailModel.getPwr() + "W");
-        String strState = "";
-        //运行状态
-        state = deviceDetailModel.getState();
-//        switch (state) {
-//            case 0:
-//                //停机
-//                txt_status.setText(getString(R.string.stop));
-//                strState = String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1) + "," + getString(R.string.stop);
-////                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//            case 1:
-//                //运行
-//                strState = (deviceDetailModel.getGear() + 1) + getString(R.string.status_running);
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//            case 2:
-//                //故障
-//                strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//            case 3:
-//                strState = String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-////                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//        }
-        txt_liuliangchoose.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1));
-        txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
-
-        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getOnline_time() / 3600.0));
-//        shuibeng_wiget.setDangWei(deviceDetailModel.getGear());
-//        shuibeng_wiget.setState(state);
-        txt_current_status_value.setText(strState);
-//        getLiuLiang();
-        if (mApp.updateActivityUI != null) {
-            if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                mApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
-            }
-        }
+        txt_leijitime.setText(String.format(getString(R.string.qibengbattery_chongdian_time), deviceDetailModel.getWh()));
+        qibengbattery_leijicount.setText(String.format(getString(R.string.qibengbatter_leijichongdiancount), deviceDetailModel.getCh_cnt()));
+        txt_shouming.setText(String.format(getString(R.string.qibengbattery_shouming), deviceDetailModel.getB_life()));
     }
 
-    private String caculcateSeconds(int fcd) {
-        int h = 0;
-        int d = 0;
-        int s = 0;
-        int temp = fcd % 3600;
-        if (fcd > 3600) {
-            h = fcd / 3600;
-            if (temp != 0) {
-                if (temp > 60) {
-                    d = temp / 60;
-                    if (temp % 60 != 0) {
-                        s = temp % 60;
-                    }
-                } else {
-                    s = temp;
-                }
-            }
-        } else {
-            d = fcd / 60;
-            if (fcd % 60 != 0) {
-                s = fcd % 60;
-            }
-        }
-        return (d < 10 ? "0" + d : d) + ":" + (s < 10 ? "0" + s : s);
-    }
-
-    private void getLiuLiang() {
-        int pw = deviceDetailModel.getGear();
-        int shuiBengType = deviceDetailModel.getType() == null ? 0 : (Integer.parseInt(deviceDetailModel.getType().equals("") ? "0" : deviceDetailModel.getType()));
-        int liuliang = 0;
-        switch (pw) {
-            case 0:
-                liuliang = 0;
-                break;
-            case 1:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 3000;
-                        break;
-                    case 1:
-                        liuliang = 6000;
-                        break;
-                }
-                break;
-            case 2:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 4000;
-                        break;
-                    case 1:
-                        liuliang = 7500;
-                        break;
-                }
-                break;
-            case 3:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 4700;
-                        break;
-                    case 1:
-                        liuliang = 8500;
-                        break;
-                }
-                break;
-            case 4:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 5400;
-                        break;
-                    case 1:
-                        liuliang = 9400;
-                        break;
-                }
-                break;
-            case 5:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 6000;
-                        break;
-                    case 1:
-                        liuliang = 10000;
-                        break;
-                }
-                break;
-        }
-        txt_shuibengliuliang.setText(liuliang + "L/h");
-
-    }
 }

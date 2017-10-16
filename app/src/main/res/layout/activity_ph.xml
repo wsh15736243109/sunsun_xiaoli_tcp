@@ -158,6 +158,7 @@
                     android:id="@+id/txt_zhaoming"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
                     android:layout_toRightOf="@+id/icon_zhaoming"
@@ -198,6 +199,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:singleLine="true"
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
                     android:layout_toRightOf="@+id/icon_shajun_setting"
                     android:text="@string/ph_low"
@@ -237,12 +239,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:layout_toLeftOf="@+id/icon_right_arrow1"
                     android:layout_centerVertical="true"
+                    android:singleLine="true"
                     android:layout_toRightOf="@+id/icon_wendu_warn"
                     android:text="@string/ph_history"
                     android:textSize="@dimen/DIMEN_20DP" />
 
                 <ImageView
+                    android:id="@+id/icon_right_arrow1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -305,6 +310,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:singleLine="true"
+                    android:layout_toLeftOf="@+id/wendu_high"
                     android:layout_toRightOf="@+id/icon_open_time"
                     android:text="@string/wendu_high"
                     android:layout_centerVertical="true"
@@ -344,6 +351,8 @@
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
                     android:layout_toRightOf="@+id/icon_shipin"
                     android:text="@string/wendu_low"
+                    android:singleLine="true"
+                    android:layout_toLeftOf="@+id/wendu_di"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/DIMEN_20DP" />
 
@@ -379,12 +388,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:layout_toLeftOf="@+id/icon_right_arrow2"
                     android:layout_toRightOf="@+id/icon_suanjiandu"
                     android:text="@string/lishishuiwen"
+                    android:singleLine="true"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/DIMEN_20DP" />
 
                 <ImageView
+                    android:id="@+id/icon_right_arrow2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -413,12 +425,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
+                    android:singleLine="true"
+                    android:layout_toLeftOf="@+id/icon_right_arrow3"
                     android:layout_toRightOf="@+id/icon_shuiwei_status"
                     android:text="@string/ph_jiaozhun"
                     android:layout_centerVertical="true"
                     android:textSize="@dimen/DIMEN_20DP" />
 
                 <ImageView
+                    android:id="@+id/icon_right_arrow3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

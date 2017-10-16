@@ -264,8 +264,7 @@
     <string name="avoid_delete">防止其他客户端误删</string>
     <string name="changeshodongatfirst">请先将模式调整为手动模式</string>
     <string name="alreay_submit">我已提交</string>
-    <string name="current_album">当前共</string>
-    <string name="zhang">张照片</string>
+    <string name="current_album">当前共%1$d张照片</string>
     <string name="video_view">视频观看</string>
     <string name="album_title">我的相册</string>
     <string name="wx">微信</string>
@@ -460,8 +459,8 @@
     <string name="qibeng_leiji_time">次氣泵已纍計使用%1$.2f小時</string>
     <string name="batteryinformation">电池信息</string>
     <string name="workstatustips">工作状态提示</string>
-    <string name="qibengbattery_chongdian_time">剩餘充電時間約:%1$.2s</string>
+    <string name="qibengbattery_chongdian_time">剩餘充電時間約:%1$d</string>
     <string name="qibengbatter_leijichongdiancount">电池累计充电已达%1$d次</string>
-    <string name="qibengbattery_shouming">电池使用寿命:%1$s</string>
+    <string name="qibengbattery_shouming">电池使用寿命:%1$d</string>
     <string name="qibengbattery_tingjiwarn">停机警告设置</string>
 </resources>

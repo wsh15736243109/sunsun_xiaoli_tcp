@@ -67,13 +67,17 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     TextView txt_current_status_value;
     private int state;
     @IsNeedClick
-    TextView txt_liuliangchoose, txt_weishitime;
-    RelativeLayout  re_liuliang_choose;
+    TextView txt_chuqiliangchoose, txt_weishitime;
+    RelativeLayout re_liuliang_choose;
     RelativeLayout re_gif;
     @IsNeedClick
     TextView txt_status, txt_leijitime;
     int seconds = 0;
-    RelativeLayout re_battery,re_chuqiliang_choose,re_workmode;
+    RelativeLayout re_battery, re_chuqiliang_choose, re_workmode;
+    @IsNeedClick
+    TextView txt_workmode;
+    ImageView img_workstatustips;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,7 +94,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         did = getIntent().getStringExtra("did");
         img_right.setBackgroundResource(R.drawable.menu);
         userPresenter = new UserPresenter(this);
-//        new Thread(runnable).start();
+        new Thread(runnable).start();
     }
 
     Runnable runnable = new Runnable() {
@@ -131,7 +135,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 showMenu();
                 break;
             case R.id.re_battery:
-                startActivity(new Intent(this,DeviceQiBengBatteryDetailActivity.class));
+                startActivity(new Intent(this, DeviceQiBengBatteryDetailActivity.class));
                 break;
             case R.id.tvUpdateDeviceName:
                 if (popupShuiBeng != null && popupShuiBeng.isShowing()) {
@@ -196,7 +200,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 for (int i = 0; i < liuliang.length; i++) {
                     liuliang[i] = String.format(getString(R.string.dang), i + 1);
                 }
-                showAlert(txt_liuliangchoose, getString(R.string.liuliang_choose), liuliang);
+                showAlert(txt_chuqiliangchoose, getString(R.string.liuliang_choose), liuliang);
                 break;
             case R.id.re_workmode:
                 String[] weishiTime = new String[60];
@@ -246,7 +250,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 switch (txt_liuliangchoose.getId()) {
                     case R.id.txt_liuliangchoose:
                         //设置档位
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue() , -1, -1, -1);
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue(), -1, -1, -1);
                         break;
                     case R.id.txt_weishitime:
                         //设置喂食
@@ -394,7 +398,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
             e.printStackTrace();
         }
         img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-        txt_gonglv.setText(deviceDetailModel.getPwr() + "W");
+//        txt_gonglv.setText(deviceDetailModel.getPwr() + "W");
         String strState = "";
         //运行状态
         state = deviceDetailModel.getState();
@@ -426,14 +430,33 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
                 break;
         }
-        txt_liuliangchoose.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1));
-        txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
+        txt_current_status_value.setText(strState);
+        txt_chuqiliangchoose.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1));
+        int mode = Integer.parseInt(deviceDetailModel.getMode());
+        switch (mode) {
+            case 0:
+                txt_workmode.setText(getString(R.string.mode_normal));
+                break;
+            case 1:
+                txt_workmode.setText(getString(R.string.mode_jianxie));
+                break;
+            case 2:
+                txt_workmode.setText(getString(R.string.mode_yingji));
+                break;
+        }
 
         txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getOnline_time() / 3600.0));
-//        shuibeng_wiget.setDangWei(deviceDetailModel.getGear());
+        int push_cfg = deviceDetailModel.getPush_cfg();
+        if ((push_cfg & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
+            img_workstatustips.setBackgroundResource(R.drawable.kai);
+        }else{
+            img_workstatustips.setBackgroundResource(R.drawable.guan);
+        }
 //        shuibeng_wiget.setState(state);
         txt_current_status_value.setText(strState);
-//        getLiuLiang();
+        if (mApp.deviceQiBengBatteryUI!=null) {
+            mApp.deviceQiBengBatteryUI.setData();
+        }
         if (mApp.updateActivityUI != null) {
             if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
                 mApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");

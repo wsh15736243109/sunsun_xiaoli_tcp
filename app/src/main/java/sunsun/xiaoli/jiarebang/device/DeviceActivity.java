@@ -627,7 +627,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                                 loadingDialog.dismiss();
                             }
                         }, 2000);
-                        return;
+//                        return;
                     }
                 }
                 String psw = "sunsun123456";

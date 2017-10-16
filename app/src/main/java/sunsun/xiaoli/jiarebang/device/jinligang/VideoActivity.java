@@ -152,14 +152,14 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         cameraPsw = getIntent().getStringExtra("cameraPsw");
         mStreamView = new StreamView(this, null);
         mVideoLayout.addView(mStreamView);
-        arrayList.put("320x180", "普清");
-        arrayListValue.add("(普清)320x180");
-        arrayList.put("640x360", "标清");
-        arrayListValue.add("(标清)640x360");
-        arrayList.put("800x480", "高清");
-        arrayListValue.add("(高清)800x480");
-        arrayList.put("1280x720", "超清");
-        arrayListValue.add("(超清)1280x720");
+        arrayList.put("320x180", getString(R.string.qingxi_pu));
+        arrayListValue.add("("+getString(R.string.qingxi_pu)+")320x180");
+        arrayList.put("640x360", getString(R.string.qingxi_biao));
+        arrayListValue.add("("+getString(R.string.qingxi_biao)+")640x360");
+        arrayList.put("800x480", getString(R.string.qingxi_gao));
+        arrayListValue.add("("+getString(R.string.qingxi_gao)+")800x480");
+        arrayList.put("1280x720", getString(R.string.qingxi_chao));
+        arrayListValue.add("("+getString(R.string.qingxi_chao)+")1280x720");
         dbManager = new DBManager(this);
         txt_video.setText(deviceListBean.getSlave_name() == null ? deviceListBean.getDevice_nickname() : deviceListBean.getSlave_name());
         isMasterDevice = getIntent().getBooleanExtra("isMasterDevice", true);
@@ -241,7 +241,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         if (flow[1] <= 0) {
             flow[1] = 0;
         }
-        txt_shuiwei_status.setText("视频累计流量" + ByteConversionGBMBKB(flow[1] <= -1 ? 0 : flow[1]));
+        txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB(flow[1] <= -1 ? 0 : flow[1]));
         mStreamView = new StreamView(this, null);
         mVideoLayout.addView(mStreamView);
     }
@@ -270,7 +270,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
 
             }
 
-            txt_shuiwei_status.setText("视频累计流量" + ByteConversionGBMBKB((flow[1] + totalFlow) == -1 ? 0 : (flow[1] + totalFlow)));
+            txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB((flow[1] + totalFlow) == -1 ? 0 : (flow[1] + totalFlow)));
             handler.postDelayed(runnable, 1000);
         }
     };
@@ -316,7 +316,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
             fileList = new ArrayList<>();
             e.printStackTrace();
         }
-        txt_albumCount.setText(getString(R.string.current_album) + fileList.size() + getString(R.string.zhang));
+        txt_albumCount.setText(String.format(getString(R.string.current_album),fileList.size()));
     }
 
     /**
@@ -623,7 +623,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                 //修改设备名称
                 View view = LayoutInflater.from(this).inflate(R.layout.edit_view, null);
                 EditText edit = (EditText) view.findViewById(R.id.editIntPart);
-                showAlertDialog("提示信息", view, 3, edit);
+                showAlertDialog(getString(R.string.rename), view, 3, edit);
                 popupWindow.dismiss();
                 break;
             case R.id.pick_upgrade:
@@ -632,7 +632,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                 break;
             case R.id.pick_Delete:
                 //删除设备
-                showAlertDialog("提示信息", null, 4, null);
+                showAlertDialog("", null, 4, null);
                 popupWindow.dismiss();
                 break;
             case R.id.pick_feedback:
@@ -783,7 +783,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
             edit.setHint(title);
             alert.setView(view);
         } else if (type == 4) {
-            alert.setMessage("确认删除设备？");
+            alert.setMessage(getString(R.string.make_sure_delete));
         } else if (type == 5 || type == 6) {
             alert.setView(view);
         }
@@ -905,6 +905,10 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
      * 竖屏显示方法
      */
     public void setPortrat() {
+//        WindowManager.LayoutParams lp = getWindow().getAttributes();
+//        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
+//        getWindow().setAttributes(lp);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置为竖屏

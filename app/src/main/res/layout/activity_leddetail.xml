@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_margin="@dimen/DIMEN_10DP"
-                    android:text="使用时间"
+                    android:text="@string/user_time"
                     android:textColor="@color/white" />
 
                 <ImageView
@@ -88,7 +88,7 @@
                         android:id="@+id/txt_moshi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="模式切换"
+                        android:text="@string/mode_change"
                         android:textSize="@dimen/DIMEN_14DP" />
 
                     <TextView
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_dengguangshiduanshezhi"
-                    android:text="灯光时段设置"
+                    android:text="@string/period_setting"
                     android:textSize="@dimen/DIMEN_14DP" />
 
                 <ImageView
@@ -166,7 +166,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_tiaoguangshezhi"
-                    android:text="手动调光设置"
+                    android:text="@string/shoudong_tiaoguang"
                     android:textSize="@dimen/DIMEN_14DP" />
 
                 <ImageView
@@ -200,7 +200,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/img_zhuangtaituisong"
-                    android:text="状态推送"
+                    android:text="@string/zhuangtai_tuisong"
                     android:textSize="@dimen/DIMEN_14DP" />
 
                 <ImageView
