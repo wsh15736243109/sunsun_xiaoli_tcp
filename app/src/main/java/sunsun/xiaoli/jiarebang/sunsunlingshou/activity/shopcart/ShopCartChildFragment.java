@@ -1,5 +1,6 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +37,7 @@ import static com.itboye.pondteam.utils.EmptyUtil.getSp;
  * Created by Administrator on 2017/6/23.
  */
 
+@SuppressLint("ValidFragment")
 public class ShopCartChildFragment extends LingShouBaseFragment implements PullToRefreshListener, IRecyclerviewclicklistener, Observer {
     private RecyclerView recyclerView;
     private ShopCartAdapter adapter;

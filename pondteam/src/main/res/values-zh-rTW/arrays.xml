@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
-    <string-array name="country_code_list" translatable="false" >
+    <string-array name="WheelArrayWeek">
+        <item>@string/Monday</item>
+        <item>@string/Tuesday</item>
+        <item>@string/Wednesday</item>
+        <item>@string/Thursday</item>
+        <item>@string/Friday</item>
+        <item>@string/Saturday</item>
+        <item>@string/Sunday</item>
+    </string-array>
+    <string-array name="timeArray">
+        <item>30</item>
+        <item>60</item>
+        <item>90</item>
+        <item>120</item>
+        <item>150</item>
+        <item>180</item>
+        <item>210</item>
+        <item>240</item>
+        <item>270</item>
+        <item>300</item>
+    </string-array>
+    <string-array name="country_code_list">
         <item>安哥拉             *+244  </item>
         <item>阿富汗             *+93   </item>
         <item>阿尔巴尼亚         *+355  </item>
@@ -196,6 +215,6 @@
         <item>津巴布韦           *+263  </item>
         <item>扎伊尔             *+243  </item>
         <item>赞比亚             *+260  </item>
-        </string-array>
+    </string-array>
 
 </resources>

@@ -72,6 +72,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
     }
 
     //        rgba(255, 174, 110, 1)
+    @SuppressLint("ValidFragment")
     public AddShopCartFragment(GoodsDetailBean goodsDetailBeans,
                                boolean isLiJIGouMai) {
         this.goodsDetailBeans = goodsDetailBeans;

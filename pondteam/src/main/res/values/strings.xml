@@ -265,7 +265,6 @@
     <string name="changeshodongatfirst">请先将模式调整为手动模式</string>
     <string name="alreay_submit">我已提交</string>
     <string name="current_album">当前共%1$d张照片</string>
-    <string name="zhang">张照片</string>
     <string name="video_view">视频观看</string>
     <string name="album_title">我的相册</string>
     <string name="wx">微信</string>
@@ -559,4 +558,11 @@
     <string name="begin_calebrated">电极校准中</string>
     <string name="seconds_left">剩余%1$d秒</string>
     <string name="userph_to_calibrate">确定使用ph%1$d校准?</string>
+
+    <string name="title_activity_ling_shou_login">LingShouLoginActivity</string>
+    <string name="action_settings">设置</string>
+    <item name="tag_first" type="id"></item>
+    <item name="tag_second" type="id"></item>
+    <item name="tag_third" type="id"></item>
+    <item name="tag_fourth" type="id"></item>
 </resources>

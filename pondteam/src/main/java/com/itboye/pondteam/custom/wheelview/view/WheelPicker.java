@@ -289,7 +289,7 @@ public class WheelPicker extends View implements IDebug, IWheelPicker, Runnable 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WheelPicker);
         int idData = a.getResourceId(R.styleable.WheelPicker_wheel_data, 0);
         mData = Arrays.asList(getResources()
-                .getStringArray(idData == 0 ? R.array.WheelArrayDefault : idData));
+                .getStringArray(idData));
         mData = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             mData.add(i+"");

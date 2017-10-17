@@ -1,5 +1,6 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.address.AddressSelectView;
 
 
+@SuppressLint("ValidFragment")
 public class AddressFragment extends BaseDialogFragment implements OnClickListener {
 
 	
@@ -32,6 +34,7 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
 		return v;
 	}
 	GetInforListener listener;
+	@SuppressLint("ValidFragment")
 	public AddressFragment(GetInforListener listener){
 		this.listener=listener;
 	}
