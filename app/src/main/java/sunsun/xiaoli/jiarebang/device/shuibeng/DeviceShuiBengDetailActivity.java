@@ -76,6 +76,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     TextView txt_status, txt_leijitime;
     int seconds = 0;
     private TcpUtil tcp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,7 +93,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         userPresenter = new UserPresenter(this);
         did = getIntent().getStringExtra("did");
-        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1,-1);
+        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1);
         img_right.setBackgroundResource(R.drawable.menu);
         new Thread(runnable).start();
         tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
@@ -134,7 +135,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     };
 
     private void beginRequest() {
-        userPresenter.getDeviceOnLineState(did);
+        userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
     }
 
     @Override
@@ -159,6 +160,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         }
         switch (v.getId()) {
             case R.id.img_right:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 showMenu();
                 break;
             case R.id.tvUpdateDeviceName:
@@ -176,6 +180,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 showAlertDialog(getString(R.string.make_sure_delete), null, 4, null);
                 break;
             case R.id.tvShengji:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 if (popupShuiBeng != null && popupShuiBeng.isShowing()) {
                     popupShuiBeng.dismiss();
                 }
@@ -193,6 +200,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 startActivity(intent);
                 break;
             case R.id.img_yichangbaojing:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 if (mApp.deviceShuiBengUI.isConnect) {
 //                    userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, isYiChangBaoJing ? 0 : 1, -1);
                     userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
@@ -201,6 +211,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 }
                 break;
             case R.id.up:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 if (state == 2) {
                     MAlert.alert(getString(R.string.device_trouble));
                     return;
@@ -220,6 +233,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 finish();
                 break;
             case R.id.re_liuliang_choose:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 String[] liuliang = new String[5];
                 for (int i = 0; i < liuliang.length; i++) {
                     liuliang[i] = String.format(getString(R.string.dang), i + 1);
@@ -227,6 +243,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 showAlert(txt_liuliangchoose, getString(R.string.liuliang_choose), liuliang);
                 break;
             case R.id.re_weishi_time:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 String[] weishiTime = new String[60];
                 for (int i = 0; i < weishiTime.length; i++) {
                     weishiTime[i] = (i + 1) + getString(R.string.minute);
@@ -234,6 +253,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 showAlert(txt_weishitime, getString(R.string.weishi_timechoose), weishiTime);
                 break;
             case R.id.shuibeng_wiget:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 switch (state) {
                     case 0:
                         //当前处于停机状态
@@ -274,7 +296,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 switch (txt_liuliangchoose.getId()) {
                     case R.id.txt_liuliangchoose:
                         //设置档位
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue() , -1, -1, -1);
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue(), -1, -1, -1);
                         break;
                     case R.id.txt_weishitime:
                         //设置喂食
@@ -356,6 +378,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         popupShuiBeng = new PopupShuiBeng(this, this);
         popupShuiBeng.show();
     }
+
     public void threadStart() {
         RequestUtil.threadStart(handler, runnable);
     }
@@ -372,7 +395,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             }
             if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 deviceDetailModel = (DeviceDetailModel) entity.getData();
-                if (deviceDetailModel!=null) {
+                if (deviceDetailModel != null) {
                     setData();
                 }
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
@@ -399,13 +422,13 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
-            }else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
                 DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
                 isConnect = detailModel.getIs_disconnect().equals("0");
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
-            }else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
                 MAlert.alert(entity.getData());
-                isConnect=false;
+                isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
         }
@@ -428,7 +451,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             e.printStackTrace();
         }
         img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-        if (detailModelTcp!=null) {
+        if (detailModelTcp != null) {
             txt_gonglv.setText(detailModelTcp.getPwr() + "W");
             String strState = "";
             //运行状态

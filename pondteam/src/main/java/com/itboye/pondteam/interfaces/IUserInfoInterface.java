@@ -457,5 +457,5 @@ public interface IUserInfoInterface<PersonDataBean> {
      * 仅获取设备在线状态
      * @param did
      */
-    void getDeviceOnLineState(String did);
+    void getDeviceOnLineState(String did,String uid);
 }

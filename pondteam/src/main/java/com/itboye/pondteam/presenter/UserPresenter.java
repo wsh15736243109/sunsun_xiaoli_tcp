@@ -152,8 +152,8 @@ public class UserPresenter extends BasePresenter implements
     public static String beginUpdatePondTeam_fail = "_beginUpdatePondTeam_fail";
     public static String shuibengExtraUpdate_success = "_shuibengExtraUpdate_success";
     public static String shuibengExtraUpdate_fail = "_shuibengExtraUpdate_fail";
-    public static String getDeviceOnLineState_success="_getDeviceOnLineState_success";
-    public static String getDeviceOnLineState_fail="_getDeviceOnLineState_success";
+    public static String getDeviceOnLineState_success = "_getDeviceOnLineState_success";
+    public static String getDeviceOnLineState_fail = "_getDeviceOnLineState_success";
 
 
     public UserPresenter(Observer observer) {
@@ -210,7 +210,7 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void deviceSet(String did,String oa_name,String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg,String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per,String oa_per,int ws_on_tm,int ws_off_tm) {
+    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -287,7 +287,7 @@ public class UserPresenter extends BasePresenter implements
 
 
     @Override
-    public void registerByEmail(String nickname, String contact, String address, String email, String password,String code) {
+    public void registerByEmail(String nickname, String contact, String address, String email, String password, String code) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -309,11 +309,11 @@ public class UserPresenter extends BasePresenter implements
                     }
 
                 });
-        user.registerByEmail(nickname, contact, address, email, password,code);
+        user.registerByEmail(nickname, contact, address, email, password, code);
     }
 
     @Override
-    public void sendVerificationCode(String country, String mobile, String code_type,int appType) {
+    public void sendVerificationCode(String country, String mobile, String code_type, int appType) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -334,7 +334,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.sendVerificationCode(country, mobile, code_type,appType);
+        user.sendVerificationCode(country, mobile, code_type, appType);
     }
 
     @Override
@@ -1128,7 +1128,7 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state,int fcd) {
+    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -1228,7 +1228,7 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void updateJiaoZhunTime(String id,int push_cfg,int temp_low,int temp_high,int ph_low,int ph_high, long firstTime, long lastTime) {
+    public void updateJiaoZhunTime(String id, int push_cfg, int temp_low, int temp_high, int ph_low, int ph_high, long firstTime, long lastTime) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -1352,7 +1352,7 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void shuibengExtraUpdate(String id, String push_cfg,int fcd,int state) {
+    public void shuibengExtraUpdate(String id, String push_cfg, int fcd, int state) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -1373,7 +1373,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.shuibengExtraUpdate(id, push_cfg,fcd,state);
+        user.shuibengExtraUpdate(id, push_cfg, fcd, state);
     }
 
     @Override
@@ -1398,11 +1398,11 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.sendEmailCode( customText,  code_type,  send_type);
+        user.sendEmailCode(customText, code_type, send_type);
     }
 
     @Override
-    public void getDeviceOnLineState(String did) {
+    public void getDeviceOnLineState(String did, String uid) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
                     @Override
@@ -1422,6 +1422,6 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.getDeviceOnLineState( did);
+        user.getDeviceOnLineState(did, uid);
     }
 }

@@ -96,6 +96,11 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
+            } else if (did.startsWith("S07")) {
+                if (myApp.deviceQiBengUI.isConnect == false) {
+                    MAlert.alert(getString(R.string.disconnect));
+                    return;
+                }
             }
             if (model == null) {
                 MAlert.alert(getString(R.string.deviceid_error));

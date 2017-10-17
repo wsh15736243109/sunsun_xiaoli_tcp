@@ -56,6 +56,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
     PtrFrameLayout ptr;
     Handler handlerRefresh = new Handler();
     TextView txt_shajundeng_mode_selection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +87,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
 
     @Override
     protected void onDestroy() {
-        myApp.uvLampUI=null;
+        myApp.uvLampUI = null;
         super.onDestroy();
     }
 
@@ -110,7 +111,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                 src1 = new BigInteger(value1 + value2, 2);//转换为BigInteger类型
                 //更新维护提示
                 userPresenter.deviceSet(
-                        myApp.pondDeviceDetailUI.deviceDetailModel.getDid(),null,null,
+                        myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null,
                         "",
                         -1,
                         "",
@@ -140,7 +141,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                 src1 = new BigInteger(value1 + value2, 2);//转换为BigInteger类型
                 //异常报警
                 userPresenter.deviceSet(
-                        myApp.pondDeviceDetailUI.deviceDetailModel.getDid(),null,null,
+                        myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null,
                         "",
                         -1,
                         "",
@@ -157,67 +158,68 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
             case QingLing:
                 //累计使用时间清零
                 if (isChecked == true) {
-                    userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(),null,null, "", -1, "", "", "", "", "", "", "0", "", "", -1, -1, "", "", "", "", -1, -1);
+                    userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "0", "", "", -1, -1, "", "", "", "", -1, -1);
                 }
                 break;
         }
     }
 
     public void setLampData() {
-        int startPo = (myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + "").length();
-        int endPo = (myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + " " + getString(R.string.hour)).length();
-        //累计使用小时
-        setDifferentSizeForTextView(startPo, endPo, myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + " " + getString(R.string.hour), txt_totalhour);
+        if (myApp.pondDeviceDetailUI.detailModelTcp != null) {
+            int startPo = (myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + "").length();
+            int endPo = (myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + " " + getString(R.string.hour)).length();
+            //累计使用小时
+            setDifferentSizeForTextView(startPo, endPo, myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + " " + getString(R.string.hour), txt_totalhour);
 //        String tempOpenTime = myApp.pondDeviceDetailUI.deviceDetailModel.getUv_on().substring(0, 2) + ":" + myApp.pondDeviceDetailUI.deviceDetailModel.getUv_on().substring(2, 4);
 //        String tempCloseTime = myApp.pondDeviceDetailUI.deviceDetailModel.getUv_off().substring(0, 2) + ":" + myApp.pondDeviceDetailUI.deviceDetailModel.getUv_off().substring(2, 4);
-        String utcOnTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_on(), "HHmm", "HH:mm");
-        String utcOffTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_off(), "HHmm", "HH:mm");
-        txt_shajundeng_close_time.setText(utcOffTime);
-        txt_shajundeng_open_time.setText(utcOnTime);
+            String utcOnTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_on()==null?"00":myApp.pondDeviceDetailUI.detailModelTcp.getUv_on(), "HHmm", "HH:mm");
+            String utcOffTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_off()==null?"00":myApp.pondDeviceDetailUI.detailModelTcp.getUv_off(), "HHmm", "HH:mm");
+            txt_shajundeng_close_time.setText(utcOffTime);
+            txt_shajundeng_open_time.setText(utcOnTime);
 //        两个开关合一  首位为更换维护提示，第二位为异常报警
-        String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg();
-        if (cfg.equals("0")) {
-            //数据格式 00
-            isQingXiTiShi = false;
-            isYiChangBaoJing = false;
-        } else if (cfg.equals("1")) {
-            //数据格式 01
-            isQingXiTiShi = false;
-            isYiChangBaoJing = true;
-        } else if (cfg.equals("2")) {
-            //数据格式 10
-            isQingXiTiShi = true;
-            isYiChangBaoJing = false;
-        } else if (cfg.equals("3")) {
-            //数据格式 11
-            isQingXiTiShi = true;
-            isYiChangBaoJing = true;
+            String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg();
+            if (cfg.equals("0")) {
+                //数据格式 00
+                isQingXiTiShi = false;
+                isYiChangBaoJing = false;
+            } else if (cfg.equals("1")) {
+                //数据格式 01
+                isQingXiTiShi = false;
+                isYiChangBaoJing = true;
+            } else if (cfg.equals("2")) {
+                //数据格式 10
+                isQingXiTiShi = true;
+                isYiChangBaoJing = false;
+            } else if (cfg.equals("3")) {
+                //数据格式 11
+                isQingXiTiShi = true;
+                isYiChangBaoJing = true;
+            }
+            setCheck(changeweihu, isQingXiTiShi);
+            setCheck(toggle_exception_warn, isYiChangBaoJing);
+            //累计使用清零
+            setCheck(qingling, isQingLing);
+            setMode();
         }
-        setCheck(changeweihu, isQingXiTiShi);
-        setCheck(toggle_exception_warn, isYiChangBaoJing);
-        //累计使用清零
-        setCheck(qingling, isQingLing);
-
-        setMode();
     }
 
     private void setMode() {
-        int uvState=myApp.pondDeviceDetailUI.detailModelTcp.getUv_state();
-        int uvCfg= Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg());
-        if ((uvCfg&(int)Math.pow(2,2))==(int)Math.pow(2,2)) {
+        int uvState = myApp.pondDeviceDetailUI.detailModelTcp.getUv_state();
+        int uvCfg = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg());
+        if ((uvCfg & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2)) {
             //手动模式
-            if (uvState==0) {
+            if (uvState == 0) {
                 //0关闭
-                tempType=3;
-                 txt_shajundeng_mode_selection.setText(getString(R.string.mode_shoudong_close));
-            }else{
+                tempType = 3;
+                txt_shajundeng_mode_selection.setText(getString(R.string.mode_shoudong_close));
+            } else {
                 //1打开
-                tempType=2;
+                tempType = 2;
                 txt_shajundeng_mode_selection.setText(getString(R.string.mode_shoudong_open));
             }
-        }else{
+        } else {
             //自动模式
-            tempType=1;
+            tempType = 1;
             txt_shajundeng_mode_selection.setText(getString(R.string.mode_zidong));
         }
     }
@@ -299,7 +301,9 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
             showModeSelctionPopupWindow();
         }
     }
-    int tempType=0;
+
+    int tempType = 0;
+
     private void showModeSelctionPopupWindow() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
         View view = View.inflate(this, R.layout.item_mode_selection, null);
@@ -361,43 +365,41 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                 int valueUvCfg = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg());
                 if (txt_shoudong_open.isSelected()) {
                     //手动模式开
-                    if (((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg())&(int)Math.pow(2,2))==(int)Math.pow(2,2))
-                            &&(myApp.pondDeviceDetailUI.detailModelTcp.getUv_state()==1)) {
+                    if (((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2))
+                            && (myApp.pondDeviceDetailUI.detailModelTcp.getUv_state() == 1)) {
                         MAlert.alert(getString(R.string.mode_isshoudong_open));
-                    }else{
-                        if ((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg())&(int)Math.pow(2,2))==(int)Math.pow(2,2)) {
+                    } else {
+                        if ((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2)) {
 
-                        }else {
+                        } else {
                             valueUvCfg = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) ^ (int) Math.pow(2, 2);
                         }
                         valueUvState = 1;
                     }
-                }
-                else if (txt_shoudong_close.isSelected()) {
+                } else if (txt_shoudong_close.isSelected()) {
                     //手动模式关
-                    if (((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg())&(int)Math.pow(2,2))==(int)Math.pow(2,2))
-                            &&(myApp.pondDeviceDetailUI.detailModelTcp.getUv_state()==0)) {
+                    if (((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2))
+                            && (myApp.pondDeviceDetailUI.detailModelTcp.getUv_state() == 0)) {
                         MAlert.alert(getString(R.string.mode_isshoudong_close));
-                    }else{
-                        if ((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg())&(int)Math.pow(2,2))==(int)Math.pow(2,2)) {
+                    } else {
+                        if ((Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2)) {
 
-                        }else {
+                        } else {
                             valueUvCfg = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) ^ (int) Math.pow(2, 2);
                         }
                         valueUvState = 0;
                     }
-                }
-                else if (txt_auto.isSelected()) {
+                } else if (txt_auto.isSelected()) {
                     valueUvState = 0;
                     //自动模式
-                    if (myApp.pondDeviceDetailUI.detailModelTcp.getUv_state()==0) {
+                    if (myApp.pondDeviceDetailUI.detailModelTcp.getUv_state() == 0) {
                         MAlert.alert(getString(R.string.mode_isauto));
-                    }else{
-                        valueUvCfg=Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg())^(int)Math.pow(2,2);
+                    } else {
+                        valueUvCfg = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()) ^ (int) Math.pow(2, 2);
                         valueUvState = 0;
                     }
                 }
-                userPresenter.deviceSet(did,null,null, "", -1, "", "", "", "", "", "", "", valueUvCfg+"", valueUvState + "", -1, -1, "", "", "", "", -1, -1);
+                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", valueUvCfg + "", valueUvState + "", -1, -1, "", "", "", "", -1, -1);
             }
         });
         alert.create();
@@ -419,7 +421,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
      * @param b     是否设置开启或关闭  true:设置开启时间  false:设置关闭时间
      */
     private void setOpenOrCloseTime(String times, final boolean b) {
-        mPicker = new CustomTimePickerDialog(this,AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
+        mPicker = new CustomTimePickerDialog(this, AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 String tempHour = hourOfDay + "";
@@ -430,7 +432,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                 if (minute < 10) {
                     tempMinute = parse2Number(minute + "");
                 }
-                tempHour=localToUTC(tempHour,"HH","HH");
+                tempHour = localToUTC(tempHour, "HH", "HH");
                 showPeriod(b, tempHour + ":" + tempMinute, b ? txt_shajundeng_open_time : txt_shajundeng_close_time);
             }
         }, Integer.parseInt(times.split(":")[0]), Integer.parseInt(times.split(":")[1]), true, getString(R.string.shajundeng_close_time));
@@ -440,9 +442,9 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
     private void showPeriod(final boolean b, String s, TextView textView) {
         String tempValue = s.replace(":", "");
         if (b) {//设置开启时间
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(),null,null, "", -1, "", "", "", "", tempValue, "", "", "", "", -1, -1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", tempValue, "", "", "", "", -1, -1, "", "", "", "", -1, -1);
         } else {//设置关闭时间
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(),null,null, "", -1, "", "", "", "", "", tempValue, "", "", "", -1, -1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", tempValue, "", "", "", -1, -1, "", "", "", "", -1, -1);
         }
     }
 

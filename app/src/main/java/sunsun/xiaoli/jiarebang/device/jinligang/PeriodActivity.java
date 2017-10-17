@@ -815,7 +815,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 txt_shajundeng.setTextColor(getResources().getColor(R.color.black));
                 txt_chonglangbeng.setTextColor(getResources().getColor(R.color.black));
                 switch_qingling.setBackgroundResource(R.drawable.guan);
-                if (mApp.jinLiGangdetailUI.detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
+                if (mApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
                     txt_chonglangbeng.setVisibility(View.GONE);
                     txt_shajundeng.setText(getString(R.string.shaju_chonglang));
                 } else {
@@ -878,7 +878,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         switch_yichangbaojing.setTag(shajundengStatus);
                         switch_dongtaitishi.setTag(shajundengDongtai);
                         setWhTime(mApp.jinLiGangdetailUI.detailModelTcp.getUv_wh());
-                        if (mApp.jinLiGangdetailUI.detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
+                        if (mApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
                             period_imageView1.setBackgroundResource(R.drawable.aq_500_select);
                             period_imageView2.setBackgroundResource(R.drawable.aq_500_unselect);
                             period_imageView3.setBackgroundResource(R.drawable.aq_500_select);

@@ -88,6 +88,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
     DBManager dbManager;
     TextView txt_status;
     private TcpUtil tcp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +173,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            userPresenter.getDeviceOnLineState(did);
+            userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
             handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
@@ -203,8 +204,10 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                         | Gravity.CENTER_HORIZONTAL, 0, 0);
                 break;
             case R.id.re_wendu_history:
-
-                if (txt_wendu_sheding_high.getText().toString().equals("")||txt_wendu_sheding_low.getText().toString().equals("")) {
+                if (detailModelTcp == null) {
+                    return;
+                }
+                if (txt_wendu_sheding_high.getText().toString().equals("") || txt_wendu_sheding_low.getText().toString().equals("")) {
                     return;
                 }
                 intent = new Intent(this, ActivityTemperature.class);
@@ -216,6 +219,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 startActivity(intent);
                 break;
             case R.id.tvUpdate:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 if (isConnect) {
                     if (popupWindow != null) {
                         popupWindow.dismiss();
@@ -228,6 +234,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.pick_upgrade:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
                     if (popupWindow != null) {
                         popupWindow.dismiss();
@@ -250,6 +259,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 showAlertDialog(getString(R.string.tips), null, 4, null);
                 break;
             case R.id.pick_share:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (popupWindow != null) {
                     popupWindow.dismiss();
                 }
@@ -270,11 +282,14 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.re_gaowen_sheding:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
                     try {
                         mNewTempValue = Double.parseDouble((txt_wendu_sheding_high.getText().toString().substring(0, txt_wendu_sheding_high.getText().toString().length() - 1)));
                         setWenDu(getString(R.string.wendu_high), txt_wendu_sheding_high, mNewTempValue);
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
 
@@ -284,10 +299,14 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.re_diwen_sheding:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
                     try {
-                    mNewTempValue = Double.parseDouble((txt_wendu_sheding_low.getText().toString().substring(0, txt_wendu_sheding_low.getText().toString().length() - 1)));
-                    setWenDu(getString(R.string.wendu_low), txt_wendu_sheding_low, mNewTempValue); }catch (Exception e){
+                        mNewTempValue = Double.parseDouble((txt_wendu_sheding_low.getText().toString().substring(0, txt_wendu_sheding_low.getText().toString().length() - 1)));
+                        setWenDu(getString(R.string.wendu_low), txt_wendu_sheding_low, mNewTempValue);
+                    } catch (Exception e) {
 
                     }
                 } else {
@@ -295,11 +314,15 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.re_settemperature:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
 
                     try {
-                    mNewTempValue = Double.parseDouble((txt_wendu_setting.getText().toString().substring(0, txt_wendu_setting.getText().toString().length() - 1)));
-                    setWenDu(getString(R.string.wendu), txt_wendu_setting, mNewTempValue); }catch (Exception e){
+                        mNewTempValue = Double.parseDouble((txt_wendu_setting.getText().toString().substring(0, txt_wendu_setting.getText().toString().length() - 1)));
+                        setWenDu(getString(R.string.wendu), txt_wendu_setting, mNewTempValue);
+                    } catch (Exception e) {
 
                     }
                 } else {
@@ -307,6 +330,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.toggle_exception_warn:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
                     showProgressDialog(getString(R.string.requesting), false);
                     setCheckOrUnCheck(toggle_exception_warn, !yiChangBaoJingStatus);
@@ -315,6 +341,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.wendu_baojing:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
                     showProgressDialog(getString(R.string.requesting), false);
                     setCheckOrUnCheck(wendu_baojing, !wenDuBaoJingStatus);
@@ -323,6 +352,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.toggle_jieshoustatus:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 if (isConnect) {
                     showProgressDialog(getString(R.string.requesting), false);
                     setCheckOrUnCheck(toggle_jieshoustatus, !gongZuoZhuangTaiTongtZhiStatus);
@@ -521,7 +553,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         setDeviceTitle(deviceDetailModel.getDevice_nickname());
-        if (detailModelTcp!=null) {
+        if (detailModelTcp != null) {
             mNewTempValue = Double.parseDouble(detailModelTcp.getT_set()) / 10;
             double wenduValue = detailModelTcp.getT() / 10;
             int startPo1 = ("" + wenduValue).length();
@@ -557,7 +589,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
             }
             int startPo2 = getString(R.string.jiarebang).length();
             int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
-            setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) :  getString(R.string.total_power) + detailModelTcp.getPwr() + "W"), txt_status);
+            setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) : getString(R.string.total_power) + detailModelTcp.getPwr() + "W"), txt_status);
             img_progress.setMaxCount(35);
             if (wenduValue < 20) {
                 img_progress.setCurrentCount(20);

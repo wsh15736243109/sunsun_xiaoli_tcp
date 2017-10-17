@@ -83,6 +83,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         popupWindow = new CameraConsolePopupWindow(
                 DeviceAq806TemperatureActivity.this, this);
         img_progress.setMaxCount(35);
+        userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.did, "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
         setDeviceTitle(getString(R.string.wendu));
         setDeviceData();
     }
@@ -244,7 +245,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 return;
             } else if (entity.getEventType() == UserPresenter.deviceSet_806success) {
                 MAlert.alert(entity.getData());
-//                myApp.jinLiGangdetailUI.beginRequest();
+                myApp.jinLiGangdetailUI.beginRequest();
             } else if (entity.getEventType() == UserPresenter.deviceSet_806fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update806ph_success) {
@@ -257,11 +258,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
     }
 
     public void setDeviceData() {
-        double wenduValue = myApp.jinLiGangdetailUI.detailModelTcp.getT() / 10;
-        int startPo1 = ("" + wenduValue).length();
-        int endPo1 = (wenduValue + "℃").length();
-        ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
-        ColoTextUtil.setDifferentSizeForTextView2(startPo1, endPo1, (wenduValue + "℃"), wendu);
+
         String extra = myApp.jinLiGangdetailUI.deviceDetailModel.getExtra();
         int pushCfg = 0;
         try {
@@ -284,17 +281,32 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
             wenDuBaoJingStatus = false;
         }
         setImageViewCheckOrUnCheck(wendu_baojing);
-        mNewTempValue = Double.parseDouble(myApp.jinLiGangdetailUI.detailModelTcp.getT_max()) / 10;
+        double wenduValue = 0;
+        String ex_dev=myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev()==null?"":myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev();
+        if (ex_dev.equalsIgnoreCase("AQ500")) {
+            re_settemperature.setVisibility(View.GONE);
+        } else {
+            re_settemperature.setVisibility(View.VISIBLE);
+        }
+        if (myApp.jinLiGangdetailUI.detailModelTcp != null) {
+            mNewTempValue = myApp.jinLiGangdetailUI.detailModelTcp.getT_max() / 10;
+            wenduValue = myApp.jinLiGangdetailUI.detailModelTcp.getT() / 10;
+            int startPo1 = ("" + wenduValue).length();
+            int endPo1 = (wenduValue + "℃").length();
+            ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
+            ColoTextUtil.setDifferentSizeForTextView2(startPo1, endPo1, (wenduValue + "℃"), wendu);
+        }
+
         txt_wendu_setting.setText(mNewTempValue + "℃");
         txt_wendu_sheding_high.setText(th / 10 + "℃");
         txt_wendu_sheding_low.setText(tl / 10 + "℃");
 //        txt_wendu_warn
         if ((wenduValue < th / 10 && wenduValue > tl / 10) || !wenDuBaoJingStatus) {
-            txt_wendu_warn.setCompoundDrawables(null,null,null,null);
+            txt_wendu_warn.setCompoundDrawables(null, null, null, null);
         } else if ((wenduValue > th / 10 || wenduValue < tl / 10) && wenDuBaoJingStatus) {
             Drawable drawable_n = getResources().getDrawable(R.drawable.ic_warn);
-            drawable_n.setBounds(0, 0, drawable_n.getMinimumWidth(),drawable_n.getMinimumHeight());
-            txt_wendu_warn.setCompoundDrawables(null,null,drawable_n,null);
+            drawable_n.setBounds(0, 0, drawable_n.getMinimumWidth(), drawable_n.getMinimumHeight());
+            txt_wendu_warn.setCompoundDrawables(null, null, drawable_n, null);
         }
         if (wenduValue < 20) {
             img_progress.setCurrentCount(20);
@@ -313,11 +325,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
             needHot = false;
         }
         txt_status.setText(getString(R.string.work_status_jiarebang) + (needHot ? getString(R.string.open) : getString(R.string.alClose)));
-        if (myApp.jinLiGangdetailUI.detailModelTcp.getEx_dev().equalsIgnoreCase("AQ500")) {
-            re_settemperature.setVisibility(View.GONE);
-        } else {
-            re_settemperature.setVisibility(View.VISIBLE);
-        }
+
     }
 
     private void setImageViewCheckOrUnCheck(ImageView wendu_baojing) {

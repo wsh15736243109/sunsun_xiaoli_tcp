@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.BaseActivity;
-import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -61,7 +60,6 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
         userPresenter = new UserPresenter(this);
         beginJiaoZhun = false;
         setJiaoZhunTimes();
-//        userPresenter.
     }
 
     public void getSche() {
@@ -105,7 +103,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
                 mydialog.show();
                 mydialog.setCancelable(false);
                 mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_INIT);
-                mydialog.txt_tips.setText("确定使用ph" + jiaozhunValue + "校准吗？");
+                mydialog.txt_tips.setText(String.format(getString(R.string.userph_to_calibrate), jiaozhunValue));
                 mydialog.btn_yes.setOnClickListener(this);
                 mydialog.btn_no.setOnClickListener(this);
                 mydialog.img_back.setOnClickListener(this);
@@ -193,19 +191,21 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     public void setData() {
         if (beginJiaoZhun) {
             mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_ING);
-            mydialog.txt_tips.setText("电极正在校准中");
-            int remainSeconds = mApp.devicePhUI.detailModelTcp.getPh_dly() - mApp.devicePhUI.detailModelTcp.getPh_sche();
-            if (remainSeconds > 0) {
-                mydialog.txt_seconds.setText("剩余" + (remainSeconds) + "秒");
-            } else {
-                if (isFirst) {
-                    isFirst = false;
+            mydialog.txt_tips.setText(getString(R.string.begin_calebrated));
+            if (mApp.devicePhUI.detailModelTcp != null) {
+                int remainSeconds = mApp.devicePhUI.detailModelTcp.getPh_dly() - mApp.devicePhUI.detailModelTcp.getPh_sche();
+                if (remainSeconds > 0) {
+                    mydialog.txt_seconds.setText(String.format(getString(R.string.seconds_left), remainSeconds));
                 } else {
-                    handler.removeCallbacks(runnable);
-                    mydialog.txt_tips.setText("电极校准成功");
-                    beginJiaoZhun = false;
-                    mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_FINISH);
-                    userPresenter.updateJiaoZhunTime(mApp.mDeviceUi.mSelectDeviceInfo.getId(), -1, -1, -1, -1, -1, -1, System.currentTimeMillis());
+                    if (isFirst) {
+                        isFirst = false;
+                    } else {
+                        handler.removeCallbacks(runnable);
+                        mydialog.txt_tips.setText(getString(R.string.jiaozhu_success));
+                        beginJiaoZhun = false;
+                        mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_FINISH);
+                        userPresenter.updateJiaoZhunTime(mApp.mDeviceUi.mSelectDeviceInfo.getId(), -1, -1, -1, -1, -1, -1, System.currentTimeMillis());
+                    }
                 }
             }
         }
@@ -225,7 +225,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
             } else if (entity.getEventType() == UserPresenter.deviceSet_300fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
-                DeviceDetailModel deviceDetailModel = (DeviceDetailModel) entity.getData();
+
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 handler.removeCallbacks(runnable);
                 MAlert.alert(entity.getData());
@@ -245,10 +245,10 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
             String firstTime = jsonObject.getString("first_upd");
             String lastTime = jsonObject.getString("last_upd");
             if (!firstTime.equals("0")) {
-                shouci.setText("首次校准完成时间：" + TimesUtils.timeStamp2DateNo1000(Long.parseLong(firstTime)));
+                shouci.setText(getString(R.string.first_jiaozhun) + TimesUtils.timeStamp2DateNo1000(Long.parseLong(firstTime)));
             }
             if (!lastTime.equals("0")) {
-                shangci.setText("上次校准完成时间：" + TimesUtils.timeStamp2DateNo1000(Long.parseLong(lastTime)));
+                shangci.setText(getString(R.string.last_jiaozhun) + TimesUtils.timeStamp2DateNo1000(Long.parseLong(lastTime)));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -175,7 +175,9 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
 
     public void set806pHData() {
         deviceDetailModel = mApp.jinLiGangdetailUI.deviceDetailModel;
-        txt_806ph.setText(String.format("%.2f", mApp.jinLiGangdetailUI.detailModelTcp.getPh() / 100));
+        if (mApp.jinLiGangdetailUI.detailModelTcp!=null) {
+            txt_806ph.setText(String.format("%.2f", mApp.jinLiGangdetailUI.detailModelTcp.getPh() / 100));
+        }
         if (deviceDetailModel != null) {
             extra = deviceDetailModel.getExtra();
             isOpen = false;

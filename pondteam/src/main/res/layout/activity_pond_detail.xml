@@ -283,7 +283,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:visibility="visible"
-                            android:text="@string/total_power"
+                            android:text=""
                             android:textSize="@dimen/DIMEN_14DP" />
 
                     </LinearLayout>
@@ -359,7 +359,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:visibility="visible"
-                            android:text="@string/total_power"
+                            android:text=""
                             android:textSize="@dimen/DIMEN_14DP" />
 
                     </LinearLayout>

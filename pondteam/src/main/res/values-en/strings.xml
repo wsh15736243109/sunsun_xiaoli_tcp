@@ -280,7 +280,7 @@
     <string name="run_normal">Running normally</string>
     <string name="run_hengwen">Constant temperature state</string>
     <string name="paichu">Please exclude</string>
-    <string name="auto">automaticity</string>
+    <string name="auto">auto</string>
     <string name="manual">manual</string>
     <string name="current_mode">Current mode：</string>
     <string name="baoliu">Please keep at least one time slot</string>
@@ -288,8 +288,8 @@
     <string name="cancel_set">Determine to cancel the current Settings?</string>
     <string name="turnonfirst">Please open the current switch button before operation</string>
     <string name="normal">normal</string>
-    <string name="guodi">Too low</string>
-    <string name="guogao">Too high</string>
+    <string name="guodi">too low</string>
+    <string name="guogao">too high</string>
     <string name="requesting">Data request, please later</string>
     <string name="chuchangshezhi">Confirm restore factory settings?</string>
     <string name="clear_wh_time">Make sure to clear?</string>
@@ -557,4 +557,7 @@
     <string name="shoudong_tiaoguang">手动调光设置</string>
     <string name="zhuangtai_tuisong">状态推送\"</string>
     <string name="user_time">使用时间</string>
+    <string name="begin_calebrated">The electrodes are being calibrated</string>
+    <string name="seconds_left">With %1$d seconds left</string>
+    <string name="userph_to_calibrate">Are you sure to use ph %1$d to calibrate?</string>
 </resources>

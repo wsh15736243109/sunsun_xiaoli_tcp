@@ -63,35 +63,31 @@ public class ActivityShouDong extends BaseActivity implements Observer {
     public void setShouDongData() {
         once_again.setVisibility(View.GONE);
         String wash_status = "";
-
-        String tempStatus = myApp.pondDeviceDetailUI.detailModelTcp.getCl_state();
-        if (tempStatus.equals("0")) {
-            wash_status = getString(R.string.current_status) + getString(R.string.readytoclean);
-            circleProgress.setStatus(CustomCircleProgress.Status.INIT);
-        } else if (tempStatus.equals("1")) {
-            wash_status = getString(R.string.current_status) + getString(R.string.washing);
-            circleProgress.setStatus(CustomCircleProgress.Status.Starting);
-        } else if (tempStatus.equals("2")) {
-            wash_status = getString(R.string.current_status) + getString(R.string.pause_washing);
-            circleProgress.setStatus(CustomCircleProgress.Status.Pause);
-        } else if (tempStatus.equals("3")) {
-            wash_status = getString(R.string.current_status) + getString(R.string.problem);
-            circleProgress.setStatus(CustomCircleProgress.Status.End);
-            once_again.setVisibility(View.VISIBLE);
+        if (myApp.pondDeviceDetailUI.detailModelTcp!=null) {
+            if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_state()!=null) {
+                String tempStatus = myApp.pondDeviceDetailUI.detailModelTcp.getCl_state();
+                if (tempStatus.equals("0")) {
+                    wash_status = getString(R.string.current_status) + getString(R.string.readytoclean);
+                    circleProgress.setStatus(CustomCircleProgress.Status.INIT);
+                } else if (tempStatus.equals("1")) {
+                    wash_status = getString(R.string.current_status) + getString(R.string.washing);
+                    circleProgress.setStatus(CustomCircleProgress.Status.Starting);
+                } else if (tempStatus.equals("2")) {
+                    wash_status = getString(R.string.current_status) + getString(R.string.pause_washing);
+                    circleProgress.setStatus(CustomCircleProgress.Status.Pause);
+                } else if (tempStatus.equals("3")) {
+                    wash_status = getString(R.string.current_status) + getString(R.string.problem);
+                    circleProgress.setStatus(CustomCircleProgress.Status.End);
+                    once_again.setVisibility(View.VISIBLE);
+                }
+                setItsColor(wash_status);
+            }
+            txt_was_time.setText(myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur() + getString(R.string.seconds));
+            txt_was_time.setTag(myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur());
+            totalCount = myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur();
+            circleProgress.setMax(totalCount);
+            circleProgress.setProgress(Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getCl_sche()));
         }
-
-//        else if (tempStatus.equals("4")) {
-//            wash_status = getString(R.string.current_status) + getString(R.string.prepare_washing);
-//            circleProgress.setStatus(CustomCircleProgress.Status.P);
-//        }
-        setItsColor(wash_status);
-        txt_was_time.setText(myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur() + getString(R.string.seconds));
-        txt_was_time.setTag(myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur());
-        totalCount = myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur();
-        circleProgress.setMax(totalCount);
-        circleProgress.setProgress(Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getCl_sche()));
-//        pro+=5;
-//        circleProgress.setProgress(pro);
     }
 
     private void setItsColor(String wash_status) {

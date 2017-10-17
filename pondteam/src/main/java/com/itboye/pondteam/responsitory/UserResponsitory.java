@@ -12,6 +12,7 @@ import com.itboye.pondteam.bean.PondTeamMostNewModel;
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.interfaces.IUserInfoInterface;
+import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.volley.BaseErrorListener;
 import com.itboye.pondteam.volley.BaseNetRepository;
 import com.itboye.pondteam.volley.BaseSuccessReqListener;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
+
+import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 
 /**
@@ -1496,7 +1499,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void getDeviceOnLineState(String did) {
+    public void getDeviceOnLineState(String did,String uid) {
         Type type = new TypeToken<DeviceDetailModel>() {
         }.getType();
         String apiVer = "100";
@@ -1526,6 +1529,7 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = getDeviceCP1000Detail;
         }
         map.put("did", did);
+        map.put("uid",uid);
         (new ByJsonRequest.Builder<DeviceDetailModel>())
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(

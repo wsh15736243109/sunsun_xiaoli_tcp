@@ -86,14 +86,9 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     PtrFrameLayout ptr;
     ImageView loading, icon_setting_2, icon_setting_1, icon_setting_3;
     public boolean isConnect = false;
-    private String psw;
-    //是否已经验证过密码
-    boolean hasSetJieNeng = false;
     DBManager dbManager;
     public String tempTime;
-    private int tempType;
     TcpUtil mTcpUtil;
-    DeviceDetailModel detailModelByHttp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,12 +99,11 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         setCurrentTitle(getIntent().getStringExtra("device"));
         did = getIntent().getStringExtra("did");
         id = getIntent().getStringExtra("id");
-        psw = getIntent().getStringExtra("psw");
         dbManager = new DBManager(this);
         userPresenter = new UserPresenter(this);
         uid = getSp(Const.UID);
         deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
-//        setDeviceData(deviceDetailModel);
+        setDefaultJieNengMode();
         BasePtr.setRefreshOnlyStyle(ptr);
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -178,7 +172,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            userPresenter.getDeviceOnLineState(did);
+            userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
             handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
@@ -400,9 +394,9 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             } else if (resultEntity.getEventType() == UserPresenter.deviceSet_fail) {//设置失败
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
-                DeviceDetailModel detailModel = (DeviceDetailModel) resultEntity.getData();
-                isConnect = detailModel.getIs_disconnect().equals("0");
-                DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+                deviceDetailModel = (DeviceDetailModel) resultEntity.getData();
+                isConnect = deviceDetailModel.getIs_disconnect().equals("0");
+                DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
             } else if (resultEntity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
@@ -426,11 +420,6 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         } else {
             txt.setVisibility(View.GONE);
             txt_wendu.setText(getString(R.string.device) + getString(R.string.offline));
-        }
-
-        if (!hasSetJieNeng) {
-            setDefaultJieNengMode();
-            hasSetJieNeng = true;
         }
         //定时清洗数据
         setDingShiQingXi(detailModelTcp);
@@ -470,8 +459,8 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     }
 
     private void setDefaultJieNengMode() {
-        int outA = Integer.parseInt(detailModelTcp.getOut_state_a());
-        int outB = Integer.parseInt(detailModelTcp.getOut_state_b());
+        int outA = Integer.parseInt(deviceDetailModel.getOut_state_a());
+        int outB = Integer.parseInt(deviceDetailModel.getOut_state_b());
         //设置初始状态下的插座A和插座B的节能模式
         if ((outA & (int) Math.pow(2, 2)) == (int) Math.pow(2, 2)) {
 
@@ -534,16 +523,13 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             //手动模式
             if (uvState == 0) {
                 //0关闭
-                tempType = 3;
                 txt_uv_total_time.setText(Html.fromHtml(getString(R.string.status) + "<font color='#45B380'>" + getString(R.string.mode_shoudong_close) + "</font>"));
             } else {
                 //1打开
-                tempType = 2;
                 txt_uv_total_time.setText(Html.fromHtml(getString(R.string.status) + "<font color='#45B380'>" + getString(R.string.mode_shoudong_open) + "</font>"));
             }
         } else {
             //自动模式
-            tempType = 1;
             txt_uv_total_time.setText(Html.fromHtml(getString(R.string.status) + "<font color='#45B380'>" + getString(R.string.mode_zidong) + "</font>"));
         }
     }
@@ -578,7 +564,6 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
 
     private void setMode(String chazuo_type, TextView textView) {
         int chaZuoBModeValue = 0;
-        tempType = 0;
         if (chazuo_type.equals("A")) {
             chaZuoBModeValue = Integer.parseInt(detailModelTcp.getOut_state_a());
         } else {
@@ -588,17 +573,14 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         if ((chaZuoBModeValue & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
             //自动模式
             textView.setText(Html.fromHtml(getString(R.string.status) + "<font color='#45B380'>" + getString(R.string.mode_zidong) + "</font>"));
-            tempType = 3;
         } else {
             //手动模式
             if ((chaZuoBModeValue & (int) Math.pow(2, 0)) == (int) Math.pow(2, 0)) {
                 //通电即为开
                 textView.setText(Html.fromHtml(getString(R.string.status) + "<font color='#45B380'>" + getString(R.string.mode_shoudong_open) + "</font>"));
-                tempType = 1;
             } else {
                 //断电即为关
                 textView.setText(Html.fromHtml(getString(R.string.status) + "<font color='#45B380'>" + getString(R.string.mode_shoudong_close) + "</font>"));
-                tempType = 2;
             }
         }
     }

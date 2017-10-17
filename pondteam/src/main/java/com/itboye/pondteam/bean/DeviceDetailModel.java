@@ -364,7 +364,7 @@ public class DeviceDetailModel implements Serializable {
      */
     private int out_ctrl;
     //温控加热上限温度	温度值的10倍值
-    private String t_max;
+    private int t_max;
 
     private int fault;
     /**
@@ -716,11 +716,11 @@ public class DeviceDetailModel implements Serializable {
         this.out_ctrl = out_ctrl;
     }
 
-    public String getT_max() {
+    public int getT_max() {
         return t_max;
     }
 
-    public void setT_max(String t_max) {
+    public void setT_max(int t_max) {
         this.t_max = t_max;
     }
 

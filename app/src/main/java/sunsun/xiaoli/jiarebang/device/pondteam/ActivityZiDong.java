@@ -301,168 +301,177 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 
     public void setZiDongData() {
         try {
+            try {
+                closeProgressDialog();
+            }catch (Exception e){
 
-
+            }
             stringWeek = new StringBuffer();
-            if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_week().equals("0")) {
-                txt_not_time.setVisibility(View.VISIBLE);
-                if (!myApp.pondDeviceDetailUI.detailModelTcp.getIs_disconnect().equals("0")) {
-                    txt_moshi.setVisibility(View.GONE);
-                    txt_ph.setVisibility(View.GONE);
+            if (myApp.pondDeviceDetailUI.detailModelTcp != null) {
+                String cl_week=myApp.pondDeviceDetailUI.detailModelTcp.getCl_week()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getCl_week();
+                String cl_en=myApp.pondDeviceDetailUI.detailModelTcp.getCl_en()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getCl_en();
+                if (cl_week.equals("0")) {
                     txt_not_time.setVisibility(View.VISIBLE);
-                    txt_not_time.setText(getString(R.string.cleabytimer) + ":" + getString(R.string.close));
-                } else if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_en().equals("0")) {
-                    txt_moshi.setVisibility(View.GONE);
-                    txt_ph.setVisibility(View.GONE);
-                    txt_not_time.setVisibility(View.VISIBLE);
-                    txt_not_time.setText(getString(R.string.cleabytimer) + ":" + getString(R.string.close));
-                } else if (myApp.pondDeviceDetailUI.detailModelTcp.getCl_en().equals("1")) {
-                    days.setVisibility(View.VISIBLE);
-                    hours.setVisibility(View.VISIBLE);
-                    mins.setVisibility(View.VISIBLE);
-                    secs.setVisibility(View.VISIBLE);
-                }
-                days.setText("");
-                hours.setText("");
-                mins.setText("");
-                secs.setText("");
-                try {
-                    //先移除原有的
-//                handler.removeCallbacks(runnable);
-                } catch (Exception e) {
-
-                }
-                txt_moshi.setVisibility(View.GONE);
-                txt_zhouqi.setText("");
-            } else {
-                txt_not_time.setVisibility(View.GONE);
-                if (handler != null) {
+                    if (!myApp.pondDeviceDetailUI.deviceDetailModel.getIs_disconnect().equals("0")) {
+                        txt_moshi.setVisibility(View.GONE);
+                        txt_ph.setVisibility(View.GONE);
+                        txt_not_time.setVisibility(View.VISIBLE);
+                        txt_not_time.setText(getString(R.string.cleabytimer) + ":" + getString(R.string.close));
+                    } else if (cl_en.equals("0")) {
+                        txt_moshi.setVisibility(View.GONE);
+                        txt_ph.setVisibility(View.GONE);
+                        txt_not_time.setVisibility(View.VISIBLE);
+                        txt_not_time.setText(getString(R.string.cleabytimer) + ":" + getString(R.string.close));
+                    } else if (cl_en.equals("1")) {
+                        days.setVisibility(View.VISIBLE);
+                        hours.setVisibility(View.VISIBLE);
+                        mins.setVisibility(View.VISIBLE);
+                        secs.setVisibility(View.VISIBLE);
+                    }
+                    days.setText("");
+                    hours.setText("");
+                    mins.setText("");
+                    secs.setText("");
                     try {
                         //先移除原有的
-//                    handler.removeCallbacks(runnable);
+//                handler.removeCallbacks(runnable);
                     } catch (Exception e) {
 
                     }
-                }
-                int week = Integer.parseInt(myApp.pondDeviceDetailUI.detailModelTcp.getCl_week());
-                String binaryWeek = Integer.toBinaryString(week);
-                if (binaryWeek.length() < 7) {
-                    if (binaryWeek.length() == 6) {
-                        binaryWeek = "0" + binaryWeek;
-                    } else if (binaryWeek.length() == 5) {
-                        binaryWeek = "00" + binaryWeek;
-                    } else if (binaryWeek.length() == 4) {
-                        binaryWeek = "000" + binaryWeek;
-                    } else if (binaryWeek.length() == 3) {
-                        binaryWeek = "0000" + binaryWeek;
-                    } else if (binaryWeek.length() == 2) {
-                        binaryWeek = "00000" + binaryWeek;
-                    } else if (binaryWeek.length() == 1) {
-                        binaryWeek = "000000" + binaryWeek;
-                    } else {
-                        binaryWeek = "0";
+                    txt_moshi.setVisibility(View.GONE);
+                    txt_zhouqi.setText("");
+                } else {
+                    txt_not_time.setVisibility(View.GONE);
+                    if (handler != null) {
+                        try {
+                            //先移除原有的
+//                    handler.removeCallbacks(runnable);
+                        } catch (Exception e) {
+
+                        }
                     }
-                }
-                caculateWeek(binaryWeek);
-                int position = 0;
-                txt_zhouqi.setText(stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.toString().length() - 1) : stringWeek.toString());
-                txt_zhouqi.setTag(position);
+                    int week = Integer.parseInt(cl_week);
+                    String binaryWeek = Integer.toBinaryString(week);
+                    if (binaryWeek.length() < 7) {
+                        if (binaryWeek.length() == 6) {
+                            binaryWeek = "0" + binaryWeek;
+                        } else if (binaryWeek.length() == 5) {
+                            binaryWeek = "00" + binaryWeek;
+                        } else if (binaryWeek.length() == 4) {
+                            binaryWeek = "000" + binaryWeek;
+                        } else if (binaryWeek.length() == 3) {
+                            binaryWeek = "0000" + binaryWeek;
+                        } else if (binaryWeek.length() == 2) {
+                            binaryWeek = "00000" + binaryWeek;
+                        } else if (binaryWeek.length() == 1) {
+                            binaryWeek = "000000" + binaryWeek;
+                        } else {
+                            binaryWeek = "0";
+                        }
+                    }
+                    caculateWeek(binaryWeek);
+                    int position = 0;
+                    txt_zhouqi.setText(stringWeek.toString().contains("、") ? stringWeek.toString().substring(0, stringWeek.toString().length() - 1) : stringWeek.toString());
+                    txt_zhouqi.setTag(position);
 //            new Thread(runnable).start();
 //            txt_moshi.setVisibility(View.VISIBLE);
-            }
-            String tempTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm(), "HHmm", "HH:mm");
-            txt_shijiansheding.setText(tempTime);
-            //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
-            String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
-            if (cfg.equals("0")) {
-                //数据格式 00
-                isQingXiTiShi = false;
-                isYiChangBaoJing = false;
-            } else if (cfg.equals("1")) {
-                //数据格式 01
-                isQingXiTiShi = false;
-                isYiChangBaoJing = true;
-            } else if (cfg.equals("2")) {
-                //数据格式 10
-                isQingXiTiShi = true;
-                isYiChangBaoJing = false;
-            } else if (cfg.equals("3")) {
-                //数据格式 11
-                isQingXiTiShi = true;
-                isYiChangBaoJing = true;
-            }
-            isdingshiqingxi = myApp.pondDeviceDetailUI.detailModelTcp.getCl_en().equals("0") ? false : true;
-            setCheck(qingxitishi, isQingXiTiShi);
-            setCheck(toggle_exception_warn, isYiChangBaoJing);
-            setCheck(toggle_dingshi, isdingshiqingxi);
-            int onT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_on_tm();
-            int offT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_off_tm();
-            //开启30秒关闭30秒为节能50%。   开启30秒关闭15秒为节能30%。
-            int seconds = myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur();
-            String percent = "";
-            switch (seconds) {
-                case 60:
-                    if (onT == 12 && offT == 18) {
-                        percent = "30%";
-                        tempType = 3;
-                    } else if (onT == 18 && offT == 12) {
-                        percent = "50%";
-                        tempType = 2;
-                    } else {
-                        percent = "other";
-                    }
-                    break;
-                case 120:
-                    if (onT == 24 && offT == 36) {
-                        percent = "30%";
-                        tempType = 3;
-                    } else if (onT == 24 && offT == 16) {
-                        percent = "50%";
-                        tempType = 2;
-                    } else {
-                        percent = "other";
-                    }
-                    break;
-                case 180:
-                    if (onT == 24 && offT == 36) {
-                        percent = "30%";
-                        tempType = 3;
-                    } else if (onT == 36 && offT == 24) {
-                        percent = "50%";
-                        tempType = 2;
-                    } else {
-                        percent = "other";
-                    }
-                    break;
-                case 240:
-                    if (onT == 24 && offT == 36) {
-                        percent = "30%";
-                        tempType = 3;
-                    } else if (onT == 36 && offT == 24) {
-                        percent = "50%";
-                        tempType = 2;
-                    } else {
-                        percent = "other";
-                    }
-                    break;
-                case 300:
-                    if (onT == 29 && offT == 46) {
-                        percent = "30%";
-                        tempType = 3;
-                    } else if (onT == 43 && offT == 32) {
-                        percent = "50%";
-                        tempType = 2;
-                    } else {
-                        percent = "other";
-                    }
-                    break;
-            }
+                }
+                String tempTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm()==null?"00":myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm(), "HHmm", "HH:mm");
+                txt_shijiansheding.setText(tempTime);
+                //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
+                String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
+                if (cfg.equals("0")) {
+                    //数据格式 00
+                    isQingXiTiShi = false;
+                    isYiChangBaoJing = false;
+                } else if (cfg.equals("1")) {
+                    //数据格式 01
+                    isQingXiTiShi = false;
+                    isYiChangBaoJing = true;
+                } else if (cfg.equals("2")) {
+                    //数据格式 10
+                    isQingXiTiShi = true;
+                    isYiChangBaoJing = false;
+                } else if (cfg.equals("3")) {
+                    //数据格式 11
+                    isQingXiTiShi = true;
+                    isYiChangBaoJing = true;
+                }
+                isdingshiqingxi =cl_en.equals("0") ? false : true;
+                setCheck(qingxitishi, isQingXiTiShi);
+                setCheck(toggle_exception_warn, isYiChangBaoJing);
+                setCheck(toggle_dingshi, isdingshiqingxi);
+                int onT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_on_tm();
+                int offT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_off_tm();
+                //开启30秒关闭30秒为节能50%。   开启30秒关闭15秒为节能30%。
+                int seconds = myApp.pondDeviceDetailUI.detailModelTcp.getCl_dur();
+                String percent = "";
+                switch (seconds) {
+                    case 60:
+                        if (onT == 12 && offT == 18) {
+                            percent = "30%";
+                            tempType = 3;
+                        } else if (onT == 18 && offT == 12) {
+                            percent = "50%";
+                            tempType = 2;
+                        } else {
+                            percent = "other";
+                        }
+                        break;
+                    case 120:
+                        if (onT == 24 && offT == 36) {
+                            percent = "30%";
+                            tempType = 3;
+                        } else if (onT == 24 && offT == 16) {
+                            percent = "50%";
+                            tempType = 2;
+                        } else {
+                            percent = "other";
+                        }
+                        break;
+                    case 180:
+                        if (onT == 24 && offT == 36) {
+                            percent = "30%";
+                            tempType = 3;
+                        } else if (onT == 36 && offT == 24) {
+                            percent = "50%";
+                            tempType = 2;
+                        } else {
+                            percent = "other";
+                        }
+                        break;
+                    case 240:
+                        if (onT == 24 && offT == 36) {
+                            percent = "30%";
+                            tempType = 3;
+                        } else if (onT == 36 && offT == 24) {
+                            percent = "50%";
+                            tempType = 2;
+                        } else {
+                            percent = "other";
+                        }
+                        break;
+                    case 300:
+                        if (onT == 29 && offT == 46) {
+                            percent = "30%";
+                            tempType = 3;
+                        } else if (onT == 43 && offT == 32) {
+                            percent = "50%";
+                            tempType = 2;
+                        } else {
+                            percent = "other";
+                        }
+                        break;
+                }
 
-            if (onT == 60 && offT == 0) {
-                savewatermode.setText("100%");
-                tempType = 1;
-            } else {
-                savewatermode.setText(percent);
+                if (onT == 60 && offT == 0) {
+                    savewatermode.setText("100%");
+                    tempType = 1;
+                } else {
+                    savewatermode.setText(percent);
+                }
+            }else{
+                showProgressDialog(getString(R.string.requesting),true);
             }
         } catch (Exception e) {
 

@@ -191,7 +191,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     }
 
     private void beginRequest() {
-        userPresenter.getDeviceOnLineState(did);
+        userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
     }
 
     @Override
@@ -200,6 +200,9 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         NumberPicker mPicker = null;
         switch (v.getId()) {
             case R.id.re_dianjijiaozhun:
+                if (detailModelTcp==null) {
+                    return;
+                }
                 intent = new Intent(this, PhJiaoZhunActivity.class);
                 startActivity(intent);
                 break;
