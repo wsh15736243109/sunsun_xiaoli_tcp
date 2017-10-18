@@ -399,8 +399,8 @@
     <string name="mode_ismanual">当前模式已经为手动</string>
     <string name="current_temperture">当前温度</string>
     <string name="tem_setting">温度设定</string>
-    <string name="status_stop">档, 停止中。</string>
-    <string name="status_running">档, 运行中。</string>
+    <string name="status_stop">%1$d檔, 停止中。</string>
+    <string name="status_running">%1$d檔, 運行中。</string>
     <string name="status_running_error">异常状态，请予以排除。</string>
     <string name="stop">停止</string>
     <string name="running">运行</string>

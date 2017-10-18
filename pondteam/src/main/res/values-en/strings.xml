@@ -397,8 +397,8 @@
     <string name="mode_ismanual">The current mode is already manual</string>
     <string name="current_temperture">The current temperature</string>
     <string name="tem_setting">Temperature setting</string>
-    <string name="status_stop">档, 停止中。</string>
-    <string name="status_running">档, 运行中。</string>
+    <string name="status_stop">%1$d gear, stop。</string>
+    <string name="status_running">%1$d gear, running。</string>
     <string name="status_running_error">Exception status, please exclude。</string>
     <string name="stop">stop</string>
     <string name="running">run</string>

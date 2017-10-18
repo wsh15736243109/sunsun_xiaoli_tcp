@@ -32,7 +32,6 @@ import static android.content.DialogInterface.BUTTON_POSITIVE;
 
 public class DeviceAq806PhActivity extends BaseActivity implements Observer {
 
-    @IsNeedClick
     ImageView img_back;
     ImageView img_phbaojing;
     @IsNeedClick

@@ -406,14 +406,14 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
             case 0:
                 //停机
                 txt_status.setText(getString(R.string.stop));
-                strState = String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1) + "," + getString(R.string.stop);
+                strState = String.format(getString(R.string.status_stop), deviceDetailModel.getGear() + 1);
 //                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
                 txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
                 Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
                 break;
             case 1:
                 //运行
-                strState = (deviceDetailModel.getGear() + 1) + getString(R.string.status_running);
+                strState =String.format(getString(R.string.status_running), (deviceDetailModel.getGear() + 1) );
                 txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
                 Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
                 break;
