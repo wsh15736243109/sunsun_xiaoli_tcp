@@ -494,7 +494,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         }
 
         txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
-        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getOnline_time() / 3600.0));
+        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh() / 3600.0));
     }
 
     private String caculcateSeconds(int fcd) {
