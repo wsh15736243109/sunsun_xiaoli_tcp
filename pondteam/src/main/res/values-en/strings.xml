@@ -241,7 +241,7 @@
     <string name="ph_jiaozhun">ph electrode calibration</string>
     <string name="begin_jiaozhun">Start the calibration</string>
     <string name="no_support_device">Current equipment is not supported</string>
-    <string name="yuancheng_ph">Remote PH temperature detector</string>
+    <string name="device_yuancheng_ph">Remote PH temperature detector</string>
     <string name="bianpinshuibeng">variable frequency pump</string>
     <string name="sensenshuizu">The SunSun aquatic intelligence monitoring system</string>
     <string name="shuibengshiyonggonglv">Current power</string>
@@ -363,14 +363,16 @@
     <string name="pro">product</string>
     <string name="ser">service</string>
     <string name="delete_ing">In the process of deletion, please later</string>
-    <string name="zhineng806">Intelligent monitoringAQ-806</string>
-    <string name="zhineng700">Intelligent monitoringAQ-700</string>
-    <string name="zhinengjiarebang">Remote intelligent heating rod</string>
-    <string name="zhinengbianpinshuibeng">Intelligent variable frequency pump</string>
-    <string name="chitangguolv">Pond filtration system</string>
-    <string name="zhinengshexiangtou">Small carp smart camera</string>
-    <string name="shuizudeng">Intelligent aquarium lamp</string>
-    <string name="zhineng228">Smart monitoringAQ-500</string>
+    <string name="device_zhineng806">Intelligent monitoringAQ-806</string>
+    <string name="device_zhineng700">Intelligent monitoringAQ-700</string>
+    <string name="device_zhinengjiarebang">Remote intelligent heating rod</string>
+    <string name="device_zhinengbianpinshuibeng">Intelligent variable frequency pump</string>
+    <string name="device_chitangguolv">Pond filtration system</string>
+    <string name="device_zhinengshexiangtou">Small carp smart camera</string>
+    <string name="device_shuizudeng">Intelligent aquarium lamp</string>
+    <string name="device_zhineng228">Smart monitoringAQ-500</string>
+    <string name="device_weishiqing"></string>
+
     <string name="shiduansetting">Time set</string>
     <string name="shuizhisuanjiansetting">Water quality acid base setting</string>
     <string name="ph_806baojingkaiguan">pH alarm switch</string>
@@ -455,7 +457,7 @@
     <string name="hasSalesReturn">Have to return</string>
     <string name="hasClosed">Cancelled or closed</string>
     <string name="hasOrderReturned">Returned</string>
-    <string name="zhinengqibeng">Intelligent ac and dc air pump</string>
+    <string name="device_zhinengqibeng">Intelligent ac and dc air pump</string>
     <string name="chuqiliang_choose">Air output selection</string>
     <string name="workmode_choose">Work mode selection</string>
     <string name="qibeng_leiji_time">The air pump has been used for %1$.2f hours</string>
@@ -562,4 +564,13 @@
     <string name="userph_to_calibrate">Are you sure to use ph %1$d to calibrate?</string>
     <string name="title_activity_ling_shou_login">LingShouLoginActivity</string>
     <string name="action_settings">Settings</string>
+    <string name="video_setting_advance">Please do the video setting first</string>
+    <string name="shezhi_myself">Custom setup</string>
+    <string name="weishi_single">The quantity of single feed</string>
+    <string name="weishimode_choose">Feeding mode selection</string>
+    <string name="weishiset_zidingyi">@string/shezhi_myself</string>
+    <string name="weishiset_yanshi_eight">Delay 8 hours</string>
+    <string name="weishiset_yanshi_twelve">Delay 12 hours</string>
+    <string name="weishiset_yanshi_twenty">Delay 24 hours</string>
+    <string name="piece">%1$d part</string>
 </resources>

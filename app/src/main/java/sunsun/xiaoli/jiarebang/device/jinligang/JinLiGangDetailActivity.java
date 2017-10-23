@@ -276,13 +276,13 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         currentTime = MyTimeUtil.getCurrentTime(System.currentTimeMillis() + "", "yyyyMMddHHmmss");
         txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_connecting));
         did = getIntent().getStringExtra("did");
+        id = getIntent().getStringExtra("id");
+        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(0xffdcdddd);
         }
-        id = getIntent().getStringExtra("id");
-        deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
             //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
             int push = deviceDetailModel.getPush_cfg();

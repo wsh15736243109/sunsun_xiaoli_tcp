@@ -12,7 +12,6 @@ import com.itboye.pondteam.bean.PondTeamMostNewModel;
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.interfaces.IUserInfoInterface;
-import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.volley.BaseErrorListener;
 import com.itboye.pondteam.volley.BaseNetRepository;
 import com.itboye.pondteam.volley.BaseSuccessReqListener;
@@ -24,8 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
-
-import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 
 /**
@@ -127,6 +124,7 @@ public class UserResponsitory extends BaseNetRepository implements
     private String sendEmailCode = "By_SecurityCode_sendEmail";
     private String authDevicePwd_CP="By_SunsunCp1000_auth";//CP1000验证接口
     private String getDeviceCP1000Detail="By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
+    private String getDeviceWeishiQi="By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -719,6 +717,8 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (did.startsWith("S07")) {
             typeKey = getDeviceCP1000Detail;
+        }if (did.startsWith("S08")) {
+            typeKey = getDeviceWeishiQi;
         }
         (new ByJsonRequest.Builder<DeviceDetailModel>())
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)

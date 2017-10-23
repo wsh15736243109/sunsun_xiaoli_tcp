@@ -103,7 +103,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                 }
                 if (AddDeviceNewActivity.name==null) {
                     if (!did.startsWith("S01")) {
-                        MAlert.alert("请输入" + getString(R.string.chitangguolv) + "的设备型号类型");
+                        MAlert.alert("请输入" + getString(R.string.device_chitangguolv) + "的设备型号类型");
                         return;
                     }
                 }else {
@@ -152,7 +152,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                             break;
                         case 7:
                             if (!did.startsWith("SCHD")) {
-                                MAlert.alert("请输入" + (AddDeviceNewActivity.name == null ? getString(R.string.zhinengshexiangtou) : AddDeviceNewActivity.name[position]) + "的设备型号类型");
+                                MAlert.alert("请输入" + (AddDeviceNewActivity.name == null ? getString(R.string.device_zhinengshexiangtou) : AddDeviceNewActivity.name[position]) + "的设备型号类型");
                                 return;
                             }
                             break;
@@ -164,6 +164,12 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                             break;
                         case 9:
                             if (!did.startsWith("S07")) {
+                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
+                                return;
+                            }
+                            break;
+                        case 10:
+                            if (!did.startsWith("S08")) {
                                 MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
                                 return;
                             }

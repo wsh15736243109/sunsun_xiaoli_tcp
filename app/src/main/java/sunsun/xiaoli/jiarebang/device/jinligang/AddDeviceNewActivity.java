@@ -63,6 +63,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.device_shexiangtou,
             R.drawable.device_shuizudeng,
             R.drawable.device_jiaozhiliubeng,
+            R.drawable.device_jiaozhiliubeng,
     };
     int add[] = {
             R.drawable.add_device, R.drawable.add_device,
@@ -70,7 +71,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.add_device, R.drawable.add_device,
             R.drawable.add_device, R.drawable.add_device,
             R.drawable.add_device, R.drawable.add_device,
-            R.drawable.add_device};
+            R.drawable.add_device, R.drawable.add_device};
 
     PopupWindow popupWindow;
     private App myApp;
@@ -83,16 +84,17 @@ public class AddDeviceNewActivity extends BaseActivity implements
         setContentView(R.layout.activity_add_news_device);
         myApp = (App) getApplication();
         name = new String[]{
-                getString(R.string.zhineng806),
-                getString(R.string.zhineng228),
-                getString(R.string.zhineng700),
-                getString(R.string.zhinengjiarebang),
-                getString(R.string.yuancheng_ph),
-                getString(R.string.zhinengbianpinshuibeng),
-                getString(R.string.chitangguolv),
-                getString(R.string.zhinengshexiangtou),
-                getString(R.string.shuizudeng),
-                getString(R.string.zhinengqibeng)};
+                getString(R.string.device_zhineng806),
+                getString(R.string.device_zhineng228),
+                getString(R.string.device_zhineng700),
+                getString(R.string.device_zhinengjiarebang),
+                getString(R.string.device_yuancheng_ph),
+                getString(R.string.device_zhinengbianpinshuibeng),
+                getString(R.string.device_chitangguolv),
+                getString(R.string.device_zhinengshexiangtou),
+                getString(R.string.device_shuizudeng),
+                getString(R.string.device_zhinengqibeng),
+                getString(R.string.device_weishiqing)};
         listview = (ListView) findViewById(R.id.addListview);
         mContext = this;
         myApp.addDeviceUI = this;
@@ -134,6 +136,9 @@ public class AddDeviceNewActivity extends BaseActivity implements
                         break;
                     case 9:
                         deviceType = DeviceType.DEVICE_QIBENG;
+                        break;
+                    case 10:
+                        deviceType = DeviceType.DEVICE_WEISHIQI;
                         break;
                 }
                 showPopwindow(position);
@@ -179,9 +184,6 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
-//						Intent mainIntent = new Intent(AddDeviceNewActivity.this,
-//								MDeviceActivity.class);
-//						startActivity(mainIntent);
             }
         });
         open_camera.setOnClickListener(new OnClickListener() {
@@ -212,9 +214,6 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
-//				Intent mainIntent = new Intent(AddDeviceNewActivity.this,
-//						ManualAddDeviceActivity.class);
-//				startActivity(mainIntent);
             }
         });
         camera_cancel_tv.setOnClickListener(new OnClickListener() {
@@ -240,6 +239,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
             addBenas.setName(name[i]);
             addBenas.setBitmp(add[i]);
             addBenas.setImg(url[i]);
+//            addBenas.setDeviceType(url[i]);
             benas.add(addBenas);
         }
         adapter = new AddDeviceAdapter(benas, myApp.addDeviceUI);

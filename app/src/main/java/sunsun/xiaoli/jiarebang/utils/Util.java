@@ -303,21 +303,23 @@ public class Util {
 
     public static String getNickName(String did){
         if (did.startsWith("S01")) {
-            return MyApplication.getInstance().getResources().getString(R.string.chitangguolv);
+            return MyApplication.getInstance().getResources().getString(R.string.device_chitangguolv);
         }else if (did.startsWith("S02")) {
-            return MyApplication.getInstance().getResources().getString(R.string.zhinengjiarebang);
+            return MyApplication.getInstance().getResources().getString(R.string.device_zhinengjiarebang);
         }else if (did.startsWith("S03")) {
-            return MyApplication.getInstance().getResources().getString(R.string.zhineng806);
+            return MyApplication.getInstance().getResources().getString(R.string.device_zhineng806);
         }else if (did.startsWith("S04")) {
-            return MyApplication.getInstance().getResources().getString(R.string.yuancheng_ph);
+            return MyApplication.getInstance().getResources().getString(R.string.device_yuancheng_ph);
         }else if (did.startsWith("S05")) {
-            return MyApplication.getInstance().getResources().getString(R.string.zhinengbianpinshuibeng);
+            return MyApplication.getInstance().getResources().getString(R.string.device_zhinengbianpinshuibeng);
         }else if (did.startsWith("S06")) {
-            return MyApplication.getInstance().getResources().getString(R.string.shuizudeng);
+            return MyApplication.getInstance().getResources().getString(R.string.device_shuizudeng);
         }else if (did.startsWith("S07")) {
-            return MyApplication.getInstance().getResources().getString(R.string.zhinengqibeng);
+            return MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng);
+        }else if (did.startsWith("S08")) {
+            return MyApplication.getInstance().getResources().getString(R.string.device_weishiqing);
         }else if (did.startsWith("SCHD")) {
-            return MyApplication.getInstance().getResources().getString(R.string.zhinengshexiangtou);
+            return MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
         }
         return "device";
     }

@@ -1,9 +1,20 @@
 package sunsun.xiaoli.jiarebang.beans;
 
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
+
 public class AddBenas {
 	private String name;
 	private int img;
 	private int bitmp;
+	private DeviceType deviceType;
+
+	public DeviceType getDeviceType() {
+		return deviceType;
+	}
+
+	public void setDeviceType(DeviceType deviceType) {
+		this.deviceType = deviceType;
+	}
 
 	public String getName() {
 		return name;
@@ -28,4 +39,5 @@ public class AddBenas {
 	public void setBitmp(int bitmp) {
 		this.bitmp = bitmp;
 	}
+
 }

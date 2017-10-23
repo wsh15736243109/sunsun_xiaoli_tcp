@@ -10,7 +10,7 @@
     <string name="SundayQ">Sunday</string>
     <string name="sensenshuizu">森森水族智能监控系统</string>
     <string name="bianpinshuibeng">变频水泵</string>
-    <string name="yuancheng_ph">远程PH温度探测仪</string>
+    <string name="device_yuancheng_ph">远程PH温度探测仪</string>
     <string name="jiarebang">加热棒</string>
     <string name="paichu">请排除</string>
     <string name="updateing_description">正在下载中，请勿切断电源，固件更新完成，设备将自动重新启动</string>
@@ -366,13 +366,13 @@
     <string name="pro">产品</string>
     <string name="ser">服务</string>
     <string name="delete_ing">正在删除中，请稍后</string>
-    <string name="zhineng806">智能监控AQ-806</string>
-    <string name="zhinengjiarebang">远程智能加热棒</string>
-    <string name="zhinengbianpinshuibeng">智能变频水泵</string>
-    <string name="chitangguolv">池塘过滤系统</string>
-    <string name="zhinengshexiangtou">小鲤智能摄像头</string>
-    <string name="shuizudeng">智能水族灯</string>
-    <string name="zhineng228">智能监控AQ-500</string>
+    <string name="device_zhineng806">智能监控AQ-806</string>
+    <string name="device_zhinengjiarebang">远程智能加热棒</string>
+    <string name="device_zhinengbianpinshuibeng">智能变频水泵</string>
+    <string name="device_chitangguolv">池塘过滤系统</string>
+    <string name="device_zhinengshexiangtou">小鲤智能摄像头</string>
+    <string name="device_shuizudeng">智能水族灯</string>
+    <string name="device_zhineng228">智能监控AQ-500</string>
     <string name="shiduansetting">时段设置</string>
     <string name="shuizhisuanjiansetting">水质酸碱设定</string>
     <string name="ph_806baojingkaiguan">pH报警开关</string>
@@ -428,6 +428,7 @@
     <string name="smartconfig_tip_shexiangtou">接通电源，长按匹配键5秒，松手至蓝色指示灯快闪状态。</string>
     <string name="smartconfig_tip_smart_light">接通电源，长按顶部旋钮5秒，松手至绿色指示灯快闪状态。</string>
     <string name="smartconfig_tip_smart_ph">接通电源，长按匹配键5秒，松手至绿色指示灯快闪状态。</string>
+    <string name="smartconfig_tip_weishiqi">接通电源，长按匹配键3秒，松手至红灭，绿灯快闪状态。</string>
     <string name="opening">开启中</string>
     <string name="masual_tiaoguang">手动调光设置</string>
     <string name="cancel_order">取消订单</string>
@@ -453,7 +454,7 @@
     <string name="hasSalesReturn">已退货</string>
     <string name="hasClosed">已取消或关闭</string>
     <string name="hasOrderReturned">已退回</string>
-    <string name="zhinengqibeng">智能交直流两用气泵</string>
+    <string name="device_zhinengqibeng">智能交直流两用气泵</string>
     <string name="chuqiliang_choose">出气量选择</string>
     <string name="workmode_choose">工作模式选择</string>
     <string name="qibeng_leiji_time">此气泵已累计使用%1$.2f小时</string>
@@ -473,7 +474,7 @@
     <string name="speakwhat">想说什么呢?</string>
     <string name="send_error_log">同时发送问题日志</string>
     <string name="submit_problem">提交问题</string>
-    <string name="zhineng700">智能监控AQ-700</string>
+    <string name="device_zhineng700">智能监控AQ-700</string>
     <string name="revalidation">重新验证</string>
     <string name="after">%1$d秒后重新发送</string>
     <string name="water_temperature">当前水温</string>
@@ -561,6 +562,16 @@
 
     <string name="title_activity_ling_shou_login">LingShouLoginActivity</string>
     <string name="action_settings">设置</string>
+    <string name="video_setting_advance">请先进行视频设置</string>
+    <string name="shezhi_myself">自定义设置</string>
+    <string name="weishi_single">单次喂食数量</string>
+    <string name="weishimode_choose">喂食模式选择</string>
+    <string name="device_weishiqing">鱼缸智能喂食器</string>
+    <string name="weishiset_zidingyi">自定义设置</string>
+    <string name="weishiset_yanshi_eight">延时8小时</string>
+    <string name="weishiset_yanshi_twelve">延时12小时</string>
+    <string name="weishiset_yanshi_twenty">延时24小时</string>
+    <string name="piece">%1$d份</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

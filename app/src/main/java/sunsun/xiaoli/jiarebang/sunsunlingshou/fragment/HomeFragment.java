@@ -128,27 +128,27 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         lingShouPresenter.getBanner(position);//获取轮播图
         lingShouPresenter.getVerticalArtical(CITY_CODE, lng + "", lat + "");//获取垂直滚动文章
         initTitleBarStyle2(getActivity(), actionBar, "", pullzoom_scrollview, this, null);
-        DeviceTypeModel deviceListBean = new DeviceTypeModel(R.drawable.home_aq_806, getString(R.string.zhineng806));
+        DeviceTypeModel deviceListBean = new DeviceTypeModel(R.drawable.home_aq_806, getString(R.string.device_zhineng806));
         arDevice.add(deviceListBean);
 
-        deviceListBean = new DeviceTypeModel(R.drawable.home_jiarebang, getString(R.string.zhinengjiarebang));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_jiarebang, getString(R.string.device_zhinengjiarebang));
         arDevice.add(deviceListBean);
 
-        deviceListBean = new DeviceTypeModel(R.drawable.home_ph, getString(R.string.yuancheng_ph));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_ph, getString(R.string.device_yuancheng_ph));
         arDevice.add(deviceListBean);
 
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shuibeng, getString(R.string.zhinengbianpinshuibeng));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_shuibeng, getString(R.string.device_zhinengbianpinshuibeng));
         arDevice.add(deviceListBean);
 
-        deviceListBean = new DeviceTypeModel(R.drawable.home_guolvtong, getString(R.string.chitangguolv));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_guolvtong, getString(R.string.device_chitangguolv));
         arDevice.add(deviceListBean);
 
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shenxiangtou, getString(R.string.zhinengshexiangtou));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_shenxiangtou, getString(R.string.device_zhinengshexiangtou));
         arDevice.add(deviceListBean);
 
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shuizudeng, getString(R.string.shuizudeng));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_shuizudeng, getString(R.string.device_shuizudeng));
         arDevice.add(deviceListBean);
-        deviceListBean = new DeviceTypeModel(R.drawable.home_aq_228, getString(R.string.zhineng228));
+        deviceListBean = new DeviceTypeModel(R.drawable.home_aq_228, getString(R.string.device_zhineng228));
         arDevice.add(deviceListBean);
         //开启渐变
         actionBar.setNeedTranslucent(true, false);

@@ -13,7 +13,7 @@ import com.itboye.pondteam.base.BaseActivity;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
-import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 /**
  * Created by Mr.w on 2017/3/4.
@@ -32,14 +32,17 @@ public class ActivityStepFirst extends BaseActivity {
 
     //用于摄像头绑定的设备did
     String aq_did;
-
+    DeviceType deviceType;
     public static ActivityStepFirst instance;
+
     public static ActivityStepFirst getInstance() {
         return instance;
     }
+
     public static void setInstance(ActivityStepFirst instance) {
         ActivityStepFirst.instance = instance;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,29 +50,33 @@ public class ActivityStepFirst extends BaseActivity {
         instance = this;
         app = (App) getApplication();
         app.addDeviceFirst = this;
-        aq_did=getIntent().getStringExtra("aq_did");
+        deviceType= (DeviceType) getIntent().getSerializableExtra("device");
+        aq_did = getIntent().getStringExtra("aq_did");
         txt_title.setText("添加" + getIntent().getStringExtra("device_type"));
         type = getIntent().getStringExtra("device_type");
         position = getIntent().getIntExtra("position", 0);
         if (type != null) {
-            if (type.contains("摄像头")) {
+            if (deviceType == DeviceType.DEVICE_CAMERA) {
                 img.setBackgroundResource(R.drawable.smart_shexiangtou);
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_shexiangtou)));
-            } else if (type.contains("806")) {
+            } else if (deviceType == DeviceType.DEVICE_AQ806) {
                 img.setBackgroundResource(R.drawable.aq);
-            } else if (type.contains("500")) {
+            } else if (deviceType == DeviceType.DEVICE_AQ500) {
                 img.setBackgroundResource(R.drawable.smart_500);
-            }else if (type.contains("PH")) {
+            } else if (deviceType == DeviceType.DEVICE_PH) {
                 img.setBackgroundResource(R.drawable.smart_ph);
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_smart_ph)));
-            }else if (type.contains("加热棒")) {
+            } else if (deviceType == DeviceType.DEVICE_JIAREBANG) {
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_jiarebang)));
                 img.setBackgroundResource(R.drawable.add_jiarebangnew);
-            }else if (type.contains("池塘过滤")) {
+            } else if (deviceType == DeviceType.DEVICE_GUOLVTONG) {
                 img.setBackgroundResource(R.drawable.add_jiarebang);
-            }else if (type.contains(AddDeviceNewActivity.name[7])) {
+            } else if (deviceType == DeviceType.DEVICE_SHUIZUDENG) {
                 img.setBackgroundResource(R.drawable.smart_light);
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_smart_light)));
+            } else if (deviceType == DeviceType.DEVICE_WEISHIQI) {
+                img.setBackgroundResource(R.drawable.smart_weishiqi);
+                txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_weishiqi)));
             }
         }
     }
@@ -85,7 +92,7 @@ public class ActivityStepFirst extends BaseActivity {
                 intent = new Intent(this, ActivityInputWifiAndPass.class);
                 intent.putExtra("device_type", type);
                 intent.putExtra("position", position);
-                intent.putExtra("aq_did", aq_did==null?"":aq_did);
+                intent.putExtra("aq_did", aq_did == null ? "" : aq_did);
                 startActivity(intent);
                 break;
         }

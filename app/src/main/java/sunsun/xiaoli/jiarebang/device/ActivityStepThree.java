@@ -249,7 +249,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("pwd", searchDeviceInfo.getPwd());
                     String extra = gson.toJson(hashMap);
-                    userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name == null ? getString(R.string.zhinengshexiangtou) : AddDeviceNewActivity.name[7], "chiniao_wifi_camera", extra);
+                    userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name == null ? getString(R.string.device_zhinengshexiangtou) : AddDeviceNewActivity.name[7], "chiniao_wifi_camera", extra);
                 } else {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("first_upd", System.currentTimeMillis() + "");
@@ -542,7 +542,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     return;
                 }
                 break;
-
+            case 10:
+                if (!did.startsWith("S08")) {
+                    return;
+                }
+                break;
         }
         if (mApp.mCameraDevice != null) {
             //添加从设备的

@@ -94,6 +94,7 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
             } else {
                 this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode;
             }
+            System.out.println("接口地址"+url);
         }
 
 

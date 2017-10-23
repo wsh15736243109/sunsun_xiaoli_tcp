@@ -84,14 +84,6 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 String psw = listItems.get(position).get("ItemPsw").toString();
                 mSelectDeviceInfo.setDid(did);
                 mSelectDeviceInfo.setPwd(psw);
-//                if (deviceIsAdd(mSelectDeviceInfo)) {
-//                    new AlertDialog.Builder(mContext)
-//                            .setTitle(getString(R.string.tips))
-//                            .setMessage(getString(R.string.hasAdd))
-//                            .setPositiveButton(getString(R.string.ok), null)
-//                            .show();
-//                    return;
-//                }
                 if ((boolean) (listItems.get(position).get("add_status"))) {
                     new AlertDialog.Builder(mContext)
                             .setTitle(getString(R.string.tips))
@@ -107,7 +99,6 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                         .setNegativeButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-//                                mApp.addDevice(mSelectDeviceInfo);
                                 if (aq_did != null) {
                                     boolean bindYes = hasBindAq();
                                     if (bindYes) {
@@ -121,7 +112,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                 if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
                                     hashMap.put("pwd", mSelectDeviceInfo.getPwd());
                                     String extra = gson.toJson(hashMap);
-                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), AddDeviceNewActivity.name == null ? getString(R.string.zhinengshexiangtou) : AddDeviceNewActivity.name[7], "chiniao_wifi_camera", extra);
+                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), AddDeviceNewActivity.name == null ? getString(R.string.device_zhinengshexiangtou) : AddDeviceNewActivity.name[7], "chiniao_wifi_camera", extra);
                                 } else {
                                     if (BuildConfig.APP_TYPE.equals("pondTeam")) {
                                         hashMap.put("notify_email", 1);
@@ -228,7 +219,11 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                         continue;
                     }
                     break;
-
+                case 10:
+                    if (!deviceInfo.getDid().startsWith("S08")) {
+                        continue;
+                    }
+                    break;
 
             }
 
@@ -284,6 +279,8 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);
             } else if (deviceInfo.getType().equalsIgnoreCase("SCHD")) {
                 map.put("ItemIcon", R.drawable.device_shexiangtou);
+            }else if (deviceInfo.getType().equalsIgnoreCase("S08")) {
+                map.put("ItemIcon", R.drawable.device_weishiqi);
             } else {
                 map.put("ItemIcon", R.drawable.ic_aplacher);
             }

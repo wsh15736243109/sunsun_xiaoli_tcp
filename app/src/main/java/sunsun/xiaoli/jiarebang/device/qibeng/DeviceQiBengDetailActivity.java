@@ -158,7 +158,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 intent = new Intent(this, VersionUpdateActivity.class);
                 intent.putExtra("did", did);
                 intent.putExtra("version", deviceDetailModel.getVer());
-                intent.putExtra("deviceType", "S05");
+                intent.putExtra("deviceType", "S07");
                 startActivity(intent);
                 break;
             case R.id.tvFanKui:

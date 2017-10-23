@@ -64,6 +64,7 @@ import sunsun.xiaoli.jiarebang.device.pondteam.ActivityPondDeviceDetail;
 import sunsun.xiaoli.jiarebang.device.pondteam.AddPondDevice;
 import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity;
+import sunsun.xiaoli.jiarebang.device.weishiqi.WeiShiQiDetailActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.popwindow.SureDeleteDialog;
@@ -123,11 +124,11 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         mApp = (App) getApplication();
         mApp.mDeviceUi = this;
         String appType = BuildConfig.APP_TYPE;
-        footerView= LayoutInflater.from(this).inflate(R.layout.device_list_footer,null);
-        nodata= (RelativeLayout) footerView.findViewById(R.id.nodata);
-        btn_addnew= (Button) footerView.findViewById(R.id.btn_addnew);
+        footerView = LayoutInflater.from(this).inflate(R.layout.device_list_footer, null);
+        nodata = (RelativeLayout) footerView.findViewById(R.id.nodata);
+        btn_addnew = (Button) footerView.findViewById(R.id.btn_addnew);
         btn_addnew.setOnClickListener(this);
-        txt_add_jieshao= (TextView) footerView.findViewById(R.id.txt_add_jieshao);
+        txt_add_jieshao = (TextView) footerView.findViewById(R.id.txt_add_jieshao);
         ummessage = (PushModel) getIntent().getSerializableExtra("ummessage");
         if (ummessage != null) {
             showPushMessage();
@@ -145,7 +146,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         swipe_layout.setColorSchemeColors(getResources().getColor(R.color.main_green));
         swipe_layout.setOnRefreshListener(this);
         swipe_layout.setRefreshing(true);
-        listItems=new ArrayList<>();
+        listItems = new ArrayList<>();
         listItemsAdapter = new SimpleAdapter(this, listItems,
                 R.layout.device_item, new String[]{"ItemName", "ItemDid",
                 "ItemState1", "ItemState2", "ItemRightArrow", "ItemIcon"},
@@ -204,10 +205,10 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 currentType = listItems.get(position).get("type").toString();
                 extra = listItems.get(position).get("extra").toString();
                 loadingDialog = new ProgressDialog(DeviceActivity.this);
-//                if (currentDid.startsWith("S06")) {
-//                    startActivity(new Intent(DeviceActivity.this, LEDDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
-//                    return;
-//                }
+                if (currentDid.startsWith("S08")) {
+                    startActivity(new Intent(DeviceActivity.this, WeiShiQiDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
+                    return;
+                }
                 if (!BuildConfig.APP_TYPE.equals("pondTeam")) {
                     if (!currentDid.toLowerCase().startsWith("SCHD".toLowerCase())) {
                         loadingDialog.setTitle(getString(R.string.tips));
@@ -389,12 +390,11 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
     }
 
 
-
     @SuppressLint("WrongConstant")
 
     public void refreshDeviceListTest() {
 
-         ArrayList<HashMap<String, Object>> listItemsTemp=new ArrayList<>();
+        ArrayList<HashMap<String, Object>> listItemsTemp = new ArrayList<>();
         mListView.setVisibility(View.VISIBLE);
         relyout.setVisibility(View.VISIBLE);
         for (int i = 0; i < arrayList.size(); i++) {
@@ -416,22 +416,24 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03")) {
                     //806
                     map.put("ItemIcon", R.drawable.device_aq);
-                }else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-1")) {
-                    //806
+                } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-1")) {
+                    //500
                     map.put("ItemIcon", R.drawable.device_500);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-2")) {
-                    //806
+                    //700
                     map.put("ItemIcon", R.drawable.device_700);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S04")) {
                     map.put("ItemIcon", R.drawable.device_ph);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S05")) {
                     map.put("ItemIcon", R.drawable.device_shuibeng);
-                }else if (arrayList.get(i).getDevice_type().startsWith("S06")) {
+                } else if (arrayList.get(i).getDevice_type().startsWith("S06")) {
                     map.put("ItemIcon", R.drawable.device_shuizudeng);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S07")) {
                     map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);
-                }else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
+                } else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
                     map.put("ItemIcon", R.drawable.device_shexiangtou);
+                } else if (arrayList.get(i).getDevice_type().startsWith("S08")) {
+                    map.put("ItemIcon", R.drawable.device_weishiqi);
                 } else {
                     map.put("ItemIcon", R.drawable.ic_aplacher);
                 }
@@ -439,17 +441,9 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 map.put("ItemIcon", R.drawable.icon);
             }
             listItemsTemp.add(map);
-//            listItems.clear();
         }
         listItems.clear();
         listItems.addAll(listItemsTemp);
-//        listItemsAdapter = new SimpleAdapter(this, listItems,
-//                R.layout.device_item, new String[]{"ItemName", "ItemDid",
-//                "ItemState1", "ItemState2", "ItemRightArrow", "ItemIcon"},
-//                new int[]{R.id.textView_dev_name, R.id.textView_dev_did,
-//                        R.id.textView_dev_state1, R.id.textView_dev_state2,
-//                        R.id.imageView_dev_right_arrow, R.id.imageView_dev_logo});
-//        mListView.setAdapter(listItemsAdapter);
         listItemsAdapter.notifyDataSetChanged();
         if (listItems.size() > 0) {
             mListView.setVisibility(View.VISIBLE);
@@ -705,7 +699,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 intent.putExtra("did", mSelectDeviceInfo.getDid());
                 intent.putExtra("id", mSelectDeviceInfo.getId());
                 intent.putExtra("hasPsw", hasPsw);//无密码则应该重新进入插入密码
-                intent.putExtra("detailModel",deviceDetailModel);
+                intent.putExtra("detailModel", deviceDetailModel);
                 startActivityForResult(intent, 101);
             }
         }, 2000);
