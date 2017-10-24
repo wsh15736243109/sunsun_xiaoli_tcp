@@ -123,7 +123,6 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         setContentView(R.layout.activity_device);
         mApp = (App) getApplication();
         mApp.mDeviceUi = this;
-        String appType = BuildConfig.APP_TYPE;
         footerView = LayoutInflater.from(this).inflate(R.layout.device_list_footer, null);
         nodata = (RelativeLayout) footerView.findViewById(R.id.nodata);
         btn_addnew = (Button) footerView.findViewById(R.id.btn_addnew);
@@ -132,9 +131,6 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         ummessage = (PushModel) getIntent().getSerializableExtra("ummessage");
         if (ummessage != null) {
             showPushMessage();
-        }
-        if (appType.toLowerCase().contains("pondteam".toLowerCase())) {
-        } else {
         }
         dbManager = new DBManager(this);
         img_right.setBackgroundResource(R.drawable.menu);
@@ -156,7 +152,6 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
 
         mListView.addFooterView(footerView);
         mListView.setAdapter(listItemsAdapter);
-//        showProgressDialog(getString(R.string.get_deviceInfoing), true);
         img_back.setVisibility(View.GONE);
         txt_exist.setText(getString(R.string.exist_login));
         initSwipListView();
@@ -188,17 +183,11 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 return false;
             }
         });
-        /**
-         * // mProgressDialog = ProgressDialog.show(DeviceActivity.this, //
-         * mSelectDeviceInfo.mDeviceName, "连接中，请稍后……"); // mProgressDialog = new
-         * ProgressDialog(App.context);
-         */
-//		 列表项短按键处理
+        //列表项短按键处理
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-//                startActivity(new Intent(DeviceActivity.this, DeviceQiBengDetailActivity.class));
                 DeviceActivity.this.position = position;
                 mSelectDeviceInfo = arrayList.get(position);
                 currentDid = listItems.get(position).get("ItemDid").toString().substring(4, listItems.get(position).get("ItemDid").toString().length());
@@ -217,11 +206,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                         loadingDialog.show();
                         userPresenter.getDeviceDetailInfo(currentDid, getSp((Const.UID)));
                     } else {
-                        String psw = dbManager.queryDevicePswByDid(currentDid, getSp(Const.UID));
-//                        if (psw.equals("")) {
-//                            MAlert.alert(getString(R.string.pass_empty));
-//                            return;
-//                        }
+                        String psw = "";
                         try {
                             JSONObject jsonObject = new JSONObject(extra);
                             psw = jsonObject.getString("pwd");
@@ -252,8 +237,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         });
 
         // 列表项长按键处理
-        mListView
-                .setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent,
                                                    View view, final int position, long id) {
@@ -359,7 +343,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(receiver);
+
     }
 
     /**
@@ -479,7 +463,6 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         switch (v.getId()) {
             case R.id.img_right:
             case R.id.btn_addnew:
-//                getDeviceList();
                 if (BuildConfig.APP_TYPE.equals("pondTeam")) {
                     intent = new Intent(this, AddPondDevice.class);
                     intent.putExtra("device_type", "S01");
@@ -579,7 +562,6 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                         loadingDialogDelete.dismiss();
                     }
                 }, 2000);
-                dbManager.deleteDeviceDataByDid(mSelectDeviceInfo.getDid(), getSp(Const.UID));
                 getDeviceList();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
                 loadingDialogDelete.setMessage(entity.getData() + "");

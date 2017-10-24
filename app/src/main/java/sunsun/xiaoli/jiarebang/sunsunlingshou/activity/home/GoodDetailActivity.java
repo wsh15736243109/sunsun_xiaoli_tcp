@@ -12,7 +12,6 @@ import com.itboye.pondteam.base.LingShouBaseActivity;
 import com.itboye.pondteam.custom.MyListView;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
-import com.itboye.pondteam.volley.DensityUtil;
 import com.itboye.pondteam.volley.ResultEntity;
 
 import java.util.List;
@@ -65,6 +64,18 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
         initViews();
     }
 
+
+    @SuppressLint("NewApi")
+    private void initViews() {
+        View headerView = getLayoutInflater().inflate(
+                R.layout.item_goods_detail_headerview, xlistview, false);
+        lunbo = (CarouselView) headerView.findViewById(R.id.lunbo);
+        name = (TextView) headerView.findViewById(R.id.name);
+        xinghao = (TextView) headerView.findViewById(R.id.xinghao);
+        jiage = (TextView) headerView.findViewById(R.id.jiage);
+        xlistview.addHeaderView(headerView);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -94,16 +105,15 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.getGoodsDetail_success) {
-                GoodsDetailBean bean = (GoodsDetailBean) entity.getData();
-                setData(bean);
+                bean = (GoodsDetailBean) entity.getData();
+                setData();
             } else if (entity.getEventType() == LingShouPresenter.getGoodsDetail_fail) {
                 MAlert.alert(entity.getData());
             }
         }
     }
 
-    private void setData(GoodsDetailBean bean) {
-        this.bean = bean;
+    private void setData() {
         setLunBo();
         setOtherData();
     }
@@ -112,7 +122,8 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
         name.setText(bean.getName());
         xinghao.setText(bean.getSku_list().get(0).getSku_desc());
         jiage.setText("￥" + bean.getSku_list().get(0).getPrice());
-
+        webAdapter = new WebAdapter();
+        xlistview.setAdapter(webAdapter);
     }
 
     private void setLunBo() {
@@ -127,35 +138,15 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
     }
 
     private class WebAdapter extends BaseAdapter {
-//        WebView webview;
-//
-//        public WebAdapter() {
-//
-//            webview = new WebView(GoodDetailActivity.this);
-//            webview.getSettings().setJavaScriptEnabled(true);
-//
-//            webview.setWebViewClient(new WebViewClient() {
-//                @Override
-//                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                    view.loadUrl(url);
-//                    return true;
-//                }
-//            });
-//
-//            webview.loadUrl("http://sunsun.8raw.com/index.php/Webview/Product/detail?id=55");
-//        }
-        ImageView webview;
+        ImageView imageView;
         public WebAdapter() {
-//
-            webview = new ImageView(GoodDetailActivity.this);
-
-
+            imageView = new ImageView(GoodDetailActivity.this);
         }
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            webview = new ImageView(GoodDetailActivity.this);
-            GlidHelper.glidLoad(webview,Const.imgurl+bean.getDetail_img().get(position).getImg_id());
-            return webview;
+            imageView = new ImageView(GoodDetailActivity.this);
+            GlidHelper.glidLoad(imageView,Const.imgurl+bean.getDetail_img().get(position).getImg_id());
+            return imageView;
         }
 
         @Override
@@ -172,54 +163,8 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
 
         @Override
         public int getCount() {
-
             return 1;
         }
     }
 
-    @SuppressLint("NewApi")
-    private void initViews() {
-        View headerView = getLayoutInflater().inflate(
-                R.layout.item_goods_detail_headerview, xlistview, false);
-        lunbo = (CarouselView) headerView.findViewById(R.id.lunbo);
-//        fenlei = (RelativeLayout) headerView.findViewById(R.id.fenlei);
-
-        int width = DensityUtil.screenWidth();
-//        lunbo.setLayoutParams(new LinearLayout.LayoutParams(width, width));
-        name = (TextView) headerView.findViewById(R.id.name);
-        xinghao = (TextView) headerView.findViewById(R.id.xinghao);
-        jiage = (TextView) headerView.findViewById(R.id.jiage);
-
-//        share = headerView.findViewById(R.id.share);
-//        share.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//                // onShareClick();
-//                LoginController
-//                        .onGoodsShareClick(GoodDetailActivity.this, null);
-//            }
-//        });
-//        fenlei.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                LoginController.onBuyClick(GoodDetailActivity.this, null);
-//
-//            }
-//        });
-//        oldPrice = (TextView) headerView.findViewById(R.id.oldPrice);
-//        price = (TextView) headerView.findViewById(R.id.price);
-//        xiaoliang = (TextView) headerView.findViewById(R.id.xiaoliang);
-
-        xlistview.addHeaderView(headerView);
-        webAdapter = new WebAdapter();
-        xlistview.setAdapter(webAdapter);
-
-        final TextView tuwen = (TextView) headerView.findViewById(R.id.tuwen);
-
-        final View tuwenUnderLine = headerView
-                .findViewById(R.id.tuwenUnderLine);
-    }
 }

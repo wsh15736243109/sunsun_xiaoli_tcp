@@ -421,6 +421,12 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         if (deviceInfo == null) {
             return;
         }
+        if (deviceInfo.getDid() == null) {
+            return;
+        }
+        if (deviceInfo.getDid() .equals("")) {
+            return;
+        }
         if (deviceInfo.getPwd() == null) {
             return;
         }

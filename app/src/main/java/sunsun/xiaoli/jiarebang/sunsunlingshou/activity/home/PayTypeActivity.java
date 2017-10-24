@@ -22,7 +22,6 @@ import sunsun.xiaoli.jiarebang.alipay.PayResult;
 import sunsun.xiaoli.jiarebang.beans.CreateOrderBean;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.model.RePayBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -62,8 +61,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 if (createOrderBean != null) {
                     //生成订单进行支付
                     //测试支付
-                    lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),createOrderBean.getPay_money(),getSp(Const.S_ID));
-//
+//                    lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),createOrderBean.getPay_money(),getSp(Const.S_ID));
+                      callAliPay(createOrderBean);
                 } else {
                     //待付款订单重新支付
                     lingShouPresenter.rePay(getSp(Const.UID),getSp(Const.S_ID),orderBean.getOrder_code());
@@ -84,9 +83,10 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
         String content = createOrderBean.getPay_code();
         String code = createOrderBean.getPay_code();
         long time = System.currentTimeMillis();
-        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Const.ALI_APPID, money + "", content, code, time + "");
+//        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Const.ALI_APPID, money + "", content, code, time + "");
+        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Const.ALI_APPID, true);
         String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
-        String sign = OrderInfoUtil2_0.getSign(params, Const.RSA_PRIVATE);
+        String sign = OrderInfoUtil2_0.getSign(params, Const.RSA_PRIVATE,true);
         final String orderInfo = orderParam + "&" + sign;
         Runnable payRunnable = new Runnable() {
             @Override
@@ -147,10 +147,10 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 MAlert.alert(entity.getData()+"fail");
             }else if(entity.getEventType()==LingShouPresenter.rePay_success){
                 MAlert.alert(entity.getData()+"success");
-                RePayBean createOrderBean= (RePayBean) entity.getData();
-                lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),Double.parseDouble(createOrderBean.getPay_money()),getSp(Const.S_ID));
+                CreateOrderBean createOrderBean= (CreateOrderBean) entity.getData();
+//                lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),Double.parseDouble(createOrderBean.getPay_money()),getSp(Const.S_ID));
                 //测试支付
-//                callAliPay(createOrderBean);
+                callAliPay(createOrderBean);
             }else if(entity.getEventType()==LingShouPresenter.rePay_fail){
                 MAlert.alert(entity.getData()+"fail");
             }

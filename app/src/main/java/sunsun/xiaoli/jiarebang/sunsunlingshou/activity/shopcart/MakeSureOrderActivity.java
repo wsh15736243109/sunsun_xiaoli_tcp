@@ -61,7 +61,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     private ServiceBean serviceBean;
     private MakeSureOrderAdapter adapter;
     private ServiceBean.SkuInfoEntity skuInfoSelect;
-    private ArrayList<GoodsDetailBean> goodsDetailBean;
+    private ArrayList<GoodsDetailBean> goodsDetailBeanArray;
     List<ServiceBean.SkuInfoEntity> skuInfoEntityList;
     private App mApp;
     int canPack;
@@ -77,7 +77,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.getDefaultAddress(getSp(Const.UID), Const.S_ID);
         initTitlebarStyle1(this, actionBar, "确认订单", R.mipmap.ic_left_light, "", 0, "");
-        goodsDetailBean = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
+        goodsDetailBeanArray = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
         isShopCart = getIntent().getBooleanExtra("isShopCart", false);
         buyType = (BuyType) getIntent().getSerializableExtra("type");
         storeBean = (StoreListBean.ListEntity) getIntent().getSerializableExtra("zixunModel");
@@ -151,8 +151,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 break;
             case Buy_LiJiGouMai://立即购买进入确认订单
                 store_id = getIntent().getStringExtra("store_id");
-                goodsDetailBean = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
-                adapter = new MakeSureOrderAdapter(this, goodsDetailBean);
+                goodsDetailBeanArray = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
+                adapter = new MakeSureOrderAdapter(this, goodsDetailBeanArray);
                 order_goods_list.setAdapter(adapter);
                 break;
             case Buy_ZiXunGouMai:
@@ -254,7 +254,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     case Buy_OrderPay: //订单重新支付进入确认订单
                         break;
                     case Buy_LiJiGouMai://立即购买进入确认订单
-                        lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBean.get(0).getCount(), goodsDetailBean.get(0).getSku_list().get(goodsDetailBean.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, freight_price, getSp(Const.S_ID));
+                        lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, freight_price, getSp(Const.S_ID));
                         break;
                     case Buy_ZiXunGouMai:
                         break;
@@ -262,9 +262,9 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
 //                lingShouPresenter.buyLiJi(getSp(Const.UID),count,model.get(0).getSku_list().get(model.get(0).getSelectPositon()).getSku_pkid(),address_id,note,store_id,send_type,send_time);
                 break;
             case R.id.btn_addshopcart:
-                if (goodsDetailBean != null) {
+                if (goodsDetailBeanArray != null) {
                     //商品详情进入加入购物车
-                    lingShouPresenter.addShopCart(getSp(Const.UID), goodsDetailBean.get(0).getCount(), goodsDetailBean.get(0).getId(), goodsDetailBean.get(0).getSku_list().get(goodsDetailBean.get(0).getSelectPositon()).getSku_pkid(), getSp(Const.S_ID));
+                    lingShouPresenter.addShopCart(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getId(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), getSp(Const.S_ID));
                 } else {
                     //预约购买加入购物车
                     lingShouPresenter.addShopCart(getSp(Const.UID),1,serviceBean.getProduct_info().getId(),skuInfoSelect.getId(),getSp(Const.S_ID));
@@ -289,6 +289,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         txt_phone.setText(addressBean.getMobile());
         txt_address.setText(addressBean.getDetailinfo());
         address_id = addressBean.getId();
+        lingShouPresenter.queryFreightPrice(store_id, address_id, getSp(Const.S_ID));
     }
 
     @Override

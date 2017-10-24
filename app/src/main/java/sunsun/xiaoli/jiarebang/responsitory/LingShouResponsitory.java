@@ -518,17 +518,17 @@ public class LingShouResponsitory extends BaseNetRepository implements
 
     @Override
     public void rePay(String uid, String s_id, String order_code) {
-        Type type = new TypeToken<RePayBean>() {
+        Type type = new TypeToken<CreateOrderBean>() {
         }.getType();
         String apiVer = "101";
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         map.put("s_id", s_id);
         map.put("order_code", order_code);
-        (new ByJsonRequest.Builder<RePayBean>())
+        (new ByJsonRequest.Builder<CreateOrderBean>())
                 .setTypeVerParamsAndReturnClass(rePay, apiVer, map, type)
                 .requestListener(
-                        new BaseSuccessReqListener<RePayBean>(
+                        new BaseSuccessReqListener<CreateOrderBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

@@ -572,6 +572,7 @@
     <string name="weishiset_yanshi_twelve">延时12小时</string>
     <string name="weishiset_yanshi_twenty">延时24小时</string>
     <string name="piece">%1$d份</string>
+    <string name="did_empty">设备did为空</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

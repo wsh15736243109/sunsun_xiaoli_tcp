@@ -506,22 +506,22 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 }
                 break;
             case 3:
-                if (!did.startsWith("S02")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S02")) {
                     return;
                 }
                 break;
             case 4:
-                if (!did.startsWith("S04")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S04")) {
                     return;
                 }
                 break;
             case 5:
-                if (!did.startsWith("S05")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S05")) {
                     return;
                 }
                 break;
             case 6:
-                if (!did.startsWith("S01")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S01")) {
                     return;
                 }
                 break;
@@ -533,17 +533,17 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 }
                 break;
             case 8:
-                if (!did.startsWith("S06")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S06")) {
                     return;
                 }
                 break;
             case 9:
-                if (!did.startsWith("S07")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S07")) {
                     return;
                 }
                 break;
             case 10:
-                if (!did.startsWith("S08")) {
+                if (!deviceInfo.getType().equalsIgnoreCase("S08")) {
                     return;
                 }
                 break;

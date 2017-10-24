@@ -573,4 +573,5 @@
     <string name="weishiset_yanshi_twelve">Delay 12 hours</string>
     <string name="weishiset_yanshi_twenty">Delay 24 hours</string>
     <string name="piece">%1$d part</string>
+    <string name="did_empty">设备did为空</string>
 </resources>

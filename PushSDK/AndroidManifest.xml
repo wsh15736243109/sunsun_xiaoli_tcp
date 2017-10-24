@@ -112,7 +112,7 @@
                 <!--com.itboye.pondteam-->
                 <!--com.itboye.lingshou-->
                 <!--com.itboye.pondlink-->
-                <action android:name="sunsun.xiaoli.jiarebang.intent.action.COMMAND" />
+                <action android:name="com.itboye.lingshou.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
@@ -160,7 +160,7 @@
         <!--com.itboye.pondlink-->
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
-            android:authorities="sunsun.xiaoli.jiarebang.umeng.message"
+            android:authorities="com.itboye.lingshou.umeng.message"
             android:exported="false">
             <grant-uri-permission android:pathPattern=".*" />
         </provider>

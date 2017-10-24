@@ -109,6 +109,14 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                 String type = mSelectDeviceInfo.getType();
                                 HashMap<String, Object> hashMap = new HashMap<>();
                                 Gson gson = new Gson();
+                                if (mSelectDeviceInfo.getDid()==null) {
+                                    MAlert.alert(getString(R.string.did_empty));
+                                    return;
+                                }
+                                if (mSelectDeviceInfo.getDid().equals("")) {
+                                    MAlert.alert(getString(R.string.did_empty));
+                                    return;
+                                }
                                 if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
                                     hashMap.put("pwd", mSelectDeviceInfo.getPwd());
                                     String extra = gson.toJson(hashMap);
