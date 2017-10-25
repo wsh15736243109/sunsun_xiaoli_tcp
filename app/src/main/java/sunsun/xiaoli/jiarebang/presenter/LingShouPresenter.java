@@ -88,16 +88,18 @@ public class LingShouPresenter extends BasePresenter implements
     //确认收货
     public static String shouhuo_success = "_shouhuo_success";
     public static String shouhuo_fail = "_shouhuo_fail";
-    public static  String storePingJia_success="_storePingJia_success";
-    public static  String storePingJia_fail="_storePingJia_fail";
-    public static String isMerchant_success="_isMerchant_success";
-    public static String isMerchant_fail="_isMerchant_fail";
-    public static String getMyPublish_success="_getMyPublish_success";
-    public static String getMyPublish_fail="_getMyPublish_fail";
-    public static String addArtical_success="_addArtical_success";
-    public static String addArtical_fail="_addArtical_fail";
-    public static String getArticleInfo_succes="_getArticleInfo_succes";
-    public static String getArticleInfo_fail="_getArticleInfo_fail";
+    public static String storePingJia_success = "_storePingJia_success";
+    public static String storePingJia_fail = "_storePingJia_fail";
+    public static String isMerchant_success = "_isMerchant_success";
+    public static String isMerchant_fail = "_isMerchant_fail";
+    public static String getMyPublish_success = "_getMyPublish_success";
+    public static String getMyPublish_fail = "_getMyPublish_fail";
+    public static String addArtical_success = "_addArtical_success";
+    public static String addArtical_fail = "_addArtical_fail";
+    public static String getArticleInfo_succes = "_getArticleInfo_succes";
+    public static String getArticleInfo_fail = "_getArticleInfo_fail";
+    public static String queryProNo_success = "_queryProNo_success";
+    public static String queryProNo_fail = "_queryProNo_fail";
 
     public LingShouPresenter(Observer observer) {
         super(observer);
@@ -892,6 +894,7 @@ public class LingShouPresenter extends BasePresenter implements
                         setChanged();
                         notifyObservers(result);
                     }
+
                     @Override
                     public void failure(ResultEntity result) {
                         result.setEventTag(Tag_Error);
@@ -900,7 +903,7 @@ public class LingShouPresenter extends BasePresenter implements
                         notifyObservers(result);
                     }
                 });
-        user.tuiHuo(uid, refund_type, reason,order_id,s_id);
+        user.tuiHuo(uid, refund_type, reason, order_id, s_id);
     }
 
     @Override
@@ -915,6 +918,7 @@ public class LingShouPresenter extends BasePresenter implements
                         setChanged();
                         notifyObservers(result);
                     }
+
                     @Override
                     public void failure(ResultEntity result) {
                         result.setEventTag(Tag_Error);
@@ -938,6 +942,7 @@ public class LingShouPresenter extends BasePresenter implements
                         setChanged();
                         notifyObservers(result);
                     }
+
                     @Override
                     public void failure(ResultEntity result) {
                         result.setEventTag(Tag_Error);
@@ -946,7 +951,7 @@ public class LingShouPresenter extends BasePresenter implements
                         notifyObservers(result);
                     }
                 });
-        user.storePingJia(uid,  order_code,  i,  sp1);
+        user.storePingJia(uid, order_code, i, sp1);
     }
 
     @Override
@@ -961,6 +966,7 @@ public class LingShouPresenter extends BasePresenter implements
                         setChanged();
                         notifyObservers(result);
                     }
+
                     @Override
                     public void failure(ResultEntity result) {
                         result.setEventTag(Tag_Error);
@@ -969,7 +975,7 @@ public class LingShouPresenter extends BasePresenter implements
                         notifyObservers(result);
                     }
                 });
-        user.isMerchant( uid);
+        user.isMerchant(uid);
     }
 
     @Override
@@ -984,6 +990,7 @@ public class LingShouPresenter extends BasePresenter implements
                         setChanged();
                         notifyObservers(result);
                     }
+
                     @Override
                     public void failure(ResultEntity result) {
                         result.setEventTag(Tag_Error);
@@ -992,7 +999,7 @@ public class LingShouPresenter extends BasePresenter implements
                         notifyObservers(result);
                     }
                 });
-        user.getMyPublish( uid);
+        user.getMyPublish(uid);
     }
 
     @Override
@@ -1007,6 +1014,7 @@ public class LingShouPresenter extends BasePresenter implements
                         setChanged();
                         notifyObservers(result);
                     }
+
                     @Override
                     public void failure(ResultEntity result) {
                         result.setEventTag(Tag_Error);
@@ -1015,12 +1023,12 @@ public class LingShouPresenter extends BasePresenter implements
                         notifyObservers(result);
                     }
                 });
-        user.addArtical( sid,  uid,  title,  imgId,  content);
+        user.addArtical(sid, uid, title, imgId, content);
     }
 
     @Override
     public void getArticleInfo(String id) {
-        ILingShouInterface<PersonDataBean> user= new LingShouResponsitory(new ICompleteListener() {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(new ICompleteListener() {
             @Override
             public void success(ResultEntity result) {
                 result.setEventTag(Tag_Success);
@@ -1038,5 +1046,27 @@ public class LingShouPresenter extends BasePresenter implements
             }
         });
         user.getArticleInfo(id);
+    }
+
+    @Override
+    public void queryProNo(String uid, String s_id) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(new ICompleteListener() {
+            @Override
+            public void success(ResultEntity result) {
+                result.setEventTag(Tag_Success);
+                result.setEventType(queryProNo_success);
+                setChanged();
+                notifyObservers(result);
+            }
+
+            @Override
+            public void failure(ResultEntity result) {
+                result.setEventTag(Tag_Error);
+                result.setEventType(queryProNo_fail);
+                setChanged();
+                notifyObservers(result);
+            }
+        });
+        user.queryProNo(uid, s_id);
     }
 }

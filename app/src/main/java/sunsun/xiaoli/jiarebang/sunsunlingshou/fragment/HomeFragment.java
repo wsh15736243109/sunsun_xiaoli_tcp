@@ -161,7 +161,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     public void setCityName(final String cityName, double lat, double lng) {
         try {
             //初始actionBar
-//            actionBar.setData("", R.drawable.img_dingwei, cityName, R.drawable.img_unread, "", null);
+//            actionBar.setParent("", R.drawable.img_dingwei, cityName, R.drawable.img_unread, "", null);
 
             getActivity().runOnUiThread(new Runnable() {
                 @Override

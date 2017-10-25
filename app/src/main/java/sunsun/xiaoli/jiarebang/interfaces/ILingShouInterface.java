@@ -327,4 +327,6 @@ public interface ILingShouInterface<PersonDataBean> {
      * @param id
      */
     void getArticleInfo(String id);
+
+    void queryProNo(String uid,String s_id);
 }

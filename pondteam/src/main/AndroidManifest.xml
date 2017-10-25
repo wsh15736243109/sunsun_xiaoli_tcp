@@ -16,14 +16,6 @@
         android:icon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="sunsun.xiaoli.jiarebang.device.pondteam.PondTeamRegisterActivity" />
-        <activity android:name="sunsun.xiaoli.jiarebang.device.pondteam.ActivityShouDong" />
-        <activity android:name="sunsun.xiaoli.jiarebang.device.pondteam.ActivityZiDong" />
-        <activity android:name="sunsun.xiaoli.jiarebang.device.pondteam.ActivityUvLamp" />
-        <activity android:name="sunsun.xiaoli.jiarebang.device.pondteam.WenDuPeriodActivity"></activity>
-        <activity android:name="sunsun.xiaoli.jiarebang.device.pondteam.ActivityChaZuoBDetail"></activity>
-        <activity android:name="sunsun.xiaoli.jiarebang.device.EditDeviceActivity"></activity>
-
 
     </application>
 

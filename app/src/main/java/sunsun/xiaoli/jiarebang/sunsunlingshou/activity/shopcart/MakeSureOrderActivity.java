@@ -65,6 +65,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     List<ServiceBean.SkuInfoEntity> skuInfoEntityList;
     private App mApp;
     int canPack;
+    private String skuPid;
 
     @Override
     protected int getLayoutId() {
@@ -89,7 +90,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         order_goods_list.setLayoutManager(layoutManager);
         switch (buyType) {
             case Buy_YuYueAnZhuang://预约购买
-
+                serviceBean= (ServiceBean)getIntent().getSerializableExtra("selectValue");
                 break;
             case Buy_YuGangQingLi: //鱼缸清理
                 serviceBean = (ServiceBean) getIntent().getSerializableExtra("selectValue");
@@ -190,6 +191,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             case R.id.btn_sure_pay:
                 switch (buyType) {
                     case Buy_YuYueAnZhuang://预约购买
+//                        lingShouPresenter.goodsOrder(getSp(Const.UID), 1, skuPid, address_id, note, store_id, send_type, send_time, freight_price, getSp(Const.S_ID));
                         break;
                     case Buy_YuGangQingLi: //鱼缸清理
                         if (address_id.equals("")) {

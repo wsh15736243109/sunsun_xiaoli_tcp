@@ -574,4 +574,5 @@
     <string name="weishiset_yanshi_twenty">Delay 24 hours</string>
     <string name="piece">%1$d part</string>
     <string name="did_empty">设备did为空</string>
+    <string name="choose_xilie">选择系列</string>
 </resources>

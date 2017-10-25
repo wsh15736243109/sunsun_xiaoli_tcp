@@ -22,8 +22,6 @@ import android.widget.Scroller;
 
 import com.itboye.pondteam.R;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -287,13 +285,13 @@ public class WheelPicker extends View implements IDebug, IWheelPicker, Runnable 
         super(context, attrs);
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.WheelPicker);
-        int idData = a.getResourceId(R.styleable.WheelPicker_wheel_data, 0);
-        mData = Arrays.asList(getResources()
-                .getStringArray(idData));
-        mData = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            mData.add(i+"");
-        }
+//        int idData = a.getResourceId(R.styleable.WheelPicker_wheel_data, 0);
+//        mData = Arrays.asList(getResources()
+//                .getStringArray(idData));
+//        mData = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            mData.add(i+"");
+//        }
         mItemTextSize = a.getDimensionPixelSize(R.styleable.WheelPicker_wheel_item_text_size,
                 getResources().getDimensionPixelSize(R.dimen.WheelItemTextSize));
         mVisibleItemCount = a.getInt(R.styleable.WheelPicker_wheel_visible_item_count, 7);
@@ -332,7 +330,12 @@ public class WheelPicker extends View implements IDebug, IWheelPicker, Runnable 
 
         // 计算文本尺寸
         // Correct sizes of text
-        computeTextSize();
+        try {
+            computeTextSize();
+        }catch (Exception e){
+
+        }
+
 
         mScroller = new Scroller(getContext());
 

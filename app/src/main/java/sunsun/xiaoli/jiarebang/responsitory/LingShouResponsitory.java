@@ -30,6 +30,7 @@ import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
+import sunsun.xiaoli.jiarebang.beans.XuLieNoModel;
 import sunsun.xiaoli.jiarebang.interfaces.ILingShouInterface;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.MyPublishBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.OrderDetailBean;
@@ -86,6 +87,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String getMyPublish="By_Stores_storesArt";//我的发布
     private String addArtical="By_Stores_addArt";
     private String ArticleInfo="By_Stores_ArtDetail";
+    private String queryProNo="By_Order_modellist";
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -816,6 +818,23 @@ public class LingShouResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(ArticleInfo, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<MyPublishBean.PublishBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void queryProNo(String uid,String s_id) {
+        Type type =new TypeToken<ArrayList<XuLieNoModel>>(){
+        }.getType();
+        String apiVer =api;
+        Map<String,Object> map =new HashMap<>();
+        map.put("s_id",s_id);
+        map.put("uid",uid);
+        (new ByJsonRequest.Builder<ArrayList<XuLieNoModel>>())
+                .setTypeVerParamsAndReturnClass(queryProNo, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ArrayList<XuLieNoModel>>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

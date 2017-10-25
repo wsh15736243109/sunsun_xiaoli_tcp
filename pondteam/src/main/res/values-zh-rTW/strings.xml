@@ -572,4 +572,5 @@
     <string name="weishiset_yanshi_twenty">延時24小時</string>
     <string name="piece">%1$d份</string>
     <string name="did_empty">设备did为空</string>
+    <string name="choose_xilie">选择系列</string>
 </resources>

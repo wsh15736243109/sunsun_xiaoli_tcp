@@ -15,31 +15,31 @@ android {
         sunsun_xiaoli_debug {
             keyAlias '森森小鲤'
             keyPassword 'android'
-            storeFile file('F:/sunsunxiaoli_tcp/sunsun_xiaoli_tcp/sunsun_xiaoli.jks')
+            storeFile file('../sunsun_xiaoli.jks')
             storePassword 'android'
         }
         sunsun_yihu_debug {
             keyAlias '小绵羊'
             keyPassword 'android'
-            storeFile file('F:/sunsunxiaoli_tcp/sunsun_xiaoli_tcp/sunsun_yihu.jks')
+            storeFile file('../sunsun_yihu.jks')
             storePassword 'android'
         }
         sunsun_lingshou_debug {
             keyAlias '森森新零售'
             keyPassword 'android'
-            storeFile file('F:/sunsunxiaoli_tcp/sunsun_xiaoli_tcp/sunsun_lingshou.jks')
+            storeFile file('../sunsun_lingshou.jks')
             storePassword 'android'
         }
         sunsun_pondteam_debug {
             keyAlias 'pondteam'
             keyPassword 'android'
-            storeFile file('F:/sunsunxiaoli_tcp/sunsun_xiaoli_tcp/sunsun_pondteam.jks')
+            storeFile file('../sunsun_pondteam.jks')
             storePassword 'android'
         }
         sunsun_pondlink_debug {
             keyAlias 'pondlink'
             keyPassword 'android'
-            storeFile file('F:/sunsunxiaoli_tcp/sunsun_xiaoli_tcp/sunsun_pondlink.jks')
+            storeFile file('../sunsun_pondlink.jks')
             storePassword 'android'
         }
     }
@@ -127,7 +127,6 @@ android {
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
 //            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
             buildConfigField("String", "APP_TYPE", '"森森新零售"')
-//            buildConfigField("boolean", "IS_CHINESE", 'true')
         }
     }
 //    lintOptions {
