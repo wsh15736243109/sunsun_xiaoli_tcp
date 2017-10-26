@@ -156,23 +156,46 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal">
 
-                            <Button
-                                android:id="@+id/haoping"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/DIMEN_25DP"
-                                android:background="@drawable/btn_border_blue_bg_blue"
-                                android:text="好评优先"
-                                android:textColor="@color/white" />
+                            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                                android:id="@+id/re_map"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/DIMEN_5DP"
+                                app:ratio="1.5">
 
-                            <Button
-                                android:id="@+id/zuijin"
+                                <com.baidu.mapapi.map.MapView
+                                    android:id="@+id/mapView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </com.baidu.mapapi.map.MapView>
+                            </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+
+                            <RelativeLayout
                                 android:layout_width="wrap_content"
-                                android:layout_height="@dimen/DIMEN_25DP"
-                                android:layout_marginLeft="@dimen/DIMEN_10DP"
-                                android:layout_toRightOf="@+id/haoping"
-                                android:background="@drawable/btn_border_blue_bg_white"
-                                android:text="离我最近"
-                                android:textColor="@color/blue500" />
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/re_map"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="@dimen/DIMEN_10DP">
+
+                                <Button
+                                    android:id="@+id/haoping"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/DIMEN_25DP"
+                                    android:background="@drawable/btn_border_blue_bg_blue"
+                                    android:text="好评优先"
+                                    android:textColor="@color/white" />
+
+                                <Button
+                                    android:id="@+id/zuijin"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/DIMEN_25DP"
+                                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                                    android:layout_toRightOf="@+id/haoping"
+                                    android:background="@drawable/btn_border_blue_bg_white"
+                                    android:text="离我最近"
+                                    android:textColor="@color/blue500" />
+                            </RelativeLayout>
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -183,13 +206,14 @@
                         android:layout_height="match_parent"
                         android:layout_below="@+id/near_store"
                         android:layout_marginBottom="@dimen/DIMEN_20DP"
-                        android:layout_marginTop="@dimen/DIMEN_20DP" />
+                        android:layout_marginTop="@dimen/DIMEN_10DP" />
+
                     <ProgressBar
                         android:id="@+id/progress"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/near_store"
-                        android:layout_centerHorizontal="true"
-                        android:layout_height="wrap_content" />
+                        android:layout_centerHorizontal="true" />
                     <!--布局二、附近商家-->
                 </RelativeLayout>
 
@@ -250,21 +274,22 @@
 
         </LinearLayout>
     </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView>
+
     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
         android:id="@+id/actionBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
 
     <!--<RelativeLayout-->
-        <!--android:layout_width="@dimen/DIMEN_200DP"-->
-        <!--android:layout_height="@dimen/DIMEN_200DP"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--android:background="@drawable/sty">-->
+    <!--android:layout_width="@dimen/DIMEN_200DP"-->
+    <!--android:layout_height="@dimen/DIMEN_200DP"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:background="@drawable/sty">-->
 
-        <!--<ImageView-->
-            <!--android:id="@+id/testImg"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:scaleType="centerCrop" />-->
+    <!--<ImageView-->
+    <!--android:id="@+id/testImg"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scaleType="centerCrop" />-->
     <!--</RelativeLayout>-->
 </RelativeLayout>

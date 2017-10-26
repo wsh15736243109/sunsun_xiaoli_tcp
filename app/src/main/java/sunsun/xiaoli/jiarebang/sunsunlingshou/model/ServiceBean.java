@@ -8,91 +8,14 @@ import java.util.List;
  */
 
 public class ServiceBean implements Serializable {
-    /**
-     * id : 22
-     * type : 0
-     * uid : 1
-     * name : 造景装饰
-     * product_code :
-     * secondary_headlines : 造景装饰副标题
-     * template_id : 0
-     * loc_country :
-     * loc_province :
-     * loc_city :
-     * loc_address :
-     * cate_id : 35
-     * create_time : 0
-     * update_time : 0
-     * onshelf : 1
-     * status : 1
-     * store_id : 1
-     * detail : 1,
-     * weight : 0.00
-     * synopsis :
-     * dt_origin_country : 0
-     * dt_goods_unit :
-     * lang :
-     * place_origin :
-     */
 
     private ProductInfoEntity product_info;
-    /**
-     * pid : 22
-     * id : 52
-     * img_id : 2
-     * type : 6015
-     * create_time : 1502848926
-     * update_time : 1502848926
-     */
-
     private ImgEntity img;
-    /**
-     * id : 36
-     * sku_desc : 造景装饰规格:1米造景;
-     * sku_id : 65:151;
-     * price : 0
-     */
-
     private List<SkuInfoEntity> sku_info;
-
-
-
-//    public void setId(String id) {
-//        this.id = id;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setSku_id(String sku_id) {
-//        this.sku_id = sku_id;
-//    }
-//
-//    public void setSku_pid(String sku_pid) {
-//        this.sku_pid = sku_pid;
-//    }
-//
-//    public String getId() {
-//        return id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public String getSku_id() {
-//        return sku_id;
-//    }
-//
-//    public String getSku_pid() {
-//        return sku_pid;
-//    }
 
     public void setProduct_info(ProductInfoEntity product_info) {
         this.product_info = product_info;
     }
-
     public void setImg(ImgEntity img) {
         this.img = img;
     }

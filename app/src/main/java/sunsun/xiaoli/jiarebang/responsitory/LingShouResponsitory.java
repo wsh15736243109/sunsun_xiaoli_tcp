@@ -88,6 +88,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String addArtical="By_Stores_addArt";
     private String ArticleInfo="By_Stores_ArtDetail";
     private String queryProNo="By_Order_modellist";
+    private String getSkuPidInConsultBuy="By_Order_consultBuy";//咨询购买前置
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -835,6 +836,23 @@ public class LingShouResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(queryProNo, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<XuLieNoModel>>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void getSkuPidInConsultBuy(String uid,String sId) {
+        Type type =new TypeToken<String>(){
+        }.getType();
+        String apiVer =api;
+        Map<String,Object> map =new HashMap<>();
+        map.put("s_id",sId);
+        map.put("uid",uid);
+        (new ByJsonRequest.Builder<String>())
+                .setTypeVerParamsAndReturnClass(getSkuPidInConsultBuy, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

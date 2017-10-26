@@ -100,6 +100,8 @@ public class LingShouPresenter extends BasePresenter implements
     public static String getArticleInfo_fail = "_getArticleInfo_fail";
     public static String queryProNo_success = "_queryProNo_success";
     public static String queryProNo_fail = "_queryProNo_fail";
+    public static String getSkuPidInConsultBuy_success = "_getSkuPidInConsultBuy_success";
+    public static String getSkuPidInConsultBuy_fail = "_getSkuPidInConsultBuy_fail";
 
     public LingShouPresenter(Observer observer) {
         super(observer);
@@ -1068,5 +1070,27 @@ public class LingShouPresenter extends BasePresenter implements
             }
         });
         user.queryProNo(uid, s_id);
+    }
+
+    @Override
+    public void getSkuPidInConsultBuy(String uid,String sId) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(new ICompleteListener() {
+            @Override
+            public void success(ResultEntity result) {
+                result.setEventTag(Tag_Success);
+                result.setEventType(getSkuPidInConsultBuy_success);
+                setChanged();
+                notifyObservers(result);
+            }
+
+            @Override
+            public void failure(ResultEntity result) {
+                result.setEventTag(Tag_Error);
+                result.setEventType(getSkuPidInConsultBuy_fail);
+                setChanged();
+                notifyObservers(result);
+            }
+        });
+        user.getSkuPidInConsultBuy(uid,sId);
     }
 }

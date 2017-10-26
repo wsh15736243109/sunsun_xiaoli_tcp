@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_marginLeft="@dimen/DIMEN_10DP"
     android:layout_height="wrap_content">
 
     <TextView
+        android:padding="@dimen/DIMEN_10DP"
         android:id="@+id/txt_storename"
-        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:padding="@dimen/DIMEN_15DP"
-        android:layout_centerVertical="true"
-        android:layout_margin="@dimen/DIMEN_10DP"
         android:background="@drawable/bg_white_border_dark"
-        android:layout_toLeftOf="@+id/txt_boda"
-        android:text="" />
+        android:text=""/>
 
     <TextView
         android:id="@+id/txt_boda"
-        android:padding="@dimen/DIMEN_10DP"
+        android:layout_marginRight="@dimen/DIMEN_5DP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="right|center_vertical"
+        android:singleLine="true"
+        android:layout_toRightOf="@+id/txt_storename"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:text="" />

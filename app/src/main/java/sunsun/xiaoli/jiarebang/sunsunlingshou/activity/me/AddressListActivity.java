@@ -163,6 +163,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                     for (AddressBean addressBean : addressBeanArrayList) {
                         addressBean.setShow(true);
                     }
+                    li_mylocation.setVisibility(View.VISIBLE);
                 }
                 if (adapter == null) {
                     adapter = new AddressListAdapter(this, R.layout.item_address, addressBeanArrayList);

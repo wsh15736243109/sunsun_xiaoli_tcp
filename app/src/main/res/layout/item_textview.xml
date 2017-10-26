@@ -6,8 +6,8 @@
     android:id="@+id/text"
     android:gravity="center"
     android:layout_margin="@dimen/DIMEN_10DP"
-    android:paddingTop="@dimen/DIMEN_5DP"
-    android:paddingBottom="@dimen/DIMEN_5DP"
+    android:paddingTop="@dimen/DIMEN_10DP"
+    android:paddingBottom="@dimen/DIMEN_10DP"
     android:layout_height="wrap_content">
 
 </TextView>

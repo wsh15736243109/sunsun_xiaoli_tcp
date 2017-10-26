@@ -6,11 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ZoomControls;
 
 import com.baidu.mapapi.map.BaiduMap;
@@ -25,6 +27,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.itboye.pondteam.base.LingShouBaseActivity;
+import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -34,28 +37,35 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.NearStoreAdapter;
+import sunsun.xiaoli.jiarebang.beans.AddressBean;
+import sunsun.xiaoli.jiarebang.beans.FreightPriceBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
 import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
 
+import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitlebarStyle1;
 
 public class ChooseStoreActivity extends LingShouBaseActivity implements Observer, IRecycleviewClick {
     private TranslucentActionBar actionBar;//可渐变的标题栏
     private TranslucentScrollView pullzoom_scrollview;//添加滑动监听的滑动组件
     RecyclerView recyclerview_near_store;
-    ArrayList<String> list=new ArrayList<>();
+    ArrayList<String> list = new ArrayList<>();
     Button btn_sure_store;
     EditText ed_store;
     LingShouPresenter lingShouPresenter;
-    private int pageIndex=1;
+    private int pageIndex = 1;
     private StoreListBean bean;
     private BitmapDescriptor descriptor;
     BaiduMap baiduMap;
     MapView mapView;
     private StoreListBean.ListEntity listEntity;
+    private String addressId;
+    private double freightPrice;
+    TextView txt_boda;
+    private String storeId;
 
     @Override
     protected int getLayoutId() {
@@ -65,11 +75,21 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
     @Override
     protected void initData() {
         //初始actionBar
-        lingShouPresenter=new LingShouPresenter(this);
-        baiduMap=mapView.getMap();
+        lingShouPresenter = new LingShouPresenter(this);
+        baiduMap = mapView.getMap();
+        //获取用户选择的地址Id,如果没有地址ID,则获取用户默认的地址
+        addressId = getIntent().getStringExtra("address_id");
+        if (addressId == null) {
+            lingShouPresenter.getDefaultAddress(getSp(Const.UID), getSp(Const.S_ID));
+        }
+
         initMapView();
-        initTitlebarStyle1(this,actionBar,"咨询购买",0,"",0,"");
+        initTitlebarStyle1(this, actionBar, "咨询购买", 0, "", 0, "");
         initRecyclerView();
+    }
+
+    private void queryFreightPrice(String stroreId, String addressId) {
+        lingShouPresenter.queryFreightPrice(stroreId, addressId, getSp(Const.S_ID));
     }
 
     private void initMapView() {
@@ -123,28 +143,36 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
 
     private void setSelectStore() {
         ed_store.setText(listEntity.getName());
+        //获取相应的运费
+        storeId = listEntity.getId();
+        if (addressId == null || "".equals(addressId)) {
+            MAlert.alert(getString(R.string.choose_address_at_first));
+            return;
+        }
+        queryFreightPrice(storeId, addressId);
+
     }
 
     private void initRecyclerView() {
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview_near_store.setLayoutManager(linearLayoutManager);
-        lingShouPresenter.getNearStore("330100",120.377819+ "", 120.377819 + "", "", "", pageIndex, 10);
+        lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_sure_store:
-                String storeName=ed_store.getText().toString();
+                String storeName = ed_store.getText().toString();
                 if (TextUtils.isEmpty(storeName)) {
                     MAlert.alert("请先选择商家");
                     return;
                 }
 
-                Intent intent=new Intent();
-                intent.putExtra("model",listEntity);
-                setResult(202,intent);
+                Intent intent = new Intent();
+                intent.putExtra("model", listEntity);
+                setResult(202, intent);
                 finish();
                 break;
         }
@@ -152,20 +180,33 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
 
     @Override
     public void update(Observable o, Object data) {
-        ResultEntity entity=handlerError(data);
-        if (entity!=null) {
-            if (entity.getCode()!=0) {
+        ResultEntity entity = handlerError(data);
+        if (entity != null) {
+            if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
                 bean = (StoreListBean) entity.getData();
-                NearStoreAdapter adapter=new NearStoreAdapter(this,bean.getList());
+                NearStoreAdapter adapter = new NearStoreAdapter(this, bean.getList());
                 adapter.setOnItemListener(this);
                 recyclerview_near_store.setAdapter(adapter);
                 //将所有点设置到地图上去
                 setMapPoint();
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
+                MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
+                //获取成功
+                AddressBean addressBean = (AddressBean) entity.getData();
+                addressId = addressBean.getId();
+            } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_fail) {
+                MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_success) {
+                //获取成功
+                FreightPriceBean addressBean = (FreightPriceBean) entity.getData();
+                freightPrice = addressBean.getFreight_price();
+                txt_boda.setText(Html.fromHtml("配送费<font color='red'> ￥" + freightPrice + ""));
+            } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             }
         }
@@ -174,7 +215,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
 
     @Override
     public void onItemClick(int position) {
-        listEntity=bean.getList().get(position);
+        listEntity = bean.getList().get(position);
         setSelectStore();
     }
 
@@ -184,18 +225,19 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
     }
 
     protected float zoom = 9;
+
     private void setMapPoint() {
         descriptor = BitmapDescriptorFactory
                 .fromBitmap(BitmapFactory
                         .decodeResource(getResources(),
                                 R.drawable.img_location));
         for (int i = 0; i < bean.getList().size(); i++) {
-            LatLng l=new LatLng(bean.getList().get(i).getLat(),bean.getList().get(i).getLng());
-            MapStatusUpdate u= MapStatusUpdateFactory.newLatLngZoom(l,zoom);
+            LatLng l = new LatLng(bean.getList().get(i).getLat(), bean.getList().get(i).getLng());
+            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(l, zoom);
             baiduMap.animateMapStatus(u);
-            Bundle bundle=new Bundle();
-            bundle.putSerializable("model",bean.getList().get(i));
-            MarkerOptions mMarkerOptions=new MarkerOptions().position(l).icon(descriptor).title(bean.getList().get(i).getName()).draggable(true).zIndex(18).extraInfo(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("model", bean.getList().get(i));
+            MarkerOptions mMarkerOptions = new MarkerOptions().position(l).icon(descriptor).title(bean.getList().get(i).getName()).draggable(true).zIndex(18).extraInfo(bundle);
             baiduMap.addOverlay(mMarkerOptions);
 
         }

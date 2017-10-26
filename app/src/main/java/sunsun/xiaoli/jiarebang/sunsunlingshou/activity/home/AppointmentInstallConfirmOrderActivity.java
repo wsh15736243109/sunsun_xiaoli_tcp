@@ -79,7 +79,7 @@ public class AppointmentInstallConfirmOrderActivity extends LingShouBaseActivity
             case R.id.re_addess:
                 startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title","").putExtra("action","chooo"),101);
                 break;
-            case R.id.btn_store:
+            case R.id.txt_choosestore:
                 break;
             case R.id.btn_contacttime:
                 break;

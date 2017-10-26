@@ -48,6 +48,7 @@ public class AppointmentInstallStepOneActivity extends LingShouBaseActivity impl
     ChooseXiliePopupWindow popupWindow;
     private ArrayList<XuLieNoModel> xuLieNoModelArrayList;
     private ArrayList<ServiceBean> serviceBeanArrayList;
+    private String xilie="";
 
     @Override
     protected int getLayoutId() {
@@ -59,7 +60,6 @@ public class AppointmentInstallStepOneActivity extends LingShouBaseActivity impl
         initTitlebarStyle1(this, actionBar, "预约安装", R.mipmap.ic_left_light, "", 0, "");
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.queryProNo(getSp(Const.UID), getSp(Const.S_ID));//查询产品型号
-
         progressDialog = new ProgressDialog(this);
     }
 
@@ -71,6 +71,10 @@ public class AppointmentInstallStepOneActivity extends LingShouBaseActivity impl
                 break;
             case R.id.btn_next:
                 xuliehao = ed_xuliehao.getText().toString();
+                if (xilie.equals("")) {
+                    MAlert.alert("请先选择系列");
+                    return;
+                }
                 if (xuliehao.equals("")) {
                     MAlert.alert("请输入序列号");
                     return;
@@ -105,7 +109,8 @@ public class AppointmentInstallStepOneActivity extends LingShouBaseActivity impl
                 //选择序列号
                 break;
             case R.id.txt_right:
-                ed_xilie.setText(popupWindow.getSelectValue());
+                xilie=popupWindow.getSelectValue();
+                ed_xilie.setText(xilie);
                 popupWindow.dismiss();
                 break;
         }

@@ -9,11 +9,10 @@
         android:id="@+id/order_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginLeft="@dimen/DIMEN_20DP"
-        android:layout_marginRight="@dimen/DIMEN_20DP"
+        app:tabMode="fixed"
+        app:tabGravity="fill"
         android:layout_centerHorizontal="true"
         app:tabIndicatorColor="@color/main_yellow"
-        app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/main_yellow"
         app:tabTextColor="@drawable/sel_tab_color" />
 

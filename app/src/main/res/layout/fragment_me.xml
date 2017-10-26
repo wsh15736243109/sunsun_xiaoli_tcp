@@ -6,129 +6,144 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/main_yellow"
-        app:ratio="1.5">
-
-        <ImageView
-            android:id="@+id/img_head"
-            android:layout_width="@dimen/DIMEN_80DP"
-            android:layout_height="@dimen/DIMEN_80DP"
-            android:layout_centerInParent="true" />
-
-        <TextView
-            android:id="@+id/txt_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/img_head"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/DIMEN_10DP"
-            android:gravity="center"
-            android:text="name" />
-    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/DIMEN_10DP"
-        android:layout_marginRight="@dimen/DIMEN_10DP"
-        android:background="@color/gray_EEEE"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
-                android:id="@+id/re_mymessage"
-                android:layout_width="0dp"
-                android:padding="@dimen/DIMEN_20DP"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/main_yellow"
+                app:ratio="1.5">
+
+                <ImageView
+                    android:id="@+id/img_head"
+                    android:layout_width="@dimen/DIMEN_80DP"
+                    android:layout_height="@dimen/DIMEN_80DP"
+                    android:layout_centerInParent="true" />
 
                 <TextView
+                    android:id="@+id/txt_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/me_data"
-                    android:drawablePadding="@dimen/margin_5"
+                    android:layout_below="@+id/img_head"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
                     android:gravity="center"
-                    android:text="@string/manage_address" />
+                    android:text="name" />
             </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
 
-            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
-                android:layout_width="0dp"
-                android:padding="@dimen/DIMEN_20DP"
-                android:layout_marginLeft="@dimen/DIMEN_1DP"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                app:ratio="1"
-                android:background="@color/white">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/DIMEN_10DP"
+                android:layout_marginRight="@dimen/DIMEN_10DP"
+                android:background="@color/gray_EEEE"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/me_service"
-                    android:drawablePadding="@dimen/margin_5"
-                    android:text="@string/me_service_introduce" />
-            </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+                    android:orientation="horizontal">
+
+                    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                        android:id="@+id/re_mymessage"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_20DP">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:drawableTop="@drawable/me_data"
+                            android:gravity="center"
+                            android:text="@string/manage_address" />
+                    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+
+                    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DIMEN_1DP"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_20DP"
+                        app:ratio="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:drawableTop="@drawable/me_service"
+                            android:text="@string/me_service_introduce" />
+                    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:orientation="horizontal">
+
+                    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                        android:id="@+id/re_advice"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_20DP"
+                        app:ratio="1">
+
+                        <TextView
+                            android:id="@+id/txt_storeOrNormal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:drawableTop="@drawable/me_suggestion"
+                            android:gravity="center"
+                            android:text="@string/me_suggestion" />
+                    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+
+                    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                        android:id="@+id/re_settings"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/DIMEN_1DP"
+                        android:layout_weight="1"
+                        android:background="@color/white"
+                        android:padding="@dimen/DIMEN_20DP"
+                        app:ratio="1">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerInParent="true"
+                            android:layout_centerVertical="true"
+                            android:drawablePadding="@dimen/margin_5"
+                            android:drawableTop="@drawable/me_set"
+                            android:gravity="center"
+                            android:text="@string/me_setting" />
+                    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_EEEE"></View>
+            </LinearLayout>
         </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/DIMEN_1DP"
-            android:orientation="horizontal">
-
-            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
-                android:id="@+id/re_advice"
-                android:layout_width="0dp"
-                android:padding="@dimen/DIMEN_20DP"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white">
-
-                <TextView
-                    android:id="@+id/txt_storeOrNormal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableTop="@drawable/me_suggestion"
-                    android:drawablePadding="@dimen/margin_5"
-                    android:gravity="center"
-                    android:text="@string/me_suggestion"
-                    app:ratio="1"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true" />
-            </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
-
-            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
-                android:id="@+id/re_settings"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/DIMEN_1DP"
-                android:layout_weight="1"
-                app:ratio="1"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:drawableTop="@drawable/me_set"
-                    android:drawablePadding="@dimen/margin_5"
-                    android:gravity="center"
-                    android:text="@string/me_setting" />
-            </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_1DP"
-            android:background="@color/gray_EEEE"></View>
-    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

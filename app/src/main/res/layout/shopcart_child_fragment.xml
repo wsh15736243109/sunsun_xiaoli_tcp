@@ -6,6 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
     <!--<in.srain.cube.views.ptr.PtrClassicFrameLayout-->
     <!--android:id="@+id/ptrFrame"-->
     <!--android:layout_width="match_parent"-->
@@ -21,17 +25,17 @@
     <!--android:id="@+id/swip_refresh"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent">-->
-    <in.srain.cube.views.ptr.PtrFrameLayout
-    android:id="@+id/ptrFrame"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_above="@+id/li_bottom"
-    cube_ptr:ptr_duration_to_close="200"
-    cube_ptr:ptr_duration_to_close_header="1000"
-    cube_ptr:ptr_keep_header_when_refresh="true"
-    cube_ptr:ptr_pull_to_fresh="false"
-    cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-    cube_ptr:ptr_resistance="1.7">
+    <!--<in.srain.cube.views.ptr.PtrFrameLayout-->
+    <!--android:id="@+id/ptrFrame"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_above="@+id/li_bottom"-->
+    <!--cube_ptr:ptr_duration_to_close="200"-->
+    <!--cube_ptr:ptr_duration_to_close_header="1000"-->
+    <!--cube_ptr:ptr_keep_header_when_refresh="true"-->
+    <!--cube_ptr:ptr_pull_to_fresh="false"-->
+    <!--cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"-->
+    <!--cube_ptr:ptr_resistance="1.7">-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -41,7 +45,7 @@
         android:layout_above="@+id/li_bottom">
 
     </android.support.v7.widget.RecyclerView>
-    </in.srain.cube.views.ptr.PtrFrameLayout>
+    <!--</in.srain.cube.views.ptr.PtrFrameLayout>-->
     <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
     <!--</in.srain.cube.views.ptr.PtrClassicFrameLayout>-->

@@ -94,7 +94,7 @@ public class OrderFragment extends LingShouBaseFragment implements TranslucentSc
         boolean isLogin= (boolean) SPUtils.get(getActivity(),null, Const.IS_LOGINED,false);
         if (isLogin) {
             btn_login.setVisibility(View.GONE);
-            re_title.setVisibility(View.VISIBLE);
+            re_title.setVisibility(View.GONE);
             content.setVisibility(View.VISIBLE);
             productOrderFragment.beginRequest();
         }else{

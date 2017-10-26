@@ -329,4 +329,6 @@ public interface ILingShouInterface<PersonDataBean> {
     void getArticleInfo(String id);
 
     void queryProNo(String uid,String s_id);
+
+    void getSkuPidInConsultBuy(String uid,String sId);
 }

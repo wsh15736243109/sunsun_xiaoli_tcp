@@ -573,4 +573,6 @@
     <string name="piece">%1$d份</string>
     <string name="did_empty">设备did为空</string>
     <string name="choose_xilie">选择系列</string>
+    <string name="getSkuPid_Error">获取商品规格失败</string>
+    <string name="descript_product">请描述你想要的产品</string>
 </resources>

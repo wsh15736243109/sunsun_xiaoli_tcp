@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
-import com.itboye.pondteam.custom.ptr.BasePtr;
 import com.itboye.pondteam.interfaces.IRecyclerviewclicklistener;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.ShopCartAdapter;
@@ -29,6 +27,7 @@ import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.refreshrecyvlerview.callback.PullToRefreshListener;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -52,18 +51,27 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
     //    PtrClassicFrameLayout ptrFrame;
     PtrFrameLayout ptrFrame;
     CheckBox all_chekbox;
-
+    TranslucentActionBar actionBar;
     public ShopCartChildFragment(int product_type) {
         this.product_type = product_type;
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.order_child_fragment;
+        return R.layout.shopcart_child_fragment;
     }
 
     @Override
     protected void initData() {
+
+        //初始actionBar
+        actionBar.setData("购物车", 0, "", 0, "", null);
+        //开启渐变
+//        actionBar.setNeedTranslucent();
+        //设置状态栏高度
+        actionBar.setStatusBarHeight(getStatusBarHeight());
+        actionBar.setBarBackgroundColor(getResources().getColor(R.color.main_yellow));
+
         beginRequest();
         shopcart_li.setPadding(0, 0, 0, 0);
 
@@ -78,13 +86,13 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         recyclerView.setLayoutManager(layoutManager);
         li_bottom.setVisibility(View.VISIBLE);
 //        swip_refresh.setRefreshing(true);
-        ptrFrame.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                beginRequest();
-                ptrFrame.autoRefresh();//自动刷新
-            }
-        }, 100);
+//        ptrFrame.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                beginRequest();
+//                ptrFrame.autoRefresh();//自动刷新
+//            }
+//        }, 100);
 //        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
 //            @Override
 //            public void onLoadMoreBegin(PtrFrameLayout frame) {//加载更多的时候
@@ -102,13 +110,13 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
 //                beginRequest();
 //            }
 //        });
-        BasePtr.setRefreshOnlyStyle(ptrFrame);
-        ptrFrame.setPtrHandler(new PtrDefaultHandler() {
-            @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                beginRequest();
-            }
-        });
+//        BasePtr.setRefreshOnlyStyle(ptrFrame);
+//        ptrFrame.setPtrHandler(new PtrDefaultHandler() {
+//            @Override
+//            public void onRefreshBegin(PtrFrameLayout frame) {
+//                beginRequest();
+//            }
+//        });
     }
 
     public void beginRequest() {
@@ -259,7 +267,7 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
 //        swip_refresh.setRefreshing(false);
-        ptrFrame.refreshComplete();
+//        ptrFrame.refreshComplete();
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());

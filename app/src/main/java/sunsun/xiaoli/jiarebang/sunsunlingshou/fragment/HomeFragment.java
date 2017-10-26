@@ -94,6 +94,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     RelativeLayout lay_actionbar_left;
     int position = 6079;
     RelativeLayout lay_actionbar_right;
+    @IsNeedClick
     TextView tv_actionbar_left;
     ImageView testImg;
     private GoodsListBean goodsList;
@@ -104,6 +105,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     Dialog alert;
     RadioButton tvTitle,tvMessage;
     private StoreListBean.ListEntity listEntity1;
+    RelativeLayout store_fenlei;
 
     @Override
     protected int getLayoutId() {
@@ -243,7 +245,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 haoping.setTextColor(getActivity().getResources().getColor(R.color.blue500));
                 break;
             case R.id.lay_actionbar_left:
-                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", ""));
+                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.choose_address)));
                 break;
             case R.id.lay_actionbar_right:
                 LoginController.goToMessageList(getActivity(), null);
@@ -305,6 +307,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         //添加智能设备---->附近商家---->热门商品
         progress.setVisibility(View.VISIBLE);
         recycler_aqhardwareorhotgoods.setVisibility(View.GONE);
+        store_fenlei.setVisibility(View.GONE);
         t = tag + "";
         if (t.equals("商品")) {
             lingShouPresenter.getHotSearchGoods();
@@ -332,6 +335,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             adapter.setOnItemListener(this);
             recycler_aqhardwareorhotgoods.setAdapter(adapter);
         } else if (t.equals("商家")) {
+            store_fenlei.setVisibility(View.VISIBLE);
             lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
             near_store.setVisibility(View.VISIBLE);
             setTextStyle(txt_center, "附近商家", R.drawable.circle_green, area_center, "商家", R.drawable.shangjia);

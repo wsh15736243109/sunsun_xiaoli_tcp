@@ -21,11 +21,11 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginedState;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.ShopCartChildFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.ConsultationAndBuyFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.MeFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.OrderFragment;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.ShopCartFragment;
 
 import static com.itboye.pondteam.utils.Const.RELOGIN;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -37,7 +37,7 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     HomeFragment homeFragment = null;
     OrderFragment orderFragment = null;
     ConsultationAndBuyFragment consultationAndBuyFragment = null;
-    ShopCartFragment shopCartFragment = null;
+    ShopCartChildFragment shopCartFragment = null;
     MeFragment meFragment = null;
 
     TextView[] txt_value = new TextView[5];
@@ -187,7 +187,7 @@ public class LingShouMainActivity extends LingShouBaseActivity {
             case 3://
                 if (shopCartFragment == null) {
                     //如果HomeFragment为空，则创建一个添加到界面
-                    shopCartFragment = new ShopCartFragment();
+                    shopCartFragment = new ShopCartChildFragment(1);
                     transaction.add(R.id.content, shopCartFragment);
                 } else {
                     // 如果HomeFragment不为空，则直接将它显示出来
