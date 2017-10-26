@@ -83,4 +83,11 @@
             android:text="@string/descript_product" />
 
     </RelativeLayout>
+    <TextView
+        android:id="@+id/txt_peisong"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
+        android:text="ddd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

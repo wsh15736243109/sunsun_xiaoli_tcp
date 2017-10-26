@@ -50,11 +50,14 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
 
     @Override
     protected void initData() {
-        li_mylocation.setVisibility(View.GONE);
         lingShouPresenter = new LingShouPresenter(this);
         if (getIntent().getStringExtra("title").equals(getString(R.string.choose_address))) {
+            li_mylocation.setVisibility(View.GONE);
+            btn_sure_address.setVisibility(View.GONE);
+        } else if (getIntent().getStringExtra("title").equals(getString(R.string.manage_address))) {
+            li_mylocation.setVisibility(View.VISIBLE);
             btn_sure_address.setText(getString(R.string.sure_address));
-        } else {
+        }else{
             btn_sure_address.setText(getString(R.string.addnew_address));
         }
         initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "删除");

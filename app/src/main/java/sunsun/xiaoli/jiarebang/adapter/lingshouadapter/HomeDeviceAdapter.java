@@ -35,14 +35,7 @@ public class HomeDeviceAdapter extends BaseAdapter {
     @Override
     public void convert(ViewHolder holder, Object o, final int position) {
         DeviceTypeModel publishArray = (DeviceTypeModel) o;
-
         holder.setViewBackgroundResource(R.id.img_device, publishArray.getRes());
         holder.setText(R.id.txt_device, publishArray.getName());
-//        holder.setOnclickListener(R.id.re_root, new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                recycleviewClick.onItemClick(position);
-//            }
-//        });
     }
 }

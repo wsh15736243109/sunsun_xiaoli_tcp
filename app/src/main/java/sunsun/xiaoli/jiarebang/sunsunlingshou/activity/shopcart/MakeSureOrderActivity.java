@@ -2,6 +2,7 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -73,6 +74,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     private String skuPid = "";
     RelativeLayout re_note;
     EditText edt_note;
+    private TextView txt_peisong;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_make_sure_order;
@@ -101,8 +104,9 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         btn_contacttime.setOnClickListener(this);
         txt_choosestore = (TextView) footView.findViewById(R.id.txt_choosestore);
         txt_choosestore.setOnClickListener(this);
-        re_note= (RelativeLayout) footView.findViewById(R.id.re_note);
-        edt_note= (EditText) footView.findViewById(R.id.edt_note);
+        txt_peisong = (TextView) footView.findViewById(R.id.txt_peisong);
+        re_note = (RelativeLayout) footView.findViewById(R.id.re_note);
+        edt_note = (EditText) footView.findViewById(R.id.edt_note);
         switch (buyType) {
             case Buy_YuYueAnZhuang://预约购买
                 serviceBean = (ServiceBean) getIntent().getSerializableExtra("selectValue");
@@ -202,7 +206,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 adapter = new MakeSureOrderAdapter(this, skuInfoEntityList);
                 order_goods_list.setAdapter(adapter);
                 //获取咨询购买的skuPid
-                lingShouPresenter.getSkuPidInConsultBuy(getSp(Const.UID),getSp(Const.S_ID));
+                lingShouPresenter.getSkuPidInConsultBuy(getSp(Const.UID), getSp(Const.S_ID));
                 break;
         }
         if (buyType != BuyType.Buy_LiJiGouMai) {
@@ -321,7 +325,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                             MAlert.alert("商品规格有误");
                             return;
                         }
-                        note=edt_note.getText().toString();
+                        note = edt_note.getText().toString();
                         lingShouPresenter.goodsOrder(getSp(Const.UID), 1, skuPid, address_id, note, store_id, send_type, send_time, freight_price, getSp(Const.S_ID));
                         break;
                 }
@@ -344,7 +348,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     MAlert.alert(getString(R.string.choose_address_at_first));
                     return;
                 }
-                startActivityForResult(new Intent(this, ChooseStoreActivity.class).putExtra("address_id",address_id), 201);
+                startActivityForResult(new Intent(this, ChooseStoreActivity.class).putExtra("address_id", address_id), 201);
                 break;
             case R.id.btn_contacttime:
                 Intent intent = new Intent(this, ChooseTimeActivity.class);
@@ -412,6 +416,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_success) {
                 freight_price = ((FreightPriceBean) entity.getData()).getFreight_price() / 100 + "";
+                txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + freight_price + "</font>"));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_success) {
@@ -436,9 +441,9 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getSkuPidInConsultBuy_success) {
                 try {
-                    JSONObject jsonObject=new JSONObject(((String) entity.getData()).toString());
+                    JSONObject jsonObject = new JSONObject(((String) entity.getData()).toString());
                     if (jsonObject.has("sku_pid")) {
-                        skuPid=jsonObject.getString("skuPid");
+                        skuPid = jsonObject.getString("skuPid");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

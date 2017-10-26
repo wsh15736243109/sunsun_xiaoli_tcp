@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,13 +32,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
-import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.HomeDeviceAdapter;
-import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.HomeNearShangJiaAdapter;
-import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.HomeShangPinAdapter;
-import sunsun.xiaoli.jiarebang.adapter.recyclerviewstyle.GridViewItemDecoration;
+import sunsun.xiaoli.jiarebang.adapter.HomeDeivcesAdapter;
+import sunsun.xiaoli.jiarebang.adapter.HomeHotGoodsAdapter;
+import sunsun.xiaoli.jiarebang.adapter.HomeNearStoreAdapter;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
+import sunsun.xiaoli.jiarebang.custom.MyGridView;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
 import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
@@ -84,7 +82,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     ArrayList<String> arrayList = new ArrayList<>();
     @IsNeedClick
     TextView txt_center, txt_left, txt_right;
-    RecyclerView recycler_aqhardwareorhotgoods;
+    MyGridView recycler_aqhardwareorhotgoods;
     Button haoping, zuijin;
     ArrayList<Integer> aqType = new ArrayList<>();
     LingShouPresenter lingShouPresenter;
@@ -245,7 +243,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 haoping.setTextColor(getActivity().getResources().getColor(R.color.blue500));
                 break;
             case R.id.lay_actionbar_left:
-                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.choose_address)));
+                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.manage_address)));
                 break;
             case R.id.lay_actionbar_right:
                 LoginController.goToMessageList(getActivity(), null);
@@ -310,31 +308,28 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         store_fenlei.setVisibility(View.GONE);
         t = tag + "";
         if (t.equals("商品")) {
+            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
+            recycler_aqhardwareorhotgoods.setNumColumns(2);
             lingShouPresenter.getHotSearchGoods();
             setTextStyle(txt_center, "热门商品", R.drawable.circle_yellow, area_center, "商品", R.drawable.shangpin);
             setTextStyle(txt_left, "附近商家", R.drawable.rect_green, area_left, "商家", R.drawable.shangjia);
             setTextStyle(txt_right, "添加智能设备", R.drawable.rect_blue, area_right, "硬件", R.drawable.yingjian);
-            GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2) {
-                @Override
-                public boolean canScrollVertically() {
-                    return false;
-                }
-            };
-            recycler_aqhardwareorhotgoods.setLayoutManager(layoutManager);
         } else if (t.equals("硬件")) {
+            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
+            recycler_aqhardwareorhotgoods.setNumColumns(3);
             progress.setVisibility(View.GONE);
             recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
             setTextStyle(txt_center, "添加智能设备", R.drawable.circle_blue, area_center, "硬件", R.drawable.yingjian);
             setTextStyle(txt_left, "热门商品", R.drawable.rect_yellow, area_left, "商品", R.drawable.shangpin);
             setTextStyle(txt_right, "附近商家", R.drawable.rect_green, area_right, "商家", R.drawable.shangjia);
             GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
-            recycler_aqhardwareorhotgoods.setLayoutManager(layoutManager);
-            //把我们自定义的ItemDecoration设置给RecyclerView
-            recycler_aqhardwareorhotgoods.addItemDecoration(new GridViewItemDecoration(getActivity()));
-            HomeDeviceAdapter adapter = new HomeDeviceAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
-            adapter.setOnItemListener(this);
+            HomeDeivcesAdapter adapter = new HomeDeivcesAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
+//            HomeDeviceAdapter adapter = new HomeDeviceAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
             recycler_aqhardwareorhotgoods.setAdapter(adapter);
         } else if (t.equals("商家")) {
+            recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(),20));
+            recycler_aqhardwareorhotgoods.setNumColumns(1);
+
             store_fenlei.setVisibility(View.VISIBLE);
             lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
             near_store.setVisibility(View.VISIBLE);
@@ -392,16 +387,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
                 recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
                 bean = (StoreListBean) entity.getData();
-                HomeNearShangJiaAdapter adapter = new HomeNearShangJiaAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
-                adapter.setOnItemListener(this);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity()) {
-                    @Override
-                    public boolean canScrollVertically() {
-                        return false;
-                    }
-                };
-                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                recycler_aqhardwareorhotgoods.setLayoutManager(layoutManager);
+                HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
+//                HomeNearShangJiaAdapter adapter = new HomeNearShangJiaAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
                 recycler_aqhardwareorhotgoods.setAdapter(adapter);
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
@@ -443,9 +430,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                         arTemp.addAll(goodsList.getList());
                     }
                 }
-                HomeShangPinAdapter adapter = new HomeShangPinAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
-                adapter.setOnItemListener(this);
-                recycler_aqhardwareorhotgoods.addItemDecoration(new GridViewItemDecoration(getActivity()));
+                HomeHotGoodsAdapter adapter = new HomeHotGoodsAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
+//                HomeShangPinAdapter adapter = new HomeShangPinAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
                 recycler_aqhardwareorhotgoods.setAdapter(adapter);
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_fail) {
                 MAlert.alert(entity.getData());

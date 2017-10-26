@@ -166,7 +166,7 @@
                                 <com.baidu.mapapi.map.MapView
                                     android:id="@+id/mapView"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent">
+                                    android:layout_height="wrap_content">
 
                                 </com.baidu.mapapi.map.MapView>
                             </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
@@ -200,13 +200,14 @@
 
                     </LinearLayout>
 
-                    <android.support.v7.widget.RecyclerView
+                    <sunsun.xiaoli.jiarebang.custom.MyGridView
                         android:id="@+id/recycler_aqhardwareorhotgoods"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_below="@+id/near_store"
-                        android:layout_marginBottom="@dimen/DIMEN_20DP"
-                        android:layout_marginTop="@dimen/DIMEN_10DP" />
+                        android:layout_margin="@dimen/DIMEN_10DP"
+
+                        />
 
                     <ProgressBar
                         android:id="@+id/progress"

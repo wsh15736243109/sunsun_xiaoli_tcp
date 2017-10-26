@@ -205,7 +205,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
                 //获取成功
                 FreightPriceBean addressBean = (FreightPriceBean) entity.getData();
                 freightPrice = addressBean.getFreight_price();
-                txt_boda.setText(Html.fromHtml("配送费<font color='red'> ￥" + freightPrice + ""));
+                txt_boda.setText(Html.fromHtml("配送费<font color='red'> ￥" + freightPrice/100 + ""));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             }

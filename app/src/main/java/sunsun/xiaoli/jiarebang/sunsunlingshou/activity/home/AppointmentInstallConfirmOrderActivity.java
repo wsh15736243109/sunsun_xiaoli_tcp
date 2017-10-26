@@ -77,7 +77,7 @@ public class AppointmentInstallConfirmOrderActivity extends LingShouBaseActivity
                 startActivity(new Intent(this, PayTypeActivity.class));
                 break;
             case R.id.re_addess:
-                startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title","").putExtra("action","chooo"),101);
+                startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title",getString(R.string.choose_address)).putExtra("action","chooo"),101);
                 break;
             case R.id.txt_choosestore:
                 break;
