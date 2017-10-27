@@ -87,7 +87,8 @@ public class LoginedState implements ILoginState {
 	@Override
 	public void goToMyMessage(Activity activity, Object data) {
 		Intent intent=new Intent(activity, AddressListActivity.class);
-		intent.putExtra("title", App.getInstance().getString(R.string.manage_address));
+		intent.putExtra("title", App.getInstance().getString(R.string.my_address));
+		intent.putExtra("action","manage_address");
 		activity.startActivity(intent);
 	}
 

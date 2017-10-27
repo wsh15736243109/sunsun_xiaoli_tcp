@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
+import com.itboye.pondteam.custom.ptr.BasePtr;
 import com.itboye.pondteam.interfaces.IRecyclerviewclicklistener;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -20,11 +21,13 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.ShopCartAdapter;
 import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
+import sunsun.xiaoli.jiarebang.custom.VpSwipeRefreshLayout;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
@@ -47,11 +50,10 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
     int product_type = 1;
     private ArrayList<ShopCartBean> arrayList = new ArrayList<>();
     TextView noData, heji;
-//    SwipeRefreshLayout swip_refresh;
-    //    PtrClassicFrameLayout ptrFrame;
     PtrFrameLayout ptrFrame;
     CheckBox all_chekbox;
     TranslucentActionBar actionBar;
+    VpSwipeRefreshLayout swipe_layout;
     public ShopCartChildFragment(int product_type) {
         this.product_type = product_type;
     }
@@ -72,6 +74,7 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         actionBar.setStatusBarHeight(getStatusBarHeight());
         actionBar.setBarBackgroundColor(getResources().getColor(R.color.main_yellow));
 
+
         beginRequest();
         shopcart_li.setPadding(0, 0, 0, 0);
 
@@ -85,38 +88,25 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         li_bottom.setVisibility(View.VISIBLE);
-//        swip_refresh.setRefreshing(true);
-//        ptrFrame.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                beginRequest();
-//                ptrFrame.autoRefresh();//自动刷新
-//            }
-//        }, 100);
-//        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
-//            @Override
-//            public void onLoadMoreBegin(PtrFrameLayout frame) {//加载更多的时候
-//                beginRequest();
-//            }
-//
-//            @Override
-//            public void onRefreshBegin(PtrFrameLayout frame) {//刷新开始
-//                beginRequest();
-//            }
-//        });
-//        swip_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//                beginRequest();
-//            }
-//        });
-//        BasePtr.setRefreshOnlyStyle(ptrFrame);
-//        ptrFrame.setPtrHandler(new PtrDefaultHandler() {
-//            @Override
-//            public void onRefreshBegin(PtrFrameLayout frame) {
-//                beginRequest();
-//            }
-//        });
+        BasePtr.setPagedPtrStyle(ptrFrame);
+        ptrFrame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                beginRequest();
+                ptrFrame.autoRefresh();//自动刷新
+            }
+        }, 100);
+        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {//加载更多的时候
+                beginRequest();
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {//刷新开始
+                beginRequest();
+            }
+        });
     }
 
     public void beginRequest() {
@@ -267,7 +257,7 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
 //        swip_refresh.setRefreshing(false);
-//        ptrFrame.refreshComplete();
+        ptrFrame.refreshComplete();
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());

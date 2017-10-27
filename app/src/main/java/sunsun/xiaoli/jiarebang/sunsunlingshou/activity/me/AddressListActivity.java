@@ -42,7 +42,8 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
     RelativeLayout lay_actionbar_right;
     private Intent intent;
     LinearLayout li_mylocation;
-
+    private String action;
+    TextView tv_actionbar_right;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_list;
@@ -51,16 +52,23 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
     @Override
     protected void initData() {
         lingShouPresenter = new LingShouPresenter(this);
-        if (getIntent().getStringExtra("title").equals(getString(R.string.choose_address))) {
-            li_mylocation.setVisibility(View.GONE);
-            btn_sure_address.setVisibility(View.GONE);
-        } else if (getIntent().getStringExtra("title").equals(getString(R.string.manage_address))) {
-            li_mylocation.setVisibility(View.VISIBLE);
-            btn_sure_address.setText(getString(R.string.sure_address));
-        }else{
-            btn_sure_address.setText(getString(R.string.addnew_address));
+        action = getIntent().getStringExtra("action");
+        if (action != null) {
+            if (action.equals("manage_address")) {
+                li_mylocation.setVisibility(View.GONE);
+                btn_sure_address.setText(getString(R.string.addnew_address));
+                initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "");
+            } else if (action.equals("location_address")) {
+                li_mylocation.setVisibility(View.VISIBLE);
+                btn_sure_address.setText(getString(R.string.sure_address));
+                initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "删除");
+            } else {
+                btn_sure_address.setText(getString(R.string.addnew_address));
+                li_mylocation.setVisibility(View.GONE);
+
+                initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "");
+            }
         }
-        initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "删除");
         initRecyclerView();
     }
 
@@ -77,25 +85,30 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 finish();
                 break;
             case R.id.btn_sure_address:
-                if (getIntent().getStringExtra("title").equals(getString(R.string.choose_address))) {
-                    AddressBean addressBeanTemp = null;
-                    for (AddressBean addressBean : addressBeanArrayList) {
-                        if (addressBean.isSelect()) {
-                            addressBeanTemp = addressBean;
-                            break;
-                        }else{
-                            addressBeanTemp = null;
+                if (action.equals("choose_address") || action.equals("manage_address")) {
+                    //添加地址
+                    startActivity(new Intent(this, AddAddressOrMymessageActivity.class));
+                } else if (action.equals("location_address")) {
+                    //设置默认地址
+                    int count = 0;
+                    AddressBean addressSelect=null;
+                    for (int i = 0; i < addressBeanArrayList.size(); i++) {
+                        if (addressBeanArrayList.get(i).isSelect()) {
+                            addressSelect=addressBeanArrayList.get(i);
+                            count++;
                         }
                     }
-                    if (addressBeanTemp==null) {
+                    if (count <= 0) {
                         MAlert.alert(getString(R.string.choose_address_at_first));
                         return;
                     }
-                    intent = new Intent();
-                    intent.putExtra("model", addressBeanTemp);
-                    setResult(102, intent);
+
+                    if (count > 1) {
+                        MAlert.alert(getString(R.string.only_one_address_set_default));
+                        return;
+                    }
+                    lingShouPresenter.setDefaultAddress(getSp(Const.UID),addressSelect.getId(),getSp(Const.S_ID));
                 } else {
-                    startActivity(new Intent(this,AddAddressOrMymessageActivity.class));
                 }
                 break;
             case R.id.txt_relocation://重新定位
@@ -110,7 +123,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 addressBeanArrayList.get(position).setSelect(!addressBeanArrayList.get(position).isSelect());
                 adapter.notifyDataSetChanged();
                 break;
-            case R.id.lay_actionbar_right:
+            case R.id.tv_actionbar_right:
                 StringBuffer id = new StringBuffer();
                 for (int i = 0; i < addressBeanArrayList.size(); i++) {
                     if (addressBeanArrayList.get(i).isSelect()) {
@@ -126,20 +139,28 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 break;
             case R.id.txt_update:
                 position = (int) v.getTag();
-                intent = new Intent(this, AddAddressOrMymessageActivity.class);
-                intent.putExtra("title", "修改地址");
-                intent.putExtra("model", addressBeanArrayList.get(position));
-                startActivity(intent);
+                if (((TextView)v).getText().equals(getString(R.string.update_address))) {
+                    //修改地址
+                    intent = new Intent(this, AddAddressOrMymessageActivity.class);
+                    intent.putExtra("title", "修改地址");
+                    intent.putExtra("model", addressBeanArrayList.get(position));
+                    startActivity(intent);
+                }else{
+                    //删除地址
+                    lingShouPresenter.deleteAddress(getSp(Const.UID), addressBeanArrayList.get(position).getId(), getSp(Const.S_ID));
+                }
                 break;
             case R.id.rootView:
-                if (getIntent().getStringExtra("title").equals(getString(R.string.manage_address)) || getIntent().getStringExtra("title").equals("")) {
-                    return;
-                }
                 position = (int) v.getTag();
-                intent = new Intent();
-                intent.putExtra("model", addressBeanArrayList.get(position));
-                setResult(102, intent);
-                finish();
+                if (action.equals("choose_address")) {
+                    //确认订单点击选择地址
+                    intent = new Intent();
+                    intent.putExtra("model", addressBeanArrayList.get(position));
+                    setResult(102, intent);
+                    finish();
+                } else if (action.equals("my_address")) {
+                    //我的地址进入查看地址详情
+                }
                 break;
         }
     }
@@ -162,14 +183,16 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 ArrayList<AddressBean> ar = (ArrayList<AddressBean>) entity.getData();
                 addressBeanArrayList.clear();
                 addressBeanArrayList.addAll(ar);
-                if (getIntent().getStringExtra("title").equals(getString(R.string.choose_address))) {
+                if (getIntent().getStringExtra("action").equals("location_address")) {
                     for (AddressBean addressBean : addressBeanArrayList) {
                         addressBean.setShow(true);
                     }
-                    li_mylocation.setVisibility(View.VISIBLE);
                 }
                 if (adapter == null) {
                     adapter = new AddressListAdapter(this, R.layout.item_address, addressBeanArrayList);
+                    if (action.equals("location_address")) {
+                        adapter.setUpdate(true);
+                    }
                     recyclerview_address.setAdapter(adapter);
                 } else {
                     adapter.notifyDataSetChanged();
@@ -180,6 +203,11 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 lingShouPresenter.queryAddress(getSp(Const.UID), getSp(Const.S_ID));//获取地址列表;
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.deleteAddress_fail) {
+                MAlert.alert(entity.getData());
+            }else if (entity.getEventType() == LingShouPresenter.setDefaultAddress_success) {
+                lingShouPresenter.queryAddress(getSp(Const.UID), getSp(Const.S_ID));//获取地址列表;
+                MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == LingShouPresenter.setDefaultAddress_fail) {
                 MAlert.alert(entity.getData());
             }
         }

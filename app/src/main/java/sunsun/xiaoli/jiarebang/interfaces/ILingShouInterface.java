@@ -331,4 +331,6 @@ public interface ILingShouInterface<PersonDataBean> {
     void queryProNo(String uid,String s_id);
 
     void getSkuPidInConsultBuy(String uid,String sId);
+
+    void setDefaultAddress(String sp, String id, String sp1);
 }

@@ -2,6 +2,7 @@ package sunsun.xiaoli.jiarebang.adapter.lingshouadapter;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.ViewHolder;
 
 public class AddressListAdapter extends BaseAdapter {
     Activity activity;
+    private boolean b;
 
     public AddressListAdapter(Activity activity, int layout, List datas) {
         super(activity, layout, datas);
@@ -42,9 +44,19 @@ public class AddressListAdapter extends BaseAdapter {
         }
         holder.getView(R.id.arrow_right).setTag(position);
         holder.setOnclickListener(R.id.arrow_right, (AddressListActivity) activity);
+        if(AddressListAdapter.this.b){
+            ((TextView)holder.getView(R.id.txt_update)).setText(context.getString(R.string.update_address));
+        }else{
+            ((TextView)holder.getView(R.id.txt_update)).setText(context.getString(R.string.delete));
+        }
         holder.getView(R.id.txt_update).setTag(position);
         holder.setOnclickListener(R.id.txt_update, (AddressListActivity) activity);
         holder.getView(R.id.rootView).setTag(position);
         holder.setOnclickListener(R.id.rootView, (AddressListActivity) activity);
+    }
+
+
+    public void setUpdate(boolean b) {
+        this.b=b;
     }
 }

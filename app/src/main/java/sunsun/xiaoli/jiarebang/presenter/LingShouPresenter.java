@@ -102,6 +102,8 @@ public class LingShouPresenter extends BasePresenter implements
     public static String queryProNo_fail = "_queryProNo_fail";
     public static String getSkuPidInConsultBuy_success = "_getSkuPidInConsultBuy_success";
     public static String getSkuPidInConsultBuy_fail = "_getSkuPidInConsultBuy_fail";
+    public static String setDefaultAddress_success = "_setDefaultAddress_success";
+    public static String setDefaultAddress_fail = "_setDefaultAddress_fail";
 
     public LingShouPresenter(Observer observer) {
         super(observer);
@@ -1073,7 +1075,7 @@ public class LingShouPresenter extends BasePresenter implements
     }
 
     @Override
-    public void getSkuPidInConsultBuy(String uid,String sId) {
+    public void getSkuPidInConsultBuy(String uid, String sId) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(new ICompleteListener() {
             @Override
             public void success(ResultEntity result) {
@@ -1091,6 +1093,28 @@ public class LingShouPresenter extends BasePresenter implements
                 notifyObservers(result);
             }
         });
-        user.getSkuPidInConsultBuy(uid,sId);
+        user.getSkuPidInConsultBuy(uid, sId);
+    }
+
+    @Override
+    public void setDefaultAddress(String uid, String id, String sId) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(new ICompleteListener() {
+            @Override
+            public void success(ResultEntity result) {
+                result.setEventTag(Tag_Success);
+                result.setEventType(setDefaultAddress_success);
+                setChanged();
+                notifyObservers(result);
+            }
+
+            @Override
+            public void failure(ResultEntity result) {
+                result.setEventTag(Tag_Error);
+                result.setEventType(setDefaultAddress_fail);
+                setChanged();
+                notifyObservers(result);
+            }
+        });
+        user.setDefaultAddress(uid, id, sId);
     }
 }

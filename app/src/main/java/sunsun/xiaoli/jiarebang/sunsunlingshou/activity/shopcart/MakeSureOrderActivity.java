@@ -341,7 +341,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 }
                 break;
             case R.id.re_addess:
-                startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title", getString(R.string.choose_address)), 101);
+                startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action","choose_address"), 101);
                 break;
             case R.id.txt_choosestore:
                 if (address_id.equals("")) {

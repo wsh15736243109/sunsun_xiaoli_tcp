@@ -243,7 +243,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 haoping.setTextColor(getActivity().getResources().getColor(R.color.blue500));
                 break;
             case R.id.lay_actionbar_left:
-                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.manage_address)));
+                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action","location_address"));
                 break;
             case R.id.lay_actionbar_right:
                 LoginController.goToMessageList(getActivity(), null);

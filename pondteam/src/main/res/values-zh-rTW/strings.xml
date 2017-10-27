@@ -575,4 +575,7 @@
     <string name="choose_xilie">选择系列</string>
     <string name="getSkuPid_Error">获取商品规格失败</string>
     <string name="descript_product">请描述你想要的产品</string>
+    <string name="my_address">我的地址</string>
+    <string name="update_address">修改地址</string>
+    <string name="only_one_address_set_default">只能设置一个默认地址</string>
 </resources>
