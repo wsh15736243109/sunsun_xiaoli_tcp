@@ -5,13 +5,14 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,13 +33,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
-import sunsun.xiaoli.jiarebang.adapter.HomeDeivcesAdapter;
-import sunsun.xiaoli.jiarebang.adapter.HomeHotGoodsAdapter;
-import sunsun.xiaoli.jiarebang.adapter.HomeNearStoreAdapter;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
-import sunsun.xiaoli.jiarebang.custom.MyGridView;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
 import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
@@ -78,11 +75,11 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     Button btn_yuyue, btn_qingli, btn_goumai, btn_zaojingzhuangshi;
     EditText ed_actionbar_search;
     RelativeLayout area_left, area_right, area_center;
-    LinearLayout near_store;
+//    LinearLayout near_store;
     ArrayList<String> arrayList = new ArrayList<>();
     @IsNeedClick
     TextView txt_center, txt_left, txt_right;
-    MyGridView recycler_aqhardwareorhotgoods;
+//    MyGridView recycler_aqhardwareorhotgoods;
     Button haoping, zuijin;
     ArrayList<Integer> aqType = new ArrayList<>();
     LingShouPresenter lingShouPresenter;
@@ -97,14 +94,19 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     ImageView testImg;
     private GoodsListBean goodsList;
     ArrayList<DeviceTypeModel> arDevice = new ArrayList<>();
-    ProgressBar progress;
+//    ProgressBar progress;
     ArticalBean articalBean;
     RatioImageView home_img;
     Dialog alert;
     RadioButton tvTitle,tvMessage;
     private StoreListBean.ListEntity listEntity1;
-    RelativeLayout store_fenlei;
+//    RelativeLayout store_fenlei;
+    FrameLayout tab_content;
 
+    MyTabFragment myTabFragment1;
+    MyTabFragment myTabFragment2;
+    MyTabFragment myTabFragment3;
+    private FragmentManager fragmentManager;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
@@ -117,9 +119,67 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //            testImg.setImageBitmap((bitmap));
         }
     };
+    /**
+     * 将所有的Fragment都置为隐藏状态。
+     *
+     * @param transaction 用于对Fragment执行操作的事务
+     */
+    private void hideFragments(FragmentTransaction transaction) {
+        if (myTabFragment1 != null) {
+            transaction.hide(myTabFragment1);
+        }
+        if (myTabFragment2 != null) {
+            transaction.hide(myTabFragment2);
+        }
+        if (myTabFragment3 != null) {
+            transaction.hide(myTabFragment3);
+        }
+    }
+    public void setTabSelection(int index) {
+        // 每次选中之前先清楚掉上次的选中状态
+        // 开启一个Fragment事务
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
+        hideFragments(transaction);
+
+        switch (index) {
+            case 0://首页
+                if (myTabFragment3 == null) {
+                    //如果HomeFragment为空，则创建一个添加到界面
+                    myTabFragment3 = new MyTabFragment(2);
+                    transaction.add(R.id.tab_content, myTabFragment3);
+                } else {
+                    // 如果HomeFragment不为空，则直接将它显示出来
+                    transaction.show(myTabFragment3);
+                }
+                break;
+            case 1://
+                if (myTabFragment2 == null) {
+                    //如果HomeFragment为空，则创建一个添加到界面
+                    myTabFragment2 = new MyTabFragment(1);
+                    transaction.add(R.id.tab_content, myTabFragment2);
+                } else {
+                    // 如果HomeFragment不为空，则直接将它显示出来
+                    transaction.show(myTabFragment2);
+                }
+                break;
+            case 2://
+                if (myTabFragment1 == null) {
+                    //如果HomeFragment为空，则创建一个添加到界面
+                    myTabFragment1 = new MyTabFragment(0);
+                    transaction.add(R.id.tab_content, myTabFragment1);
+                } else {
+                    // 如果HomeFragment不为空，则直接将它显示出来
+                    transaction.show(myTabFragment1);
+                }
+                break;
+        }
+        transaction.commit();
+    }
 
     @Override
     protected void initData() {
+        fragmentManager = getActivity().getSupportFragmentManager();
 //        Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503478934176&di=45c483741d5b9e90c51e2d5a77cd85ba&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D2183734545c2d562e605d8ae8f78fa9a%2F8435e5dde71190efee7d4ffac41b9d16fdfa6015.jpg").into(testImg);
 //        Glide.with(getActivity()).load("https://www.baidu.com/img/bdlogo.png").transform(new GlideRoundTransform(getActivity(),10)).into(testImg);
         app = (App) getActivity().getApplication();
@@ -303,39 +363,42 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
     private void setSelectArea(Object tag) {
         //添加智能设备---->附近商家---->热门商品
-        progress.setVisibility(View.VISIBLE);
-        recycler_aqhardwareorhotgoods.setVisibility(View.GONE);
-        store_fenlei.setVisibility(View.GONE);
+//        progress.setVisibility(View.VISIBLE);
+//        recycler_aqhardwareorhotgoods.setVisibility(View.GONE);
+//        store_fenlei.setVisibility(View.GONE);
         t = tag + "";
         if (t.equals("商品")) {
-            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
-            recycler_aqhardwareorhotgoods.setNumColumns(2);
-            lingShouPresenter.getHotSearchGoods();
+//            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
+//            recycler_aqhardwareorhotgoods.setNumColumns(2);
+//            lingShouPresenter.getHotSearchGoods();
             setTextStyle(txt_center, "热门商品", R.drawable.circle_yellow, area_center, "商品", R.drawable.shangpin);
             setTextStyle(txt_left, "附近商家", R.drawable.rect_green, area_left, "商家", R.drawable.shangjia);
             setTextStyle(txt_right, "添加智能设备", R.drawable.rect_blue, area_right, "硬件", R.drawable.yingjian);
+            setTabSelection(0);
         } else if (t.equals("硬件")) {
-            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
-            recycler_aqhardwareorhotgoods.setNumColumns(3);
-            progress.setVisibility(View.GONE);
-            recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
+//            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
+//            recycler_aqhardwareorhotgoods.setNumColumns(3);
+//            progress.setVisibility(View.GONE);
+//            recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
             setTextStyle(txt_center, "添加智能设备", R.drawable.circle_blue, area_center, "硬件", R.drawable.yingjian);
             setTextStyle(txt_left, "热门商品", R.drawable.rect_yellow, area_left, "商品", R.drawable.shangpin);
             setTextStyle(txt_right, "附近商家", R.drawable.rect_green, area_right, "商家", R.drawable.shangjia);
             GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
-            HomeDeivcesAdapter adapter = new HomeDeivcesAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
+//            HomeDeivcesAdapter adapter = new HomeDeivcesAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
 //            HomeDeviceAdapter adapter = new HomeDeviceAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
-            recycler_aqhardwareorhotgoods.setAdapter(adapter);
+            setTabSelection(1);
+//            recycler_aqhardwareorhotgoods.setAdapter(adapter);
         } else if (t.equals("商家")) {
-            recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(),20));
-            recycler_aqhardwareorhotgoods.setNumColumns(1);
 
-            store_fenlei.setVisibility(View.VISIBLE);
-            lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
-            near_store.setVisibility(View.VISIBLE);
+//            recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(),20));
+//            recycler_aqhardwareorhotgoods.setNumColumns(1);
+//            store_fenlei.setVisibility(View.VISIBLE);
+//            lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
+//            near_store.setVisibility(View.VISIBLE);
             setTextStyle(txt_center, "附近商家", R.drawable.circle_green, area_center, "商家", R.drawable.shangjia);
             setTextStyle(txt_left, "添加智能设备", R.drawable.rect_blue, area_left, "硬件", R.drawable.yingjian);
             setTextStyle(txt_right, "热门商品", R.drawable.rect_yellow, area_right, "商品", R.drawable.shangpin);
+            setTabSelection(2);
         }
     }
 
@@ -378,18 +441,18 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     @Override
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
-        progress.setVisibility(View.GONE);
+//        progress.setVisibility(View.GONE);
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
-                recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
-                bean = (StoreListBean) entity.getData();
-                HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
-//                HomeNearShangJiaAdapter adapter = new HomeNearShangJiaAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
-                recycler_aqhardwareorhotgoods.setAdapter(adapter);
+//                recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
+//                bean = (StoreListBean) entity.getData();
+//                HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
+////                HomeNearShangJiaAdapter adapter = new HomeNearShangJiaAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
+//                recycler_aqhardwareorhotgoods.setAdapter(adapter);
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getVerticalArtical_success) {
@@ -422,7 +485,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             } else if (entity.getEventType() == LingShouPresenter.getBanner_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_success) {
-                recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
+//                recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
                 goodsList = (GoodsListBean) entity.getData();
                 ArrayList<GoodsListBean.ListEntity> arTemp = new ArrayList<>();
                 if (goodsList != null) {
@@ -430,9 +493,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                         arTemp.addAll(goodsList.getList());
                     }
                 }
-                HomeHotGoodsAdapter adapter = new HomeHotGoodsAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
-//                HomeShangPinAdapter adapter = new HomeShangPinAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
-                recycler_aqhardwareorhotgoods.setAdapter(adapter);
+//                HomeHotGoodsAdapter adapter = new HomeHotGoodsAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
+////                HomeShangPinAdapter adapter = new HomeShangPinAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
+//                recycler_aqhardwareorhotgoods.setAdapter(adapter);
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_fail) {
                 MAlert.alert(entity.getData());
             }

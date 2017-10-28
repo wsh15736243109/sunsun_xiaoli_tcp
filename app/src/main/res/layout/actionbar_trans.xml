@@ -65,7 +65,7 @@
             android:background="@drawable/btn_border_white_bg_white_oval"
             android:clickable="true"
             android:padding="@dimen/DIMEN_10DP"
-            android:textSize="@dimen/DIMEN_14DP" />
+            android:textSize="@dimen/DIMEN_12DP" />
         <RelativeLayout
             android:id="@+id/lay_actionbar_right"
             android:layout_width="100dp"

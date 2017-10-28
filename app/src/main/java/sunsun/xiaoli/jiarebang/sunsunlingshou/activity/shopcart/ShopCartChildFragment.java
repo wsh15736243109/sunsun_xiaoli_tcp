@@ -98,11 +98,11 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         recyclerView.addItemDecoration(defaultItem);
         recyclerView.setSwipeMenuCreator(swipeMenuCreator);
 
-        // 自定义的核心就是DefineLoadMoreView类。
-        DefineLoadMoreView loadMoreView = new DefineLoadMoreView(getActivity());
-        recyclerView.addFooterView(loadMoreView); // 添加为Footer。
-        recyclerView.setLoadMoreView(loadMoreView); // 设置LoadMoreView更新监听。
-        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
+//        // 自定义的核心就是DefineLoadMoreView类。
+//        DefineLoadMoreView loadMoreView = new DefineLoadMoreView(getActivity());
+//        recyclerView.addFooterView(loadMoreView); // 添加为Footer。
+//        recyclerView.setLoadMoreView(loadMoreView); // 设置LoadMoreView更新监听。
+//        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
         recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
         li_bottom.setVisibility(View.VISIBLE);
     }

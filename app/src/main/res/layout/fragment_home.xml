@@ -136,85 +136,78 @@
                     android:layout_marginTop="@dimen/DIMEN_10DP">
                     <!--布局一、硬件入口-->
                     <!--布局三、热门商品-->
-                    <LinearLayout
-                        android:id="@+id/near_store"
+                    <!--<LinearLayout-->
+                        <!--android:id="@+id/near_store"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="@dimen/DIMEN_30DP"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<RelativeLayout-->
+                            <!--android:id="@+id/store_fenlei"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_gravity="center_horizontal">-->
+
+                            <!--<sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout-->
+                                <!--android:id="@+id/re_map"-->
+                                <!--android:layout_width="match_parent"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_marginTop="@dimen/DIMEN_5DP"-->
+                                <!--app:ratio="1.5">-->
+
+                                <!--<com.baidu.mapapi.map.MapView-->
+                                    <!--android:id="@+id/mapView"-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="wrap_content">-->
+
+                                <!--</com.baidu.mapapi.map.MapView>-->
+                            <!--</sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>-->
+
+                            <!--<RelativeLayout-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:layout_below="@+id/re_map"-->
+                                <!--android:layout_centerHorizontal="true"-->
+                                <!--android:layout_marginTop="@dimen/DIMEN_10DP">-->
+
+                                <!--<Button-->
+                                    <!--android:id="@+id/haoping"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="@dimen/DIMEN_25DP"-->
+                                    <!--android:background="@drawable/btn_border_blue_bg_blue"-->
+                                    <!--android:text="好评优先"-->
+                                    <!--android:textColor="@color/white" />-->
+
+                                <!--<Button-->
+                                    <!--android:id="@+id/zuijin"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="@dimen/DIMEN_25DP"-->
+                                    <!--android:layout_marginLeft="@dimen/DIMEN_10DP"-->
+                                    <!--android:layout_toRightOf="@+id/haoping"-->
+                                    <!--android:background="@drawable/btn_border_blue_bg_white"-->
+                                    <!--android:text="离我最近"-->
+                                    <!--android:textColor="@color/blue500" />-->
+                            <!--</RelativeLayout>-->
+                        <!--</RelativeLayout>-->
+
+                    <!--</LinearLayout>-->
+                    <FrameLayout
+                        android:id="@+id/tab_content"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/DIMEN_30DP"
-                        android:orientation="vertical">
-
-                        <RelativeLayout
-                            android:id="@+id/map"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/store_fenlei"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal">
-
-                            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
-                                android:id="@+id/re_map"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/DIMEN_5DP"
-                                app:ratio="1.5">
-
-                                <com.baidu.mapapi.map.MapView
-                                    android:id="@+id/mapView"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
-
-                                </com.baidu.mapapi.map.MapView>
-                            </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
-
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/re_map"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginTop="@dimen/DIMEN_10DP">
-
-                                <Button
-                                    android:id="@+id/haoping"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="@dimen/DIMEN_25DP"
-                                    android:background="@drawable/btn_border_blue_bg_blue"
-                                    android:text="好评优先"
-                                    android:textColor="@color/white" />
-
-                                <Button
-                                    android:id="@+id/zuijin"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="@dimen/DIMEN_25DP"
-                                    android:layout_marginLeft="@dimen/DIMEN_10DP"
-                                    android:layout_toRightOf="@+id/haoping"
-                                    android:background="@drawable/btn_border_blue_bg_white"
-                                    android:text="离我最近"
-                                    android:textColor="@color/blue500" />
-                            </RelativeLayout>
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <sunsun.xiaoli.jiarebang.custom.MyGridView
-                        android:id="@+id/recycler_aqhardwareorhotgoods"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/near_store"
                         android:layout_margin="@dimen/DIMEN_10DP"
-
-                        />
-
-                    <ProgressBar
-                        android:id="@+id/progress"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/near_store"
-                        android:layout_centerHorizontal="true" />
+                        android:background="@color/white"></FrameLayout>
+                    <!--<sunsun.xiaoli.jiarebang.custom.MyGridView-->
+                        <!--android:id="@+id/recycler_aqhardwareorhotgoods"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_below="@+id/near_store"-->
+                        <!--android:layout_margin="@dimen/DIMEN_10DP"-->
+
+                        <!--/>-->
+
+
                     <!--布局二、附近商家-->
                 </RelativeLayout>
 

@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/img_shangjia"
-        android:layout_margin="@dimen/DIMEN_5DP"
+        android:layout_marginLeft="@dimen/DIMEN_5DP"
         android:layout_toRightOf="@+id/img_shangjia">
 
         <TextView
@@ -28,7 +28,11 @@
         <RatingBar
             style="@style/roomRatingBar"
             android:layout_width="wrap_content"
+            android:isIndicator="true"
             android:numStars="5"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:layout_below="@+id/txt_shangjianame"
             android:layout_height="@dimen/DIMEN_30DP"
             android:rating="4"
@@ -48,11 +52,13 @@
             android:id="@+id/txt_people"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:text="联系人" />
 
         <TextView
             android:id="@+id/txt_juli"
             android:layout_width="wrap_content"
+            android:singleLine="true"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_people"
             android:gravity="center"
