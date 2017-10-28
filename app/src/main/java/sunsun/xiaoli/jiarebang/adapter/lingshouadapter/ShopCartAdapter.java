@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.itboye.pondteam.custom.swiprecyclerview.SwipeItemLayout;
 import com.itboye.pondteam.interfaces.IRecyclerviewclicklistener;
 import com.itboye.pondteam.utils.Const;
 
@@ -52,7 +51,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Simple
     public SimpleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         @LayoutRes
-        int layout = R.layout.item_left_menu_shopcart;
+        int layout = R.layout.item_shopcart;
         View rootView = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
         return new SimpleViewHolder(rootView);
     }
@@ -73,15 +72,15 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Simple
             }
         });
 
-        if (holder.mLeftMenu != null) {
-            holder.mLeftMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mItemTouchListener.onLeftMenuClick(position+"");
-                    holder.mSwipeItemLayout.close();
-                }
-            });
-        }
+//        if (holder.mLeftMenu != null) {
+//            holder.mLeftMenu.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mItemTouchListener.onLeftMenuClick(position+"");
+//                    holder.mSwipeItemLayout.close();
+//                }
+//            });
+//        }
         holder.check_img.setTag(R.id.tag_first,mData.get(position).isSelect());
         holder.check_img.setTag(position);
         if (mData.get(position).isSelect()) {
@@ -98,17 +97,17 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Simple
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
 
-        private final View mLeftMenu;
-        private final SwipeItemLayout mSwipeItemLayout;
+//        private final View mLeftMenu;
+//        private final SwipeItemLayout mSwipeItemLayout;
         TextView txt_name_shopcart, txt_price_shopcart, gwc_jian, gwc_jia;
         EditText gwc_num;
         ImageView img_shopcart, check_img;
 
         SimpleViewHolder(View itemView) {
             super(itemView);
-            mSwipeItemLayout = (SwipeItemLayout) itemView.findViewById(R.id.swipe_layout);
+//            mSwipeItemLayout = (SwipeItemLayout) itemView.findViewById(R.id.swipe_layout);
             txt_name_shopcart = (TextView) itemView.findViewById(R.id.txt_name_shopcart);
-            mLeftMenu = itemView.findViewById(R.id.left_menu);
+//            mLeftMenu = itemView.findViewById(R.id.left_menu);
             img_shopcart = (ImageView) itemView.findViewById(R.id.img_shopcart);
             check_img = (ImageView) itemView.findViewById(R.id.check_img);
             gwc_jian = (TextView) itemView.findViewById(R.id.gwc_jian);

@@ -198,4 +198,5 @@ dependencies {
     compile files('libs/org.apache.http.legacy.jar')
     compile files('libs/alipaySingle-20170510.jar')
     compile 'cn.dreamtobe.kpswitch:library:1.3.0'
+    compile project(path: ':recyclerview-swipe')
 }

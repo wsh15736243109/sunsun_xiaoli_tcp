@@ -44,6 +44,7 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
     public static class Builder<T> {
         private ByJsonRequest<T> buildRequest;
         private String url = Const.URL;
+//        private String url="http://mw.api.itboye.com/public/index.php";
         private XRequestListener<T> listener;
         private XErrorListener errlistener;
         private Type expectReturnType;
@@ -262,7 +263,10 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             buildRequest.setExpectReturnType(expectReturnType);
-            buildRequest.addParam(Const.ITBOYE, bytetoString(Base64.encode(desContent.getBytes(),Base64.DEFAULT)));
+            String msg=bytetoString(Base64.encode(desContent.getBytes(),Base64.DEFAULT));
+//            String msg=(desContent);
+            buildRequest.addParam(Const.ITBOYE, msg);
+            System.out.println("请求参数》》》"+msg);
 //			map.put("html","");
             buildRequest.addHeader("alg", "md5_v2");
             buildRequest.addHeader("Accept", "text/html,application/json");

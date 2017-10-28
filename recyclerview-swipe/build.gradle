@@ -1,0 +1,21 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 22
+    }
+
+//    resourcePrefix 'recycler_swipe_'
+}
+
+dependencies {
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.yanzhenjie:loading:1.0.2'
+}
+
+//apply from: "https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true"

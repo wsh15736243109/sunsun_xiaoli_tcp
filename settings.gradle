@@ -1,1 +1,1 @@
-include ':app', ':PushSDK', ':pondteam', ':uilibs', ':uILibs_Extends'
+include ':app', ':PushSDK', ':pondteam', ':uilibs', ':uILibs_Extends', ':recyclerview-swipe'
