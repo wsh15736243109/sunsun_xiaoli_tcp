@@ -458,4 +458,13 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param did
      */
     void getDeviceOnLineState(String did,String uid);
+
+    /**
+     * 更新设备信息
+     * @param sp
+     * @param device_id
+     * @param lang
+     * @param timezone
+     */
+    void updateMobileMsg(String sp, String device_id, String lang, String timezone);
 }

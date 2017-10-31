@@ -3,6 +3,7 @@ package sunsun.xiaoli.jiarebang.device.jiarebang;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -88,7 +89,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
     DBManager dbManager;
     TextView txt_status;
     private TcpUtil tcp;
-
+    TextView txt_wendu_warn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,7 +174,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
+            userPresenter.getDeviceOnLineState(did, getSp(Const.UID));
             handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
@@ -234,7 +235,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.pick_upgrade:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -259,7 +260,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 showAlertDialog(getString(R.string.tips), null, 4, null);
                 break;
             case R.id.pick_share:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (popupWindow != null) {
@@ -282,7 +283,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.re_gaowen_sheding:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -299,7 +300,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.re_diwen_sheding:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -314,7 +315,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.re_settemperature:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -330,7 +331,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.toggle_exception_warn:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -341,7 +342,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.wendu_baojing:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -352,7 +353,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 }
                 break;
             case R.id.toggle_jieshoustatus:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 if (isConnect) {
@@ -553,9 +554,10 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         setDeviceTitle(deviceDetailModel.getDevice_nickname());
+        double wenduValue = 0;
         if (detailModelTcp != null) {
             mNewTempValue = Double.parseDouble(detailModelTcp.getT_set()) / 10;
-            double wenduValue = detailModelTcp.getT() / 10;
+            wenduValue = detailModelTcp.getT() / 10;
             int startPo1 = ("" + wenduValue).length();
             int endPo1 = (wenduValue + "℃").length();
             ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
@@ -623,7 +625,15 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        int th = deviceDetailModel.getTemp_max();
+        int tl = deviceDetailModel.getTemp_min();
+        if ((wenduValue < th / 10 && wenduValue > tl / 10)) {
+            txt_wendu_warn.setCompoundDrawables(null, null, null, null);
+        } else if ((wenduValue > th / 10 || wenduValue < tl / 10) && wenDuBaoJingStatus) {
+            Drawable drawable_n = getResources().getDrawable(R.drawable.ic_warn);
+            drawable_n.setBounds(0, 0, drawable_n.getMinimumWidth(), drawable_n.getMinimumHeight());
+            txt_wendu_warn.setCompoundDrawables(null, null, drawable_n, null);
+        }
         setImageViewCheckOrUnCheck(toggle_exception_warn, wendu_baojing, toggle_jieshoustatus);
 
         txt_wendu_setting.setText(mNewTempValue + "℃");

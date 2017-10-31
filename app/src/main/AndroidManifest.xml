@@ -142,6 +142,8 @@
                 <action android:name="android.NET.wifi.RSSI_CHANGED" />
                 <action android:name="android.net.wifi.STATE_CHANGE" />
                 <action android:name="android.Net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED"></action>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"></action>
             </intent-filter>
         </receiver>
 

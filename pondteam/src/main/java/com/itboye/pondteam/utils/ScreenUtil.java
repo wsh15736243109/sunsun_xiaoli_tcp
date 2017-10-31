@@ -3,6 +3,7 @@ package com.itboye.pondteam.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.os.PowerManager;
+import android.telephony.TelephonyManager;
 import android.util.TypedValue;
 
 /**
@@ -40,6 +41,18 @@ public class ScreenUtil {
                 wl = null;
             }
         }
+    }
+
+    /**
+     * 获取手机IMEI号
+     *
+     * 需要动态权限: android.permission.READ_PHONE_STATE
+     */
+    public static String getIMEI(Context context) {
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
+        String imei = telephonyManager.getDeviceId();
+
+        return imei;
     }
 
 }

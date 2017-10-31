@@ -31,7 +31,7 @@
                 android:layout_marginRight="8dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="修改设备名称"
+                android:text="@string/update_devicename"
                 android:textColor="#0884DC"
                 android:textSize="16dp" />
 
@@ -48,7 +48,7 @@
                 android:layout_marginRight="8dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="检查固件升级"
+                android:text="@string/update_shiji"
                 android:textColor="#0884DC"
                 android:textSize="16dp" />
 
@@ -65,7 +65,7 @@
                 android:layout_marginRight="8dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="删除设备"
+                android:text="@string/delete_device"
                 android:textColor="#0884DC"
                 android:textSize="16dp" />
 
@@ -83,7 +83,7 @@
                 android:layout_marginRight="8dp"
                 android:background="#ffffff"
                 android:gravity="center"
-                android:text="反馈"
+                android:text="@string/feedback"
                 android:textColor="#0884DC"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -96,7 +96,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/round_bg_shape"
             android:gravity="center"
-            android:text="取 消"
+            android:text="@string/cancel"
             android:textColor="#0884DC"
             android:textSize="16dp" />
     </LinearLayout>

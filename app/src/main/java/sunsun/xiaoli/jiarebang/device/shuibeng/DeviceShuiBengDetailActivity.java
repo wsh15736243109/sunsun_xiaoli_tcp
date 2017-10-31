@@ -135,7 +135,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     };
 
     private void beginRequest() {
-        userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
+        userPresenter.getDeviceOnLineState(did, getSp(Const.UID));
     }
 
     @Override
@@ -460,7 +460,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 case 0:
                     //停机
                     txt_status.setText(getString(R.string.stop));
-                    strState = String.format(getString(R.string.status_stop), detailModelTcp.getGear() + 1) ;
+                    strState = String.format(getString(R.string.status_stop), detailModelTcp.getGear() + 1);
 //                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
                     txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
                     Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
@@ -494,7 +494,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         }
 
         txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
-        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh() / 3600.0));
+        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh()));
     }
 
     private String caculcateSeconds(int fcd) {

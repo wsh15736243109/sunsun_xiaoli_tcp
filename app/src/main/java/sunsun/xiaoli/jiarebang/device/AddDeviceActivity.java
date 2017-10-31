@@ -69,7 +69,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
         aq_did = getIntent().getStringExtra("aq_did");
         position = getIntent().getIntExtra("position", 0);
         txt_title.setText(getString(R.string.LANDEVICE));
-        txt_title_2.setText(R.string.LAN_DEVICE);
+        txt_title_2.setText(R.string.connect_device);
         mSelectDeviceInfo = null;
         dbManager = new DBManager(this);
         userPresenter = new UserPresenter(this);

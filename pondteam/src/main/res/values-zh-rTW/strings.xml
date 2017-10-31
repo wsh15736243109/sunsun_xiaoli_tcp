@@ -485,10 +485,10 @@
     <string name="addnew_address">添加地址</string>
     <string name="choose_address_at_first">请先选择地址</string>
     <string name="current_params">当前参数</string>
-    <string name="open_time2">开启时间</string>
-    <string name="close_time2">关闭时间</string>
-    <string name="dongtai_tips">动态提示</string>
-    <string name="period_1">第1时间段</string>
+    <string name="open_time2">開啓時間</string>
+    <string name="close_time2">關閉時間</string>
+    <string name="dongtai_tips">動態提示</string>
+    <string name="period_1">第一时间段</string>
     <string name="period_2">第二时间段</string>
     <string name="period_3">第三时间段</string>
     <string name="hourof_24">24小时走势</string>
@@ -578,4 +578,8 @@
     <string name="my_address">我的地址</string>
     <string name="update_address">修改地址</string>
     <string name="only_one_address_set_default">只能设置一个默认地址</string>
+    <string name="login_sunsun">森森小鲤只能</string>
+    <string name="add">Add</string>
+    <string name="connect_device">已连接设备</string>
+    <string name="setting_different">请设置不同于其他时间段的时间</string>
 </resources>

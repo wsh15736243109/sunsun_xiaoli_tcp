@@ -62,7 +62,7 @@
     <string name="sign_password">登录密码</string>
     <string name="user_name_register">用户昵称</string>
     <string name="address_information">地址信息</string>
-    <string name="cantact_number">联系电话</string>
+    <string name="cantact_number">手机号</string>
     <string name="determine">确定</string>
     <string name="deviceid">设备ID</string>
     <string name="pipei">匹配</string>
@@ -408,8 +408,8 @@
     <string name="choose_devicetype">请选择需要添加的设备类型</string>
     <string name="low_dianji">低值区</string>
     <string name="high_dianji">高值区</string>
-    <string name="first_jiaozhun">首次校准时间</string>
-    <string name="last_jiaozhun">上次校准时间</string>
+    <string name="first_jiaozhun">首次校准时间:</string>
+    <string name="last_jiaozhun">上次校准时间:</string>
     <string name="tiaoguang_xitong">系统预设</string>
     <string name="tiaoguang_red">红色草系</string>
     <string name="tiaoguang_green">绿色草系</string>
@@ -579,6 +579,10 @@
     <string name="my_address">我的地址</string>
     <string name="update_address">修改地址</string>
     <string name="only_one_address_set_default">只能设置一个默认地址</string>
+    <string name="login_sunsun">森森小鲤智能</string>
+    <string name="add">Add</string>
+    <string name="connect_device">已连接设备</string>
+    <string name="setting_different">请设置不同于其他时间段的时间</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

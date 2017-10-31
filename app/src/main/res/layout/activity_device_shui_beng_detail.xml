@@ -42,7 +42,7 @@
                         android:layout_marginLeft="12dp"
                         android:text="@string/current_status"
                         android:textColor="@color/main_green"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_current_status_value"
@@ -52,7 +52,7 @@
                         android:layout_toRightOf="@+id/txt_current_status"
                         android:text=""
                         android:textColor="@color/main_green"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
                 </RelativeLayout>
 
                 <sunsun.xiaoli.jiarebang.custom.LoweRelaLayout
@@ -151,7 +151,7 @@
                         android:drawableLeft="@drawable/shuibeng_liuliang"
                         android:gravity="center|left"
                         android:text="@string/liuliang_choose"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_liuliangchoose"
@@ -163,7 +163,7 @@
                         android:layout_marginRight="@dimen/DIMEN_10DP"
                         android:text=""
                         android:textColor="@color/main_green"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
                 </RelativeLayout>
 
                 <View
@@ -189,7 +189,7 @@
                         android:drawableLeft="@drawable/weishi_time"
                         android:gravity="center|left"
                         android:text="@string/weishi_timechoose"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_weishitime"
@@ -201,7 +201,7 @@
                         android:layout_marginRight="@dimen/DIMEN_10DP"
                         android:text=""
                         android:textColor="@color/main_green"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
                 </RelativeLayout>
 
                 <View
@@ -225,7 +225,7 @@
                         android:gravity="center|left"
                         android:layout_toLeftOf="@+id/img_yichangbaojing"
                         android:text="@string/yichangbaojing"
-                        android:textSize="@dimen/DIMEN_20DP"
+                        android:textSize="@dimen/DIMEN_18DP"
                         android:singleLine="true"
                         android:layout_alignBottom="@+id/img_yichangbaojing"
                         android:layout_alignParentLeft="true"
@@ -267,7 +267,7 @@
                         android:drawableLeft="@drawable/shuibeng_dianliang"
                         android:gravity="center|left"
                         android:text="@string/shuibengshiyonggonglv"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_gonglv"

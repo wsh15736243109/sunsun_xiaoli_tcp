@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
+import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import java.lang.reflect.Field;
@@ -124,7 +125,7 @@ public class CustomTimePickerDialog extends TimePickerDialog {
                     }
                 }
                 if (hasTheSame) {
-                    MAlert.alert("请设置不同于其他时间段的时间");
+                    MAlert.alert(MyApplication.getInstance().getString(R.string.setting_different));
                 } else {
                     callback.onTimeSet(timePicker, currentHour,
                             currentMinute * 10);

@@ -169,7 +169,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(0xffdcdddd);
         }
-        txt_title.setText(getString(R.string.video_view));
+        txt_title.setText(txt_video.getText());
         img_right.setBackgroundResource(R.drawable.menu);
         popupWindow = new CameraConsolePopupWindow(
                 this, this);
@@ -380,7 +380,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
             super.onPostExecute(s);
             //统计流量
             initFlowPlus();
-            setViewVisible(mClient.isConnect());
+//            setViewVisible(mClient.isConnect());
         }
 
 
@@ -544,7 +544,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                     txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
                     getQingXiZhuangTai();
                 } else {
-                    txt_fenbianlv_zhuangtai.setText("未连接");
+                    txt_fenbianlv_zhuangtai.setText(getString(R.string.video_disconnect));
                 }
             }
         });

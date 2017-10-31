@@ -54,11 +54,13 @@ public class LoginActivity extends BaseActivity implements Observer {
             btn_country.setVisibility(View.GONE);
             editextUsetName.setHint(getString(R.string.email));
         } else {
+            title_login.setText(getString(R.string.login_sunsun));
             btn_country.setVisibility(View.VISIBLE);
             editextUsetName.setHint(getString(R.string.user_name));
             bottom_icon.setVisibility(View.GONE);
         }
-        if (getPackageName().contains("pondlink")) {
+        if (getPackageName().contains("pondlink")){
+            title_login.setText("PondLinkByPondteam");
             bottom_icon.setVisibility(View.VISIBLE);
             bottom_icon.setBackgroundColor(getResources().getColor(R.color.login_color));
             bottom_icon.setText("pondLink");

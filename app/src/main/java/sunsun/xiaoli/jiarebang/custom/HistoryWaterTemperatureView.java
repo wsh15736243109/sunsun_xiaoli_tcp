@@ -204,7 +204,7 @@ public class HistoryWaterTemperatureView extends View {
                 paint.setTypeface(Typeface.DEFAULT_BOLD);
                 String week = getWeek(array.get(i).getHis_date());
                 if (week.equals("yesterday")) {
-                    week = "ytd";
+                    week = "yday";
                 }
                 String date = "";
                 paint.getTextBounds(week, 0, week.length(), rectDate);
@@ -212,19 +212,19 @@ public class HistoryWaterTemperatureView extends View {
                     //当天(区分今天、昨天)
                     String today = judgeIsToday2(array.get(i).getHis_date());
                     if (today.equals("yesterday")) {
-                        today = "ytd";
+                        today = "yday";
                     }
                     paint.getTextBounds(today, 0, today.length(), rectDate);
                     date = formatTimesYMDH2H(array.get(i).getHis_date());
                     if (date.equals("yesterday")) {
-                        date = "ytd";
+                        date = "yday";
                     }
                     canvas.drawText(today, pointX - rectDate.width() / 2, min_left_x, paint);
                 } else {
                     //周或日
                     date = formatTimesYMD2MD(array.get(i).getHis_date());
                     if (date.equals("yesterday")) {
-                        date = "ytd";
+                        date = "yday";
                     }
                     canvas.drawText(week, pointX - rectDate.width() / 2, min_left_x, paint);
 

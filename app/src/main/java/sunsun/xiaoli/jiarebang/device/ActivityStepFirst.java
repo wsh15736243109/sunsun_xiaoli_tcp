@@ -52,7 +52,7 @@ public class ActivityStepFirst extends BaseActivity {
         app.addDeviceFirst = this;
         deviceType= (DeviceType) getIntent().getSerializableExtra("device");
         aq_did = getIntent().getStringExtra("aq_did");
-        txt_title.setText("添加" + getIntent().getStringExtra("device_type"));
+        txt_title.setText( getString(R.string.add) + getIntent().getStringExtra("device_type"));
         type = getIntent().getStringExtra("device_type");
         position = getIntent().getIntExtra("position", 0);
         if (type != null) {

@@ -22,7 +22,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
+
+import static com.itboye.pondteam.utils.MyTimeUtil.getTimeZone;
 
 
 /**
@@ -125,6 +126,7 @@ public class UserResponsitory extends BaseNetRepository implements
     private String authDevicePwd_CP="By_SunsunCp1000_auth";//CP1000验证接口
     private String getDeviceCP1000Detail="By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
     private String getDeviceWeishiQi="By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
+    private String updateMobileMsg="By_SunsunUserDevice_update";//更改设备信息
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -802,13 +804,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("device_nickname", device_nickname);
         map.put("device_type", device_type);
-        TimeZone tz = TimeZone.getDefault();
-        String s = tz.getDisplayName(false, TimeZone.SHORT);
-        if (s.contains("+")) {
-            s = s.substring(s.indexOf(":") - 1, s.indexOf(":"));
-        } else {
-            s = "-" + s.substring(s.indexOf(":") - 1, s.indexOf(":"));
-        }
+        String s=getTimeZone();
         map.put("timezone", s);
         map.put("lang", "zh-cn");
         map.put("extra", extra);
@@ -1534,6 +1530,25 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void updateMobileMsg(String uid, String device_id, String lang, String timezone) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "101";
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("device_id", device_id);
+        map.put("lang", lang);
+        map.put("timezone", timezone);
+        (new ByJsonRequest.Builder<String>())
+                .setTypeVerParamsAndReturnClass(updateMobileMsg, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

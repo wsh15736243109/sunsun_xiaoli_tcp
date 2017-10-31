@@ -200,7 +200,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 }
                 if (!BuildConfig.APP_TYPE.equals("pondTeam")) {
                     if (!currentDid.toLowerCase().startsWith("SCHD".toLowerCase())) {
-                        loadingDialog.setTitle(getString(R.string.tips));
+//                        loadingDialog.setTitle(getString(R.string.tips));
                         loadingDialog.setMessage(getString(R.string.get_deviceInfoing));
                         loadingDialog.setCanceledOnTouchOutside(false);
                         loadingDialog.show();
@@ -223,7 +223,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                     }
                 } else {
                     if (currentDid.startsWith("S01")) {
-                        loadingDialog.setTitle(getString(R.string.tips));
+//                        loadingDialog.setTitle(getString(R.string.tips));
                         loadingDialog.setMessage(getString(R.string.get_deviceInfoing));
                         loadingDialog.setCanceledOnTouchOutside(false);
                         loadingDialog.show();

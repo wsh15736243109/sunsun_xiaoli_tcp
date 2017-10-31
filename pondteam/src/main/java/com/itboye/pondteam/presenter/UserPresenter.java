@@ -154,6 +154,8 @@ public class UserPresenter extends BasePresenter implements
     public static String shuibengExtraUpdate_fail = "_shuibengExtraUpdate_fail";
     public static String getDeviceOnLineState_success = "_getDeviceOnLineState_success";
     public static String getDeviceOnLineState_fail = "_getDeviceOnLineState_success";
+    public static String updateMobileMsg_fail="_updateMobileMsg_fail";
+    public static String updateMobileMsg_success="_updateMobileMsg_success";
 
 
     public UserPresenter(Observer observer) {
@@ -1423,5 +1425,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.getDeviceOnLineState(did, uid);
+    }
+
+    @Override
+    public void updateMobileMsg(String sp, String device_id, String lang, String timezone) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(updateMobileMsg_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(updateMobileMsg_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.updateMobileMsg(sp, device_id, lang, timezone);
     }
 }

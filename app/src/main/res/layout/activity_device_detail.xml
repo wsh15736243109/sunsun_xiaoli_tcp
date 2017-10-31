@@ -35,7 +35,7 @@
                     android:gravity="center"
                     android:text="@string/current_temperture"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/DIMEN_20DP" />
+                    android:textSize="@dimen/DIMEN_18DP" />
 
                 <TextView
                     android:id="@+id/wendu"
@@ -158,7 +158,7 @@
                         android:layout_toLeftOf="@+id/txt_wendu_setting"
                         android:layout_toRightOf="@+id/icon_wendu_setting"
                         android:text="@string/tem_setting"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_wendu_setting"
@@ -198,7 +198,7 @@
                         android:drawablePadding="@dimen/DIMEN_5DP"
                         android:layout_toRightOf="@+id/icon_wendu_warn"
                         android:text="@string/wendu_baojing"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <ImageView
                         android:id="@+id/wendu_baojing"
@@ -234,7 +234,7 @@
                         android:layout_toLeftOf="@+id/txt_wendu_sheding_high"
                         android:layout_toRightOf="@+id/icon_wendu_warn_high"
                         android:text="@string/wendu_high"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_wendu_sheding_high"
@@ -274,7 +274,7 @@
                         android:layout_toRightOf="@+id/icon_wendu_warn_low"
                         android:text="@string/wendu_low"
                         android:singleLine="true"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <TextView
                         android:id="@+id/txt_wendu_sheding_low"
@@ -316,7 +316,7 @@
                         android:singleLine="true"
                         android:layout_toRightOf="@+id/icon_wendu_history"
                         android:text="@string/lishishuiwen"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <ImageView
                         android:id="@+id/icon_arrow"
@@ -389,7 +389,7 @@
                         android:layout_toRightOf="@+id/icon_exception_warn"
                         android:text="@string/yichangbaojing"
                         android:singleLine="true"
-                        android:textSize="@dimen/DIMEN_20DP" />
+                        android:textSize="@dimen/DIMEN_18DP" />
 
                     <ImageView
                         android:id="@+id/toggle_exception_warn"
