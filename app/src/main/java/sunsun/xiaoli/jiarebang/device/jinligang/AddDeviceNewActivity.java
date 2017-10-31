@@ -63,7 +63,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.device_shexiangtou,
             R.drawable.device_shuizudeng,
             R.drawable.device_jiaozhiliubeng,
-            R.drawable.device_jiaozhiliubeng,
+            R.drawable.device_weishiqi,
     };
     int add[] = {
             R.drawable.add_device, R.drawable.add_device,

@@ -75,6 +75,8 @@ import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
 import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
+import static com.itboye.pondteam.utils.Const.imagePath;
+import static com.itboye.pondteam.utils.Const.patten;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.NumberUtils.getAppointNumber;
 import static com.itboye.pondteam.utils.ScreenUtil.keepScreenOn;
@@ -132,7 +134,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private CHD_LocalScan mScan;
     private Handler mTimeHandler;
     Runnable mTimeRunnable;
-    private String imagePath;
     private TrafficBean trafficBean;
     DBManager dbManager;
     private Handler handlerWifi;
@@ -845,8 +846,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         }
 
     }
-
-    String patten = "yyyyMMdd";
 
     private void initFlowPlus() {
         todayTime = new SimpleDateFormat(patten).format(new Date());

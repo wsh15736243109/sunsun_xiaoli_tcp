@@ -44,7 +44,7 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
     public static class Builder<T> {
         private ByJsonRequest<T> buildRequest;
         private String url = Const.URL;
-//        private String url="http://mw.api.itboye.com/public/index.php";
+        //        private String url="http://mw.api.itboye.com/public/index.php";
         private XRequestListener<T> listener;
         private XErrorListener errlistener;
         private Type expectReturnType;
@@ -90,12 +90,14 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
 //			map.put(Const.ALG, Const.ALG_VALUE);
             map.put(Const.NOTIFY_ID, time);
             map.put("client_id", Const.CLIENT_ID);
+
+            Const.language = MyApplication.getInstance().getLanguage();
             if (autoCode.equals("")) {
-                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID;
+                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&lang=" + Const.language;
             } else {
-                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode;
+                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode + "&lang=" + Const.language;
             }
-            System.out.println("接口地址"+url);
+            System.out.println("接口地址" + url);
         }
 
 
@@ -204,7 +206,7 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
             String jsonStr = gson.toJson(this.userParam);
 
             Log.d("request_params", "----------------------------------请求开始---------------------------------------");
-            Log.d("request_params","请求参数"+jsonStr);
+            Log.d("request_params", "请求参数" + jsonStr);
             this.desContent = DESUtil.encode(jsonStr,
                     Const.CLIENT_SECERET);
 
@@ -263,10 +265,10 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
                     DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                     DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             buildRequest.setExpectReturnType(expectReturnType);
-            String msg=bytetoString(Base64.encode(desContent.getBytes(),Base64.DEFAULT));
+            String msg = bytetoString(Base64.encode(desContent.getBytes(), Base64.DEFAULT));
 //            String msg=(desContent);
             buildRequest.addParam(Const.ITBOYE, msg);
-            System.out.println("请求参数》》》"+msg);
+            System.out.println("请求参数》》》" + msg);
 //			map.put("html","");
             buildRequest.addHeader("alg", "md5_v2");
             buildRequest.addHeader("Accept", "text/html,application/json");
@@ -293,8 +295,7 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
     /**
      * 字节数组转为普通字符串（ASCII对应的字符）
      *
-     * @param bytearray
-     *            byte[]
+     * @param bytearray byte[]
      * @return String
      */
     public static String bytetoString(byte[] bytearray) {

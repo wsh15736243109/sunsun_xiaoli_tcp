@@ -128,7 +128,6 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
         swipe_layout.setOnRefreshListener(this);
         showProgressDialog(getString(R.string.get_deviceInfoing), true);
         img_back.setVisibility(View.VISIBLE);
-        txt_exist.setText(getString(R.string.exist_login));
         txt_exist.setVisibility(View.GONE);
 
         mContext = this;
@@ -343,11 +342,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
         switch (v.getId()) {
             case R.id.img_right:
             case R.id.btn_addnew:
-                showPopwindow(0);
-//                intent = new Intent(this, ActivityStepFirst.class);
-//                intent.putExtra("aq_did", aq_did);
-//                intent.putExtra("device_type", "摄像头");
-//                startActivity(intent);
+                showPopwindow(7);
                 break;
             case R.id.img_back:
                 finish();
@@ -383,7 +378,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 Intent intent = new Intent(CameraDeviceListActivity.this, ActivityStepFirst.class);
                 intent.putExtra("aq_did", aq_did);
                 intent.putExtra("device_type", "摄像头");
-                intent.putExtra("position", 7);
+                intent.putExtra("position", position);
                 startActivity(intent);
 //						Intent mainIntent = new Intent(AddDeviceNewActivity.this,
 //								MDeviceActivity.class);
@@ -400,7 +395,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 Intent intent = new Intent(CameraDeviceListActivity.this,
                         AddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", 7);
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
@@ -414,7 +409,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 Intent intent = new Intent(CameraDeviceListActivity.this,
                         ManualAddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", 7);
+                intent.putExtra("position", position);
                 startActivity(intent);
 //				Intent mainIntent = new Intent(AddDeviceNewActivity.this,
 //						ManualAddDeviceActivity.class);

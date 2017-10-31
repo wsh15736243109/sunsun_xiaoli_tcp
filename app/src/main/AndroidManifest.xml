@@ -164,6 +164,7 @@
         <activity android:name=".sunsunlingshou.activity.ArticleActivity" />
         <activity android:name=".sunsunlingshou.activity.home.RedBagAcitivty" />
         <activity android:name=".device.weishiqi.WeiShiQiDetailActivity"></activity>
+        <activity android:name=".device.EditDeviceActivity"></activity>
     </application>
 
 </manifest>

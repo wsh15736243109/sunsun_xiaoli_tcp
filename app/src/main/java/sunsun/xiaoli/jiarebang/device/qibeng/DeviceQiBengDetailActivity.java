@@ -113,6 +113,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         }
     };
 
+
     private void beginRequest() {
         userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
     }

@@ -18,6 +18,7 @@ import sunsun.xiaoli.jiarebang.beans.FileBean;
  */
 
 public class FileOperateUtil {
+
     /**
      * 读取某个文件夹下的所有文件
      */

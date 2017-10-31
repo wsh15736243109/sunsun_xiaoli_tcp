@@ -125,16 +125,16 @@ android {
 //            buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
 //            buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
-//            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
-            buildConfigField("String", "APP_TYPE", '"森森新零售"')
+            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
+//            buildConfigField("String", "APP_TYPE", '"森森新零售"')
         }
     }
-//    lintOptions {
-//        checkReleaseBuilds false
-//        // Or, if you prefer, you can continue to check for errors in release builds,
-//        // but continue the build even when errors are found:
-//        abortOnError false
-//    }
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 
 
 

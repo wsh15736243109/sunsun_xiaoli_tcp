@@ -9,12 +9,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.android.volley.Request;
@@ -40,7 +37,6 @@ import com.umeng.message.entity.UMessage;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
@@ -187,6 +183,10 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         SDKInitializer.initialize(getApplicationContext());
         MobclickAgent.setCatchUncaughtExceptions(true);
         //设置默认语言为英文
+//        String sta = "en";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
+//        if (BuildConfig.APP_TYPE.toLowerCase().equals("PondTeam".toLowerCase())) {
+//            sta = "en";
+//        }
         initLanguage();
         gson = new Gson();//在这里为应用设置异常处理程序，然后我们的程序才能捕获未处理的异常
         CrashHandler crashHandler = CrashHandler.getInstance();
@@ -215,30 +215,6 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 //        new LocationUtil(getApplicationContext(), this);
     }
 
-    private void initLanguage() {
-//        Locale.TAIWAN(臺灣繁體)
-//        Locale.setDefault(BuildConfig.IS_CHINESE ? Locale.CHINESE : Locale.ENGLISH);
-//        if (BuildConfig.APP_TYPE.t.equals("PondTeam".toLowerCase())) {
-//
-//        }
-//        Configuration config = getBaseContext().getResources()
-//                .getConfiguration();
-//        Locale curLocale = getResources().getConfiguration().locale;
-//        config.locale = curLocale;
-//        getBaseContext().getResources().updateConfiguration(config,
-//                getBaseContext().getResources().getDisplayMetrics());
-        String sta = "en";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
-        if (BuildConfig.APP_TYPE.toLowerCase().equals("PondTeam".toLowerCase())) {
-            sta = "en";
-        }
-        // 本地语言设置
-        Locale myLocale = new Locale(sta);
-        Resources res = getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-//        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-    }
 
     private void regToWx() {
         iwxapi = WXAPIFactory.createWXAPI(getApplicationContext(), BuildConfig.WX_APP_ID);
@@ -424,7 +400,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         if (deviceInfo.getDid() == null) {
             return;
         }
-        if (deviceInfo.getDid() .equals("")) {
+        if (deviceInfo.getDid().equals("")) {
             return;
         }
         if (deviceInfo.getPwd() == null) {

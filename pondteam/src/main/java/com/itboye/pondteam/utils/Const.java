@@ -45,6 +45,10 @@ public class Const {
     public static String URL = "http://" + wrapUrl + "/index.php";
     public static String updaloadURL = "http://" + wrapUrl + "/index.php/file/upload";
 
+    public static String imagePath;
+    public static String patten = "yyyyMMdd";
+    public static String language="";
+
     public Const(String wrapUrl) {
         this.wrapUrl = wrapUrl;
         this.URL = "http://" + wrapUrl + "/index.php";

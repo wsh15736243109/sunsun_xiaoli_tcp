@@ -2,15 +2,20 @@ package com.itboye.pondteam.app;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.itboye.pondteam.bean.DeviceListBean;
+import com.itboye.pondteam.utils.Const;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by admin on 2016/12/6.
@@ -19,11 +24,11 @@ import java.util.List;
 public class MyApplication extends Application {
 
     private static RequestQueue queue;
-//    private LanguageSettingUtil languageSetting;
+    //    private LanguageSettingUtil languageSetting;
 //    private SwitchLanguageObservable switchLangObs;
     public List<WeakReference<Activity>> activityList = new LinkedList<>();
     public static MyApplication instance;
-//    public AddDeviceNewActivity addDeviceUI;
+    //    public AddDeviceNewActivity addDeviceUI;
 //    public AddDeviceActivity mAddDeviceUi;
 //    public ArrayList<AqDeviceInfo> mMyDeviceList = null;
 //    public DeviceActivity mDeviceUi;
@@ -52,13 +57,15 @@ public class MyApplication extends Application {
         MyApplication.instance = instance;
     }
 
-//    AqDeviceFind aqDeviceFind;
+    //    AqDeviceFind aqDeviceFind;
     @Override
     public void onCreate() {
         super.onCreate();
 //        mLanDeviceList = new ArrayList<AqDeviceInfo>();
         queue = Volley.newRequestQueue(this);
-        instance=this;
+        instance = this;
+
+
 //        TimeZone tz = TimeZone.getDefault();
 //        String s =tz.getDisplayName(false, TimeZone.SHORT);
 //        System.out.println("当前时区"+s);
@@ -81,6 +88,44 @@ public class MyApplication extends Application {
 //    public SwitchLanguageObservable getSwitchLangObs() {
 //        return switchLangObs;
 //    }
+
+    public void initLanguage() {
+//        Locale.TAIWAN(臺灣繁體)
+//        Locale.setDefault(BuildConfig.IS_CHINESE ? Locale.CHINESE : Locale.ENGLISH);
+//        if (BuildConfig.APP_TYPE.t.equals("PondTeam".toLowerCase())) {
+//
+//        }
+//        Configuration config = getBaseContext().getResources()
+//                .getConfiguration();
+//        Locale curLocale = getResources().getConfiguration().locale;
+//        config.locale = curLocale;
+//        getBaseContext().getResources().updateConfiguration(config,
+//                getBaseContext().getResources().getDisplayMetrics());
+
+        // 本地语言设置
+//        Locale myLocale = new Locale(sta);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        Const.language = getLanguage();
+        //设置成简体中文的时候，getLanguage()返回的是zh,getCountry()返回的是cn.
+//        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+    }
+
+    public String getLanguage() {
+        //获取系统当前使用的语言
+        String lan = Locale.getDefault().getLanguage();
+        //获取区域
+        String country = Locale.getDefault().getCountry();
+        if (lan.startsWith("zh")) {
+            return lan + "-" + country;
+        } else if (lan.equals("en")) {
+            return lan;
+        } else {
+            return "en";
+        }
+    }
 
     public void addActivity(Activity activity) {
         activityList.add(new WeakReference<Activity>(activity));
@@ -232,6 +277,7 @@ public class MyApplication extends Application {
     public static RequestQueue getQueue() {
         return queue;
     }
+
     //
     public static <T> void addRequest(Request<T> request) {
         request.addMarker("itboye");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="?android:colorBackground"
+    android:background="@color/white"
     android:layout_margin="@dimen/DIMEN_10DP"
     android:layout_height="@dimen/DIMEN_100DP">
     <RelativeLayout
