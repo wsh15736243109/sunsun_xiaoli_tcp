@@ -581,7 +581,7 @@
     <string name="update_address">修改地址</string>
     <string name="only_one_address_set_default">只能设置一个默认地址</string>
     <string name="login_sunsun">Smart of sunsun</string>
-    <string name="add">Add</string>
+    <string name="add">Add </string>
     <string name="connect_device">Connected device</string>
     <string name="setting_different">Please set different time periods</string>
 </resources>
