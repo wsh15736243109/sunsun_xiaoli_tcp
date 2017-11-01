@@ -21,6 +21,7 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 /**
  * Created by Mr.w on 2017/3/4.
@@ -39,6 +40,7 @@ public class ActivityInputWifiAndPass extends BaseActivity implements Observer {
     public static ActivityInputWifiAndPass instance;
     private String wifiName;
     private String wifi_name;
+    private DeviceType deviceType;
 
     public static ActivityInputWifiAndPass getInstance() {
         return instance;
@@ -58,6 +60,7 @@ public class ActivityInputWifiAndPass extends BaseActivity implements Observer {
         aq_did = getIntent().getStringExtra("aq_did");
         position = getIntent().getIntExtra("position", position);
         type = getIntent().getStringExtra("device_type");
+        deviceType= (DeviceType) getIntent().getSerializableExtra("device");
         wifiName = myApplication.aqSmartConfig.getCurrentWiFiSSID();
         if (wifiName == null || "".equals(wifiName)) {
             MAlert.alert(getString(R.string.connect_wifi));
@@ -99,6 +102,7 @@ public class ActivityInputWifiAndPass extends BaseActivity implements Observer {
                 intent.putExtra("type", type);
                 intent.putExtra("wifi_name", wifi_name);
                 intent.putExtra("wifi_pass", edit_wifipass.getText().toString());
+                intent.putExtra("device", deviceType);
                 startActivity(intent);
                 break;
             case R.id.img_back:

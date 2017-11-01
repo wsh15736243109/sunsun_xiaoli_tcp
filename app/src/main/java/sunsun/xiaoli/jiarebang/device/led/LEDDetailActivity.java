@@ -41,6 +41,7 @@ import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 
 import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
@@ -71,6 +72,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
     private Button buttonShouDong;
     PtrFrameLayout ptrFrame;
     ImageView loading;
+    private TcpUtil mTcpUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +88,30 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         img_right.setBackgroundResource(R.drawable.menu);
         popupWindow = new CameraConsolePopupWindow(
                 this, this);
+        mTcpUtil=new TcpUtil(handData,did, getSp(Const.UID), "101");
+        mTcpUtil.start();
         new Thread(runnable).start();
     }
+
+    private DeviceDetailModel detailModelTcp;
+    Handler handData = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.arg1) {
+                case 101:
+                    System.out.println(mTcpUtil.getMsg()+"----->101 TCP 接收数据");
+                    System.out.println(mTcpUtil.getMsg()+"----->101 TCP 接收数据 " + msg.obj);
+                    break;
+                case 102:
+                    detailModelTcp = (DeviceDetailModel) msg.obj;
+                    setData();
+                    System.out.println(mTcpUtil.getMsg()+"----->102 TCP 接收数据 ");
+                    System.out.println(mTcpUtil.getMsg()+"----->102 TCP 接收数据 " + detailModelTcp.getDid());
+                    break;
+            }
+        }
+    };
 
     public void setLoadingIsVisible(boolean is) {
         if (is) {
@@ -348,7 +372,13 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
 
     private void switchTurn(boolean isOpen) {
         if (isOpen) {
-            re_switchbg.setBackgroundResource(R.drawable.switch_bg_red);
+            if (detailModel.getDevice_type().equals("S06-1")) {
+                //水草版
+                re_switchbg.setBackgroundResource(R.drawable.switch_bg_red);
+            }else{
+                //海水版
+                re_switchbg.setBackgroundResource(R.drawable.switch_bg_blue);
+            }
             img_switch.setBackgroundResource(R.drawable.led_switch_white);
         } else {
             re_switchbg.setBackgroundColor(getResources().getColor(R.color.gray_c9));
@@ -401,7 +431,6 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
     }
 
     public void beginRequest() {
-        did = getIntent().getStringExtra("did");
         userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
     }
 
@@ -420,7 +449,21 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        isTuiSong = ((detailModel.getPush_cfg() & (int) Math.pow(2, 0)) == Math.pow(2, 0));
+//        if (detailModelTcp!=null) {
+//            isOpen = detailModelTcp.getSw() == 1;
+//            txt_moshi_value.setText(getString(R.string.current_mode) + "" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)));
+//            txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
+//            String per = detailModel.getPer();
+//            if (app.ledPeriodSettingsUI != null) {
+//                app.ledPeriodSettingsUI.setData(per);
+//            }
+//            if (app.tiaoGuangUI != null) {
+//                app.tiaoGuangUI.initProgress();
+//            }
+//        }
+        if (detailModelTcp!=null) {
+
+        }
         isOpen = detailModel.getSw() == 1;
         switchTurn(isOpen);
         img_tuisong_status.setBackgroundResource(isTuiSong ? R.drawable.kai : R.drawable.guan);

@@ -1441,7 +1441,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (!str.equals("")) {
             map.put("per", str);
         }
-        map.put("debug", "1");
+        map.put("debug", "0");
         (new ByJsonRequest.Builder<String>())
                 .setTypeVerParamsAndReturnClass(deviceSet_led, apiVer, map, type)
                 .requestListener(

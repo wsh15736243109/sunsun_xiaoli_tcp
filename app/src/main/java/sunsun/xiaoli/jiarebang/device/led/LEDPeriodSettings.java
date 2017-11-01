@@ -177,17 +177,19 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
             Type type1 = new TypeToken<ArrayList<DeviceDetailModel.TimePeriod>>() {
             }.getType();
             ArrayList<DeviceDetailModel.TimePeriod> arTemp= new Gson().fromJson(data, type1);
-            arPer.clear();
-            arPer.addAll(arTemp);
-            if (addShiDuanadapter==null) {
-                addShiDuanadapter = new SwipLedAddShiDuanadapter(this, arPer);
-                addShiDuanadapter.setSwitchClick(this);
-                exListView.setAdapter(addShiDuanadapter);
-            }else{
-                addShiDuanadapter.notifyDataSetChanged();
-            }
-            for (int i = 0; i < addShiDuanadapter.getGroupCount(); i++) {
-                exListView.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
+            if (arTemp!=null) {
+                arPer.clear();
+                arPer.addAll(arTemp);
+                if (addShiDuanadapter==null) {
+                    addShiDuanadapter = new SwipLedAddShiDuanadapter(this, arPer);
+                    addShiDuanadapter.setSwitchClick(this);
+                    exListView.setAdapter(addShiDuanadapter);
+                }else{
+                    addShiDuanadapter.notifyDataSetChanged();
+                }
+                for (int i = 0; i < addShiDuanadapter.getGroupCount(); i++) {
+                    exListView.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
+                }
             }
             isUpdateUI = false;
 

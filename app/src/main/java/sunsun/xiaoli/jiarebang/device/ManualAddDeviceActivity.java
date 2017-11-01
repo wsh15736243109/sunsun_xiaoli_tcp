@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.bean.DeviceListBean;
-import com.itboye.pondteam.db.DBManager;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -27,6 +26,7 @@ import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
@@ -42,8 +42,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
     ManualAddDeviceActivity mThis;
     UserPresenter userPresenter;
     ImageView img_right;
-    TextView txt_title,manual_add_device_textView1;
-    DBManager dbManager;
+    TextView txt_title, manual_add_device_textView1;
     EditText manual_add_device_edit_password;
     String aq_did;
     private String did;
@@ -51,6 +50,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
     private String psw;
     int position;
     ImageView img_back;
+    DeviceType deviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +60,9 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
         mApp.mManualAddDeviceUi = this;
         manual_add_device_textView1.setText(R.string.shoudong_title2);
         mContext = this;
+        deviceType = (DeviceType) getIntent().getSerializableExtra("device");
         position = getIntent().getIntExtra("position", 0);
         aq_did = getIntent().getStringExtra("aq_did");
-        dbManager = new DBManager(this);
         mThis = this;
         userPresenter = new UserPresenter(this);
         txt_title.setText(getString(R.string.add_device));
@@ -101,12 +101,12 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.device_name_empty));
                     return;
                 }
-                if (AddDeviceNewActivity.name==null) {
+                if (AddDeviceNewActivity.name == null) {
                     if (!did.startsWith("S01")) {
                         MAlert.alert("请输入" + getString(R.string.device_chitangguolv) + "的设备型号类型");
                         return;
                     }
-                }else {
+                } else {
                     switch (position) {
                         case 0:
                             if (!did.startsWith("S03")) {
@@ -186,7 +186,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         MAlert.alert(getString(R.string.hasBind));
                         return;
                     }
-                }else {
+                } else {
                     if (mApp.mDeviceUi.arrayList != null) {
                         for (DeviceListBean deviceListBean : mApp.mDeviceUi.arrayList) {
                             if (deviceListBean.getDid().contains(did)) {
@@ -205,12 +205,6 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.psw_name_empty));
                     return;
                 }
-                int count = dbManager.queryDeviceCountByDid(did, getSp(Const.UID));
-                if (count > 0) {
-                    //先删除数据库设备，再进行添加
-                    dbManager.deleteDeviceDataByDid(did, getSp(Const.UID));
-                }
-                dbManager.insertDeviceData(did, psw, getSp(Const.UID));
                 HashMap<String, Object> hash = new HashMap<>();
                 Gson gson = new Gson();
 
@@ -225,12 +219,19 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                     hash.put("first_upd", System.currentTimeMillis() + "");
                     hash.put("pwd", psw);
                     String extra = gson.toJson(hash);
-                    if (position==2) {
-                        userPresenter.addDevice(getSp(Const.UID), did, nickName, "S03-2", extra);
-                    }else if (position==1){
-                        userPresenter.addDevice(getSp(Const.UID), did, nickName, "S03-1", extra);
-                    }else {
-                        userPresenter.addDevice(getSp(Const.UID), did, nickName, did.substring(0, 3), extra);
+                    switch (deviceType) {
+                        case DEVICE_AQ500:
+                            userPresenter.addDevice(getSp(Const.UID), did, nickName, "S03-1", extra);
+                            break;
+                        case DEVICE_AQ700:
+                            userPresenter.addDevice(getSp(Const.UID), did, nickName, "S03-2", extra);
+                            break;
+                        case DEVICE_SHUIZUDENG:
+                            userPresenter.addDevice(getSp(Const.UID), did, nickName, "S06-1", extra);
+                            break;
+                        default:
+                            userPresenter.addDevice(getSp(Const.UID), did, nickName, did.substring(0, 3), extra);
+                            break;
                     }
                 }
                 break;
@@ -256,7 +257,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         userPresenter.cameraBind(aq_did, did, "chiniao_wifi_camera", did, psw);
                     } else {
                         //结束上一个activity
-                        if (mApp.addDeviceUI!=null) {
+                        if (mApp.addDeviceUI != null) {
                             mApp.addDeviceUI.finish();
                         }
 
@@ -277,7 +278,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.cameraBind_success) {
                 //结束上一个activity
-                if (mApp.addDeviceUI!=null) {
+                if (mApp.addDeviceUI != null) {
                     mApp.addDeviceUI.finish();
                 }
                 //结束当前activity

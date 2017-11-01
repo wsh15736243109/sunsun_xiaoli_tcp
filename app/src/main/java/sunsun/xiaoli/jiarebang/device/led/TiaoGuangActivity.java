@@ -29,11 +29,11 @@ public class TiaoGuangActivity extends BaseActivity implements Observer {
     TextView[] textViews = new TextView[4];
     @IsNeedClick
     TextView txt_xitong, txt_red, txt_lvse, txt_zonghe, txt_title;
-    RelativeLayout re_zonghe, re_red, re_green, re_xitong;
+    RelativeLayout re_zonghe, re_red, re_green, re_xitong, re_blue;
     @IsNeedClick
     SeekBar seek_red, seek_green, seek_white;
     @IsNeedClick
-    TextView txt_red_progress, txt_green_progress, txt_white_progress;
+    TextView txt_red_progress, txt_green_progress, txt_white_progress, txt_blue_progress;
     ImageView img_back;
     int position = 0;
     App mApp;
@@ -111,6 +111,11 @@ public class TiaoGuangActivity extends BaseActivity implements Observer {
     }
 
     public void initProgress() {
+        if (mApp.ledDetailActivity.detailModel.getDevice_type().equals("S06-1")) {
+            re_blue.setVisibility(View.GONE);
+        } else {
+            re_blue.setVisibility(View.VISIBLE);
+        }
         if (isUpdateUI) {
             if (position == -1) {
                 seek_white.setProgress(mApp.ledDetailActivity.detailModel.getW());

@@ -557,7 +557,7 @@
     <string name="mode_change">mode switch</string>
     <string name="period_setting">light peroid set</string>
     <string name="shoudong_tiaoguang">manual dimming set</string>
-    <string name="zhuangtai_tuisong">State push\"</string>
+    <string name="zhuangtai_tuisong">State push</string>
     <string name="user_time">Use time</string>
     <string name="begin_calebrated">The electrodes are being calibrated</string>
     <string name="seconds_left">With %1$d seconds left</string>

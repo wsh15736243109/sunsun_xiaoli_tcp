@@ -49,6 +49,14 @@ public class TcpUtil {
         }
     };
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
     /**
      * @param handler 更新UI通信
      * @param msg     0：did  1:uid  2:t

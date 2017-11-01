@@ -142,6 +142,15 @@ public class DeviceDetailModel implements Serializable {
     private int uv_state;
     private String oa_per_name;
     private String ob_per_name;
+    private String device_type;
+
+    public String getDevice_type() {
+        return device_type;
+    }
+
+    public void setDevice_type(String device_type) {
+        this.device_type = device_type;
+    }
 
     public String getOa_per_name() {
         return oa_per_name;

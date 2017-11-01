@@ -93,6 +93,7 @@ public class ActivityStepFirst extends BaseActivity {
                 intent.putExtra("device_type", type);
                 intent.putExtra("position", position);
                 intent.putExtra("aq_did", aq_did == null ? "" : aq_did);
+                intent.putExtra("device", deviceType);
                 startActivity(intent);
                 break;
         }

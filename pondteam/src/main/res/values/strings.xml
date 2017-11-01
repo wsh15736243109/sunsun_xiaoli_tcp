@@ -554,7 +554,7 @@
     <string name="mode_change">模式切换</string>
     <string name="period_setting">灯光时段设置</string>
     <string name="shoudong_tiaoguang">手动调光设置</string>
-    <string name="zhuangtai_tuisong">状态推送\"</string>
+    <string name="zhuangtai_tuisong">状态推送</string>
     <string name="user_time">使用时间</string>
     <string name="begin_calebrated">电极校准中</string>
     <string name="seconds_left">剩余%1$d秒</string>
