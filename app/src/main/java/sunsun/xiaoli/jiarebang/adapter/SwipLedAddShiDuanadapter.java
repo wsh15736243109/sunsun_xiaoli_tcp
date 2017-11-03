@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import sunsun.xiaoli.jiarebang.device.led.LEDPeriodSettings;
 
 import static com.itboye.pondteam.utils.StringFormatUtils.getFormatNum;
+import static com.itboye.pondteam.volley.TimesUtils.utc2Local;
 
 
 /**
@@ -86,8 +87,8 @@ public class SwipLedAddShiDuanadapter extends BaseSwipeMenuExpandableListAdapter
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.re_weishi_opentime.setTag(groupPosition);
         holder.re_weishi_closetime.setTag(groupPosition);
-        holder.txt_open_time.setText(getFormatNum(arrayList.get(groupPosition).getH0()) + ":" + getFormatNum(arrayList.get(groupPosition).getM0()));
-        holder.txt_close_time.setText(getFormatNum(arrayList.get(groupPosition).getH1()) + ":" + getFormatNum(arrayList.get(groupPosition).getM1()));
+        holder.txt_open_time.setText(utc2Local(getFormatNum(arrayList.get(groupPosition).getH0()) + ":" + getFormatNum(arrayList.get(groupPosition).getM0()),"HH:mm","HH:mm"));
+        holder.txt_close_time.setText(utc2Local(getFormatNum(arrayList.get(groupPosition).getH1()) + ":" + getFormatNum(arrayList.get(groupPosition).getM1()),"HH:mm","HH:mm"));
         holder.re_tiaose.setTag(groupPosition);
         holder.re_tiaose.setOnClickListener((LEDPeriodSettings) activity);
         holder.re_weishi_opentime.setOnClickListener((LEDPeriodSettings) activity);

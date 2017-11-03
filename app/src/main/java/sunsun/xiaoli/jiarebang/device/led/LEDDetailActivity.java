@@ -73,6 +73,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
     PtrFrameLayout ptrFrame;
     ImageView loading;
     private TcpUtil mTcpUtil;
+    public String ledType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,29 +86,31 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         id = getIntent().getStringExtra("id");
         did = getIntent().getStringExtra("did");
         userPresenter = new UserPresenter(this);
+        userPresenter.deviceSet_led(did, -1, -1, -1, "", -1, -1, -1, -1, -1);
+        userPresenter.getDeviceOnLineState(did, "");
         img_right.setBackgroundResource(R.drawable.menu);
         popupWindow = new CameraConsolePopupWindow(
                 this, this);
-        mTcpUtil=new TcpUtil(handData,did, getSp(Const.UID), "101");
+        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
         mTcpUtil.start();
         new Thread(runnable).start();
     }
 
-    private DeviceDetailModel detailModelTcp;
+    public DeviceDetailModel detailModelTcp;
     Handler handData = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case 101:
-                    System.out.println(mTcpUtil.getMsg()+"----->101 TCP 接收数据");
-                    System.out.println(mTcpUtil.getMsg()+"----->101 TCP 接收数据 " + msg.obj);
+                    System.out.println(mTcpUtil.getMsg() + "----->101 TCP 接收数据");
+                    System.out.println(mTcpUtil.getMsg() + "----->101 TCP 接收数据 " + msg.obj);
                     break;
                 case 102:
                     detailModelTcp = (DeviceDetailModel) msg.obj;
                     setData();
-                    System.out.println(mTcpUtil.getMsg()+"----->102 TCP 接收数据 ");
-                    System.out.println(mTcpUtil.getMsg()+"----->102 TCP 接收数据 " + detailModelTcp.getDid());
+                    System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 ");
+                    System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 " + detailModelTcp.getDid());
                     break;
             }
         }
@@ -198,24 +201,28 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 buttonShouDong.setBackgroundColor(getResources().getColor(R.color.gray));
                 linearLayout.addView(buttonShouDong);
                 builder.setView(linearLayout);
-                setAutoMode(detailModel.getMode().equals("1"));
+                setAutoMode(detailModelTcp.getMode().equals("1"));
                 builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (buttonZiDong.isSelected()) {
-                            //选中的自动
-                            if (detailModel.getMode().equals("1")) {
-                                MAlert.alert(getString(R.string.mode_isauto));
-                                return;
+                        if (detailModelTcp != null) {
+                            if (buttonZiDong.isSelected()) {
+                                //选中的自动
+                                if (detailModelTcp.getMode().equals("1")) {
+                                    MAlert.alert(getString(R.string.mode_isauto));
+                                    return;
+                                }
+                                userPresenter.deviceSet_led(did, 1, -1, -1, "", -1, -1, -1, -1, -1);
+                            } else {
+                                //选中的手动
+                                if (detailModelTcp.getMode().equals("0")) {
+                                    MAlert.alert(getString(R.string.mode_ismanual));
+                                    return;
+                                }
+                                userPresenter.deviceSet_led(did, 0, -1, -1, "", -1, -1, -1, -1, -1);
                             }
-                            userPresenter.deviceSet_led(did, 1, -1, -1, "", -1, -1, -1, -1, -1);
-                        } else {
-                            //选中的手动
-                            if (detailModel.getMode().equals("0")) {
-                                MAlert.alert(getString(R.string.mode_ismanual));
-                                return;
-                            }
-                            userPresenter.deviceSet_led(did, 0, -1, -1, "", -1, -1, -1, -1, -1);
+                        }else{
+
                         }
                     }
                 });
@@ -229,10 +236,18 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 builder.show();
                 break;
             case R.id.re_shiduansetting:
+                if (detailModelTcp.getMode().equals("1")) {
+                    MAlert.alert(getString(R.string.changeshodongatfirst));
+                    return;
+                }
                 intent = new Intent(this, LEDPeriodSettings.class);
                 startActivity(intent);
                 break;
             case R.id.re_tiaoguangsetting:
+                if (detailModelTcp.getMode().equals("1")) {
+                    MAlert.alert(getString(R.string.changeshodongatfirst));
+                    return;
+                }
                 intent = new Intent(this, TiaoGuangActivity.class);
                 startActivity(intent);
                 break;
@@ -290,8 +305,11 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 }
                 break;
             case R.id.img_switch:
+                if (detailModelTcp.getMode().equals("1")) {
+                    MAlert.alert(getString(R.string.changeshodongatfirst));
+                    return;
+                }
                 userPresenter.deviceSet_led(did, -1, -1, -1, "", -1, -1, -1, -1, isOpen ? 0 : 1);
-//                switchTurn(isOpen);
                 break;
             case R.id.img_tuisong_status:
                 userPresenter.adtExtraUpdate(app.mDeviceUi.mSelectDeviceInfo.getId(), isTuiSong ? "0" : "1");
@@ -372,10 +390,10 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
 
     private void switchTurn(boolean isOpen) {
         if (isOpen) {
-            if (detailModel.getDevice_type().equals("S06-1")) {
+            if (ledType.equals("ADT-C")) {
                 //水草版
                 re_switchbg.setBackgroundResource(R.drawable.switch_bg_red);
-            }else{
+            } else {
                 //海水版
                 re_switchbg.setBackgroundResource(R.drawable.switch_bg_blue);
             }
@@ -426,6 +444,11 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.deviceSet_led_fail) {
                 MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+                DeviceDetailModel deviceDetailModel = (DeviceDetailModel) entity.getData();
+                ledType = deviceDetailModel.getDevice_type();
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
+                ledType = "ADT-C";
             }
         }
     }
@@ -449,32 +472,34 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        if (detailModelTcp!=null) {
-//            isOpen = detailModelTcp.getSw() == 1;
-//            txt_moshi_value.setText(getString(R.string.current_mode) + "" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)));
-//            txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
-//            String per = detailModel.getPer();
-//            if (app.ledPeriodSettingsUI != null) {
-//                app.ledPeriodSettingsUI.setData(per);
-//            }
+        if (detailModelTcp != null) {
+            isOpen = detailModelTcp.getSw() == 1;
+            switchTurn(isOpen);
+            img_tuisong_status.setBackgroundResource(isTuiSong ? R.drawable.kai : R.drawable.guan);
+            txt_moshi_value.setText(getString(R.string.current_mode) + "" + (detailModelTcp.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)));
+            txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModelTcp.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
+            String per = detailModelTcp.getPer();
+            if (app.ledPeriodSettingsUI != null) {
+                app.ledPeriodSettingsUI.setData(per);
+            }
 //            if (app.tiaoGuangUI != null) {
 //                app.tiaoGuangUI.initProgress();
 //            }
+        }
+//        if (detailModelTcp!=null) {
+//
 //        }
-        if (detailModelTcp!=null) {
-
-        }
-        isOpen = detailModel.getSw() == 1;
-        switchTurn(isOpen);
-        img_tuisong_status.setBackgroundResource(isTuiSong ? R.drawable.kai : R.drawable.guan);
-        txt_moshi_value.setText(getString(R.string.current_mode) + "" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)));
-        txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
-        String per = detailModel.getPer();
-        if (app.ledPeriodSettingsUI != null) {
-            app.ledPeriodSettingsUI.setData(per);
-        }
-        if (app.tiaoGuangUI != null) {
-            app.tiaoGuangUI.initProgress();
-        }
+//        isOpen = detailModel.getSw() == 1;
+//        switchTurn(isOpen);
+//        img_tuisong_status.setBackgroundResource(isTuiSong ? R.drawable.kai : R.drawable.guan);
+//        txt_moshi_value.setText(getString(R.string.current_mode) + "" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)));
+//        txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModel.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
+//        String per = detailModel.getPer();
+//        if (app.ledPeriodSettingsUI != null) {
+//            app.ledPeriodSettingsUI.setData(per);
+//        }
+//        if (app.tiaoGuangUI != null) {
+//            app.tiaoGuangUI.initProgress();
+//        }
     }
 }

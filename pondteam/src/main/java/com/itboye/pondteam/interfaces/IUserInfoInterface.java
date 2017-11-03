@@ -467,4 +467,6 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param timezone
      */
     void updateMobileMsg(String sp, String device_id, String lang, String timezone);
+
+    void deviceSet_qibeng(String did, int dev_lock, int mode, int state, int gear, int wh, int ch_cnt, int b_life, int push_cfg);
 }

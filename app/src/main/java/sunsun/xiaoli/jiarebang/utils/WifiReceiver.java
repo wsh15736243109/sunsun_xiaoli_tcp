@@ -9,26 +9,14 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.itboye.pondteam.app.MyApplication;
-import com.itboye.pondteam.presenter.UserPresenter;
-import com.itboye.pondteam.utils.Const;
-import com.itboye.pondteam.utils.loadingutil.MAlert;
-import com.itboye.pondteam.volley.ResultEntity;
-
-import java.util.Observable;
-import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.app.App;
-
-import static com.itboye.pondteam.utils.EmptyUtil.getSp;
-import static com.itboye.pondteam.utils.MyTimeUtil.getTimeZone;
-import static com.itboye.pondteam.utils.ScreenUtil.getIMEI;
 
 /**
  * Created by Administrator on 2017/7/27.
  */
 
-public class WifiReceiver extends BroadcastReceiver implements Observer {
-    UserPresenter userPresenter=new UserPresenter(this);
+public class WifiReceiver extends BroadcastReceiver  {
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO Auto-generated method stub
@@ -77,27 +65,9 @@ public class WifiReceiver extends BroadcastReceiver implements Observer {
             }
         }else if(intent.getAction().equals(Intent.ACTION_LOCALE_CHANGED)||intent.getAction().equals(Intent.ACTION_TIME_CHANGED)){
             //语言切换时
-            String timezone=getTimeZone();
-            String lang=MyApplication.getInstance().getLanguage();
-            String device_id=getIMEI(context);
-            userPresenter.updateMobileMsg(getSp(Const.UID),device_id,lang,timezone);
+            MyApplication.getInstance().updateMobile();
             Log.v("request_params","语言改变了");
         }
     }
 
-    @Override
-    public void update(Observable o, Object data) {
-        ResultEntity result = (ResultEntity) data;
-        if (result!=null) {
-            if (result.getCode()!=0) {
-                MAlert.alert(result.getMsg()+"");
-                return;
-            }
-            if (result.getEventType()== UserPresenter.updateMobileMsg_success) {
-//                MAlert.alert(result.getData());
-            }else if (result.getEventType()== UserPresenter.updateMobileMsg_fail) {
-                MAlert.alert(result.getData());
-            }
-        }
-    }
 }

@@ -443,7 +443,7 @@
     <string name="error">异常</string>
     <string name="device_error">设备异常</string>
     <string name="device_will">设备将在%1$s后启动</string>
-    <string name="leiji_time">此水泵已累计使用%1$.2f小时</string>
+    <string name="leiji_time">此水泵已累计使用%1$d小时</string>
     <string name="dang">%1$d档</string>
     <string name="mode_shoudong_open">手动模式-开</string>
     <string name="mode_shoudong_close">手动模式-关</string>
@@ -458,7 +458,7 @@
     <string name="chuqiliang_choose">出气量选择</string>
     <string name="workmode_choose">工作模式选择</string>
     <string name="qibeng_leiji_time">此气泵已累计使用%1$.2f小时</string>
-    <string name="qibengbattery_chongdian_time">剩余充电时间约:%1$d</string>
+    <string name="qibengbattery_chongdian_time">已工作时间:%1$d</string>
     <string name="batteryinformation">电池信息</string>
     <string name="workstatustips">工作状态提示</string>
     <string name="qibengbatter_leijichongdiancount">电池累计充电已达%1$d次</string>
@@ -583,6 +583,10 @@
     <string name="add">添加</string>
     <string name="connect_device">已连接设备</string>
     <string name="setting_different">请设置不同于其他时间段的时间</string>
+    <string name="tiaoguang_bibo">碧波荡漾</string>
+    <string name="tiaoguang_lansemenghuan">蓝色梦幻</string>
+    <string name="tiaoguang_zisegongjian">紫色空间</string>
+    <string name="current_electricity">当前电量:%1$d%%</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

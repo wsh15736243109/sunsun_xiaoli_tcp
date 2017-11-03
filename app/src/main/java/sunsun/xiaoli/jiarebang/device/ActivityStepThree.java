@@ -101,6 +101,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         Glide.with(getApplicationContext()).load(R.drawable.smartconfig_loading).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(progress_add);
         aq_did = getIntent().getStringExtra("aq_did");//得到主设备的did,摄像头才能绑定，如果主设备did为空，则不进行绑定
         alert = new AlertDialog.Builder(this);
+        alert.setCancelable(true);
         smartConfigType = SmartConfigType.SEARCHING;
         setZhuangTai(smartConfigType);
         position = getIntent().getIntExtra("position", 0);
@@ -538,7 +539,8 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 }
                 break;
             case 8:
-                if (!deviceInfo.getType().equalsIgnoreCase("S06")) {
+                if (!deviceInfo.getType().startsWith("S06")) {
+                    //设备类型为S06-1,S06-2
                     return;
                 }
                 break;

@@ -54,7 +54,6 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
     TextView txt_title;
     App mApp;
     public DeviceQiBengBatteryDetailActivity shuibengUI;
-    private String did;
     public DeviceDetailModel deviceDetailModel;
     public boolean isConnect;
     TextView device_status;
@@ -67,7 +66,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
     RelativeLayout re_liuliang_choose;
     RelativeLayout re_gif;
     @IsNeedClick
-    TextView txt_leijitime, qibengbattery_leijicount, txt_shouming;
+    TextView txt_leijitime, qibengbattery_leijicount,current_electricity;
     int seconds = 0;
     RelativeLayout re_battery, re_chuqiliang_choose, re_workmode;
     MyBattery battery_wiget;
@@ -87,10 +86,8 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                 beginRequest();
             }
         });
-        did = getIntent().getStringExtra("did");
         img_right.setBackgroundResource(R.drawable.menu);
         userPresenter = new UserPresenter(this);
-        battery_wiget.setBatteryValue(80);
     }
 
     @Override
@@ -101,7 +98,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
 
 
     private void beginRequest() {
-        userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
+        userPresenter.getDeviceDetailInfo(mApp.deviceQiBengUI.deviceDetailModel.getDid(), getSp(Const.UID));
     }
 
     @Override
@@ -147,7 +144,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                     popupShuiBeng.dismiss();
                 }
                 intent = new Intent(this, VersionUpdateActivity.class);
-                intent.putExtra("did", did);
+                intent.putExtra("mApp.deviceQiBengUI.deviceDetailModel.getDid()", mApp.deviceQiBengUI.deviceDetailModel.getDid());
                 intent.putExtra("version", deviceDetailModel.getVer());
                 intent.putExtra("deviceType", "S05");
                 startActivity(intent);
@@ -161,7 +158,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                 break;
             case R.id.img_yichangbaojing:
                 if (mApp.deviceShuiBengUI.isConnect) {
-//                    userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, isYiChangBaoJing ? 0 : 1, -1);
+//                    userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, -1, isYiChangBaoJing ? 0 : 1, -1);
                     userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
                 } else {
                     MAlert.alert(getString(R.string.disconnect));
@@ -175,7 +172,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                 if (mApp.deviceShuiBengUI.isConnect && deviceDetailModel != null) {
                     if (currentGear < 4) {
                         currentGear++;
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, currentGear, -1, -1, -1);
+                        userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, currentGear, -1, -1, -1);
                     } else {
                         MAlert.alert(getString(R.string.highest));
                     }
@@ -205,21 +202,21 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                     case 0:
                         //当前处于停机状态
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds);
+                        userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, -1, -1, 2, seconds);
                         break;
                     case 1:
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds);//
+                        userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, -1, -1, 2, seconds);//
                         break;
                     case 2:
                         //设备有误不能进行操作
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
-//                        userPresenter.deviceSet_shuiBeng(mApp.deviceShuiBengUI.did, -1, -1, -1, -1, 1, -1);
+//                        userPresenter.deviceSet_shuiBeng(mApp.deviceShuiBengUI.mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, -1, -1, 1, -1);
                         MAlert.alert(getString(R.string.device_trouble));
                         break;
                     case 3:
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 1, -1);
+                        userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, -1, -1, 1, -1);
                         break;
                 }
                 break;
@@ -241,13 +238,13 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                 switch (txt_liuliangchoose.getId()) {
                     case R.id.txt_liuliangchoose:
                         //设置档位
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue(), -1, -1, -1);
+                        userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, numberPicker.getValue(), -1, -1, -1);
                         break;
                     case R.id.txt_weishitime:
                         //设置喂食
                         int fcd = numberPicker.getValue() + 1;
                         userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", fcd * 60, -1);
-//                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, fcd * 60);
+//                        userPresenter.deviceSet_shuiBeng(mApp.deviceQiBengUI.deviceDetailModel.getDid(), -1, -1, -1, -1, -1, fcd * 60);
                         break;
                 }
             }
@@ -391,7 +388,10 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
         }
         txt_leijitime.setText(String.format(getString(R.string.qibengbattery_chongdian_time), deviceDetailModel.getWh()));
         qibengbattery_leijicount.setText(String.format(getString(R.string.qibengbatter_leijichongdiancount), deviceDetailModel.getCh_cnt()));
-        txt_shouming.setText(String.format(getString(R.string.qibengbattery_shouming), deviceDetailModel.getB_life()));
+        battery_wiget.setBatteryValue(mApp.deviceQiBengUI.deviceDetailModel.getBatt());
+        battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryCHARGING,mApp.deviceQiBengUI.deviceDetailModel.getBatt());
+        current_electricity.setText(String.format(getString(R.string.current_electricity),mApp.deviceQiBengUI.deviceDetailModel.getBatt()));
+
     }
 
 }

@@ -582,4 +582,8 @@
     <string name="add">添加</string>
     <string name="connect_device">已連接設備</string>
     <string name="setting_different">請設置不同于其他時間段的時間</string>
+    <string name="tiaoguang_bibo">碧波荡漾</string>
+    <string name="tiaoguang_lansemenghuan">蓝色梦幻</string>
+    <string name="tiaoguang_zisegongjian">紫色空间</string>
+    <string name="current_electricity">當前電量:%1$d%%</string>
 </resources>

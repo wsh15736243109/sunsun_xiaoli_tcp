@@ -120,7 +120,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
         setContentView(R.layout.activity_period);
         mApp = (App) getApplication();
         titlesBegin = new String[]{getString(R.string.light_zhaoming) + getString(R.string.open_time2), getString(R.string.light_shajun) + getString(R.string.open_time2), getString(R.string.chonglangbeng) + getString(R.string.open_time2)};
-        titlesEnd = new String[]{getString(R.string.light_zhaoming) + getString(R.string.close_time2), getString(R.string.light_shajun) + getString(R.string.close_time2), getString(R.string.chonglangbeng) + getString(R.string.close_time2)};
+        titlesEnd = new String[]{getString(R.string.light_zhaoming)  +getString(R.string.close_time2), getString(R.string.light_shajun) + getString(R.string.close_time2), getString(R.string.chonglangbeng) + getString(R.string.close_time2)};
         txt_title.setText("");
         mApp.mPeriodUi = this;
 //        yanChiFinish = false;
@@ -251,8 +251,6 @@ public class PeriodActivity extends BaseActivity implements Observer {
         CustomTimePickerDialog mPicker = new CustomTimePickerDialog(PeriodActivity.this, AlertDialog.THEME_HOLO_LIGHT, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String str = (hourOfDay < 10 ? "0" + hourOfDay : hourOfDay) + ":" + (minute < 10 ? ("0" + minute) : minute);
-//                text.setText(str);
                 switch (text.getId()) {
                     case R.id.period_textView3:
                         if (!(Boolean.parseBoolean(period_switch1.getTag() + ""))) {

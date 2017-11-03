@@ -446,7 +446,7 @@
     <string name="error">abnormal</string>
     <string name="device_error">Equipment exception</string>
     <string name="device_will">The device will start after %1$s minutes</string>
-    <string name="leiji_time">The pump has been used for %1$.2f hours</string>
+    <string name="leiji_time">The pump has been used for %1$d hours</string>
     <string name="dang">%1$d</string>
     <string name="mode_shoudong_open">manual mode open</string>
     <string name="mode_shoudong_close">manual mode close</string>
@@ -461,7 +461,7 @@
     <string name="chuqiliang_choose">Air output selection</string>
     <string name="workmode_choose">Work mode selection</string>
     <string name="qibeng_leiji_time">The air pump has been used for %1$.2f hours</string>
-    <string name="qibengbattery_chongdian_time">The remaining charging time is about:%1$d</string>
+    <string name="qibengbattery_chongdian_time">Servicing time:%1$d</string>
     <string name="batteryinformation">battery information</string>
     <string name="workstatustips">Work status prompt</string>
     <string name="qibengbatter_leijichongdiancount">The accumulative charge of the battery has reached %1$d</string>
@@ -488,8 +488,8 @@
     <string name="addnew_address">Add the address</string>
     <string name="choose_address_at_first">Please select the address first</string>
     <string name="current_params">Current parameter</string>
-    <string name="open_time2"> open time</string>
-    <string name="close_time2"> close time</string>
+    <string name="open_time2">&#160;open time</string>
+    <string name="close_time2">&#160;close time</string>
     <string name="dongtai_tips">Dynamic prompt</string>
     <string name="period_1">The first time period</string>
     <string name="period_2">The second time period</string>
@@ -573,7 +573,7 @@
     <string name="weishiset_yanshi_twelve">Delay 12 hours</string>
     <string name="weishiset_yanshi_twenty">Delay 24 hours</string>
     <string name="piece">%1$d part</string>
-    <string name="did_empty">设备did为空</string>
+    <string name="did_empty">Did is empty</string>
     <string name="choose_xilie">选择系列</string>
     <string name="getSkuPid_Error">获取商品规格失败</string>
     <string name="descript_product">请描述你想要的产品</string>
@@ -584,4 +584,8 @@
     <string name="add">Add </string>
     <string name="connect_device">Connected device</string>
     <string name="setting_different">Please set different time periods</string>
+    <string name="tiaoguang_bibo">碧波荡漾</string>
+    <string name="tiaoguang_lansemenghuan">蓝色梦幻</string>
+    <string name="tiaoguang_zisegongjian">紫色空间</string>
+    <string name="current_electricity">Current power:%1$d%%</string>
 </resources>

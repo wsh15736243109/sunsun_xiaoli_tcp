@@ -41,6 +41,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.PopupShuiBeng;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -77,6 +78,8 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     @IsNeedClick
     TextView txt_workmode;
     ImageView img_workstatustips;
+    private TcpUtil mTcpUtil;
+    private int pushCfg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +97,31 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         did = getIntent().getStringExtra("did");
         img_right.setBackgroundResource(R.drawable.menu);
         userPresenter = new UserPresenter(this);
+        userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, -1);
+        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
+        mTcpUtil.start();
         new Thread(runnable).start();
     }
+
+    public DeviceDetailModel detailModelTcp;
+    Handler handData = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.arg1) {
+                case 101:
+                    System.out.println(mTcpUtil.getMsg() + "----->101 TCP 接收数据");
+                    System.out.println(mTcpUtil.getMsg() + "----->101 TCP 接收数据 " + msg.obj);
+                    break;
+                case 102:
+                    detailModelTcp = (DeviceDetailModel) msg.obj;
+                    setData();
+                    System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 ");
+                    System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 " + detailModelTcp.getDid());
+                    break;
+            }
+        }
+    };
 
     Runnable runnable = new Runnable() {
         @Override
@@ -170,25 +196,18 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 startActivity(intent);
                 break;
             case R.id.img_yichangbaojing:
-                if (mApp.deviceShuiBengUI.isConnect) {
-//                    userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, isYiChangBaoJing ? 0 : 1, -1);
-                    userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
+                pushCfg = deviceDetailModel.getPush_cfg();
+                if (isConnect) {
+//                    userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
+                    userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, pushCfg ^ (int) Math.pow(2, 1));
                 } else {
                     MAlert.alert(getString(R.string.disconnect));
                 }
                 break;
-            case R.id.up:
-                if (state == 2) {
-                    MAlert.alert(getString(R.string.device_trouble));
-                    return;
-                }
-                if (mApp.deviceShuiBengUI.isConnect && deviceDetailModel != null) {
-                    if (currentGear < 4) {
-                        currentGear++;
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, currentGear, -1, -1, -1);
-                    } else {
-                        MAlert.alert(getString(R.string.highest));
-                    }
+            case R.id.img_workstatustips:
+                if (isConnect) {
+                    pushCfg = deviceDetailModel.getPush_cfg();
+                    userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, pushCfg ^ (int) Math.pow(2, 0));
                 } else {
                     MAlert.alert(getString(R.string.disconnect));
                 }
@@ -204,42 +223,40 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 showAlert(txt_chuqiliangchoose, getString(R.string.liuliang_choose), liuliang);
                 break;
             case R.id.re_workmode:
-                String[] weishiTime = new String[60];
-                for (int i = 0; i < weishiTime.length; i++) {
-                    weishiTime[i] = (i + 1) + getString(R.string.minute);
-                }
-                showAlert(txt_weishitime, getString(R.string.weishi_timechoose), weishiTime);
+                String[] woekMode = new String[3];
+                woekMode[0] = getString(R.string.mode_jianxie);
+                woekMode[1] = getString(R.string.mode_normal);
+                woekMode[2] = getString(R.string.mode_yingji);
+                showAlert(txt_weishitime, "", woekMode);
                 break;
             case R.id.shuibeng_wiget:
-                switch (state) {
-                    case 0:
-                        //当前处于停机状态
-//                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds);
-                        break;
-                    case 1:
-//                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds);//
-                        break;
-                    case 2:
-                        //设备有误不能进行操作
-//                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
-//                        userPresenter.deviceSet_shuiBeng(mApp.deviceShuiBengUI.did, -1, -1, -1, -1, 1, -1);
-                        MAlert.alert(getString(R.string.device_trouble));
-                        break;
-                    case 3:
-//                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 1, -1);
-                        break;
-                }
-                break;
+//                switch (state) {
+//                    case 0:
+//                        //当前处于停机状态
+////                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
+//                        if ((deviceDetailModel.getState()&(int)Math.pow(2,1))==(int)Math.pow(2,1)) {
+                userPresenter.deviceSet_qibeng(did, -1, -1, deviceDetailModel.getState() ^ (int) Math.pow(2, 1), -1, -1, -1, -1, -1);
+//                        }
+//                        break;
+//                    case 1:
+////                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
+//                        userPresenter.deviceSet_qibeng(did, -1, -1, 0, -1, -1, -1,-1,-1);//
+//                        break;
+//                    case 2:
+//                        //设备有误不能进行操作
+////                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
+//                        userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1,-1,-1);
+//                        MAlert.alert(getString(R.string.device_trouble));
+//                        break;
+//                }
+//                break;
         }
 
     }
 
     private void showAlert(final TextView txt_liuliangchoose, String title, String[] msg) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-        alert.setTitle(title);
+//        alert.setTitle(title);
         final NumberPicker numberPicker = new NumberPicker(this);
         numberPicker.setDisplayedValues(msg);
         numberPicker.setMinValue(0);
@@ -251,13 +268,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 switch (txt_liuliangchoose.getId()) {
                     case R.id.txt_liuliangchoose:
                         //设置档位
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue(), -1, -1, -1);
+                        userPresenter.deviceSet_qibeng(did, -1, -1, -1, numberPicker.getValue(), -1, -1, -1, -1);
                         break;
                     case R.id.txt_weishitime:
-                        //设置喂食
-                        int fcd = numberPicker.getValue() + 1;
-                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", fcd * 60, -1);
-//                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, fcd * 60);
+                        //设置工作模式
+                        userPresenter.deviceSet_qibeng(deviceDetailModel.getId(), -1, numberPicker.getValue(), -1, -1, -1, -1, -1, -1);
                         break;
                 }
             }
@@ -352,13 +367,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deviceSet_shuiBengsuccess) {
                 MAlert.alert(entity.getData());
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        beginRequest();
-                    }
-                }, 1000);
-
+                beginRequest();
             } else if (entity.getEventType() == UserPresenter.deviceSet_shuiBengfail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
@@ -403,36 +412,34 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         String strState = "";
         //运行状态
         state = deviceDetailModel.getState();
-        switch (state) {
-            case 0:
-                //停机
-                txt_status.setText(getString(R.string.stop));
-                strState = String.format(getString(R.string.status_stop), deviceDetailModel.getGear() + 1);
-//                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-            case 1:
-                //运行
-                strState =String.format(getString(R.string.status_running), (deviceDetailModel.getGear() + 1) );
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-            case 2:
-                //故障
-                strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-            case 3:
-                strState = String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-//                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-                break;
-        }
-        txt_current_status_value.setText(strState);
-        txt_chuqiliangchoose.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1));
+//        switch (state) {
+//            case 0:
+//                //停机
+//                txt_status.setText(getString(R.string.stop));
+//                strState = String.format(getString(R.string.status_stop), deviceDetailModel.getGear() + 1);
+////                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
+//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+//                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+//                break;
+//            case 1:
+//                //运行
+//                strState = String.format(getString(R.string.status_running), (deviceDetailModel.getGear() + 1));
+//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
+//                Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+//                break;
+//            case 2:
+//                //故障
+//                strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
+//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
+//                Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+//                break;
+//            case 3:
+//                strState = String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
+////                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
+//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+//                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+//                break;
+//        }
         int mode = Integer.parseInt(deviceDetailModel.getMode());
         switch (mode) {
             case 0:
@@ -445,17 +452,34 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 txt_workmode.setText(getString(R.string.mode_yingji));
                 break;
         }
+        if ((state & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+            txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+            Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+            strState = String.format(getString(R.string.status_running), (deviceDetailModel.getGear() + 1));
+        }else{
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+        }
+//        txt_current_status_value.setText(strState);
+        txt_current_status_value.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1) + "," + txt_workmode.getText());
 
-        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getOnline_time() / 3600.0));
+
+        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh()));
         int push_cfg = deviceDetailModel.getPush_cfg();
         if ((push_cfg & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
             img_workstatustips.setBackgroundResource(R.drawable.kai);
-        }else{
+        } else {
             img_workstatustips.setBackgroundResource(R.drawable.guan);
         }
+        if ((push_cfg & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
+            isYiChangBaoJing = true;
+        } else {
+            isYiChangBaoJing = false;
+        }
+        img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
 //        shuibeng_wiget.setState(state);
         txt_current_status_value.setText(strState);
-        if (mApp.deviceQiBengBatteryUI!=null) {
+        if (mApp.deviceQiBengBatteryUI != null) {
             mApp.deviceQiBengBatteryUI.setData();
         }
         if (mApp.updateActivityUI != null) {

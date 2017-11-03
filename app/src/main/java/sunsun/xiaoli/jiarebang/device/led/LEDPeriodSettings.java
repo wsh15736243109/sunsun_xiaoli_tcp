@@ -34,6 +34,7 @@ import sunsun.xiaoli.jiarebang.adapter.SwipLedAddShiDuanadapter;
 import sunsun.xiaoli.jiarebang.app.App;
 
 import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
+import static com.itboye.pondteam.volley.TimesUtils.localToUTC;
 
 public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuanadapter.ISwitchClickListenter, XAlertDialog.OnEditInputFinishedListener, Observer {
 
@@ -44,7 +45,6 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
     App mApp;
     private SwipLedAddShiDuanadapter addShiDuanadapter;
     public ArrayList<DeviceDetailModel.TimePeriod> arPer = new ArrayList<>();
-    public boolean isUpdateUI = true;
     UserPresenter userPresenter;
     private int position;
 
@@ -124,9 +124,9 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
                     return;
                 }
                 DeviceDetailModel.TimePeriod timePeriod = new DeviceDetailModel.TimePeriod();
-                timePeriod.setH0(6);
+                timePeriod.setH0(Integer.parseInt(localToUTC("6","HH","HH")));
                 timePeriod.setM0(30);
-                timePeriod.setH1(6);
+                timePeriod.setH1(Integer.parseInt(localToUTC("6","HH","HH")));
                 timePeriod.setM1(0);
                 timePeriod.setEn(1);
                 timePeriod.setW(50);
@@ -159,10 +159,10 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 if (isKaiQi) {
-                    arPer.get(position).setH0(hourOfDay);
+                    arPer.get(position).setH0(Integer.parseInt(localToUTC(hourOfDay+"","HH","HH")));
                     arPer.get(position).setM0(minute);
                 }else{
-                    arPer.get(position).setH1(hourOfDay);
+                    arPer.get(position).setH1(Integer.parseInt(localToUTC(hourOfDay+"","HH","HH")));
                     arPer.get(position).setM1(minute);
                 }
                 putNewData(arPer);
@@ -173,7 +173,6 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
         mPicker.show();
     }
     public void setData(String data) {
-        if (isUpdateUI) {
             Type type1 = new TypeToken<ArrayList<DeviceDetailModel.TimePeriod>>() {
             }.getType();
             ArrayList<DeviceDetailModel.TimePeriod> arTemp= new Gson().fromJson(data, type1);
@@ -191,9 +190,6 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
                     exListView.expandGroup(i);// 关键步骤3,初始化时，将ExpandableListView以展开的方式呈现
                 }
             }
-            isUpdateUI = false;
-
-        }
     }
 
     @Override
@@ -217,7 +213,6 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
             }
             if (entity.getEventType() == UserPresenter.deviceSet_led_success) {
                 MAlert.alert(entity.getData());
-                isUpdateUI = true;
                 mApp.ledDetailActivity.beginRequest();
             } else if (entity.getEventType() == UserPresenter.deviceSet_led_fail) {
                 MAlert.alert(entity.getData());

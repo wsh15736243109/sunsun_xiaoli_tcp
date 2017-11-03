@@ -115,7 +115,6 @@
         <activity android:name=".sunsunlingshou.activity.me.MyPublishDetailActivity" />
         <activity android:name=".sunsunlingshou.activity.me.ServiceIntroduceActivity" />
         <activity android:name=".sunsunlingshou.activity.home.AppointmentInstallStepOneActivity" />
-        <activity android:name=".device.pondteam.AddPondDevice" />
         <activity
             android:name=".sunsunlingshou.activity.home.AppointmentInstallConfirmOrderActivity"
             android:windowSoftInputMode="adjustPan" />
@@ -162,11 +161,20 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".device.qibeng.DeviceQiBengBatteryDetailActivity" />
         <activity android:name=".device.qibeng.DeviceQiBengDetailActivity" />
-        <activity android:name=".device.pondteam.ActivityPondDeviceDetail" />
         <activity android:name=".sunsunlingshou.activity.ArticleActivity" />
         <activity android:name=".sunsunlingshou.activity.home.RedBagAcitivty" />
         <activity android:name=".device.weishiqi.WeiShiQiDetailActivity"></activity>
         <activity android:name=".device.EditDeviceActivity"></activity>
+
+
+        <activity android:name=".device.pondteam.AddPondDevice" />
+        <activity android:name=".device.pondteam.ActivityPondDeviceDetail" />
+        <activity android:name=".device.pondteam.ActivityZiDong"></activity>
+        <activity android:name=".device.pondteam.ActivityShouDong"></activity>
+        <activity android:name=".device.pondteam.ActivityUvLamp"></activity>
+        <activity android:name=".device.pondteam.ActivityChaZuoBDetail"></activity>
+        <activity android:name=".device.pondteam.PondTeamRegisterActivity"></activity>
+        <activity android:name=".device.pondteam.WenDuPeriodActivity"></activity>
     </application>
 
 </manifest>

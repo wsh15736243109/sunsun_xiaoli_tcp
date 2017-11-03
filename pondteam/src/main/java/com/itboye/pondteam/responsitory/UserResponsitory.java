@@ -123,10 +123,11 @@ public class UserResponsitory extends BaseNetRepository implements
     private String adtExtraUpdate = "By_SunsunUserDevice_updateAdtExtra";
     private String shuibengExtraUpdate = "By_SunsunUserDevice_updateWaterPumpExtra";
     private String sendEmailCode = "By_SecurityCode_sendEmail";
-    private String authDevicePwd_CP="By_SunsunCp1000_auth";//CP1000验证接口
-    private String getDeviceCP1000Detail="By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
-    private String getDeviceWeishiQi="By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
-    private String updateMobileMsg="By_SunsunUserDevice_update";//更改设备信息
+    private String authDevicePwd_CP = "By_SunsunCp1000_auth";//CP1000验证接口
+    private String getDeviceCP1000Detail = "By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
+    private String getDeviceWeishiQi = "By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
+    private String updateMobileMsg = "By_SunsunUserDevice_update";//更改设备信息
+    private String deviceSet_qibeng="By_SunsunCp1000_devicesCtrl";//CP1000設置接口
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -719,7 +720,8 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (did.startsWith("S07")) {
             typeKey = getDeviceCP1000Detail;
-        }if (did.startsWith("S08")) {
+        }
+        if (did.startsWith("S08")) {
             typeKey = getDeviceWeishiQi;
         }
         (new ByJsonRequest.Builder<DeviceDetailModel>())
@@ -804,7 +806,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("device_nickname", device_nickname);
         map.put("device_type", device_type);
-        String s=getTimeZone();
+        String s = getTimeZone();
         map.put("timezone", s);
         map.put("lang", "zh-cn");
         map.put("extra", extra);
@@ -1058,7 +1060,7 @@ public class UserResponsitory extends BaseNetRepository implements
         } else if (deviceType.startsWith("S06")) {
             //adt验证
             typekey = authDevicePwd_Adt;
-        }else if (deviceType.startsWith("S07")) {
+        } else if (deviceType.startsWith("S07")) {
             //CP1000验证
             typekey = authDevicePwd_CP;
         }
@@ -1495,12 +1497,12 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void getDeviceOnLineState(String did,String uid) {
+    public void getDeviceOnLineState(String did, String uid) {
         Type type = new TypeToken<DeviceDetailModel>() {
         }.getType();
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
-        String typeKey=getJinLiGangDetail;
+        String typeKey = getJinLiGangDetail;
         if (did.startsWith("S03")) {
             //806获取设备详情
             typeKey = getJinLiGangDetail;
@@ -1521,11 +1523,12 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (did.startsWith("S06")) {
             typeKey = getDeviceLedLightDetail;
-        }if (did.startsWith("S07")) {
+        }
+        if (did.startsWith("S07")) {
             typeKey = getDeviceCP1000Detail;
         }
         map.put("did", did);
-        map.put("uid",uid);
+        map.put("uid", uid);
         (new ByJsonRequest.Builder<DeviceDetailModel>())
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
@@ -1547,6 +1550,46 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("timezone", timezone);
         (new ByJsonRequest.Builder<String>())
                 .setTypeVerParamsAndReturnClass(updateMobileMsg, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void deviceSet_qibeng(String did, int dev_lock, int mode, int state, int gear, int wh, int ch_cnt, int b_life, int push_cfg) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("did", did);
+        if (dev_lock != -1) {
+            map.put("dev_lock", dev_lock);
+        }
+        if (mode != -1) {
+            map.put("mode", mode);
+        }
+        if (state != -1) {
+            map.put("state", state);
+        }
+        if (gear != -1) {
+            map.put("gear", gear);
+        }
+        if (wh != -1) {
+            map.put("wh", wh);
+        }
+        if (ch_cnt != -1) {
+            map.put("ch_cnt", ch_cnt);
+        }
+        if (b_life != -1) {
+            map.put("b_life", b_life);
+        }
+        if (push_cfg != -1) {
+            map.put("push_cfg", push_cfg);
+        }
+        (new ByJsonRequest.Builder<String>())
+                .setTypeVerParamsAndReturnClass(deviceSet_qibeng, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
                                 getListener()))

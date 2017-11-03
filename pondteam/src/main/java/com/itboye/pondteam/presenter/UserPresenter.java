@@ -156,6 +156,8 @@ public class UserPresenter extends BasePresenter implements
     public static String getDeviceOnLineState_fail = "_getDeviceOnLineState_success";
     public static String updateMobileMsg_fail="_updateMobileMsg_fail";
     public static String updateMobileMsg_success="_updateMobileMsg_success";
+    public static String deviceSet_qibeng_success="_deviceSet_qibeng_success";
+    public static String deviceSet_qibeng_fail="_deviceSet_qibeng_fail";
 
 
     public UserPresenter(Observer observer) {
@@ -1449,5 +1451,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.updateMobileMsg(sp, device_id, lang, timezone);
+    }
+
+    @Override
+    public void deviceSet_qibeng(String did, int dev_lock, int mode, int state, int gear, int wh, int ch_cnt, int b_life, int push_cfg) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(deviceSet_qibeng_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(deviceSet_qibeng_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.deviceSet_qibeng(did,  dev_lock,  mode,  state,  gear,  wh,  ch_cnt,  b_life,  push_cfg);
     }
 }

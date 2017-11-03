@@ -31,9 +31,8 @@
         <SeekBar
             android:id="@+id/seek_white"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_50DP"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:progressDrawable="@drawable/progress_bg"
             android:thumb="@drawable/is_checkbox"
             android:layout_toLeftOf="@+id/txt_white_progress"
             android:layout_toRightOf="@+id/img_white"
@@ -177,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/tiaoguang_xitong"
-                android:textColor="@color/main_green" />
+                android:textColor="@color/black" />
 
         </RelativeLayout>
 

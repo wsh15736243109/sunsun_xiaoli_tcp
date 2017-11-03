@@ -257,6 +257,7 @@ public class MyBattery extends View {
             batteryValue = 100;
         }
         this.batteryValue = batteryValue;
+        invalidate();
     }
 
     public void animalStart(long duration) {
