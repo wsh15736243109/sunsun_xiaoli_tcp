@@ -29,6 +29,7 @@ public class Util {
 
     /**
      * 弃用，某些符合规定的图片也会包checkArgs invalid
+     *
      * @param bmp
      * @param needRecycle
      * @return
@@ -97,8 +98,9 @@ public class Util {
      * }
      * return this.mediaObject.checkArgs();
      * }
-     *
+     * <p>
      * 新版
+     *
      * @param bmp
      * @param needRecycle
      * @return
@@ -301,24 +303,37 @@ public class Util {
         return null;
     }
 
-    public static String getNickName(String did){
+    public static String getNickName(String... args) {
+        String did = args[0];
+        String type = "ADT-C";
+        try {
+            if (args.length > 1) {
+                type = args[1];
+            }
+        }catch (Exception e){
+
+        }
         if (did.startsWith("S01")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_chitangguolv);
-        }else if (did.startsWith("S02")) {
+        } else if (did.startsWith("S02")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhinengjiarebang);
-        }else if (did.startsWith("S03")) {
+        } else if (did.startsWith("S03")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhineng806);
-        }else if (did.startsWith("S04")) {
+        } else if (did.startsWith("S04")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_yuancheng_ph);
-        }else if (did.startsWith("S05")) {
+        } else if (did.startsWith("S05")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhinengbianpinshuibeng);
-        }else if (did.startsWith("S06")) {
-            return MyApplication.getInstance().getResources().getString(R.string.device_shuizudeng);
-        }else if (did.startsWith("S07")) {
+        } else if (did.startsWith("S06")) {
+            if (type.equalsIgnoreCase("S06-1")) {
+                return "ADT-C";
+            }else{
+                return "ADT-H";
+            }
+        } else if (did.startsWith("S07")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng);
-        }else if (did.startsWith("S08")) {
+        } else if (did.startsWith("S08")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_weishiqing);
-        }else if (did.startsWith("SCHD")) {
+        } else if (did.startsWith("SCHD")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
         }
         return "device";

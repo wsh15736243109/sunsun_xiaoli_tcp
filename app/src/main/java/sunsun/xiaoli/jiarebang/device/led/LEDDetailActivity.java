@@ -91,6 +91,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         img_right.setBackgroundResource(R.drawable.menu);
         popupWindow = new CameraConsolePopupWindow(
                 this, this);
+        showProgressDialog(getString(R.string.posting),true);
         mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
         mTcpUtil.start();
         new Thread(runnable).start();
@@ -107,6 +108,11 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                     System.out.println(mTcpUtil.getMsg() + "----->101 TCP 接收数据 " + msg.obj);
                     break;
                 case 102:
+                    try {
+                        closeProgressDialog();
+                    }catch (Exception e){
+
+                    }
                     detailModelTcp = (DeviceDetailModel) msg.obj;
                     setData();
                     System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 ");
@@ -236,8 +242,8 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 builder.show();
                 break;
             case R.id.re_shiduansetting:
-                if (detailModelTcp.getMode().equals("1")) {
-                    MAlert.alert(getString(R.string.changeshodongatfirst));
+                if (detailModelTcp.getMode().equals("0")) {
+                    MAlert.alert(getString(R.string.changezidongatfirst));
                     return;
                 }
                 intent = new Intent(this, LEDPeriodSettings.class);
@@ -477,7 +483,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
             switchTurn(isOpen);
             img_tuisong_status.setBackgroundResource(isTuiSong ? R.drawable.kai : R.drawable.guan);
             txt_moshi_value.setText(getString(R.string.current_mode) + "" + (detailModelTcp.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)));
-            txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModelTcp.getMode().equals("0") ? getString(R.string.manual) : getString(R.string.auto)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
+            txt_zhuangtai.setText(Html.fromHtml(getString(R.string.current_status) + "<font color=\"#00bbaa\">" + (detailModelTcp.getMode().equals("0") ? getString(R.string.mode_shoudong) : getString(R.string.mode_zidong)) + "，" + (isOpen ? getString(R.string.opening) : getString(R.string.close)) + "</font>"));
             String per = detailModelTcp.getPer();
             if (app.ledPeriodSettingsUI != null) {
                 app.ledPeriodSettingsUI.setData(per);

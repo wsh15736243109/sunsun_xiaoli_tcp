@@ -138,12 +138,7 @@ public class TiaoGuangActivity extends BaseActivity implements Observer {
         }
         setXiLieValue();
         if (position == -1) {
-            seek_white.setProgress(mApp.ledDetailActivity.detailModelTcp.getW());
-            seek_green.setProgress(mApp.ledDetailActivity.detailModelTcp.getG());
-            seek_red.setProgress(mApp.ledDetailActivity.detailModelTcp.getR());
-            txt_white_progress.setText(mApp.ledDetailActivity.detailModelTcp.getW() + "%");
-            txt_green_progress.setText(mApp.ledDetailActivity.detailModelTcp.getG() + "%");
-            txt_red_progress.setText(mApp.ledDetailActivity.detailModelTcp.getR() + "%");
+            setColorValueAndProgress(mApp.ledDetailActivity.detailModelTcp.getW(), 0, mApp.ledDetailActivity.detailModelTcp.getG(), mApp.ledDetailActivity.detailModelTcp.getR());
             li_theme.setVisibility(View.VISIBLE);
             li_btn.setVisibility(View.GONE);
             setColorValueAndProgress(mApp.ledDetailActivity.detailModelTcp.getW(), mApp.ledDetailActivity.detailModelTcp.getB(), mApp.ledDetailActivity.detailModelTcp.getG(), mApp.ledDetailActivity.detailModelTcp.getR());
@@ -158,19 +153,21 @@ public class TiaoGuangActivity extends BaseActivity implements Observer {
         swichCaseSelet();
     }
 
+    //设置高亮选中项
     private void swichCaseSelet() {
         for (TextView textView : textViews) {
             textView.setTextColor(getResources().getColor(R.color.black));
         }
-        if (mApp.ledDetailActivity.detailModelTcp.getW()==100&&mApp.ledDetailActivity.detailModelTcp.getB()==60&&mApp.ledDetailActivity.detailModelTcp.getG()==80&&mApp.ledDetailActivity.detailModelTcp.getR()==100) {
+        if (mApp.ledDetailActivity.detailModelTcp.getW() == 100 && mApp.ledDetailActivity.detailModelTcp.getB() == 60 && mApp.ledDetailActivity.detailModelTcp.getG() == 80 && mApp.ledDetailActivity.detailModelTcp.getR() == 100) {
             textViews[0].setTextColor(getResources().getColor(R.color.red500));
-        }else if(mApp.ledDetailActivity.detailModelTcp.getW()==100&&mApp.ledDetailActivity.detailModelTcp.getB()==80&&mApp.ledDetailActivity.detailModelTcp.getG()==100&&mApp.ledDetailActivity.detailModelTcp.getR()==40){
+        } else if (mApp.ledDetailActivity.detailModelTcp.getW() == 100 && mApp.ledDetailActivity.detailModelTcp.getB() == 80 && mApp.ledDetailActivity.detailModelTcp.getG() == 100 && mApp.ledDetailActivity.detailModelTcp.getR() == 40) {
             textViews[1].setTextColor(getResources().getColor(R.color.red500));
-        }else if(mApp.ledDetailActivity.detailModelTcp.getW()==100&&mApp.ledDetailActivity.detailModelTcp.getB()==100&&mApp.ledDetailActivity.detailModelTcp.getG()==100&&mApp.ledDetailActivity.detailModelTcp.getR()==80){
+        } else if (mApp.ledDetailActivity.detailModelTcp.getW() == 100 && mApp.ledDetailActivity.detailModelTcp.getB() == 100 && mApp.ledDetailActivity.detailModelTcp.getG() == 100 && mApp.ledDetailActivity.detailModelTcp.getR() == 80) {
             textViews[2].setTextColor(getResources().getColor(R.color.red500));
         }
     }
 
+    //设置水草灯或海水灯的各种颜色通道系列
     private void setXiLieValue() {
         for (int i = 0; i < textViews.length; i++) {
             TextView textView = textViews[i];

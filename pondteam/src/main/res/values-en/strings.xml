@@ -461,7 +461,7 @@
     <string name="chuqiliang_choose">Air output selection</string>
     <string name="workmode_choose">Work mode selection</string>
     <string name="qibeng_leiji_time">The air pump has been used for %1$.2f hours</string>
-    <string name="qibengbattery_chongdian_time">Servicing time:%1$d</string>
+    <string name="qibengbattery_chongdian_time">The accumulative working time of the battery:<font color='#00ff00'>%1$dh</font></string>
     <string name="batteryinformation">battery information</string>
     <string name="workstatustips">Work status prompt</string>
     <string name="qibengbatter_leijichongdiancount">The accumulative charge of the battery has reached %1$d</string>
@@ -588,4 +588,10 @@
     <string name="tiaoguang_lansemenghuan">蓝色梦幻</string>
     <string name="tiaoguang_zisegongjian">紫色空间</string>
     <string name="current_electricity">Current power:%1$d%%</string>
+    <string name="qidong">启动</string>
+    <string name="qibeng_status">%1$d档，%2$s，%3$s。</string>
+    <string name="qibeng_stop">停止中</string>
+    <string name="qibeng_running">运行中</string>
+    <string name="changezidongatfirst" >Please adjust the pattern to auto mode first</string>
+    <string name="hasbeanuserelectricity">已启用电池供电</string>
 </resources>

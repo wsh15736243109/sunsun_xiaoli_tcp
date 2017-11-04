@@ -29,9 +29,6 @@ import com.itboye.pondteam.utils.DeviceStatusShow;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Observable;
 import java.util.Observer;
 
@@ -56,7 +53,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
 
     UserPresenter userPresenter;
 
-    TextView txt_title, txt_shuibengliuliang, txt_gonglv;
+    TextView txt_title;
     App mApp;
     public DeviceQiBengDetailActivity shuibengUI;
     private String did;
@@ -98,6 +95,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         img_right.setBackgroundResource(R.drawable.menu);
         userPresenter = new UserPresenter(this);
         userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, -1);
+        showProgressDialog(getString(R.string.posting), true);
         mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
         mTcpUtil.start();
         new Thread(runnable).start();
@@ -115,6 +113,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                     break;
                 case 102:
                     detailModelTcp = (DeviceDetailModel) msg.obj;
+                    try {
+                        closeProgressDialog();
+                    } catch (Exception e) {
+
+                    }
                     setData();
                     System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 ");
                     System.out.println(mTcpUtil.getMsg() + "----->102 TCP 接收数据 " + detailModelTcp.getDid());
@@ -153,16 +156,14 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     @Override
     public void onClick(View v) {
         Intent intent = null;
-        int currentGear = 0;
-        if (deviceDetailModel != null) {
-            currentGear = deviceDetailModel.getGear();
-        }
         switch (v.getId()) {
             case R.id.img_right:
                 showMenu();
                 break;
             case R.id.re_battery:
-                startActivity(new Intent(this, DeviceQiBengBatteryDetailActivity.class));
+                if (detailModelTcp != null) {
+                    startActivity(new Intent(this, DeviceQiBengBatteryDetailActivity.class));
+                }
                 break;
             case R.id.tvUpdateDeviceName:
                 if (popupShuiBeng != null && popupShuiBeng.isShowing()) {
@@ -196,7 +197,10 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 startActivity(intent);
                 break;
             case R.id.img_yichangbaojing:
-                pushCfg = deviceDetailModel.getPush_cfg();
+                if (detailModelTcp == null) {
+                    return;
+                }
+                pushCfg = detailModelTcp.getPush_cfg();
                 if (isConnect) {
 //                    userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
                     userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, pushCfg ^ (int) Math.pow(2, 1));
@@ -205,8 +209,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 }
                 break;
             case R.id.img_workstatustips:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 if (isConnect) {
-                    pushCfg = deviceDetailModel.getPush_cfg();
+                    pushCfg = detailModelTcp.getPush_cfg();
                     userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, pushCfg ^ (int) Math.pow(2, 0));
                 } else {
                     MAlert.alert(getString(R.string.disconnect));
@@ -216,63 +223,54 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 finish();
                 break;
             case R.id.re_chuqiliang_choose:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 String[] liuliang = new String[5];
                 for (int i = 0; i < liuliang.length; i++) {
                     liuliang[i] = String.format(getString(R.string.dang), i + 1);
                 }
-                showAlert(txt_chuqiliangchoose, getString(R.string.liuliang_choose), liuliang);
+                showAlert(txt_chuqiliangchoose, getString(R.string.liuliang_choose), liuliang, detailModelTcp.getGear());
                 break;
             case R.id.re_workmode:
+                if (detailModelTcp == null) {
+                    return;
+                }
                 String[] woekMode = new String[3];
-                woekMode[0] = getString(R.string.mode_jianxie);
-                woekMode[1] = getString(R.string.mode_normal);
+                woekMode[0] = getString(R.string.mode_normal);
+                woekMode[1] = getString(R.string.mode_jianxie);
                 woekMode[2] = getString(R.string.mode_yingji);
-                showAlert(txt_weishitime, "", woekMode);
+                showAlert(txt_workmode, "", woekMode, Integer.parseInt(detailModelTcp.getMode()));
                 break;
             case R.id.shuibeng_wiget:
-//                switch (state) {
-//                    case 0:
-//                        //当前处于停机状态
-////                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-//                        if ((deviceDetailModel.getState()&(int)Math.pow(2,1))==(int)Math.pow(2,1)) {
-                userPresenter.deviceSet_qibeng(did, -1, -1, deviceDetailModel.getState() ^ (int) Math.pow(2, 1), -1, -1, -1, -1, -1);
-//                        }
-//                        break;
-//                    case 1:
-////                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-//                        userPresenter.deviceSet_qibeng(did, -1, -1, 0, -1, -1, -1,-1,-1);//
-//                        break;
-//                    case 2:
-//                        //设备有误不能进行操作
-////                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
-//                        userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1,-1,-1);
-//                        MAlert.alert(getString(R.string.device_trouble));
-//                        break;
-//                }
-//                break;
+                if (detailModelTcp == null) {
+                    return;
+                }
+                userPresenter.deviceSet_qibeng(did, -1, -1, detailModelTcp.getState() == 0 ? 1 : 0, -1, -1, -1, -1, -1);
         }
 
     }
 
-    private void showAlert(final TextView txt_liuliangchoose, String title, String[] msg) {
+    private void showAlert(final TextView txt_liuliangchoose, String title, String[] msg, int selectValue) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
 //        alert.setTitle(title);
         final NumberPicker numberPicker = new NumberPicker(this);
         numberPicker.setDisplayedValues(msg);
         numberPicker.setMinValue(0);
         numberPicker.setMaxValue(msg.length - 1);
+        numberPicker.setValue(selectValue);
         numberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         alert.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (txt_liuliangchoose.getId()) {
-                    case R.id.txt_liuliangchoose:
+                    case R.id.txt_chuqiliangchoose:
                         //设置档位
                         userPresenter.deviceSet_qibeng(did, -1, -1, -1, numberPicker.getValue(), -1, -1, -1, -1);
                         break;
-                    case R.id.txt_weishitime:
+                    case R.id.txt_workmode:
                         //设置工作模式
-                        userPresenter.deviceSet_qibeng(deviceDetailModel.getId(), -1, numberPicker.getValue(), -1, -1, -1, -1, -1, -1);
+                        userPresenter.deviceSet_qibeng(did, -1, numberPicker.getValue(), -1, -1, -1, -1, -1, -1);
                         break;
                 }
             }
@@ -365,10 +363,10 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 setData();
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
-            } else if (entity.getEventType() == UserPresenter.deviceSet_shuiBengsuccess) {
+            } else if (entity.getEventType() == UserPresenter.deviceSet_qibeng_success) {
                 MAlert.alert(entity.getData());
                 beginRequest();
-            } else if (entity.getEventType() == UserPresenter.deviceSet_shuiBengfail) {
+            } else if (entity.getEventType() == UserPresenter.deviceSet_qibeng_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
@@ -396,95 +394,69 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         seconds = 0;
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
-        try {
-            JSONObject json = new JSONObject(deviceDetailModel.getExtra());
-            if (json.has("push_cfg")) {
-                isYiChangBaoJing = json.getInt("push_cfg") == 1;
-            }
-            if (json.has("fcd")) {
-                seconds = json.getInt("fcd");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-//        txt_gonglv.setText(deviceDetailModel.getPwr() + "W");
-        String strState = "";
-        //运行状态
-        state = deviceDetailModel.getState();
-//        switch (state) {
-//            case 0:
-//                //停机
-//                txt_status.setText(getString(R.string.stop));
-//                strState = String.format(getString(R.string.status_stop), deviceDetailModel.getGear() + 1);
-////                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//            case 1:
-//                //运行
-//                strState = String.format(getString(R.string.status_running), (deviceDetailModel.getGear() + 1));
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//            case 2:
-//                //故障
-//                strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
-//            case 3:
-//                strState = String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-////                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
-//                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-//                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-//                break;
+//        try {
+//            JSONObject json = new JSONObject(deviceDetailModel.getExtra());
+//            if (json.has("push_cfg")) {
+//                isYiChangBaoJing = json.getInt("push_cfg") == 1;
+//            }
+//            if (json.has("fcd")) {
+//                seconds = json.getInt("fcd");
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
 //        }
-        int mode = Integer.parseInt(deviceDetailModel.getMode());
-        switch (mode) {
-            case 0:
-                txt_workmode.setText(getString(R.string.mode_normal));
-                break;
-            case 1:
-                txt_workmode.setText(getString(R.string.mode_jianxie));
-                break;
-            case 2:
-                txt_workmode.setText(getString(R.string.mode_yingji));
-                break;
-        }
-        if ((state & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
-            txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-            Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-            strState = String.format(getString(R.string.status_running), (deviceDetailModel.getGear() + 1));
-        }else{
-                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
-        }
-//        txt_current_status_value.setText(strState);
-        txt_current_status_value.setText(String.format(getString(R.string.dang), deviceDetailModel.getGear() + 1) + "," + txt_workmode.getText());
+//        img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
+        //运行状态
+        if (detailModelTcp != null) {
+            state = detailModelTcp.getState();
+            int mode = Integer.parseInt(detailModelTcp.getMode());
+            switch (mode) {
+                case 0:
+                    txt_workmode.setText(getString(R.string.mode_normal));
+                    break;
+                case 1:
+                    txt_workmode.setText(getString(R.string.mode_jianxie));
+                    break;
+                case 2:
+                    txt_workmode.setText(getString(R.string.mode_yingji));
+                    break;
+            }
+            int gear = detailModelTcp.getGear();
+            if ((state & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
+                if ((state & (int) Math.pow(2, 0)) == (int) Math.pow(2, 0)) {
+                    txt_current_status_value.setText(getString(R.string.hasbeanuserelectricity));
+                } else {
+                    txt_current_status_value.setText(String.format(getString(R.string.qibeng_status), gear + 1, txt_workmode.getText(), getString(R.string.qibeng_running)));
+                }
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.stop) + "</b>"));
 
-
-        txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh()));
-        int push_cfg = deviceDetailModel.getPush_cfg();
-        if ((push_cfg & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
-            img_workstatustips.setBackgroundResource(R.drawable.kai);
-        } else {
-            img_workstatustips.setBackgroundResource(R.drawable.guan);
-        }
-        if ((push_cfg & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
-            isYiChangBaoJing = true;
-        } else {
-            isYiChangBaoJing = false;
-        }
-        img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-//        shuibeng_wiget.setState(state);
-        txt_current_status_value.setText(strState);
-        if (mApp.deviceQiBengBatteryUI != null) {
-            mApp.deviceQiBengBatteryUI.setData();
-        }
-        if (mApp.updateActivityUI != null) {
-            if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                mApp.updateActivityUI.setProgress(deviceDetailModel.getUpd_state() + "");
+                Glide.with(getApplicationContext()).load(R.drawable.weishi_running).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+            } else {
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.qidong) + "</b>"));
+                txt_current_status_value.setText(String.format(getString(R.string.qibeng_status), gear + 1, txt_workmode.getText(), getString(R.string.qibeng_stop)));
+                Glide.with(getApplicationContext()).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+            }
+            txt_chuqiliangchoose.setText(String.format(getString(R.string.dang), gear + 1));
+            txt_leijitime.setText(String.format(getString(R.string.leiji_time), detailModelTcp.getWh()));
+            int push_cfg = detailModelTcp.getPush_cfg();
+            if ((push_cfg & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
+                img_workstatustips.setBackgroundResource(R.drawable.kai);
+            } else {
+                img_workstatustips.setBackgroundResource(R.drawable.guan);
+            }
+            if ((push_cfg & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
+                isYiChangBaoJing = true;
+            } else {
+                isYiChangBaoJing = false;
+            }
+            img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
+            if (mApp.deviceQiBengBatteryUI != null) {
+                mApp.deviceQiBengBatteryUI.setData();
+            }
+            if (mApp.updateActivityUI != null) {
+                if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                    mApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
+                }
             }
         }
     }
@@ -515,71 +487,4 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         return (d < 10 ? "0" + d : d) + ":" + (s < 10 ? "0" + s : s);
     }
 
-    private void getLiuLiang() {
-        int pw = deviceDetailModel.getGear();
-        int shuiBengType = deviceDetailModel.getType() == null ? 0 : (Integer.parseInt(deviceDetailModel.getType().equals("") ? "0" : deviceDetailModel.getType()));
-        int liuliang = 0;
-        switch (pw) {
-            case 0:
-                liuliang = 0;
-                break;
-            case 1:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 3000;
-                        break;
-                    case 1:
-                        liuliang = 6000;
-                        break;
-                }
-                break;
-            case 2:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 4000;
-                        break;
-                    case 1:
-                        liuliang = 7500;
-                        break;
-                }
-                break;
-            case 3:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 4700;
-                        break;
-                    case 1:
-                        liuliang = 8500;
-                        break;
-                }
-                break;
-            case 4:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 5400;
-                        break;
-                    case 1:
-                        liuliang = 9400;
-                        break;
-                }
-                break;
-            case 5:
-                switch (shuiBengType) {
-                    case 0:
-                    case -1:
-                        liuliang = 6000;
-                        break;
-                    case 1:
-                        liuliang = 10000;
-                        break;
-                }
-                break;
-        }
-        txt_shuibengliuliang.setText(liuliang + "L/h");
-
-    }
 }

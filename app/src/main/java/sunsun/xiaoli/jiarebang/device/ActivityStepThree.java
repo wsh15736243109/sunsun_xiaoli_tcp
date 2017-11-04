@@ -269,7 +269,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name[2], "S03-2", extra);
                             break;
                         default:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid()), type, extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(),type), type, extra);
                     }
                 }
                 break;

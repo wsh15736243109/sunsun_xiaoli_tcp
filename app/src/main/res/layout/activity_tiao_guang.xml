@@ -31,9 +31,12 @@
         <SeekBar
             android:id="@+id/seek_white"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/DIMEN_20DP"
             android:layout_centerVertical="true"
-            android:thumb="@drawable/is_checkbox"
+            android:thumb="@drawable/shape_circle"
+            android:thumbOffset="@dimen/DIMEN_5DP"
+            android:maxHeight="@dimen/DIMEN_10DP"
+            android:progressDrawable="@drawable/seekbar_define_style"
             android:layout_toLeftOf="@+id/txt_white_progress"
             android:layout_toRightOf="@+id/img_white"
             android:max="100" />
@@ -64,7 +67,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:thumb="@drawable/is_checkbox"
+            android:thumb="@drawable/shape_circle"
+            android:maxHeight="@dimen/DIMEN_10DP"
+            android:thumbOffset="@dimen/DIMEN_5DP"
+            android:progressDrawable="@drawable/seekbar_define_style"
             android:layout_toLeftOf="@+id/txt_blue_progress"
             android:layout_toRightOf="@+id/img_blue"
             android:max="100" />
@@ -93,7 +99,10 @@
             android:id="@+id/seek_green"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:thumb="@drawable/is_checkbox"
+            android:thumb="@drawable/shape_circle"
+            android:maxHeight="@dimen/DIMEN_10DP"
+            android:thumbOffset="@dimen/DIMEN_5DP"
+            android:progressDrawable="@drawable/seekbar_define_style"
             android:layout_toLeftOf="@+id/txt_green_progress"
             android:layout_toRightOf="@+id/img_green"
             android:max="100" />
@@ -124,9 +133,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:thumb="@drawable/shape_circle"
+            android:thumbOffset="1dp"
+            android:maxHeight="@dimen/DIMEN_10DP"
+            android:progress="0"
+            android:progressDrawable="@drawable/seekbar_define_style"
             android:layout_toLeftOf="@+id/txt_red_progress"
             android:layout_toRightOf="@+id/img_red"
-            android:thumb="@drawable/is_checkbox"
             android:max="100" />
 
         <TextView
@@ -176,7 +189,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:text="@string/tiaoguang_xitong"
-                android:textColor="@color/black" />
+                android:textColor="@color/main_green" />
 
         </RelativeLayout>
 

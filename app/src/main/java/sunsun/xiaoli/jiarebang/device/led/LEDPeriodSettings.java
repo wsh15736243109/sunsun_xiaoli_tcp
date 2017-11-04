@@ -57,8 +57,10 @@ public class LEDPeriodSettings extends BaseActivity implements SwipLedAddShiDuan
         userPresenter = new UserPresenter(this);
         txt_title.setText(getString(R.string.periodoflight));
         initSwipExpandListView();
-        if (mApp.ledDetailActivity.detailModel.getPer()!=null) {
-            setData(mApp.ledDetailActivity.detailModel.getPer());
+        if (mApp.ledDetailActivity.detailModelTcp!=null) {
+            if (mApp.ledDetailActivity.detailModelTcp.getPer()!=null) {
+                setData(mApp.ledDetailActivity.detailModelTcp.getPer());
+            }
         }
     }
 

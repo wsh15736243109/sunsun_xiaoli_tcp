@@ -141,7 +141,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
 //                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid()), mSelectDeviceInfo.getType(), extra);
 //                                            break;
                                         default:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid()), mSelectDeviceInfo.getType(), extra);
+                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid(),type), mSelectDeviceInfo.getType(), extra);
                                             break;
                                     }
                                 }
@@ -290,7 +290,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 map.put("ItemIcon", R.drawable.device_ph);
             } else if (deviceInfo.getType().startsWith("S05")) {
                 map.put("ItemIcon", R.drawable.device_shuibeng);
-            } else if (deviceInfo.getType().equalsIgnoreCase("S06")) {
+            } else if (deviceInfo.getType().startsWith("S06")) {
                 map.put("ItemIcon", R.drawable.device_shuizudeng);
             } else if (deviceInfo.getType().equalsIgnoreCase("S07")) {
                 map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);

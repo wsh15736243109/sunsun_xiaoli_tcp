@@ -458,7 +458,7 @@
     <string name="qibeng_leiji_time">次氣泵已纍計使用%1$.2f小時</string>
     <string name="batteryinformation">電池信息</string>
     <string name="workstatustips">工作狀態提示</string>
-    <string name="qibengbattery_chongdian_time">剩餘充電時間約:%1$d</string>
+    <string name="qibengbattery_chongdian_time">電池纍計工作時間:<font color='#00ff00'>%1$dh</font></string>
     <string name="qibengbatter_leijichongdiancount">電池纍計充電已達%1$d次</string>
     <string name="qibengbattery_shouming">電池使用壽命:%1$d</string>
     <string name="qibengbattery_tingjiwarn">停機警告設置</string>
@@ -586,4 +586,10 @@
     <string name="tiaoguang_lansemenghuan">蓝色梦幻</string>
     <string name="tiaoguang_zisegongjian">紫色空间</string>
     <string name="current_electricity">當前電量:%1$d%%</string>
+    <string name="qidong">启动</string>
+    <string name="qibeng_status">%1$d档，%2$s，%3$s。</string>
+    <string name="qibeng_stop">停止中</string>
+    <string name="qibeng_running">运行中</string>
+    <string name="changezidongatfirst" >请先将模式调整为自动模式</string>
+    <string name="hasbeanuserelectricity">已启用电池供电</string>
 </resources>

@@ -133,8 +133,8 @@ public class MyBattery extends View {
     }
 
     public enum BatteryStatus{
-        BatteryCHARGING,//充电中
-        BatteryPowerSupply//未充电工作中
+        BatteryCHARGING,//低電量紅色
+        BatteryPowerSupply//電量正常，白色
     }
 
 
