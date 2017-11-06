@@ -102,23 +102,23 @@
             </intent-filter>
         </service>
 
-        <receiver
-            android:name="com.taobao.agoo.AgooCommondReceiver"
-            android:exported="true"
-            android:process=":channel">
-            <intent-filter>
-                <!--sunsun.xiaoli.jiarebang-->
-                <!--com.itboye.xiaomianyang-->
-                <!--com.itboye.pondteam-->
-                <!--com.itboye.lingshou-->
-                <!--com.itboye.pondlink-->
-                <action android:name="sunsun.xiaoli.jiarebang.intent.action.COMMAND" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver-->
+            <!--android:name="com.taobao.agoo.AgooCommondReceiver"-->
+            <!--android:exported="true"-->
+            <!--android:process=":channel">-->
+            <!--<intent-filter>-->
+                <!--&lt;!&ndash;sunsun.xiaoli.jiarebang&ndash;&gt;-->
+                <!--&lt;!&ndash;com.itboye.xiaomianyang&ndash;&gt;-->
+                <!--&lt;!&ndash;com.itboye.pondteam&ndash;&gt;-->
+                <!--&lt;!&ndash;com.itboye.lingshou&ndash;&gt;-->
+                <!--&lt;!&ndash;com.itboye.pondlink&ndash;&gt;-->
+                <!--<action android:name="${PACKAGE}.intent.action.COMMAND" />-->
+            <!--</intent-filter>-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.PACKAGE_REMOVED" />-->
+                <!--<data android:scheme="package" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name="com.umeng.message.UmengMessageIntentReceiverService"
@@ -158,12 +158,12 @@
         <!--com.itboye.pondteam-->
         <!--com.itboye.lingshou-->
         <!--com.itboye.pondlink-->
-        <provider
-            android:name="com.umeng.message.provider.MessageProvider"
-            android:authorities="sunsun.xiaoli.jiarebang.umeng.message"
-            android:exported="false">
-            <grant-uri-permission android:pathPattern=".*" />
-        </provider>
+        <!--<provider-->
+            <!--android:name="com.umeng.message.provider.MessageProvider"-->
+            <!--android:authorities="${PACKAGE}.umeng.message"-->
+            <!--android:exported="false">-->
+            <!--<grant-uri-permission android:pathPattern=".*" />-->
+        <!--</provider>-->
 
     </application>
 

@@ -2,14 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 118
         versionName "1.1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "sunsunlingshou"
     }
+//        flavorDimensions "xiaoli", "sunsunlingshou", "yihu", "pondTeam", "pondLink"
     /**默认debug模式下的使用的keystore文件*/
     signingConfigs {
         sunsun_xiaoli_debug {
@@ -46,20 +48,22 @@ android {
 
     productFlavors {
         sunsunlingshou {
-            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.lingshou", str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "59fffc78f43e487e9000026a", UMENG_MESSAGE_SECRET: "a11d73ec66d4323df2b8c8d8ddcf5399"]
             applicationId "com.itboye.lingshou"
             resValue "string", "app_name", "森森新零售"
             resValue "bool", "isrRank", 'true'
+//            dimension "sunsunlingshou"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
             buildConfigField("String", "APP_TYPE", '"森森新零售"')
             buildConfigField("boolean", "IS_CHINESE", 'true')
         }
         xiaoli {
-            manifestPlaceholders = [str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
+            manifestPlaceholders = [PACKAGE: "sunsun.xiaoli.jiarebang", str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
             applicationId "sunsun.xiaoli.jiarebang"
             resValue "string", "app_name", "小鲤智能"
             resValue "bool", "isrRank", 'true'
+//            dimension "xiaoli"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaoli"')
             buildConfigField("String", "APP_TYPE", '"小鲤智能"')
@@ -67,10 +71,11 @@ android {
         }
 
         yihu {
-            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.xiaomianyang", str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd"]
             applicationId "com.itboye.xiaomianyang"
             resValue "string", "app_name", "宜虎"
             resValue "bool", "isrRank", 'true'
+//            dimension "yihu"
             buildConfigField("String", "WX_APP_ID", '"wx60f47b0798e9850e"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaomianyang"')
             buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
@@ -78,20 +83,22 @@ android {
         }
 
         pondTeam {
-            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.pondteam", str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12"]
             applicationId "com.itboye.pondteam"
             resValue "string", "app_name", "PondTeam"
             resValue "bool", "isrRank", 'true'
+//            dimension "pondTeam"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_filter_vat"')
             buildConfigField("String", "APP_TYPE", '"pondTeam"')
             buildConfigField("boolean", "IS_CHINESE", 'false')
         }
         pondLink {
-            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.pondlink", str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c"]
             applicationId "com.itboye.pondlink"
             resValue "string", "app_name", "PondLink"
             resValue "bool", "isrRank", 'true'
+//            dimension "pondLink"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_pondlink"')
             buildConfigField("String", "APP_TYPE", '"pondTeam"')
@@ -104,13 +111,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationVariants.all { variant ->
-                variant.outputs.each { output ->
+                variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def file = output.outputFile
                         def fileName = file.name.replace(".apk", "-" + defaultConfig.versionName
                                 + ".apk")
-                        output.outputFile = new File(file.parent, fileName)
+//                        output.outputFileName = new File(file.parent, fileName)
                     }
                 }
             }
@@ -118,6 +125,10 @@ android {
 
         debug {
             signingConfig signingConfigs.sunsun_xiaoli_debug
+//            signingConfig signingConfigs.sunsun_lingshou_debug
+//            signingConfig signingConfigs.sunsun_yihu_debug
+//            signingConfig signingConfigs.sunsun_pondteam_debug
+//            signingConfig signingConfigs.sunsun_pondlink_debug
 //            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou",ENVIRONMENT: "lingshou",app_icon   : "@drawable/device_002",UMENG_APPKEY:"58cb6076677baa0aa300014f",UMENG_MESSAGE_SECRET:"af2c2bd3297da0dfd34bb23f14db362b"]
 //            applicationId "com.itboye.lingshou"
 //            resValue "string", "app_name", "森森新零售"

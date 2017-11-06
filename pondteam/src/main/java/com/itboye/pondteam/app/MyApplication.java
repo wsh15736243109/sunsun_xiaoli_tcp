@@ -12,7 +12,6 @@ import com.android.volley.toolbox.Volley;
 import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
-import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
 import java.lang.ref.WeakReference;
@@ -21,6 +20,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
+
+import static com.itboye.pondteam.utils.EmptyUtil.getSp;
+import static com.itboye.pondteam.utils.MyTimeUtil.getTimeZone;
+import static com.itboye.pondteam.utils.ScreenUtil.getIMEI;
 
 /**
  * Created by admin on 2016/12/6.
@@ -117,14 +120,14 @@ public class MyApplication extends Application implements Observer {
         //设置成简体中文的时候，getLanguage()返回的是zh,getCountry()返回的是cn.
 //        conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-//        updateMobile();
+        updateMobile();
     }
 
     public void updateMobile() {
-//        String timezone = getTimeZone();
-//        String lang = MyApplication.getInstance().getLanguage();
-//        String device_id = getIMEI(getApplicationContext());
-//        userPresenter.updateMobileMsg(getSp(Const.UID), device_id, lang, timezone);
+        String timezone = getTimeZone();
+        String lang = MyApplication.getInstance().getLanguage();
+        String device_id = getIMEI(getApplicationContext());
+        userPresenter.updateMobileMsg(getSp(Const.UID), device_id, lang, timezone);
     }
 
     public String getLanguage() {
@@ -174,13 +177,13 @@ public class MyApplication extends Application implements Observer {
         ResultEntity result = (ResultEntity) data;
         if (result!=null) {
             if (result.getCode()!=0) {
-                MAlert.alert(result.getMsg()+"");
+//                MAlert.alert(result.getMsg()+"");
                 return;
             }
             if (result.getEventType()== UserPresenter.updateMobileMsg_success) {
 //                MAlert.alert(result.getData());
             }else if (result.getEventType()== UserPresenter.updateMobileMsg_fail) {
-                MAlert.alert(result.getData());
+//                MAlert.alert(result.getData());
             }
         }
     }

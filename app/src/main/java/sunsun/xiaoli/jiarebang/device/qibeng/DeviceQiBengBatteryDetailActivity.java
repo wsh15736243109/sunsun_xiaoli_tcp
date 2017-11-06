@@ -179,7 +179,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
         if (mApp.deviceQiBengUI.detailModelTcp != null) {
             int batt = mApp.deviceQiBengUI.detailModelTcp.getBatt();
             txt_leijitime.setText(Html.fromHtml(String.format(getString(R.string.qibengbattery_chongdian_time), mApp.deviceQiBengUI.detailModelTcp.getWh())));
-            qibengbattery_leijicount.setText(String.format(getString(R.string.qibengbatter_leijichongdiancount), mApp.deviceQiBengUI.detailModelTcp.getCh_cnt()));
+            qibengbattery_leijicount.setText(Html.fromHtml(String.format(getString(R.string.qibengbatter_leijichongdiancount), mApp.deviceQiBengUI.detailModelTcp.getCh_cnt())));
             battery_wiget.setBatteryValue(batt);
             battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryCHARGING, batt);
             current_electricity.setText(String.format(getString(R.string.current_electricity), batt));

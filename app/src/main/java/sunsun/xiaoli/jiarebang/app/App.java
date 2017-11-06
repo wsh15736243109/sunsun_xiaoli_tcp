@@ -251,7 +251,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 
             @Override
             public void onSuccess(String deviceToken) {
-                System.out.println(">>>deviceToken" + deviceToken);
+                System.out.println(">>>deviceToken成功" + deviceToken+">>package"+getPackageName());
                 token = deviceToken;
 //                MAlert.alert(">>>deviceToken"+deviceToken);
             }

@@ -175,6 +175,30 @@
         <activity android:name=".device.pondteam.ActivityChaZuoBDetail"></activity>
         <activity android:name=".device.pondteam.PondTeamRegisterActivity"></activity>
         <activity android:name=".device.pondteam.WenDuPeriodActivity"></activity>
+
+        <receiver
+            android:name="com.taobao.agoo.AgooCommondReceiver"
+            android:exported="true"
+            android:process=":channel">
+            <intent-filter>
+                <!--sunsun.xiaoli.jiarebang-->
+                <!--com.itboye.xiaomianyang-->
+                <!--com.itboye.pondteam-->
+                <!--com.itboye.lingshou-->
+                <!--com.itboye.pondlink-->
+                <action android:name="${PACKAGE}.intent.action.COMMAND" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <provider
+            android:name="com.umeng.message.provider.MessageProvider"
+            android:authorities="${PACKAGE}.umeng.message"
+            android:exported="false">
+            <grant-uri-permission android:pathPattern=".*" />
+        </provider>
     </application>
 
 </manifest>
