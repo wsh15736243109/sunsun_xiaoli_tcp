@@ -558,7 +558,7 @@
     <string name="period_setting">light peroid set</string>
     <string name="shoudong_tiaoguang">manual dimming set</string>
     <string name="zhuangtai_tuisong">State push</string>
-    <string name="user_time">Use time</string>
+    <string name="user_time">Use time %1$h</string>
     <string name="begin_calebrated">The electrodes are being calibrated</string>
     <string name="seconds_left">With %1$d seconds left</string>
     <string name="userph_to_calibrate">Are you sure to use ph %1$d to calibrate?</string>

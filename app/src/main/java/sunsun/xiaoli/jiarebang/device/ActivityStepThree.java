@@ -522,7 +522,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 }
                 break;
             case 5:
-                if (!deviceInfo.getType().equalsIgnoreCase("S05")) {
+                if (!deviceInfo.getType().startsWith("S05")) {
                     return;
                 }
                 break;

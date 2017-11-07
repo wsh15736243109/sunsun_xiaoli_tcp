@@ -555,7 +555,7 @@
     <string name="period_setting">燈光時段設置</string>
     <string name="shoudong_tiaoguang">手動調光設置</string>
     <string name="zhuangtai_tuisong">狀態推送</string>
-    <string name="user_time">使用時間</string>
+    <string name="user_time">使用時間%1$dh</string>
     <string name="begin_calebrated">點擊校準中</string>
     <string name="seconds_left">剩餘%1$d秒</string>
     <string name="userph_to_calibrate">確定使用ph%1$d校準?</string>

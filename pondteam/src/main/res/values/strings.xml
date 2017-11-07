@@ -555,7 +555,7 @@
     <string name="period_setting">灯光时段设置</string>
     <string name="shoudong_tiaoguang">手动调光设置</string>
     <string name="zhuangtai_tuisong">状态推送</string>
-    <string name="user_time">使用时间</string>
+    <string name="user_time">使用时间%1$d小时</string>
     <string name="begin_calebrated">电极校准中</string>
     <string name="seconds_left">剩余%1$d秒</string>
     <string name="userph_to_calibrate">确定使用ph%1$d校准?</string>

@@ -470,6 +470,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         isConnect = detailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
         txt_title.setText(detailModel.getDevice_nickname());
+        txt_ledusetime.setText(getString(R.string.user_time,detailModel.getOnline_time()));
         try {
             jsonObject = new JSONObject(detailModel.getExtra());
             if (jsonObject.has("push")) {
