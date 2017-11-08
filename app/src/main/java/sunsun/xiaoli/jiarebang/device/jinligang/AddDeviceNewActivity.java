@@ -163,7 +163,15 @@ public class AddDeviceNewActivity extends BaseActivity implements
         TextView pick_image = (TextView) popView.findViewById(R.id.pick_image);
         TextView camera_cancel_tv = (TextView) popView
                 .findViewById(R.id.camera_cancel_tv);
-
+        if (getPackageName().equalsIgnoreCase("com.itboye.pondteam") || getPackageName().equalsIgnoreCase("com.itboye.xiaomianyang")) {
+            open_configuration.setText(getString(R.string.configuration_pond));
+            open_camera.setText(getString(R.string.LAN_pond));
+            pick_image.setText(getString(R.string.manually_pond));
+        } else {
+            open_configuration.setText(getString(R.string.configuration_other));
+            open_camera.setText(getString(R.string.LAN_other));
+            pick_image.setText(getString(R.string.manually_other));
+        }
         int width = getResources().getDisplayMetrics().widthPixels;
         int height = getResources().getDisplayMetrics().heightPixels - 20;
 

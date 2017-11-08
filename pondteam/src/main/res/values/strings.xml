@@ -199,9 +199,9 @@
     <string name="problem">设备故障</string>
     <string name="make_sure_qingling">确定清零 ?</string>
     <string name="readytoclean">准备清洗</string>
-    <string name="configuration">一键配置</string>
-    <string name="LAN">添加局域网设备</string>
-    <string name="manually">手动添加设备</string>
+    <string name="configuration_pond">一键配置</string>
+    <string name="LAN_pond">添加局域网设备</string>
+    <string name="manually_pond">手动添加设备</string>
     <string name="search_success">搜索设备成功</string>
     <string name="LAN_DEVICE">局域网设备</string>
     <string name="lan_tips">请在设备列表连接</string>
@@ -593,6 +593,9 @@
     <string name="qibeng_running">运行中</string>
     <string name="changezidongatfirst" >请先将模式调整为自动模式</string>
     <string name="hasbeanuserelectricity">已启用电池供电</string>
+    <string name="configuration_other">一键配置</string>
+    <string name="LAN_other">添加局域网设备</string>
+    <string name="manually_other">手动添加设备</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

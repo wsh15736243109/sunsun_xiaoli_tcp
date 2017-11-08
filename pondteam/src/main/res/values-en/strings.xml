@@ -146,9 +146,9 @@
     <string name="problem">Motor fault</string>
     <string name="make_sure_qingling">Make sure I zero it ?</string>
     <string name="readytoclean">Ready to clean</string>
-    <string name="configuration">Select network(2.4G)</string>
-    <string name="LAN">Add previous devices</string>
-    <string name="manually">Device setting</string>
+    <string name="configuration_pond">Select network(2.4G)</string>
+    <string name="LAN_pond">Add previous devices</string>
+    <string name="manually_pond">Device setting</string>
     <string name="search_success">search device success</string>
     <string name="current_wifiname">current wi-fi</string>
     <string name="current_wifipass">Wi-Fi password</string>
@@ -241,7 +241,6 @@
     <string name="ph_jiaozhun">pH electrode calibration</string>
     <string name="begin_jiaozhun">Start the calibration</string>
     <string name="no_support_device">Current device is not supported</string>
-    <string name="device_yuancheng_ph">Remote PH temperature detector</string>
     <string name="bianpinshuibeng">variable frequency pump</string>
     <string name="sensenshuizu">The SunSun aquatic intelligence monitor system</string>
     <string name="shuibengshiyonggonglv">Current power</string>
@@ -363,15 +362,17 @@
     <string name="pro">product</string>
     <string name="ser">service</string>
     <string name="delete_ing">In the process of deletion, please later</string>
-    <string name="device_zhineng806">Intelligent monitor AQ-806</string>
-    <string name="device_zhineng700">Intelligent monitor AQ-700</string>
-    <string name="device_zhinengjiarebang">Remote intelligent heating rod</string>
-    <string name="device_zhinengbianpinshuibeng">Intelligent variable frequency pump</string>
+    <string name="device_zhineng806">Smart Monitoring AQ-806</string>
+    <string name="device_zhineng700">Smart Monitoring AQ-700</string>
+    <string name="device_zhineng228">Smart Monitoring AQ-500</string>
+    <string name="device_zhinengjiarebang">Remote Smart heater rod</string>
+    <string name="device_yuancheng_ph">Smart PH temperature detector</string>
+    <string name="device_zhinengbianpinshuibeng">Smart Frequency variation pump</string>
     <string name="device_chitangguolv">Pond filtration system</string>
-    <string name="device_zhinengshexiangtou">Small carp smart camera</string>
-    <string name="device_shuizudeng">Intelligent aquarium lamp</string>
-    <string name="device_zhineng228">Smart monitor AQ-500</string>
-    <string name="device_weishiqing">Aquarium itelligent feeder</string>
+    <string name="device_zhinengshexiangtou">Smart hd camera</string>
+    <string name="device_shuizudeng">Smart aquarium lamp</string>
+    <string name="device_zhinengqibeng">Intelligent ac/dc air pump</string>
+    <string name="device_weishiqing">Aquarium smart feeder</string>
 
     <string name="shiduansetting">Time set</string>
     <string name="shuizhisuanjiansetting">Ph of water setting</string>
@@ -457,7 +458,6 @@
     <string name="hasSalesReturn">Have to return</string>
     <string name="hasClosed">Cancelled or closed</string>
     <string name="hasOrderReturned">Returned</string>
-    <string name="device_zhinengqibeng">Intelligent ac and dc air pump</string>
     <string name="chuqiliang_choose">Air output selection</string>
     <string name="workmode_choose">Work mode selection</string>
     <string name="qibeng_leiji_time">The air pump has been used for %1$.2f hours</string>
@@ -594,4 +594,7 @@
     <string name="qibeng_running">运行中</string>
     <string name="changezidongatfirst" >Please adjust the pattern to auto mode first</string>
     <string name="hasbeanuserelectricity">已启用电池供电</string>
+    <string name="configuration_other">A key configuration</string>
+    <string name="LAN_other">Add LAN device</string>
+    <string name="manually_other">Add device manually</string>
 </resources>
