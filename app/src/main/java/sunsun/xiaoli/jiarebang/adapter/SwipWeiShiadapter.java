@@ -56,7 +56,11 @@ public class SwipWeiShiadapter extends BaseSwipeMenuExpandableListAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.img_add_weishi.setVisibility(View.GONE);
         holder.txt_weishi_name.setVisibility(View.VISIBLE);
-                holder.txt_weishi_name.setText(arrayList.get(groupPosition).getNick_name());
+        try {
+            holder.txt_weishi_name.setText(arrayList.get(groupPosition).getNick_name());
+        }catch (Exception e){
+
+        }
         holder.txt_weishi_name.setTag(groupPosition);
         holder.txt_weishi_name.setOnClickListener(((ActivityChaZuoBDetail) activity));
         return new ContentViewWrapper(convertView, reUseable);
@@ -78,8 +82,8 @@ public class SwipWeiShiadapter extends BaseSwipeMenuExpandableListAdapter {
         holder.txt_zhouqi_time.setText(arrayList.get(groupPosition).getNick_name());
 //        holder.txt_open_time.setText(getFormatNum(arrayList.get(groupPosition).getH0()) + ":" + getFormatNum(arrayList.get(groupPosition).getM0())+ ":" + getFormatNum(arrayList.get(groupPosition).getS0()));
 //        holder.txt_close_time.setText(getFormatNum(arrayList.get(groupPosition).getH1()) + ":" + getFormatNum(arrayList.get(groupPosition).getM1())+ ":" + getFormatNum(arrayList.get(groupPosition).getS1()));
-        holder.txt_open_time.setText(TimesUtils.utc2Local(getFormatTime(arrayList.get(groupPosition).getSt()),"HH:mm:ss","HH:mm:ss"));
-        holder.txt_close_time.setText(TimesUtils.utc2Local(getFormatTime(arrayList.get(groupPosition).getEt()),"HH:mm:ss","HH:mm:ss"));
+        holder.txt_open_time.setText(TimesUtils.utc2Local(getFormatTime(arrayList.get(groupPosition).getSt()), "HH:mm:ss", "HH:mm:ss"));
+        holder.txt_close_time.setText(TimesUtils.utc2Local(getFormatTime(arrayList.get(groupPosition).getEt()), "HH:mm:ss", "HH:mm:ss"));
         if (arrayList.get(groupPosition).getWeek() != 0) {
             String weeks = caculteWeeks(arrayList.get(groupPosition).getWeek() == -1 ? 0 : arrayList.get(groupPosition).getWeek());
             holder.txt_zhouqi_time.setText(weeks.endsWith(",") ? weeks.substring(0, weeks.length() - 1) : weeks);

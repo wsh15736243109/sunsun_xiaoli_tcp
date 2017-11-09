@@ -306,7 +306,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     case Buy_OrderPay: //订单重新支付进入确认订单
                         break;
                     case Buy_LiJiGouMai://立即购买进入确认订单
-                        lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, freight_price, getSp(Const.S_ID));
+                        lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, Double.parseDouble(freight_price) * 100 + "", getSp(Const.S_ID));
                         break;
                     case Buy_ZiXunGouMai:
                         if (address_id.equals("")) {
@@ -341,7 +341,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 }
                 break;
             case R.id.re_addess:
-                startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action","choose_address"), 101);
+                startActivityForResult(new Intent(this, AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action", "choose_address"), 101);
                 break;
             case R.id.txt_choosestore:
                 if (address_id.equals("")) {

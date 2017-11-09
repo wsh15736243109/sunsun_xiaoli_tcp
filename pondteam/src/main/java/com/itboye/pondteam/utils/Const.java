@@ -9,32 +9,32 @@ public class Const {
 
     public static final String LOGIN_ACTION = "LOGIN_ACTION";
     public static final String ALI_APPID = "2017102409486552";
-    public static final String RSA_PRIVATE = "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDrcWACw7S3+9DC\n" +
-            "qdwpozo+stNt/v41pyOmOTWK0yxcXOe+UYXARQyWfRYmWG6rXP+90BddhiF8eAW0\n" +
-            "mAfsZ1M2NkFTpJiZ/SQMyczFyTLB6mjtUEFKPlNk3LQw/UIP4rHc6CNzaEk9woai\n" +
-            "F0SqUFooojUKeHQf10O9/v90/TA5dQwWcZa/8O9uHSEgLciOfzuD23cHxHx+PLeY\n" +
-            "kyktuZDUXzUcN1tMCPR3QnMJpUp2p0a/6IoCK6KVm9cj68Fszkt9YPZI4JYSHY50\n" +
-            "zFvxzUw8vyQO40gxV2A4pNpZ11rFw+j70vkc5XsAIx3+Er9E5E/kyrvyL1PjKO3T\n" +
-            "NmqpIr0rAgMBAAECggEALnrhY2pTYQb7fZKe/jFVLE+NYee3M8xdQ1GD+nYaCdnl\n" +
-            "fjMF3qFDDOqA1u0aXAYuDsDn+/Sg47umFLL2zXrQeKFZYDPcVHofBc9I97rypEms\n" +
-            "kT0IxqlrOTxA7nLw+cXdKylA5mWuH90pSxKg4aafRepP4lNJSYfrvbR7phLd1Fmg\n" +
-            "KihpNXk6qRMzQKTpJ2IveT5VdZsAL9D9hbULHRxriNAVWcZu+rvv81raqQp+xZxk\n" +
-            "O+wOh7RdjOBWL7SZM49tQ/Om6C1oJMtt30eKsL3fJFddl7hnqeHStMVgK14nFYjI\n" +
-            "lIcADBEVMPgWUr/3GT6zxwydyUoqpX2KqM+3/WuZsQKBgQD4ebdmB3Ewf1ZBwizk\n" +
-            "zOgUtVZAWRuYGOgQGyWi+vn3CN5dEvI1DmKPAZpNoaw2QXqsBiSm5/cF+ZKCAFfI\n" +
-            "IR4swOtLtc4NeP/wEvn0g85AHuQ63FMPjeZLSgWFr3BB4eBoMxynqtBjyV2x5F1q\n" +
-            "IXYqrvO6TTl5/RfbOUnVToHzjwKBgQDykp/tF5XJGNiYS+pMGvXLSOyvGuxebIJ+\n" +
-            "R8FTBt7uGfH7GdsJzdZOXN4z+KFZOLZ7I9Dl1nAvNEcBo2yKcpN+AGOQdZ+lUwos\n" +
-            "yuaWR2axNmFsC4tJaW/2SmQwhTyqaFfi0iORnMybY04zpvq/Si0vbNbKwgw2HIQR\n" +
-            "4cgo+soepQKBgHna10JGLBBoolilbXbXtolRVPdBu/KfZE9hwNdo1eV8h/CFNhsm\n" +
-            "7tbLJm0j+FyzSAHNEXR5Ff/sIRl4KZSQCUhRZBNBGcgpqvqFk+eCLEft3mevXVyn\n" +
-            "bmVF6+df3mGw8GipiEgB0SjevABdyiIePuE343deH+3fXS+5rKfbVIepAoGAFbCO\n" +
-            "pECLoCOcmmGPXaa7e6XVpAKgSAEj2e7Ilofyvw+K140ETOge1XrwU21T4Ap2JqSZ\n" +
-            "NTPrbA0cnETkm6yLC6U1QeGCmOHH8yFhZOaVhBr8sxCFL9dBr6APPVdsiUAzO5DW\n" +
-            "pVqD4REMGQpBOYGEcM0ml5KqTNxX4tFxeFiUYhECgYBr9EgoUSaeGC4wPWutU41K\n" +
-            "p7OVdJpS/X4vXy6eLaEKCSpmz+OS0jUmw+S9J4qEhI0/4Mlzn86i18rJQSh1OTiX\n" +
-            "hKe1GcpuHv8pgLRBMNoklM4QGCfekQdiMyf4uCJR4VV17zispXSSGsvpGnW+DAk8\n" +
-            "VChqvDmqBPihQgXQS+nUHA==";
+    public static final String RSA_PRIVATE = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxTkCQyZn8QtIP\n" +
+            "rgDF+jsdG6GoZZaPHFNU1nIV+cqTyku9RjNaqzCQcvSVBapPFjIHMW4+NRdqkJ3I\n" +
+            "lvdniFs9Di607VPAbFjEMIXDPafG+jIUS9eNqzSQUoTV+pcfOkQWHB/Br0ilADpK\n" +
+            "Ghyo55gu9rK18K73VlgR2pvuSAex8+iVDFMSZEWw0e45xUxSurJ0dVDorRY7u8yu\n" +
+            "joQzz4q5iVOi4lRIxs/U4ELnaYqeSHWaxpqc4gfUwsRrYXLTgIEOdwE8hy7uwaNp\n" +
+            "g+UsJtQIWlnAQRXWc6TCmL902i2UAUvYUxMVn4/ejyrWD+xTBTzhtcs44jUiqq0O\n" +
+            "PaswPQJxAgMBAAECggEATjbEyJoGMX+QhpYthSgDV63OvChEKFFIeU43+XW9ZUCB\n" +
+            "9La5BLArtizfs7VSEZ0q6H1nsk1dTQcKc2gVLzi5ds+AzxM6NNIWvkThXOUf0+ie\n" +
+            "mtFx/u6dO2ULcBEhBQeA7XfuklQuaYsWK4YlSmUPfvgYkaXgqP8PzqBu1Mg1jMvd\n" +
+            "qghYhgSaxOTqrQ/aC4z+SLWT88s7/S5QjD72jTKfLGegqp0aVlCYpEBpJPsquMjy\n" +
+            "OAME8XDwUEl7supQInM3wgY7WgaO8UCD+gD7X43i3TJuIRSoHmBpKqeSMlnR2dtd\n" +
+            "ll5oJjvt/obFQatianVpM8kXezdMrfOd4tHCxoMu2QKBgQDbn9iHhlvtnKE703bN\n" +
+            "F9wJA75lhBC2nQV2Lo//siZXHstDFVAFBbx7FJp0dSTwykMP2mMNAOu6e6VRsqpv\n" +
+            "a8x5qH5310tyFz6pY57iekCnubiLQ4LJCjXbE5d9LC8N+NNHG4BwJsEh5aOkO6mN\n" +
+            "uOsne6m0BYNHc/QbM+vjBybu+wKBgQDOrBO8HkXcsmFDCdrkpLtU5Q26jdRbb8ug\n" +
+            "vGPdmtEQVaFh6UbSEvd/KMngUj7LasFGgJqNaQvpIiB6CETKlY99tW+yLfqArqQ1\n" +
+            "K5dJSGOBBdmCzGoPWipqv3N7VDKWJJmBmK0syHj74S6B5/JnHzZ51wR/3WYeo9Gd\n" +
+            "UzrMNrSogwKBgQCUeQZ38FQbWYUCnd21nwioq3g+xr5JxfNYRvggYz5aLT46lqDn\n" +
+            "FE6sYmxciIk1o3ccs4W817+E7WwAxClGc/ji0g7VU530flRlTSyvbPhiq0JgG37C\n" +
+            "DH4GIcOK4qDY8Dtc2fHFX9223bj4IUFpxvZqVcaPJh7u4ivHbB1u+HnQmwKBgEaT\n" +
+            "ZLnc7KaNE8G8388sofw/rAyE2nvPFY5yRvgqIjKdy1qQOusKJxJ5b1b3PxJgBlh5\n" +
+            "Gk4oDTUzvjtuD2/O2w1mpBoIsX64JMMze5o+6hvpT3nnLGDJvapubpUzD4NORE2J\n" +
+            "QboFS6tYHnWmK5Ujh4rb7mFrza+w6af8ABw0okTZAoGAHsbo5eO0luV/cnuf4xZu\n" +
+            "wpgZxBkF5GEhKlWlId/mUrM0k+oO34FJESogzQyqkGvGYuXIir0NmK+L6dAwBqd0\n" +
+            "y6xyW5tM+NOEwr4XjO6Y9F1X0uOIrMvj8j+gDfbeO/GTJS71fCZ6MRkIpLLTRRUh\n" +
+            "yCzq/pyyF1veeTNMk9byXHM=";
     public static final String RELOGIN = "relogin";
     public static final String IS_STORE = "is_stores";
     public static final String STORE_ID = "stores_id";

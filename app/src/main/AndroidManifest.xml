@@ -175,6 +175,21 @@
         <activity android:name=".device.pondteam.ActivityChaZuoBDetail"></activity>
         <activity android:name=".device.pondteam.PondTeamRegisterActivity"></activity>
         <activity android:name=".device.pondteam.WenDuPeriodActivity"></activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:exported="true"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="${APP_ID}"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop"></activity>
 
         <receiver
             android:name="com.taobao.agoo.AgooCommondReceiver"

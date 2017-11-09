@@ -6,8 +6,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 118
-        versionName "1.1.8"
+        versionCode 120
+        versionName "1.2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "sunsunlingshou"
     }
@@ -48,18 +48,18 @@ android {
 
     productFlavors {
         sunsunlingshou {
-            manifestPlaceholders = [PACKAGE: "com.itboye.lingshou", str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "59fffc78f43e487e9000026a", UMENG_MESSAGE_SECRET: "a11d73ec66d4323df2b8c8d8ddcf5399"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.lingshou", str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "59fffc78f43e487e9000026a", UMENG_MESSAGE_SECRET: "a11d73ec66d4323df2b8c8d8ddcf5399",APP_ID:"wx3aa59deb67aa6823"]
             applicationId "com.itboye.lingshou"
             resValue "string", "app_name", "森森新零售"
             resValue "bool", "isrRank", 'true'
 //            dimension "sunsunlingshou"
-            buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
+            buildConfigField("String", "WX_APP_ID", '"wx3aa59deb67aa6823"')
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
             buildConfigField("String", "APP_TYPE", '"森森新零售"')
             buildConfigField("boolean", "IS_CHINESE", 'true')
         }
         xiaoli {
-            manifestPlaceholders = [PACKAGE: "sunsun.xiaoli.jiarebang", str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b"]
+            manifestPlaceholders = [PACKAGE: "sunsun.xiaoli.jiarebang", str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b",APP_ID:""]
             applicationId "sunsun.xiaoli.jiarebang"
             resValue "string", "app_name", "小鲤智能"
             resValue "bool", "isrRank", 'true'
@@ -71,7 +71,7 @@ android {
         }
 
         yihu {
-            manifestPlaceholders = [PACKAGE: "com.itboye.xiaomianyang", str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.xiaomianyang", str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd",APP_ID:""]
             applicationId "com.itboye.xiaomianyang"
             resValue "string", "app_name", "宜虎"
             resValue "bool", "isrRank", 'true'
@@ -83,7 +83,7 @@ android {
         }
 
         pondTeam {
-            manifestPlaceholders = [PACKAGE: "com.itboye.pondteam", str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.pondteam", str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12",APP_ID:""]
             applicationId "com.itboye.pondteam"
             resValue "string", "app_name", "PondTeam"
             resValue "bool", "isrRank", 'true'
@@ -94,7 +94,7 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'false')
         }
         pondLink {
-            manifestPlaceholders = [PACKAGE: "com.itboye.pondlink", str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c"]
+            manifestPlaceholders = [PACKAGE: "com.itboye.pondlink", str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c",APP_ID:""]
             applicationId "com.itboye.pondlink"
             resValue "string", "app_name", "PondLink"
             resValue "bool", "isrRank", 'true'
@@ -125,8 +125,8 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.sunsun_xiaoli_debug
-//            signingConfig signingConfigs.sunsun_lingshou_debug
+//            signingConfig signingConfigs.sunsun_xiaoli_debug
+            signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug
@@ -200,11 +200,11 @@ dependencies {
     compile 'in.srain.cube:ptr-load-more:1.0.2'
     compile 'com.github.bumptech.glide:glide:3.6.1'
     compile project(path: ':uILibs_Extends')
-    //    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.yancy.imageselector:imageselector:1.3.0'
-    compile files('libs/wechat-sdk-android-with-mta-1.3.4.jar')
+//    compile files('libs/wechat-sdk-android-with-mta-1.3.4.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.kevin:wraprecyclerview:1.0.1'
     compile files('libs/org.apache.http.legacy.jar')
