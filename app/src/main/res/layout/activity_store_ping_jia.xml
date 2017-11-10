@@ -4,6 +4,7 @@
     android:id="@+id/activity_store_ping_jia"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_F9"
     android:orientation="vertical"
     tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.StorePingJiaActivity">
 
@@ -26,28 +27,41 @@
                 android:id="@+id/txt_storeName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/DIMEN_20DP"
+                android:layout_marginLeft="@dimen/DIMEN_30DP"
+                android:layout_marginRight="@dimen/DIMEN_30DP"
+                android:layout_marginTop="@dimen/DIMEN_20DP"
+                android:layout_marginBottom="@dimen/DIMEN_10DP"
                 android:background="@drawable/bg_white_border_dark"
                 android:gravity="center"
-                android:padding="@dimen/DIMEN_20DP"
-                android:text="XXXXXXXXXXXXXXXXXX商家" />
+                android:padding="@dimen/DIMEN_10DP"
+                android:text="" />
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/DIMEN_10DP"
+                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/half_oval"
+                android:text="请给商家大打分,期待你的好评哟" />
 
             <LinearLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/DIMEN_10DP"
+                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                android:layout_marginRight="@dimen/DIMEN_20DP"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="请给商家大打分" />
+
 
                 <RelativeLayout
                     android:layout_marginTop="@dimen/DIMEN_5DP"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_50DP"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -67,13 +81,14 @@
                         android:numStars="5"
                         android:stepSize="1"
                         android:layout_toRightOf="@+id/txt_1"
-                        android:rating="4" />
+                        android:rating="0" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_50DP"
                     android:layout_marginTop="@dimen/DIMEN_5DP"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -92,12 +107,13 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/DIMEN_5DP"
                         android:numStars="5"
-                        android:rating="4" />
+                        android:rating="0" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_50DP"
+                    android:layout_gravity="center_horizontal"
                     android:gravity="center_vertical"
                     android:layout_marginTop="@dimen/DIMEN_5DP"
                     android:orientation="horizontal">
@@ -117,7 +133,7 @@
                         android:layout_marginLeft="@dimen/DIMEN_5DP"
                         android:layout_toRightOf="@+id/txt_3"
                         android:stepSize="0.15"
-                        android:rating="4"
+                        android:rating="0"
                         android:id="@+id/sudu" />
                 </RelativeLayout>
             </LinearLayout>
@@ -127,6 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/DIMEN_20DP"
                 android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
                 android:text="填写评价" />
 
             <EditText
@@ -135,7 +152,7 @@
                 android:layout_marginLeft="@dimen/DIMEN_20DP"
                 android:layout_marginRight="@dimen/DIMEN_20DP"
                 android:layout_marginTop="@dimen/DIMEN_10DP"
-                android:background="@color/white"
+                android:background="@color/gray_EEEE"
                 android:gravity="left"
                 android:minHeight="250dp"
                 android:padding="@dimen/DIMEN_10DP"
@@ -157,6 +174,7 @@
                     android:paddingLeft="@dimen/DIMEN_30DP"
                     android:paddingRight="@dimen/DIMEN_30DP"
                     android:paddingTop="@dimen/DIMEN_5DP"
+                    android:textAllCaps="false"
                     android:text="@string/cancel" />
 
                 <Button
@@ -171,6 +189,7 @@
                     android:paddingRight="@dimen/DIMEN_30DP"
                     android:paddingTop="@dimen/DIMEN_5DP"
                     android:text="@string/ok"
+                    android:textAllCaps="false"
                     android:textColor="@color/white" />
             </RelativeLayout>
         </LinearLayout>

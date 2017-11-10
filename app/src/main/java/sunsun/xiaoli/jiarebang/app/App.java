@@ -79,6 +79,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.OrderDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.MakeSureOrderActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
 import sunsun.xiaoli.jiarebang.utils.AqDeviceFind;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
@@ -137,6 +138,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     public YuGangCleanOrHuoTiBuyStepOneActivity yuGangCleanOrHuoTiBuyStepOneActivityUI;
     public ChooseTimeActivity chooseTimeActivityUI;
     public OrderDetailActivity orderDetailUI;
+    public MakeSureOrderActivity makeSureActivity;
 
     public List<WeakReference<Activity>> getActivityList() {
         return activityList;

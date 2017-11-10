@@ -60,7 +60,7 @@
                 android:background="@color/red500"
                 android:id="@+id/btn_sure_pay"
                 android:gravity="center"
-                android:text="确认支付"
+                android:text="确认订单"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>

@@ -86,6 +86,16 @@ public class GoodsDetailBean implements Serializable {
     private String is_fav;
     private int selectPositon;
     private int count;
+    private double price;
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     private ArrayList<DetailImage> detail_img;
 
     public ArrayList<DetailImage> getDetail_img() {

@@ -27,6 +27,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.OrderDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.StorePingJiaActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.PayTypeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.ModeAdapter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.refreshrecyvlerview.callback.PullToRefreshListener;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -113,6 +114,12 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        beginRequest();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.activity_main:
@@ -126,7 +133,8 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
             case R.id.order_pro_status:
                 entityTemp = (OrderBean.ListEntity) v.getTag();
                 if (entityTemp.getPay_status() == 0) {
-                    startActivity(new Intent(getActivity(), PayTypeActivity.class).putExtra("model", entityTemp));
+                    BuyType buyType=BuyType.Buy_OrderPay;
+                    startActivity(new Intent(getActivity(), PayTypeActivity.class).putExtra("model", entityTemp).putExtra("buyType",buyType));
                 }
 
                 break;

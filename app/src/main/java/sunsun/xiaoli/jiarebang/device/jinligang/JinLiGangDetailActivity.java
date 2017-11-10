@@ -729,6 +729,17 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 re_chonglangbeng.setVisibility(View.GONE);
             } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
                 findViewById(R.id.re_shuiweibaojing).setVisibility(View.GONE);
+                if (shajundeng_status) {
+                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_select2);
+                } else {
+                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_unselect2);
+                }
+                if (chonglangbeng_status) {
+                    ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_select);
+                } else {
+                    ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_unselect);
+                }
+
             } else {
                 findViewById(R.id.re_chonglangbeng).setVisibility(View.VISIBLE);
                 if (shajundeng_status) {

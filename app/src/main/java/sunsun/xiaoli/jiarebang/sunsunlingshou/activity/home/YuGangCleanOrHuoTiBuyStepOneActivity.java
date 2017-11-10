@@ -107,6 +107,10 @@ public class YuGangCleanOrHuoTiBuyStepOneActivity extends LingShouBaseActivity i
                 finish();
                 break;
             case R.id.btn_next:
+                if (serviceBeanArrayList==null) {
+                    MAlert.alert("当前无数据，请重新加载");
+                    return;
+                }
                 boolean hasSelect=false;
                 for (ServiceBean.SkuInfoEntity skuInfoEntity : serviceBeanArrayList.get(0).getSku_info()) {
                     if (skuInfoEntity.isSelect()) {

@@ -159,9 +159,11 @@ public class AddShopCartFragment extends BaseDialogFragment {
                 int skuPid = 0;
                 int position = -1;
                 List<GoodsDetailBean.SkuListEntity> sku_list = goodsDetailBeans.getSku_list();
+                GoodsDetailBean.SkuListEntity skuListEntity =new GoodsDetailBean.SkuListEntity();
                 for (int i = 0; i < sku_list.size(); i++) {
-                    GoodsDetailBean.SkuListEntity skuListEntity = sku_list.get(i);
+                   skuListEntity = sku_list.get(i);
                     if (skuListEntity.getSku_id().equals(s)) {
+                        skuListEntity.getPrice();
                         skuPid = Integer.valueOf(skuListEntity.getSku_pkid());
                         position=i;
                         break;
@@ -173,6 +175,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
                 }
                 goodsDetailBeans.setSelectPositon(position);
                 goodsDetailBeans.setCount(Integer.valueOf(string));
+                goodsDetailBeans.setPrice(Double.parseDouble(skuListEntity.getPrice()));
                 ArrayList<GoodsDetailBean> ar=new ArrayList<GoodsDetailBean>();
                 ar.add(goodsDetailBeans);
                 Intent intent = new Intent(getActivity(), MakeSureOrderActivity.class);

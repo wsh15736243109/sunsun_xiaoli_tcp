@@ -2,9 +2,11 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -15,17 +17,22 @@ import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.alipay.OrderInfoUtil2_0;
 import sunsun.xiaoli.jiarebang.alipay.PayResult;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.CreateOrderBean;
+import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
+import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -41,6 +48,11 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
     Button btn_sure_pay;
     RadioButton pay_wx, pay_ali;
     TextView txt_price;
+    App mApp;
+    LinearLayout li_goods;
+    BuyType buyType;
+    ArrayList<GoodsDetailBean> goodsModel;
+    private OrderBean.ListEntity entityTemp;
 
     @Override
     protected int getLayoutId() {
@@ -49,15 +61,125 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
 
     @Override
     protected void initData() {
+        mApp = (App) getApplication();
+        buyType = (BuyType) getIntent().getSerializableExtra("buyType");
+        switch (buyType) {
+            case Buy_HuoTiGouMai:
+                createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
+                if (createOrderBean != null) {
+                    View view = View.inflate(this, R.layout.item_goods, null);
+                    TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                    TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                    txt_product_name.setText("活体购买");
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    li_goods.addView(view);
+                }
+                break;
+            case Buy_LiJiGouMai:
+                goodsModel = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("goodsModel");
+                if (goodsModel != null) {
+                    View view = View.inflate(this, R.layout.item_goods, null);
+                    TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                    TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                    txt_product_name.setText(goodsModel.get(0).getName());
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + goodsModel.get(0).getPrice() / 100 + "</font>"));
+                    li_goods.addView(view);
+                }
+                break;
+            case Buy_OrderPay:
+                entityTemp = (OrderBean.ListEntity) getIntent().getSerializableExtra("model");
+                if (entityTemp != null) {
+                    for (int i = 0; i < entityTemp.getItems().size(); i++) {
+                        View view = View.inflate(this, R.layout.item_goods, null);
+                        TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                        TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                        txt_product_name.setText(entityTemp.getItems().get(i).getName());
+                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + Double.parseDouble(entityTemp.getItems().get(i).getPrice()) / 100 + "</font>"));
+                        li_goods.addView(view);
+                    }
+                }
+                break;
+            case Buy_ShopCart:
+                ArrayList<ShopCartBean> ar = (ArrayList<ShopCartBean>) getIntent().getSerializableExtra("shopcart_model");
+                if (ar!=null) {
+                    for (int i = 0; i < ar.size(); i++) {
+                        View view = View.inflate(this, R.layout.item_goods, null);
+                        TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                        TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                        txt_product_name.setText(ar.get(i).getName());
+                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + (ar.get(0).getPrice()) / 100 + "</font>"));
+                        li_goods.addView(view);
+                    }
+                }
+                break;
+            case Buy_YuGangQingLi:
+                createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
+                if (createOrderBean != null) {
+                    View view = View.inflate(this, R.layout.item_goods, null);
+                    TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                    TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                    txt_product_name.setText("鱼缸清理");
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    li_goods.addView(view);
+                }
+                break;
+            case Buy_YuYueAnZhuang:
+                createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
+                if (createOrderBean != null) {
+                    View view = View.inflate(this, R.layout.item_goods, null);
+                    TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                    TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                    txt_product_name.setText("预约安装");
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    li_goods.addView(view);
+                }
+                break;
+            case Buy_ZaoJingZhuangShi:
+                createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
+                if (createOrderBean != null) {
+                    View view = View.inflate(this, R.layout.item_goods, null);
+                    TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                    TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                    txt_product_name.setText("造景装饰");
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    li_goods.addView(view);
+                }
+                break;
+            case Buy_ZiXunGouMai:
+                createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
+                if (createOrderBean != null) {
+                    View view = View.inflate(this, R.layout.item_goods, null);
+                    TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+                    TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+                    txt_product_name.setText("咨询购买");
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() + "</font>"));
+                    li_goods.addView(view);
+                }
+                break;
+        }
         lingShouPresenter = new LingShouPresenter(this);
         initTitlebarStyle1(this, actionBar, "支付方式", R.mipmap.ic_left_light, "", 0, "");
-        if (getIntent().getSerializableExtra("model") instanceof CreateOrderBean) {
-            createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
-            txt_price.setText("详情 ￥" + createOrderBean.getPay_money() / 100);
-        } else {
-            orderBean = (OrderBean.ListEntity) getIntent().getSerializableExtra("model");
-            txt_price.setText("详情 ￥" + Double.parseDouble(orderBean.getPrice()) / 100);
-        }
+//        if (getIntent().getSerializableExtra("model") instanceof CreateOrderBean) {
+//            createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
+//            if (createOrderBean != null) {
+//                View view = View.inflate(this, R.layout.item_goods, null);
+//                TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+//                TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+//                txt_product_name.setText("");
+//                txt_price.setText(Html.fromHtml("详情 ￥<font color='red'>" + createOrderBean.getPay_money() + "</font>"));
+//                li_goods.addView(view);
+//            }
+//        } else {
+//            orderBean = (OrderBean.ListEntity) getIntent().getSerializableExtra("model");
+//            for (int i = 0; i < orderBean.getItems().size(); i++) {
+//                View view = View.inflate(this, R.layout.item_goods, null);
+//                TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
+//                TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
+//                txt_product_name.setText(orderBean.getItems().get(i).getName());
+//                txt_price.setText(Html.fromHtml("详情 ￥<font color='red'>" + orderBean.getItems().get(i).getPrice() + "</font>"));
+//                li_goods.addView(view);
+//            }
+//        }
     }
 
     @Override
@@ -88,7 +210,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
 
     private void callWxPay(CreateOrderBean createOrderBean) {
         PayReq req = new PayReq();
-        //req.appId = "wxf8b4f85f3a794e77";  // 测试用appId
+        req.appId = BuildConfig.WX_APP_ID;  // 测试用appId
 //        req.appId			= json.getString("appid");
 //        req.partnerId		= json.getString("partnerid");
 //        req.prepayId		= json.getString("prepayid");
@@ -150,6 +272,9 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         MAlert.alert("支付成功");
+                        if (mApp.makeSureActivity != null) {
+                            mApp.makeSureActivity.finish();
+                        }
                         finish();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。

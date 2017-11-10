@@ -32,6 +32,7 @@ import sunsun.xiaoli.jiarebang.beans.AddressBean;
 import sunsun.xiaoli.jiarebang.beans.CreateOrderBean;
 import sunsun.xiaoli.jiarebang.beans.FreightPriceBean;
 import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
+import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
@@ -39,6 +40,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseStoreActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.PayTypeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressListActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.model.RePayBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.ServiceBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
@@ -46,6 +48,16 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitlebarStyle1;
 
+/**
+ * 预约安装
+ * 鱼缸清理
+ * 活体购买
+ * 造景装饰
+ * 咨询购买
+ * 单商品立即购买
+ * 购物车商品（多商品购买）
+ * 订单重新支付
+ */
 public class MakeSureOrderActivity extends LingShouBaseActivity implements Observer {
 
     WrapRecyclerView order_goods_list;
@@ -75,7 +87,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     RelativeLayout re_note;
     EditText edt_note;
     private TextView txt_peisong;
-
+    private OrderBean.ListEntity entityTemp;
+    ArrayList<ShopCartBean> ar;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_make_sure_order;
@@ -84,11 +97,17 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     @Override
     protected void initData() {
         mApp = (App) getApplication();
+        mApp.makeSureActivity=this;
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.getDefaultAddress(getSp(Const.UID), Const.S_ID);
         initTitlebarStyle1(this, actionBar, "确认订单", R.mipmap.ic_left_light, "", 0, "");
         goodsDetailBeanArray = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
         isShopCart = getIntent().getBooleanExtra("isShopCart", false);
+        if (isShopCart) {
+            btn_addshopcart.setVisibility(View.GONE);
+        }else{
+            btn_addshopcart.setVisibility(View.VISIBLE);
+        }
         buyType = (BuyType) getIntent().getSerializableExtra("type");
         storeBean = (StoreListBean.ListEntity) getIntent().getSerializableExtra("zixunModel");
         canPack = getIntent().getIntExtra("canPack", 0);
@@ -180,11 +199,12 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 order_goods_list.setAdapter(adapter);
                 break;
             case Buy_ShopCart: //添加购物车进入确认订单
-                ArrayList<ShopCartBean> ar = (ArrayList<ShopCartBean>) getIntent().getSerializableExtra("model");
+                ar = (ArrayList<ShopCartBean>) getIntent().getSerializableExtra("model");
                 adapter = new MakeSureOrderAdapter(this, ar);
                 order_goods_list.setAdapter(adapter);
                 break;
             case Buy_OrderPay: //订单重新支付进入确认订单
+
                 break;
             case Buy_LiJiGouMai://立即购买进入确认订单
                 store_id = getIntent().getStringExtra("store_id");
@@ -203,6 +223,10 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                         }
                     }
                 }
+                btn_contacttime.setText(send_time);
+                txt_choosestore.setText(storeBean.getName());
+                store_id=storeBean.getId();
+                skuPid=skuInfoSelect.getId();
                 adapter = new MakeSureOrderAdapter(this, skuInfoEntityList);
                 order_goods_list.setAdapter(adapter);
                 //获取咨询购买的skuPid
@@ -212,6 +236,12 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         if (buyType != BuyType.Buy_LiJiGouMai) {
             order_goods_list.addFooterView(footView);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mApp.makeSureActivity=null;
     }
 
     String note = "", store_id = "", send_type = "1", send_time = "", freight_price = "";
@@ -291,6 +321,18 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                         lingShouPresenter.goodsOrder(getSp(Const.UID), 1, skuInfoSelect.getId(), address_id, note, store_id, send_type, send_time, freight_price, getSp(Const.S_ID));
                         break;
                     case Buy_ShopCart: //添加购物车进入确认订单
+                        if (address_id.equals("")) {
+                            MAlert.alert("请选择收货地址");
+                            return;
+                        }
+                        if (send_time == null || "".equals(send_time)) {
+                            MAlert.alert("请选择配送时间");
+                            return;
+                        }
+                        if (store_id == null || "".equals(store_id)) {
+                            MAlert.alert("请选择商家");
+                            return;
+                        }
                         StringBuffer ids = new StringBuffer();
                         ArrayList<ShopCartBean> ar = (ArrayList<ShopCartBean>) getIntent().getSerializableExtra("model");
                         for (int i = 0; i < ar.size(); i++) {
@@ -306,6 +348,18 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     case Buy_OrderPay: //订单重新支付进入确认订单
                         break;
                     case Buy_LiJiGouMai://立即购买进入确认订单
+//                        if (address_id.equals("")) {
+//                            MAlert.alert("请选择收货地址");
+//                            return;
+//                        }
+//                        if (send_time == null || "".equals(send_time)) {
+//                            MAlert.alert("请选择配送时间");
+//                            return;
+//                        }
+//                        if (store_id == null || "".equals(store_id)) {
+//                            MAlert.alert("请选择商家");
+//                            return;
+//                        }
                         lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, Double.parseDouble(freight_price) * 100 + "", getSp(Const.S_ID));
                         break;
                     case Buy_ZiXunGouMai:
@@ -323,6 +377,10 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                         }
                         if (skuPid == null || "".equals(skuPid)) {
                             MAlert.alert("商品规格有误");
+                            return;
+                        }
+                        if (freight_price.equals("")) {
+                            MAlert.alert("运费有误，请重新选择地址");
                             return;
                         }
                         note = edt_note.getText().toString();
@@ -365,6 +423,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         address_id = addressBean.getId();
         if (!store_id.equals("")) {
             lingShouPresenter.queryFreightPrice(store_id, address_id, getSp(Const.S_ID));
+        }else{
+//            MAlert.alert("地址选择有误");
         }
     }
 
@@ -420,8 +480,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_success) {
-                CreateOrderBean createOrderBean = (CreateOrderBean) entity.getData();
-                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean));
+                RePayBean createOrderBean = (RePayBean) entity.getData();
+                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType",buyType).putExtra("shopcart_model",ar));
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.goodsOrder_success) {
@@ -431,7 +491,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 CreateOrderBean createOrderBean = (CreateOrderBean) entity.getData();
                 Intent intent = new Intent(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
-                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean));
+                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType",buyType).putExtra("goodsModel",goodsDetailBeanArray));
             } else if (entity.getEventType() == LingShouPresenter.goodsOrder_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
