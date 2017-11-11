@@ -561,7 +561,7 @@
     <string name="user_time">Use time %1$h</string>
     <string name="begin_calebrated">The electrodes are being calibrated</string>
     <string name="seconds_left">With %1$d seconds left</string>
-    <string name="userph_to_calibrate">Are you sure to use ph %1$d to calibrate?</string>
+    <string name="userph_to_calibrate">Are you sure to use ph %1$.2f to calibrate?</string>
     <string name="title_activity_ling_shou_login">LingShouLoginActivity</string>
     <string name="action_settings">Settings</string>
     <string name="video_setting_advance">Please do the video setting first</string>

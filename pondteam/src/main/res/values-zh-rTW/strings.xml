@@ -558,7 +558,7 @@
     <string name="user_time">使用時間%1$dh</string>
     <string name="begin_calebrated">點擊校準中</string>
     <string name="seconds_left">剩餘%1$d秒</string>
-    <string name="userph_to_calibrate">確定使用ph%1$d校準?</string>
+    <string name="userph_to_calibrate">確定使用ph%1$.2f校準?</string>
     <string name="title_activity_ling_shou_login">LingShouLoginActivity</string>
     <string name="action_settings">Settings</string>
     <string name="video_setting_advance">請先進行視頻設置</string>

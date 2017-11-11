@@ -77,6 +77,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mApp.phJiaoZhunUI =null;
         handler.removeCallbacks(runnable);
     }
 
@@ -204,7 +205,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
                         mydialog.txt_tips.setText(getString(R.string.jiaozhu_success));
                         beginJiaoZhun = false;
                         mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_FINISH);
-                        userPresenter.updateJiaoZhunTime(mApp.mDeviceUi.mSelectDeviceInfo.getId(), -1, -1, -1, -1, -1, -1, System.currentTimeMillis());
+                        userPresenter.updateJiaoZhunTime(mApp.devicePhUI.deviceDetailModel.getId(), -1, -1, -1, -1, -1, -1, System.currentTimeMillis());
                     }
                 }
             }
@@ -239,7 +240,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     }
 
     public void setJiaoZhunTimes() {
-        String times = mApp.mDeviceUi.mSelectDeviceInfo.getExtra();
+        String times = mApp.devicePhUI.deviceDetailModel.getExtra();
         try {
             JSONObject jsonObject = new JSONObject(times);
             String firstTime = jsonObject.getString("first_upd");

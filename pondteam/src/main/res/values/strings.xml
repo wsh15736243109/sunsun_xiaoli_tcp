@@ -558,7 +558,7 @@
     <string name="user_time">使用时间%1$d小时</string>
     <string name="begin_calebrated">电极校准中</string>
     <string name="seconds_left">剩余%1$d秒</string>
-    <string name="userph_to_calibrate">确定使用ph%1$d校准?</string>
+    <string name="userph_to_calibrate">确定使用ph%1$.2f校准?</string>
 
     <string name="title_activity_ling_shou_login">LingShouLoginActivity</string>
     <string name="action_settings">设置</string>
