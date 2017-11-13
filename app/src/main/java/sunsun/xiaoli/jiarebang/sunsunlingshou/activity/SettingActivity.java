@@ -23,6 +23,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.beans.LingShouPersonDataBean;
 import sunsun.xiaoli.jiarebang.beans.UploadImageBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.GlideLoader;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.utils.uploadmultipleimage.UploadImageUtils;
 
@@ -36,6 +37,9 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
     RelativeLayout re_head;
     @IsNeedClick
     ImageView img_head;
+
+    RelativeLayout re_sensen;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_setting;
@@ -43,7 +47,7 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
 
     @Override
     protected void initData() {
-        initTitlebarStyle1(this,actionBar,"设置",R.mipmap.ic_left_light,"",0,"");
+        initTitlebarStyle1(this, actionBar, "设置", R.mipmap.ic_left_light, "", 0, "");
         //初始actionBar
         actionBar.setData("设置", 0, "", 0, "", null);
         //开启渐变
@@ -54,13 +58,12 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
     }
 
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_exit_login:
                 new LingShouPersonDataBean().setPersonData(null);
-                Intent intent=new Intent();
+                Intent intent = new Intent();
                 intent.setAction(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
                 MAlert.alert("退出成功");
@@ -68,6 +71,12 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
                 break;
             case R.id.re_head:
                 openLibrary(img_head);
+                break;
+            case R.id.re_sensen:
+                startActivity(
+                        new Intent(this, WebActivity.class)
+                                .putExtra("url", Const.aboutMe)
+                                .putExtra("title", "关于我们"));
                 break;
         }
     }
@@ -100,18 +109,18 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
             File file = new File(pathList.get(0));
             Glide.with(getApplicationContext()).load(pathList.get(0)).placeholder(R.drawable.lingshou_logo).into(img_head);
             img_head.setTag(pathList.get(0));
-            new UploadImageUtils(getSp(Const.UID),"avatar").beginUpload("image", file, this);
+            new UploadImageUtils(getSp(Const.UID), "avatar").beginUpload("image", file, this);
         }
     }
 
 
     @Override
     public void uploadSuccess(UploadImageBean response) {
-        MAlert.alert(response+"成功");
+        MAlert.alert(response + "成功");
     }
 
     @Override
     public void uploadFail(VolleyError error) {
-        MAlert.alert(error.getMessage()+"失败");
+        MAlert.alert(error.getMessage() + "失败");
     }
 }

@@ -52,6 +52,8 @@ public class Const {
     public Const(String wrapUrl) {
         this.wrapUrl = wrapUrl;
         this.URL = "http://" + wrapUrl + "/index.php";
+        this.webUrl="http://"+wrapUrl+"/web.php/web/";
+        this.aboutMe=webUrl+"/about";
     }
 
     //头像上传接口
@@ -70,6 +72,9 @@ public class Const {
     //帮助中心
     public static String helpUrl = "https://api.ryzcgf.com/public/web.php/web/user_manual";
 
+    public static String webUrl="http://"+wrapUrl+"/web.php/web";
+
+    public static  String aboutMe=webUrl+"/about";
     //银联支付
     public static String zhifu = "http://api.ryzcgf.com/public/index.php/upacp/frontConsume/pay_code/";
     /**

@@ -1,9 +1,9 @@
 package com.itboye.pondteam.app;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.multidex.MultiDexApplication;
 import android.util.DisplayMetrics;
 
 import com.android.volley.Request;
@@ -29,7 +29,7 @@ import static com.itboye.pondteam.utils.ScreenUtil.getIMEI;
  * Created by admin on 2016/12/6.
  */
 
-public class MyApplication extends Application implements Observer {
+public class MyApplication extends MultiDexApplication implements Observer {
 
     private static RequestQueue queue;
     //    private LanguageSettingUtil languageSetting;

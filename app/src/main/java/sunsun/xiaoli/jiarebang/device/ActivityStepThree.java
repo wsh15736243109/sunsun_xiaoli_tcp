@@ -85,6 +85,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
     String aq_did;
     int position;
     DeviceType deviceType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +107,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         setZhuangTai(smartConfigType);
         position = getIntent().getIntExtra("position", 0);
         type = getIntent().getStringExtra("type");
-        deviceType= (DeviceType) getIntent().getSerializableExtra("device");
+        deviceType = (DeviceType) getIntent().getSerializableExtra("device");
         wifiName = getIntent().getStringExtra("wifi_name");
         wifiPass = getIntent().getStringExtra("wifi_pass");
 //        did = getIntent().getStringExtra("did");
@@ -229,7 +230,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     return;
                 }
                 if (hasFind == false || searchDeviceInfo == null) {
-                    MAlert.alert(getString(R.string.deviceid_error)+hasFind+":"+searchDeviceInfo);
+                    MAlert.alert(getString(R.string.deviceid_error) + hasFind + ":" + searchDeviceInfo);
                     return;
                 }
                 if (aq_did != null) {
@@ -269,7 +270,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name[2], "S03-2", extra);
                             break;
                         default:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(),type), type, extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(), type), type, extra);
                     }
                 }
                 break;
@@ -308,7 +309,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());
-                txt_search.setText(getString(R.string.deviceid_error)+entity.getCode());
+                txt_search.setText(getString(R.string.deviceid_error) + entity.getCode());
                 return;
             }
             if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
@@ -625,7 +626,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         dialog = alert.create();
         if (!isShow) {
 //            if (!dialog.isShowing()) {
-            alert.show();
+        alert.show();
 //            } else {
 //                dialog.dismiss();
 //            }

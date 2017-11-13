@@ -141,8 +141,8 @@
                 <action android:name="android.NET.wifi.RSSI_CHANGED" />
                 <action android:name="android.net.wifi.STATE_CHANGE" />
                 <action android:name="android.Net.wifi.WIFI_STATE_CHANGED" />
-                <action android:name="android.intent.action.LOCALE_CHANGED"></action>
-                <action android:name="android.intent.action.TIMEZONE_CHANGED"></action>
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
             </intent-filter>
         </receiver>
 
@@ -163,57 +163,62 @@
         <activity android:name=".device.qibeng.DeviceQiBengDetailActivity" />
         <activity android:name=".sunsunlingshou.activity.ArticleActivity" />
         <activity android:name=".sunsunlingshou.activity.home.RedBagAcitivty" />
-        <activity android:name=".device.weishiqi.WeiShiQiDetailActivity"></activity>
-        <activity android:name=".device.EditDeviceActivity"></activity>
-
-
+        <activity android:name=".device.weishiqi.WeiShiQiDetailActivity" />
+        <activity android:name=".device.EditDeviceActivity" />
         <activity android:name=".device.pondteam.AddPondDevice" />
         <activity android:name=".device.pondteam.ActivityPondDeviceDetail" />
-        <activity android:name=".device.pondteam.ActivityZiDong"></activity>
-        <activity android:name=".device.pondteam.ActivityShouDong"></activity>
-        <activity android:name=".device.pondteam.ActivityUvLamp"></activity>
-        <activity android:name=".device.pondteam.ActivityChaZuoBDetail"></activity>
-        <activity android:name=".device.pondteam.PondTeamRegisterActivity"></activity>
-        <activity android:name=".device.pondteam.WenDuPeriodActivity"></activity>
+        <activity android:name=".device.pondteam.ActivityZiDong" />
+        <activity android:name=".device.pondteam.ActivityShouDong" />
+        <activity android:name=".device.pondteam.ActivityUvLamp" />
+        <activity android:name=".device.pondteam.ActivityChaZuoBDetail" />
+        <activity android:name=".device.pondteam.PondTeamRegisterActivity" />
+        <activity android:name=".device.pondteam.WenDuPeriodActivity" />
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:label="@string/app_name"
             android:exported="true"
+            android:label="@string/app_name"
             android:launchMode="singleTop">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:scheme="${APP_ID}"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="${APP_ID}" />
             </intent-filter>
         </activity>
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
 
         <receiver
             android:name="com.taobao.agoo.AgooCommondReceiver"
             android:exported="true"
             android:process=":channel">
             <intent-filter>
-                <!--sunsun.xiaoli.jiarebang-->
-                <!--com.itboye.xiaomianyang-->
-                <!--com.itboye.pondteam-->
-                <!--com.itboye.lingshou-->
-                <!--com.itboye.pondlink-->
+
+                <!-- sunsun.xiaoli.jiarebang -->
+                <!-- com.itboye.xiaomianyang -->
+                <!-- com.itboye.pondteam -->
+                <!-- com.itboye.lingshou -->
+                <!-- com.itboye.pondlink -->
                 <action android:name="${PACKAGE}.intent.action.COMMAND" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
                 <data android:scheme="package" />
             </intent-filter>
         </receiver>
+
         <provider
             android:name="com.umeng.message.provider.MessageProvider"
             android:authorities="${PACKAGE}.umeng.message"
             android:exported="false">
             <grant-uri-permission android:pathPattern=".*" />
         </provider>
+
+        <activity android:name=".sunsunlingshou.activity.web.WebActivity"></activity>
     </application>
 
 </manifest>

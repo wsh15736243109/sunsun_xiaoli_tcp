@@ -49,6 +49,7 @@ dependencies {
     compile 'in.srain.cube:ptr-load-more:1.0.2'
     compile 'com.umeng.analytics:analytics:6.1.1'
     compile 'com.orhanobut:logger:1.15'
+    compile 'com.android.support:multidex:1.0.2'
 //    compile '__local_jars__:F:\\SunsunXiaoLi\\PushSDK\\libs\\com.umeng.message_3.1.1a.jar'
 
 }
