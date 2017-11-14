@@ -238,19 +238,19 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
 
         // 列表项长按键处理
         mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> parent,
-                                                   View view, final int position, long id) {
-                        mSelectDeviceInfo = arrayList.get(position);
-                        mApp.mEditDeviceInfo = mSelectDeviceInfo;
-                        Intent mainIntent = new Intent(DeviceActivity.this,
-                                EditDeviceActivity.class);
-                        mainIntent.putExtra("id", mSelectDeviceInfo.getId());
-                        mainIntent.putExtra("type", mSelectDeviceInfo.getDevice_type());
-                        DeviceActivity.this.startActivity(mainIntent);
-                        return true;
-                    }
-                });
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent,
+                                           View view, final int position, long id) {
+                mSelectDeviceInfo = arrayList.get(position);
+                mApp.mEditDeviceInfo = mSelectDeviceInfo;
+                Intent mainIntent = new Intent(DeviceActivity.this,
+                        EditDeviceActivity.class);
+                mainIntent.putExtra("id", mSelectDeviceInfo.getId());
+                mainIntent.putExtra("type", mSelectDeviceInfo.getDevice_type());
+                DeviceActivity.this.startActivity(mainIntent);
+                return true;
+            }
+        });
 //        throw new RuntimeException("自定义异常：这是自己抛出的异常");
     }
 
@@ -537,7 +537,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                         @Override
                         public void run() {
                             if (loadingDialog != null) {
-                                loadingDialog.dismiss();
+                                setDialoadDismiss(loadingDialog);
                             }
                             if (loadingDialogDelete != null) {
                                 loadingDialogDelete.dismiss();
@@ -578,7 +578,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadingDialog.dismiss();
+                        setDialoadDismiss(loadingDialog);
                     }
                 }, 2000);
             } else if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
@@ -589,7 +589,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            loadingDialog.dismiss();
+                            setDialoadDismiss(loadingDialog);
                         }
                     }, 2000);
                     return;
@@ -600,7 +600,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                loadingDialog.dismiss();
+                                setDialoadDismiss(loadingDialog);
                             }
                         }, 2000);
                         return;
@@ -628,10 +628,20 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadingDialog.dismiss();
+                        setDialoadDismiss(loadingDialog);
                     }
                 }, 2000);
             }
+        }
+    }
+
+    private void setDialoadDismiss(ProgressDialog loadingDialog) {
+        try {
+            if (loadingDialog != null && loadingDialog.isShowing() && !this.isFinishing() && this != null) {
+                loadingDialog.dismiss();
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -640,7 +650,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                loadingDialog.dismiss();
+                setDialoadDismiss(loadingDialog);
                 Intent intent = null;
                 String deviceType = mSelectDeviceInfo.getDevice_type();
                 if (deviceType.contains("S02")) {
