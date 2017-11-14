@@ -356,6 +356,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
             img_camera.setVisibility(View.VISIBLE);
             img_quanping.setVisibility(View.VISIBLE);
             img_quanping.setBackgroundResource(R.drawable.quanping);
+            mVideoLayout.setVisibility(View.VISIBLE);
         } else {
             mVideoLayout.removeAllViews();
             txt_isOpen.setVisibility(View.VISIBLE);
@@ -496,28 +497,46 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                 Log.v("tes", ">>>recordStopBitmapCallBack");
             }
 
-            public void videoStreamBitmapCallBack(Bitmap bitmap) {
+            public void videoStreamBitmapCallBack( final Bitmap bitmap) {
                 Log.v("tes", ">>>videoStreamBitmapCallBack");
-                mStreamView.showBitmap(bitmap);
-                runOnUiThread(new Runnable() {
+                //视频连接状态
+                txt_fenbianlv_zhuangtai.post(new Runnable() {
                     @Override
                     public void run() {
-                        txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
-                        getQingXiZhuangTai();
-                        if (mClient.isConnect()) {
-                            img_shuicaogang.setBackgroundResource(R.drawable.kai);
-                        } else {
-                            img_shuicaogang.setBackgroundResource(R.drawable.guan);
-                        }
-                        txt_wangsu.setText(mClient.getVideoFrameBps());
-                        if (mClient.isConnect()) {
+                        if (bitmap != null) {
                             setCameraOpen(true);
+                            txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+                            txt_wangsu.setText(mClient.getVideoFrameBps());
+                            getQingXiZhuangTai();
                         } else {
+                            //视频连接状态
                             setCameraOpen(false);
+                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
                         }
                     }
                 });
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
+//                        getQingXiZhuangTai();
+//                        if (mClient.isConnect()) {
+//                            img_shuicaogang.setBackgroundResource(R.drawable.kai);
+//                        } else {
+//                            img_shuicaogang.setBackgroundResource(R.drawable.guan);
+//                        }
+//                        txt_wangsu.setText(mClient.getVideoFrameBps());
+//                        if (mClient.isConnect()) {
+//                            setCameraOpen(true);
+//                        } else {
+//                            setCameraOpen(false);
+//                        }
+//                    }
+//                });
+
+                mStreamView.showBitmap(bitmap);
             }
 
             public void videoStreamDataCallBack(int format, int width, int height, int datalen, byte[] data) {
@@ -532,22 +551,23 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                 Log.v("tes", ">>>audioDataCallBack");
             }
         });
-
-        mClient.connectDevice(cameraDid, cameraPsw);
+//        cameraDid="SCHD-001009-ZWXGR";
+//        cameraPsw="PCYkQXQg";
+        int re=  mClient.connectDevice(cameraDid, cameraPsw);
         mClient.openVideoStream();
-        Log.v("test", "did=" + cameraDid);
-        Log.v("test", "passwd=" + cameraPsw);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mClient.isConnect()) {
-                    txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
-                    getQingXiZhuangTai();
-                } else {
-                    txt_fenbianlv_zhuangtai.setText(getString(R.string.video_disconnect));
-                }
-            }
-        });
+        Log.v("test", "did=" + cameraDid+"   re="+re);
+//        Log.v("test", "passwd=" + cameraPsw);
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (mClient.isConnect()) {
+//                    txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
+//                    getQingXiZhuangTai();
+//                } else {
+//                    txt_fenbianlv_zhuangtai.setText(getString(R.string.video_disconnect));
+//                }
+//            }
+//        });
 
     }
 
