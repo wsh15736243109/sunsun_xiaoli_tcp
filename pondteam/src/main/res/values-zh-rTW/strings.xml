@@ -595,4 +595,10 @@
     <string name="configuration_other">一鍵配置</string>
     <string name="LAN_other">添加局域網設備</string>
     <string name="manually_other">手動添加設備</string>
+    <string name="connect_password_unknown_error">未知信息</string>
+    <string name="connect_password_error">密碼錯誤</string>
+    <string name="connect_device_offline">設備離綫</string>
+    <string name="connect_device_did_not_exsit">設備DID不存在</string>
+    <string name="connect_timeout">連接超時</string>
+    <string name="current_resolution">當前分辨率:</string>
 </resources>

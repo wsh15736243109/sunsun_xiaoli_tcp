@@ -153,13 +153,13 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         mStreamView = new StreamView(this, null);
         mVideoLayout.addView(mStreamView);
         arrayList.put("320x180", getString(R.string.qingxi_pu));
-        arrayListValue.add("("+getString(R.string.qingxi_pu)+")320x180");
+        arrayListValue.add("(" + getString(R.string.qingxi_pu) + ")320x180");
         arrayList.put("640x360", getString(R.string.qingxi_biao));
-        arrayListValue.add("("+getString(R.string.qingxi_biao)+")640x360");
+        arrayListValue.add("(" + getString(R.string.qingxi_biao) + ")640x360");
         arrayList.put("800x480", getString(R.string.qingxi_gao));
-        arrayListValue.add("("+getString(R.string.qingxi_gao)+")800x480");
+        arrayListValue.add("(" + getString(R.string.qingxi_gao) + ")800x480");
         arrayList.put("1280x720", getString(R.string.qingxi_chao));
-        arrayListValue.add("("+getString(R.string.qingxi_chao)+")1280x720");
+        arrayListValue.add("(" + getString(R.string.qingxi_chao) + ")1280x720");
         dbManager = new DBManager(this);
         txt_video.setText(deviceListBean.getSlave_name() == null ? deviceListBean.getDevice_nickname() : deviceListBean.getSlave_name());
         isMasterDevice = getIntent().getBooleanExtra("isMasterDevice", true);
@@ -302,7 +302,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         } catch (Exception e) {
 
         }
-        app.videoUI=null;
+        app.videoUI = null;
         intent = null;
         keepScreenOn(this, false);
         super.onDestroy();
@@ -316,7 +316,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
             fileList = new ArrayList<>();
             e.printStackTrace();
         }
-        txt_albumCount.setText(String.format(getString(R.string.current_album),fileList.size()));
+        txt_albumCount.setText(String.format(getString(R.string.current_album), fileList.size()));
     }
 
     /**
@@ -497,7 +497,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                 Log.v("tes", ">>>recordStopBitmapCallBack");
             }
 
-            public void videoStreamBitmapCallBack( final Bitmap bitmap) {
+            public void videoStreamBitmapCallBack(final Bitmap bitmap) {
                 Log.v("tes", ">>>videoStreamBitmapCallBack");
                 //视频连接状态
                 txt_fenbianlv_zhuangtai.post(new Runnable() {
@@ -506,7 +506,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
                         if (bitmap != null) {
                             setCameraOpen(true);
                             txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
                             txt_wangsu.setText(mClient.getVideoFrameBps());
                             getQingXiZhuangTai();
                         } else {
@@ -553,26 +553,24 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         });
 //        cameraDid="SCHD-001009-ZWXGR";
 //        cameraPsw="PCYkQXQg";
-        int re=  mClient.connectDevice(cameraDid, cameraPsw);
+        int re = mClient.connectDevice(cameraDid, cameraPsw);
+        final String videoStatus = new VideoHelper().getVideoStatus(re);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                txt_video_status.setText(videoStatus);
+                txt_fenbianlv_zhuangtai.setText(videoStatus);
+            }
+        });
         mClient.openVideoStream();
-        Log.v("test", "did=" + cameraDid+"   re="+re);
+        Log.v("test", "did=" + cameraDid + "   re=" + re);
 //        Log.v("test", "passwd=" + cameraPsw);
-//        runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (mClient.isConnect()) {
-//                    txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
-//                    getQingXiZhuangTai();
-//                } else {
-//                    txt_fenbianlv_zhuangtai.setText(getString(R.string.video_disconnect));
-//                }
-//            }
-//        });
 
     }
 
 
     private void getQingXiZhuangTai() {
+        txt_fenbianlv_zhuangtai.setText(getString(R.string.current_resolution) + (mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight() ));
         txt_fenbianlv_value.setText(arrayList.get(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight()));
     }
 

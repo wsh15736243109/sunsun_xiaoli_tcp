@@ -146,6 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_shuiwei"
+                android:textColor="@color/orange500"
                 android:layout_marginLeft="@dimen/DIMEN_5DP"
                 android:layout_toRightOf="@+id/icon_shuiwei_status"
                 android:textSize="@dimen/DIMEN_16DP" />
@@ -208,6 +209,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_fenbianlv"
+                android:textColor="@color/orange500"
                 android:layout_marginLeft="@dimen/DIMEN_5DP"
                 android:layout_toRightOf="@+id/icon_fenbianlv"
                 android:text=""
@@ -218,6 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textColor="@color/orange500"
                 android:layout_marginRight="@dimen/DIMEN_10DP"
                 android:layout_centerVertical="true"
                 android:text="" />
@@ -252,6 +255,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_xiangce"
+                android:textColor="@color/orange500"
                 android:layout_marginLeft="@dimen/DIMEN_5DP"
                 android:layout_toRightOf="@+id/icon_xiangce"
                 android:text=""

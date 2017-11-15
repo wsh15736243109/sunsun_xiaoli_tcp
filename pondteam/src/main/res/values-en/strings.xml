@@ -56,7 +56,7 @@
     <string name="genghuanweihu_tishi">Maintenance reminder</string>
     <string name="yichangbaojing">Abnormity alarm</string>
     <string name="hour">hours</string>
-    <string name="current_status">Current Status:</string>
+    <string name="current_status">Current status:</string>
     <string name="prepare_washing">ready to clean</string>
     <string name="choose_single_washtime">Manual cleaning time setting</string>
     <string name="minute">min</string>
@@ -252,7 +252,7 @@
     <string name="login">Login</string>
     <string name="caturesuccess">The image has been saved in</string>
     <string name="pengyouquan">Circle Of Friends</string>
-    <string name="choose_fenbianlv">Select the resolution</string>
+    <string name="choose_fenbianlv">Resolution select</string>
     <string name="errcode_success">Send successfully</string>
     <string name="errcode_cancel">Send cancel</string>
     <string name="errcode_deny">Send rejected</string>
@@ -597,4 +597,10 @@
     <string name="configuration_other">A key configuration</string>
     <string name="LAN_other">Add LAN device</string>
     <string name="manually_other">Add device manually</string>
+    <string name="connect_password_unknown_error">Unknown message</string>
+    <string name="connect_password_error">Password error</string>
+    <string name="connect_device_offline">device offline</string>
+    <string name="connect_device_did_not_exsit">Device DID is not exist</string>
+    <string name="connect_timeout">Connect time out</string>
+    <string name="current_resolution">Current resolution:</string>
 </resources>

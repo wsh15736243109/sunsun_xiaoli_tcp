@@ -226,7 +226,15 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             public void audioDataCallBack(int datalen, byte[] data) {
             }
         });
-        mClient.connectDevice(chirdDid, pass);
+        final int re=mClient.connectDevice(chirdDid, pass);
+        final String videoStatus= new VideoHelper().getVideoStatus(re);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                txt_shipin_status.setText(videoStatus);
+                Log.v("test","video status = " + re);
+            }
+        });
         mClient.openVideoStream();
     }
 

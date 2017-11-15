@@ -596,6 +596,12 @@
     <string name="configuration_other">一键配置</string>
     <string name="LAN_other">添加局域网设备</string>
     <string name="manually_other">手动添加设备</string>
+    <string name="connect_password_unknown_error">未知信息</string>
+    <string name="connect_password_error">密码错误</string>
+    <string name="connect_device_offline">设备离线</string>
+    <string name="connect_device_did_not_exsit">设备DID不存在</string>
+    <string name="connect_timeout">连接超时</string>
+    <string name="current_resolution">当前分辨率:</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>
