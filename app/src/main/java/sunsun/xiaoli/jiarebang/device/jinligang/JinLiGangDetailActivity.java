@@ -8,7 +8,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +45,7 @@ import com.itboye.pondteam.utils.MyTimeUtil;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -57,7 +57,6 @@ import java.util.Observer;
 
 import ChirdSdk.CHD_Client;
 import ChirdSdk.CHD_LocalScan;
-import ChirdSdk.ClientCallBack;
 import ChirdSdk.StreamView;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
@@ -90,7 +89,7 @@ import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getTimesString;
  */
 
 
-public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer {
+public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer, VideoInterface {
     RelativeLayout re_wendushezhi, re_dengguangzhaoming, re_shajundeng, re_chonglangbeng, re_shipinguankan, re_shuiphsetting;
     RelativeLayout re_shuiph;//水温ph走势
     RelativeLayout re_shiduan;
@@ -153,111 +152,111 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private String currentTime;
     private TcpUtil mTcpUtil;
 
-    private void clientCallBackListener() {
+    private VideoHelper mVideoHelper;
 
-        mClient.setClientCallBack(new ClientCallBack() {
-
-            public void paramChangeCallBack(int changeType) {
-            }
-
-            public void disConnectCallBack() {
-                //视频连接状态
-                txt_shipin_status.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //视频连接状态
-                        txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                    }
-                });
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setCameraOpen(mClient.isConnect());
-                    }
-                });
-            }
-
-            public void snapBitmapCallBack(Bitmap bitmap) {
-                MAlert.alert(getString(R.string.caturesuccess) + imagePath);
-            }
-
-            public void recordTimeCountCallBack(String times) {
-            }
-
-            public void recordStopBitmapCallBack(Bitmap bitmap) {
-            }
-
-            public void videoStreamBitmapCallBack(final Bitmap bitmap) {
-                //视频连接状态
-                txt_shipin_status.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (bitmap != null) {
-                            setCameraOpen(true);
-                            txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                        } else {
-                            //视频连接状态
-                            setCameraOpen(false);
-                            txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                        }
-                    }
-                });
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mClient.isConnect()) {
-                            txt_wangsu.setText(mClient.getVideoFrameBps());
-                        } else {
+//    private void clientCallBackListener() {
+//
+//        mClient.setClientCallBack(new ClientCallBack() {
+//
+//            public void paramChangeCallBack(int changeType) {
+//            }
+//
+//            public void disConnectCallBack() {
+//                //视频连接状态
+//                txt_shipin_status.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //视频连接状态
+//                        txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                    }
+//                });
+//
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        setCameraOpen(mClient.isConnect());
+//                    }
+//                });
+//            }
+//
+//            public void snapBitmapCallBack(Bitmap bitmap) {
+//                MAlert.alert(getString(R.string.caturesuccess) + imagePath);
+//            }
+//
+//            public void recordTimeCountCallBack(String times) {
+//            }
+//
+//            public void recordStopBitmapCallBack(Bitmap bitmap) {
+//            }
+//
+//            public void videoStreamBitmapCallBack(final Bitmap bitmap) {
+//                //视频连接状态
+//                txt_shipin_status.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (bitmap != null) {
+//                            setCameraOpen(true);
+//                            txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                        } else {
+//                            //视频连接状态
 //                            setCameraOpen(false);
-                        }
-                    }
-                });
-                mStreamView.showBitmap(bitmap);
-            }
-
-            public void videoStreamDataCallBack(int format, int width, int height, int datalen, byte[] data) {
-            }
-
-            public void serialDataCallBack(int datalen, byte[] data) {
-                Log.v("test", "RecvSerialDataLen:" + datalen);
-            }
-
-            public void audioDataCallBack(int datalen, byte[] data) {
-            }
-        });
-        final int re=mClient.connectDevice(chirdDid, pass);
-        final String videoStatus= new VideoHelper().getVideoStatus(re);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                txt_shipin_status.setText(videoStatus);
-                Log.v("test","video status = " + re);
-            }
-        });
-        mClient.openVideoStream();
-    }
+//                            txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                        }
+//                    }
+//                });
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (mClient.isConnect()) {
+//                            txt_wangsu.setText(mClient.getVideoFrameBps());
+//                        } else {
+////                            setCameraOpen(false);
+//                        }
+//                    }
+//                });
+//                mStreamView.showBitmap(bitmap);
+//            }
+//
+//            public void videoStreamDataCallBack(int format, int width, int height, int datalen, byte[] data) {
+//            }
+//
+//            public void serialDataCallBack(int datalen, byte[] data) {
+//                Log.v("test", "RecvSerialDataLen:" + datalen);
+//            }
+//
+//            public void audioDataCallBack(int datalen, byte[] data) {
+//            }
+//        });
+//        mVideoHelper.connectDevice(chirdDid, pass);
+//
+//    }
 
     /**
      * 设摄像头状态
      *
      * @param b true:打开  false:关闭
      */
-    private void setCameraOpen(boolean b) {
-        if (b) {
+    private void setCameraOpen(final boolean b) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (b) {
+                    setTextValue(txt_wangsu, mClient.getVideoFrameBps());
 //            txt_isOpen.setVisibility(View.GONE);
-            mVideoLayout.setBackgroundColor(Color.parseColor("#ffffffff"));
-            txt_wangsu.setVisibility(View.VISIBLE);
-            img_camera.setVisibility(View.VISIBLE);
-            img_quanping.setVisibility(View.VISIBLE);
-        } else {
-            mVideoLayout.removeAllViews();
+                    mVideoLayout.setBackgroundColor(Color.parseColor("#ffffffff"));
+                    txt_wangsu.setVisibility(View.VISIBLE);
+                    img_camera.setVisibility(View.VISIBLE);
+                    img_quanping.setVisibility(View.VISIBLE);
+                } else {
+                    mVideoLayout.removeAllViews();
 //            txt_isOpen.setVisibility(View.VISIBLE);
-            mVideoLayout.setBackgroundColor(Color.parseColor("#000000"));
-            txt_wangsu.setVisibility(View.GONE);
-            img_camera.setVisibility(View.GONE);
-            img_quanping.setVisibility(View.GONE);
-        }
+                    mVideoLayout.setBackgroundColor(Color.parseColor("#000000"));
+                    txt_wangsu.setVisibility(View.GONE);
+                    img_camera.setVisibility(View.GONE);
+                    img_quanping.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     PtrDefaultHandler ptrHandler = new PtrDefaultHandler() {
@@ -279,6 +278,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         dbManager = new DBManager(this);
         app = (App) getApplication();
         mClient = new CHD_Client();
+        mVideoHelper = new VideoHelper(this, mClient, this);
         keepScreenOn(this, true);
         app.jinLiGangdetailUI = this;
         userPresenter = new UserPresenter(this);
@@ -415,10 +415,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             }
         }
         try {
-            if (mClient != null) {
-                mClient.disconnectDevice();
-                mClient.closeVideoStream();
-            }
+            mVideoHelper.closeVideo();
         } catch (Exception e) {
 
         }
@@ -847,24 +844,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         }
     }
 
-    class MyTask extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            clientCallBackListener();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            //统计流量
-            initFlowPlus();
-            setViewVisible(mClient.isConnect());
-        }
-
-    }
 
     private void initFlowPlus() {
         todayTime = new SimpleDateFormat(patten).format(new Date());
@@ -1010,7 +989,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                         mVideoLayout.addView(mStreamView);
                         if (chirdDid != null) {
                             if (!chirdDid.equals("")) {
-                                new MyTask().execute();
+                                mVideoHelper.connectDevice(chirdDid, pass);
                             } else {
                                 txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
                             }
@@ -1269,7 +1248,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         if ((fault & (int) Math.pow(2, 6)) == Math.pow(2, 6)) {
             txt_shuiwei_status.setText(getString(R.string.current_status) + getString(R.string.guodi));
         } else {
-            txt_shuiwei_status.setText(getString(R.string.current_status) +getString(R.string.normal) );
+            txt_shuiwei_status.setText(getString(R.string.current_status) + getString(R.string.normal));
         }
         String pushCfg = getAppointNumber(Integer.toBinaryString(detailModelTcp.getPush_cfg()), 9);
         pushStrs = pushCfg.toCharArray();
@@ -1415,5 +1394,40 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         if (app.mPeriodUi != null) {
             app.mPeriodUi.setNewTimer();
         }
+    }
+
+    @Override
+    public void videoStreamBitmapCallBack(@NotNull Bitmap bitmap) {
+        mStreamView.showBitmap(bitmap);
+        setCameraOpen(true);
+    }
+
+    @Override
+    public void snapBitmapCallBack(@NotNull Bitmap bitmap) {
+        MAlert.alert(getString(R.string.caturesuccess) + imagePath);
+    }
+
+    @Override
+    public void disConnectCallBack() {
+        setCameraOpen(false);
+    }
+
+    @Override
+    public void paramChangeCallBack(int changeType) {
+        //
+    }
+
+    @Override
+    public void videoConnectStatus(int result) {
+        setTextValue(txt_shipin_status,mVideoHelper.getVideoStatus(result));
+    }
+
+    private void setTextValue(final TextView textView,final String value){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(value);
+            }
+        });
     }
 }

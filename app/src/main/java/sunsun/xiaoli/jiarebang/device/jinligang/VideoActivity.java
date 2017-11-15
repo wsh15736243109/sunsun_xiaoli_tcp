@@ -1,6 +1,5 @@
 package sunsun.xiaoli.jiarebang.device.jinligang;
 
-import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,7 +10,6 @@ import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -44,6 +42,8 @@ import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -80,7 +80,7 @@ import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.readfile;
  * Created by Administrator on 2017/3/6.
  */
 
-public class VideoActivity extends BaseTwoActivity implements Observer {
+public class VideoActivity extends BaseTwoActivity implements Observer, VideoInterface {
     ImageView img_back, img_right, img_camera, img_quanping;
     LinearLayout li_title;
     TextView txt_title, add, txt_wangsu, txt_isOpen, txt_video_status;
@@ -123,6 +123,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
     TextView txt_video;
     private String nickname;
     boolean clickBack = false;
+    private VideoHelper mVideoHelper;
 
     static Intent intent = null;
 
@@ -148,10 +149,12 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         userPresenter = new UserPresenter(this);
         deviceListBean = (DeviceListBean) getIntent().getSerializableExtra("model");
         mClient = new CHD_Client();
+        mVideoHelper = new VideoHelper(this, mClient, this);
         cameraDid = getIntent().getStringExtra("cameraDid");
         cameraPsw = getIntent().getStringExtra("cameraPsw");
         mStreamView = new StreamView(this, null);
         mVideoLayout.addView(mStreamView);
+        mVideoHelper.connectDevice(cameraDid, cameraPsw);
         arrayList.put("320x180", getString(R.string.qingxi_pu));
         arrayListValue.add("(" + getString(R.string.qingxi_pu) + ")320x180");
         arrayList.put("640x360", getString(R.string.qingxi_biao));
@@ -190,7 +193,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
 //        clientCallBackListener();
 //        initFlowPlus();
 //        setViewVisible(mClient.isConnect());
-        new ColledctTask().execute();
+//        new ColledctTask().execute();
     }
 
     @Override
@@ -238,12 +241,15 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
 //        }
         //查询昨日使用的流量
         flow = dbManager.queryFlow(cameraDid, getSp(Const.UID), yesTerdayTime);
-        if (flow[1] <= 0) {
-            flow[1] = 0;
+        try {
+            if (flow[1] <= 0) {
+                flow[1] = 0;
+            }
+            txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB(flow[1] <= -1 ? 0 : flow[1]));
+        }catch (Exception e){
+
         }
-        txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB(flow[1] <= -1 ? 0 : flow[1]));
-        mStreamView = new StreamView(this, null);
-        mVideoLayout.addView(mStreamView);
+
     }
 
     Runnable runnable = new Runnable() {
@@ -291,8 +297,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
         try {
             if (mClient != null) {
                 clickBack = true;
-                mClient.disconnectDevice();
-                mClient.closeVideoStream();
+                mVideoHelper.closeVideo();
             }
         } catch (Exception e) {
 
@@ -348,186 +353,182 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
     private String imagePath;
 
 
-    private void setCameraOpen(boolean b) {
-        if (b) {
-            txt_isOpen.setVisibility(View.GONE);
-            mVideoLayout.setBackgroundColor(Color.parseColor("#ffffffff"));
-            txt_wangsu.setVisibility(View.VISIBLE);
-            img_camera.setVisibility(View.VISIBLE);
-            img_quanping.setVisibility(View.VISIBLE);
-            img_quanping.setBackgroundResource(R.drawable.quanping);
-            mVideoLayout.setVisibility(View.VISIBLE);
-        } else {
-            mVideoLayout.removeAllViews();
-            txt_isOpen.setVisibility(View.VISIBLE);
-            mVideoLayout.setBackgroundColor(Color.parseColor("#000000"));
-            txt_wangsu.setVisibility(View.GONE);
-            img_camera.setVisibility(View.GONE);
-            img_quanping.setVisibility(View.GONE);
-        }
+    private void setCameraOpen(final boolean b) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (b) {
+                    txt_isOpen.setVisibility(View.GONE);
+                    mVideoLayout.setBackgroundColor(Color.parseColor("#ffffffff"));
+                    txt_wangsu.setVisibility(View.VISIBLE);
+                    img_camera.setVisibility(View.VISIBLE);
+                    img_quanping.setVisibility(View.VISIBLE);
+                    img_quanping.setBackgroundResource(R.drawable.quanping);
+                    mVideoLayout.setVisibility(View.VISIBLE);
+                } else {
+                    mVideoLayout.removeAllViews();
+                    txt_isOpen.setVisibility(View.VISIBLE);
+                    mVideoLayout.setBackgroundColor(Color.parseColor("#000000"));
+                    txt_wangsu.setVisibility(View.GONE);
+                    img_camera.setVisibility(View.GONE);
+                    img_quanping.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
-    @SuppressLint("StaticFieldLeak")
-    class ColledctTask extends AsyncTask<String, String, String> {
+    private void setTextValue(final TextView textView,final String value){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                textView.setText(value);
+            }
+        });
+    }
 
-        @Override
-        protected String doInBackground(String... strings) {
-            clientCallBackListener();
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            //统计流量
+    @Override
+    public void videoConnectStatus(int result) {
+        setTextValue(txt_video_status,mVideoHelper.getVideoStatus(result));
+        if (result==0) {
             initFlowPlus();
-//            setViewVisible(mClient.isConnect());
         }
-
-
     }
 
-    /**
-     * 摄像头设备相关回掉
-     */
-    private void clientCallBackListener() {
+    @Override
+    public void videoStreamBitmapCallBack(@NotNull Bitmap bitmap) {
+        mStreamView.showBitmap(bitmap);
+        setCameraOpen(true);
+        setTextValue(txt_wangsu,mClient.getVideoFrameBps());
+        getQingXiZhuangTai();
+    }
 
-        mClient.setClientCallBack(new ClientCallBack() {
-            public void paramChangeCallBack(int changeType) {
-                Log.v("tes", ">>>paramChangeCallBack");
-                switch (changeType) {
-                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_ABILITY:
-                        //摄像头性能
-//                        MAlert.alert("分辨率设置成功1");
-                        break;
-                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_PARAME:
-                        //格式、分辨率、帧率
-//                        MAlert.alert("分辨率设置成功");
-                        img_fenbianlv.setVisibility(View.GONE);
-                        txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
-                        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
-                        getQingXiZhuangTai();
-                        break;
-                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_CTRL:
-//                        MAlert.alert("分辨率设置成功3");
-                        //摄像头控制参数
-                        break;
-                    case ClientCallBack.PARAMCHANGE_TYPE_AUDIO_PARAM:
-//                        MAlert.alert("分辨率设置成功4");
-                        //音频参数
-                        break;
-                    case ClientCallBack.PARAMCHANGE_TYPE_SERIAL_PARAM:
-//                        MAlert.alert("分辨率设置成功5");
-                        //串口参数
-                        break;
-                    case ClientCallBack.PARAMCHANGE_TYPE_GPIO_STATUS:
-//                        MAlert.alert("分辨率设置成功6");
-                        //GPIO状态
-                        break;
-                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_ALLCTRL:
-//                        MAlert.alert("分辨率设置成功7");
-                        //摄像头全部控制参数
-                        break;
+    @Override
+    public void snapBitmapCallBack(@NotNull Bitmap bitmap) {
+        Log.v("tes", ">>>snapBitmapCallBack");
+        try {
+            closeProgressDialog();
+        } catch (Exception e) {
+
+        }
+        setPhotoCount();
+        if (flag) {
+            flag = false;
+            MAlert.alert("正在保存图片");
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    SystemClock.sleep(2000);
+                    Intent intent = new Intent(VideoActivity.this, ImageDetailActivity.class);
+                    intent.putExtra("img", imagePath);
+                    startActivity(intent);
                 }
-            }
+            });
 
-            public void disConnectCallBack() {
-                Log.v("tes", ">>>disConnectCallBack");
-                if (clickBack) {
+        } else {
+            MAlert.alert(getString(R.string.caturesuccess) + imagePath, Gravity.BOTTOM);
+        }
+    }
 
-                } else {
-                    MAlert.alert(getString(R.string.shexiangtou) + getString(R.string.video_disconnect));
-                }
-                clickBack = false;
-                //视频连接状态
-                txt_video_status.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //视频连接状态
-                        txt_video_status.setText(mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect));
+    @Override
+    public void disConnectCallBack() {
+        setCameraOpen(false);
+    }
+
+    @Override
+    public void paramChangeCallBack(int changeType) {
+        if (changeType== ClientCallBack.PARAMCHANGE_TYPE_VIDEO_PARAME) {
+            img_fenbianlv.setVisibility(View.GONE);
+            txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
+            txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
+            getQingXiZhuangTai();
+        }
+    }
 //
-                    }
-                });
+//    @SuppressLint("StaticFieldLeak")
+//    class ColledctTask extends AsyncTask<String, String, String> {
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            clientCallBackListener();
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            //统计流量
+//            initFlowPlus();
+////            setViewVisible(mClient.isConnect());
+//        }
+//
+//
+//    }
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mClient.isConnect()) {
-                            setCameraOpen(true);
-                        } else {
-                            setCameraOpen(false);
-                        }
-                    }
-                });
-//                mClient.connectDevice(cameraDid, cameraPsw);
-//                mClient.openVideoStream();
-            }
-
-            public void snapBitmapCallBack(Bitmap bitmap) {
-                Log.v("tes", ">>>snapBitmapCallBack");
-                try {
-                    closeProgressDialog();
-                } catch (Exception e) {
-
-                }
-                setPhotoCount();
-                if (flag) {
-                    flag = false;
-                    MAlert.alert("正在保存图片");
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SystemClock.sleep(2000);
-                            Intent intent = new Intent(VideoActivity.this, ImageDetailActivity.class);
-                            intent.putExtra("img", imagePath);
-                            startActivity(intent);
-                        }
-                    });
-
-                } else {
-                    MAlert.alert(getString(R.string.caturesuccess) + imagePath, Gravity.BOTTOM);
-                }
-            }
-
-            public void recordTimeCountCallBack(String times) {
-                Log.v("tes", ">>>recordTimeCountCallBack");
-            }
-
-            public void recordStopBitmapCallBack(Bitmap bitmap) {
-                Log.v("tes", ">>>recordStopBitmapCallBack");
-            }
-
-            public void videoStreamBitmapCallBack(final Bitmap bitmap) {
-                Log.v("tes", ">>>videoStreamBitmapCallBack");
-                //视频连接状态
-                txt_fenbianlv_zhuangtai.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (bitmap != null) {
-                            setCameraOpen(true);
-                            txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-//                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                            txt_wangsu.setText(mClient.getVideoFrameBps());
-                            getQingXiZhuangTai();
-                        } else {
-                            //视频连接状态
-                            setCameraOpen(false);
-                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-                        }
-                    }
-                });
+//    /**
+//     * 摄像头设备相关回掉
+//     */
+//    private void clientCallBackListener() {
+//
+//        mClient.setClientCallBack(new ClientCallBack() {
+//            public void paramChangeCallBack(int changeType) {
+//                Log.v("tes", ">>>paramChangeCallBack");
+//                switch (changeType) {
+//                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_ABILITY:
+//                        //摄像头性能
+////                        MAlert.alert("分辨率设置成功1");
+//                        break;
+//                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_PARAME:
+//                        //格式、分辨率、帧率
+////                        MAlert.alert("分辨率设置成功");
+//                        img_fenbianlv.setVisibility(View.GONE);
+//                        txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
+//                        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
+//                        getQingXiZhuangTai();
+//                        break;
+//                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_CTRL:
+////                        MAlert.alert("分辨率设置成功3");
+//                        //摄像头控制参数
+//                        break;
+//                    case ClientCallBack.PARAMCHANGE_TYPE_AUDIO_PARAM:
+////                        MAlert.alert("分辨率设置成功4");
+//                        //音频参数
+//                        break;
+//                    case ClientCallBack.PARAMCHANGE_TYPE_SERIAL_PARAM:
+////                        MAlert.alert("分辨率设置成功5");
+//                        //串口参数
+//                        break;
+//                    case ClientCallBack.PARAMCHANGE_TYPE_GPIO_STATUS:
+////                        MAlert.alert("分辨率设置成功6");
+//                        //GPIO状态
+//                        break;
+//                    case ClientCallBack.PARAMCHANGE_TYPE_VIDEO_ALLCTRL:
+////                        MAlert.alert("分辨率设置成功7");
+//                        //摄像头全部控制参数
+//                        break;
+//                }
+//            }
+//
+//            public void disConnectCallBack() {
+//                Log.v("tes", ">>>disConnectCallBack");
+//                if (clickBack) {
+//
+//                } else {
+//                    MAlert.alert(getString(R.string.shexiangtou) + getString(R.string.video_disconnect));
+//                }
+//                clickBack = false;
+//                //视频连接状态
+//                txt_video_status.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        //视频连接状态
+//                        txt_video_status.setText(mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect));
+////
+//                    }
+//                });
+//
 //                runOnUiThread(new Runnable() {
 //                    @Override
 //                    public void run() {
-//                        txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-//                        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
-//                        getQingXiZhuangTai();
-//                        if (mClient.isConnect()) {
-//                            img_shuicaogang.setBackgroundResource(R.drawable.kai);
-//                        } else {
-//                            img_shuicaogang.setBackgroundResource(R.drawable.guan);
-//                        }
-//                        txt_wangsu.setText(mClient.getVideoFrameBps());
 //                        if (mClient.isConnect()) {
 //                            setCameraOpen(true);
 //                        } else {
@@ -535,43 +536,119 @@ public class VideoActivity extends BaseTwoActivity implements Observer {
 //                        }
 //                    }
 //                });
-
-                mStreamView.showBitmap(bitmap);
-            }
-
-            public void videoStreamDataCallBack(int format, int width, int height, int datalen, byte[] data) {
-                Log.v("tes", ">>>videoStreamDataCallBack");
-            }
-
-            public void serialDataCallBack(int datalen, byte[] data) {
-                Log.v("tes", ">>>serialDataCallBack");
-            }
-
-            public void audioDataCallBack(int datalen, byte[] data) {
-                Log.v("tes", ">>>audioDataCallBack");
-            }
-        });
-//        cameraDid="SCHD-001009-ZWXGR";
-//        cameraPsw="PCYkQXQg";
-        int re = mClient.connectDevice(cameraDid, cameraPsw);
-        final String videoStatus = new VideoHelper().getVideoStatus(re);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                txt_video_status.setText(videoStatus);
-                txt_fenbianlv_zhuangtai.setText(videoStatus);
-            }
-        });
-        mClient.openVideoStream();
-        Log.v("test", "did=" + cameraDid + "   re=" + re);
-//        Log.v("test", "passwd=" + cameraPsw);
-
-    }
+////                mClient.connectDevice(cameraDid, cameraPsw);
+////                mClient.openVideoStream();
+//            }
+//
+//            public void snapBitmapCallBack(Bitmap bitmap) {
+//                Log.v("tes", ">>>snapBitmapCallBack");
+//                try {
+//                    closeProgressDialog();
+//                } catch (Exception e) {
+//
+//                }
+//                setPhotoCount();
+//                if (flag) {
+//                    flag = false;
+//                    MAlert.alert("正在保存图片");
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            SystemClock.sleep(2000);
+//                            Intent intent = new Intent(VideoActivity.this, ImageDetailActivity.class);
+//                            intent.putExtra("img", imagePath);
+//                            startActivity(intent);
+//                        }
+//                    });
+//
+//                } else {
+//                    MAlert.alert(getString(R.string.caturesuccess) + imagePath, Gravity.BOTTOM);
+//                }
+//            }
+//
+//            public void recordTimeCountCallBack(String times) {
+//                Log.v("tes", ">>>recordTimeCountCallBack");
+//            }
+//
+//            public void recordStopBitmapCallBack(Bitmap bitmap) {
+//                Log.v("tes", ">>>recordStopBitmapCallBack");
+//            }
+//
+//            public void videoStreamBitmapCallBack(final Bitmap bitmap) {
+//                Log.v("tes", ">>>videoStreamBitmapCallBack");
+//                //视频连接状态
+//                txt_fenbianlv_zhuangtai.post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (bitmap != null) {
+//                            setCameraOpen(true);
+//                            txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+////                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                            txt_wangsu.setText(mClient.getVideoFrameBps());
+//                            getQingXiZhuangTai();
+//                        } else {
+//                            //视频连接状态
+//                            setCameraOpen(false);
+//                            txt_fenbianlv_zhuangtai.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+//                        }
+//                    }
+//                });
+////                runOnUiThread(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        txt_video_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
+////                        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
+////                        getQingXiZhuangTai();
+////                        if (mClient.isConnect()) {
+////                            img_shuicaogang.setBackgroundResource(R.drawable.kai);
+////                        } else {
+////                            img_shuicaogang.setBackgroundResource(R.drawable.guan);
+////                        }
+////                        txt_wangsu.setText(mClient.getVideoFrameBps());
+////                        if (mClient.isConnect()) {
+////                            setCameraOpen(true);
+////                        } else {
+////                            setCameraOpen(false);
+////                        }
+////                    }
+////                });
+//
+//                mStreamView.showBitmap(bitmap);
+//            }
+//
+//            public void videoStreamDataCallBack(int format, int width, int height, int datalen, byte[] data) {
+//                Log.v("tes", ">>>videoStreamDataCallBack");
+//            }
+//
+//            public void serialDataCallBack(int datalen, byte[] data) {
+//                Log.v("tes", ">>>serialDataCallBack");
+//            }
+//
+//            public void audioDataCallBack(int datalen, byte[] data) {
+//                Log.v("tes", ">>>audioDataCallBack");
+//            }
+//        });
+////        cameraDid="SCHD-001009-ZWXGR";
+////        cameraPsw="PCYkQXQg";
+//        int re = mClient.connectDevice(cameraDid, cameraPsw);
+////        final String videoStatus = new VideoHelper().getVideoStatus(re);
+////        runOnUiThread(new Runnable() {
+////            @Override
+////            public void run() {
+////                txt_video_status.setText(videoStatus);
+////                txt_fenbianlv_zhuangtai.setText(videoStatus);
+////            }
+////        });
+//        mClient.openVideoStream();
+//        Log.v("test", "did=" + cameraDid + "   re=" + re);
+////        Log.v("test", "passwd=" + cameraPsw);
+//
+//    }
 
 
     private void getQingXiZhuangTai() {
-        txt_fenbianlv_zhuangtai.setText(getString(R.string.current_resolution) + (mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight() ));
-        txt_fenbianlv_value.setText(arrayList.get(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight()));
+        setTextValue(txt_fenbianlv_zhuangtai,getString(R.string.current_resolution) + (mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight() ));
+        setTextValue(txt_fenbianlv_value,arrayList.get(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight()));
     }
 
 
