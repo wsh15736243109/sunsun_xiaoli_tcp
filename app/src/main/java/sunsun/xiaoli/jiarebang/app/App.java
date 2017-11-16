@@ -176,7 +176,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     public String token;
     public HomeFragment homeFragment;
     public boolean isStartSearch;
-
+    public String name[] = null;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -189,6 +189,8 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 //        if (BuildConfig.APP_TYPE.toLowerCase().equals("PondTeam".toLowerCase())) {
 //            sta = "en";
 //        }
+
+        initDeviceTypeName();
         initLanguage();
         gson = new Gson();//在这里为应用设置异常处理程序，然后我们的程序才能捕获未处理的异常
         CrashHandler crashHandler = CrashHandler.getInstance();
@@ -211,6 +213,21 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         if (BuildConfig.APP_TYPE.equals("森森新零售")) {
             new Const("dev.sale.sunsunxiaoli.com");
         }
+    }
+
+    private void initDeviceTypeName() {
+        name = new String[]{
+                getString(R.string.device_zhineng806),
+                getString(R.string.device_zhineng228),
+                getString(R.string.device_zhineng700),
+                getString(R.string.device_zhinengjiarebang),
+                getString(R.string.device_yuancheng_ph),
+                getString(R.string.device_zhinengbianpinshuibeng),
+                getString(R.string.device_chitangguolv),
+                getString(R.string.device_zhinengshexiangtou),
+                getString(R.string.device_shuizudeng),
+                getString(R.string.device_zhinengqibeng),
+                getString(R.string.device_weishiqing)};
     }
 
     private void initLocation() {

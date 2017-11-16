@@ -38,7 +38,6 @@ import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.SearchDeviceInfo;
-import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
 import sunsun.xiaoli.jiarebang.interfaces.SmartConfigType;
 import sunsun.xiaoli.jiarebang.popwindow.AutoDismissDialog;
 import sunsun.xiaoli.jiarebang.utils.DeviceType;
@@ -253,7 +252,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("pwd", searchDeviceInfo.getPwd());
                     String extra = gson.toJson(hashMap);
-                    userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name == null ? getString(R.string.device_zhinengshexiangtou) : AddDeviceNewActivity.name[7], "chiniao_wifi_camera", extra);
+                    userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().name[7], "chiniao_wifi_camera", extra);
                 } else {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("first_upd", System.currentTimeMillis() + "");
@@ -264,10 +263,10 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     String extra = gson.toJson(hashMap);
                     switch (deviceType) {
                         case DEVICE_AQ500:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name[1], "S03-1", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().name[1], "S03-1", extra);
                             break;
                         case DEVICE_AQ700:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), AddDeviceNewActivity.name[2], "S03-2", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().name[2], "S03-2", extra);
                             break;
                         default:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(), type), type, extra);

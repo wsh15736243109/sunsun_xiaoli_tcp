@@ -51,7 +51,6 @@ public class AddDeviceNewActivity extends BaseActivity implements
     List<AddBenas> benas;
     ImageView img_back;
     DeviceType deviceType;//设备类型
-    public static String name[] = null;
     int url[] = {
             R.drawable.device_aq,
             R.drawable.device_500,
@@ -83,18 +82,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
         super.onCreate(arg0);
         setContentView(R.layout.activity_add_news_device);
         myApp = (App) getApplication();
-        name = new String[]{
-                getString(R.string.device_zhineng806),
-                getString(R.string.device_zhineng228),
-                getString(R.string.device_zhineng700),
-                getString(R.string.device_zhinengjiarebang),
-                getString(R.string.device_yuancheng_ph),
-                getString(R.string.device_zhinengbianpinshuibeng),
-                getString(R.string.device_chitangguolv),
-                getString(R.string.device_zhinengshexiangtou),
-                getString(R.string.device_shuizudeng),
-                getString(R.string.device_zhinengqibeng),
-                getString(R.string.device_weishiqing)};
+
         listview = (ListView) findViewById(R.id.addListview);
         mContext = this;
         myApp.addDeviceUI = this;
@@ -188,7 +176,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         ActivityStepFirst.class);
-                mainIntent.putExtra("device_type", name[position]);
+                mainIntent.putExtra("device_type", App.getInstance().name[position]);
                 mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
@@ -203,7 +191,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         AddDeviceActivity.class);
-                mainIntent.putExtra("device_type", name[position]);
+                mainIntent.putExtra("device_type", App.getInstance().name[position]);
                 mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
@@ -218,7 +206,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         ManualAddDeviceActivity.class);
-                mainIntent.putExtra("device_type", name[position]);
+                mainIntent.putExtra("device_type", App.getInstance().name[position]);
                 mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
@@ -242,9 +230,9 @@ public class AddDeviceNewActivity extends BaseActivity implements
     @SuppressWarnings("unused")
     public void onAdapter() {
         benas = new ArrayList<AddBenas>();
-        for (int i = 0; i < name.length; i++) {
+        for (int i = 0; i < App.getInstance().name.length; i++) {
             AddBenas addBenas = new AddBenas();
-            addBenas.setName(name[i]);
+            addBenas.setName(App.getInstance().name[i]);
             addBenas.setBitmp(add[i]);
             addBenas.setImg(url[i]);
 //            addBenas.setDeviceType(url[i]);

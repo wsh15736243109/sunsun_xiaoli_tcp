@@ -31,7 +31,6 @@ import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.SearchDeviceInfo;
-import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
 import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -122,7 +121,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                 if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
                                     hashMap.put("pwd", mSelectDeviceInfo.getPwd());
                                     String extra = gson.toJson(hashMap);
-                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), AddDeviceNewActivity.name == null ? getString(R.string.device_zhinengshexiangtou) : AddDeviceNewActivity.name[7], "chiniao_wifi_camera", extra);
+                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[7], "chiniao_wifi_camera", extra);
                                 } else {
                                     if (BuildConfig.APP_TYPE.equals("pondTeam")) {
                                         hashMap.put("notify_email", 1);
@@ -132,10 +131,10 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                     String extra = gson.toJson(hashMap);
                                     switch (deviceType) {
                                         case DEVICE_AQ500:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), AddDeviceNewActivity.name[1], "S03-1", extra);
+                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[1], "S03-1", extra);
                                             break;
                                         case DEVICE_AQ700:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), AddDeviceNewActivity.name[2], "S03-2", extra);
+                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[2], "S03-2", extra);
                                             break;
 //                                        case DEVICE_SHUIZUDENG:
 //                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid()), mSelectDeviceInfo.getType(), extra);

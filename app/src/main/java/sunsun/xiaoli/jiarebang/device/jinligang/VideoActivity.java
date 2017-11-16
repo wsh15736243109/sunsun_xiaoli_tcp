@@ -56,7 +56,6 @@ import java.util.Observer;
 
 import ChirdSdk.CHD_Client;
 import ChirdSdk.CHD_LocalScan;
-import ChirdSdk.ClientCallBack;
 import ChirdSdk.StreamView;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
@@ -76,8 +75,33 @@ import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getFileSavePath;
 import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getTimesString;
 import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.readfile;
 
+
 /**
  * Created by Administrator on 2017/3/6.
+ * 更改日志
+ * 日期 : 2017/11/15
+ *      封装VideoHelper类，用来辅助连接管理视频相关方法
+ * 日期 : 2017/11/16
+ * 内容 : 1、修改视频全屏去掉信息栏恢复竖屏后信息栏消失问题
+ *              {
+ *                  设置全屏：
+                         Window window = getWindow();
+                         WindowManager.LayoutParams winParams = win.getAttributes();
+                         winParams.flags=winParams.flags|WindowManager.LayoutParams.FLAG_FULLSCREEN；
+                         或
+                         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                         或
+                         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                    取消全屏
+                         Window window = getWindow();
+                         winParams.flags=winParams.flags&~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+                         或
+                         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                         或
+                         window.setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+ *              }
+ *       2、 增加视频连接超时时重连的方法
+ *       3、修复视频connectDevice==0时画布不显示bitmap（FrameLayout被隐藏）
  */
 
 public class VideoActivity extends BaseTwoActivity implements Observer, VideoInterface {
@@ -103,7 +127,6 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     public ArrayList<FileBean> fileList;
     private AlertDialog.Builder alert;
     private AlertDialog alertDialog;
-    ImageView img_fenbianlv;
     private boolean flag;
     String cameraDid = "", cameraPsw = "";
     private String todayTime;
@@ -124,7 +147,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     private String nickname;
     boolean clickBack = false;
     private VideoHelper mVideoHelper;
-
+    WindowManager.LayoutParams winParams;
     static Intent intent = null;
 
     public static Intent createIntent(Context context) {
@@ -142,6 +165,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedio);
         Window window = getWindow();
+        winParams=window.getAttributes();
         app = (App) getApplication();
         app.videoUI = this;
         keepScreenOn(this, true);
@@ -152,9 +176,6 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
         mVideoHelper = new VideoHelper(this, mClient, this);
         cameraDid = getIntent().getStringExtra("cameraDid");
         cameraPsw = getIntent().getStringExtra("cameraPsw");
-        mStreamView = new StreamView(this, null);
-        mVideoLayout.addView(mStreamView);
-        mVideoHelper.connectDevice(cameraDid, cameraPsw);
         arrayList.put("320x180", getString(R.string.qingxi_pu));
         arrayListValue.add("(" + getString(R.string.qingxi_pu) + ")320x180");
         arrayList.put("640x360", getString(R.string.qingxi_biao));
@@ -190,10 +211,15 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
         height = dm.heightPixels * dm.density;
         ratioW2H = height / width;
         txt_video_status.setText(getString(R.string.video_connecting));
-//        clientCallBackListener();
-//        initFlowPlus();
-//        setViewVisible(mClient.isConnect());
-//        new ColledctTask().execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mStreamView = new StreamView(this, null);
+        mVideoLayout.addView(mStreamView);
+
+        mVideoHelper.connectDevice(cameraDid, cameraPsw);
     }
 
     @Override
@@ -241,12 +267,15 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 //        }
         //查询昨日使用的流量
         flow = dbManager.queryFlow(cameraDid, getSp(Const.UID), yesTerdayTime);
+        if (flow == null) {
+            flow = new int[1];
+        }
         try {
             if (flow[1] <= 0) {
                 flow[1] = 0;
             }
             txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB(flow[1] <= -1 ? 0 : flow[1]));
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -272,11 +301,10 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 } else if (wangsu.toLowerCase().endsWith("b/s".toLowerCase())) {
                     totalFlow += (Double.parseDouble(wangsu.substring(0, wangsu.length() - 4)));
                 }
+                txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB((flow[1] + totalFlow) == -1 ? 0 : (flow[1] + totalFlow)));
             } catch (Exception e) {
 
             }
-
-            txt_shuiwei_status.setText(getString(R.string.total_flow) + ByteConversionGBMBKB((flow[1] + totalFlow) == -1 ? 0 : (flow[1] + totalFlow)));
             handler.postDelayed(runnable, 1000);
         }
     };
@@ -364,7 +392,10 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                     img_camera.setVisibility(View.VISIBLE);
                     img_quanping.setVisibility(View.VISIBLE);
                     img_quanping.setBackgroundResource(R.drawable.quanping);
+                    txt_shuiwei_status.setVisibility(View.VISIBLE);
                     mVideoLayout.setVisibility(View.VISIBLE);
+                    txt_fenbianlv_value.setVisibility(View.VISIBLE);
+                    txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
                 } else {
                     mVideoLayout.removeAllViews();
                     txt_isOpen.setVisibility(View.VISIBLE);
@@ -372,13 +403,18 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                     txt_wangsu.setVisibility(View.GONE);
                     img_camera.setVisibility(View.GONE);
                     img_quanping.setVisibility(View.GONE);
+                    txt_shuiwei_status.setVisibility(View.GONE);
+                    txt_fenbianlv_value.setVisibility(View.GONE);
+                    txt_fenbianlv_zhuangtai.setVisibility(View.GONE);
                 }
             }
         });
     }
 
-    private void setTextValue(final TextView textView,final String value){
-        runOnUiThread(new Runnable() {
+    private void setTextValue(final TextView textView, final String value) {
+//        textView.post
+        textView.post(new Runnable() {
+
             @Override
             public void run() {
                 textView.setText(value);
@@ -387,18 +423,37 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     }
 
     @Override
+    public void videoConnectInit() {
+        setTextValue(txt_video_status, getString(R.string.video_connecting));
+    }
+
+    @Override
     public void videoConnectStatus(int result) {
-        setTextValue(txt_video_status,mVideoHelper.getVideoStatus(result));
-        if (result==0) {
+        Log.v("tes", ">>>videoConnectStatus" + result);
+        setTextValue(txt_video_status, mVideoHelper.getVideoStatus(result));
+        if (result == 0) {
+            setCameraOpen(true);
             initFlowPlus();
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String msg = getString(R.string.video) + txt_video_status.getText().toString();
+                    mVideoHelper.showVideoMessage(VideoActivity.this, msg + "," + getString(R.string.makesure_retry));
+                }
+            });
         }
     }
 
     @Override
     public void videoStreamBitmapCallBack(@NotNull Bitmap bitmap) {
-        mStreamView.showBitmap(bitmap);
+        Log.v("tes", ">>>videoStreamBitmapCallBack");
         setCameraOpen(true);
-        setTextValue(txt_wangsu,mClient.getVideoFrameBps());
+        if (mStreamView == null) {
+            mStreamView = new StreamView(this, null);
+        }
+        mStreamView.showBitmap(bitmap);
+        setTextValue(txt_wangsu, mClient.getVideoFrameBps());
         getQingXiZhuangTai();
     }
 
@@ -432,16 +487,21 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     @Override
     public void disConnectCallBack() {
         setCameraOpen(false);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mVideoHelper.showVideoMessage(VideoActivity.this, getString(R.string.video) + getString(R.string.current_status) + getString(R.string.video_disconnect) + "," + getString(R.string.makesure_retry));
+            }
+        });
     }
 
     @Override
     public void paramChangeCallBack(int changeType) {
-        if (changeType== ClientCallBack.PARAMCHANGE_TYPE_VIDEO_PARAME) {
-            img_fenbianlv.setVisibility(View.GONE);
-            txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
-            txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
-            getQingXiZhuangTai();
-        }
+//        if (changeType == ClientCallBack.PARAMCHANGE_TYPE_VIDEO_PARAME) {
+        txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
+        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
+        getQingXiZhuangTai();
+//        }
     }
 //
 //    @SuppressLint("StaticFieldLeak")
@@ -647,8 +707,10 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 
 
     private void getQingXiZhuangTai() {
-        setTextValue(txt_fenbianlv_zhuangtai,getString(R.string.current_resolution) + (mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight() ));
-        setTextValue(txt_fenbianlv_value,arrayList.get(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight()));
+        txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
+        setTextValue(txt_fenbianlv_zhuangtai, getString(R.string.current_resolution) + (mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight()));
+        txt_fenbianlv_value.setVisibility(View.VISIBLE);
+        setTextValue(txt_fenbianlv_value, arrayList.get(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight()));
     }
 
 
@@ -678,8 +740,15 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
             case R.id.img_back:
                 finish();
                 break;
+            case R.id.txt_shuiwei_status:
+                MAlert.alert(txt_shuiwei_status.getText());
+
+                break;
+            case R.id.txt_fenbianlv_zhuangtai:
+                MAlert.alert(txt_fenbianlv_zhuangtai.getText());
+                break;
             case R.id.add:
-                showPopwindow(0);
+                showPopwindow(7);
 //                intent = new Intent(this, ActivityStepFirst.class);
 //                intent.putExtra("device_type", "摄像头");
 //                startActivity(intent);
@@ -698,6 +767,11 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                     isLan = !isLan;
                 }
                 break;
+//            case R.id.txt_video_status:
+//                if (!txt_video_status.getText().toString().contains(getString(R.string.video_connect))) {
+//
+//                }
+//                break;
             case R.id.re_fenbianlv:
                 if (!mClient.isConnect()) {
                     MAlert.alert(getString(R.string.shexiangtou) + getString(R.string.video_disconnect));
@@ -775,20 +849,20 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 }, 3000);
 //
                 break;
-            case R.id.img_shuicaogang:
-                if (mClient.isConnect()) {
-                    img_shuicaogang.setBackgroundResource(R.drawable.guan);
-                    mClient.disconnectDevice();
-                    txt_video_status.setText(getString(R.string.current_status) + getString(R.string.video_connect));
-                } else {
-                    img_shuicaogang.setBackgroundResource(R.drawable.kai);
-                    mStreamView = new StreamView(this, null);
-                    mVideoLayout.addView(mStreamView);
-                    mClient.connectDevice(cameraDid, cameraPsw);
-                    mClient.openVideoStream();
-                    txt_video_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
-                }
-                break;
+//            case R.id.img_shuicaogang:
+//                if (mClient.isConnect()) {
+//                    img_shuicaogang.setBackgroundResource(R.drawable.guan);
+//                    mClient.disconnectDevice();
+//                    txt_video_status.setText(getString(R.string.current_status) + getString(R.string.video_connect));
+//                } else {
+//                    img_shuicaogang.setBackgroundResource(R.drawable.kai);
+//                    mStreamView = new StreamView(this, null);
+//                    mVideoLayout.addView(mStreamView);
+//                    mClient.connectDevice(cameraDid, cameraPsw);
+//                    mClient.openVideoStream();
+//                    txt_video_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
+//                }
+//                break;
         }
     }
 
@@ -821,7 +895,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                         ActivityStepFirst.class);
                 intent.putExtra("aq_did", aq_did);
                 intent.putExtra("device_type", "摄像头");
-                intent.putExtra("position", 7);
+                intent.putExtra("position", position);
                 startActivity(intent);
                 finish();
             }
@@ -836,7 +910,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 Intent intent = new Intent(VideoActivity.this,
                         AddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", 7);
+                intent.putExtra("position", position);
                 startActivity(intent);
                 finish();
             }
@@ -851,7 +925,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 Intent intent = new Intent(VideoActivity.this,
                         ManualAddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", 7);
+                intent.putExtra("position", position);
                 startActivity(intent);
                 finish();
             }
@@ -1004,8 +1078,9 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 //        lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
 //        getWindow().setAttributes(lp);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);// 设置为竖屏
     }
 
@@ -1024,7 +1099,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 //            FrameLayout.LayoutParams layout = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
             mStreamView.getHolder().setFixedSize(innerwidth, innerheight);
             li_title.setVisibility(View.GONE);
-            li.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+//            li.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
             img_quanping.setBackgroundResource(R.drawable.xiaoping);
             isLan = false;
         } else if (newConfig.orientation == 1) {
@@ -1034,4 +1109,6 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
             img_quanping.setBackgroundResource(R.drawable.quanping);
         }
     }
+
+
 }

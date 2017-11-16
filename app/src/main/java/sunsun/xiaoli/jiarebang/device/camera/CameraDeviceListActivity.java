@@ -50,6 +50,7 @@ import sunsun.xiaoli.jiarebang.device.AddDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.EditDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.ManualAddDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.jinligang.VideoActivity;
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
@@ -410,6 +411,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                         ManualAddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
                 intent.putExtra("position", position);
+                intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
 //				Intent mainIntent = new Intent(AddDeviceNewActivity.this,
 //						ManualAddDeviceActivity.class);

@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/re_ratio"
-        android:layout_marginTop="@dimen/DIMEN_0.5DP"
         android:background="@color/black"
         app:ratio="1.8">
 
@@ -143,11 +142,14 @@
 
             <TextView
                 android:id="@+id/txt_shuiwei_status"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_toLeftOf="@+id/img_liuliang"
+                android:layout_marginRight="@dimen/margin_5"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txt_shuiwei"
                 android:textColor="@color/orange500"
                 android:layout_marginLeft="@dimen/DIMEN_5DP"
+                android:text=""
                 android:layout_toRightOf="@+id/icon_shuiwei_status"
                 android:textSize="@dimen/DIMEN_16DP" />
 
@@ -195,24 +197,18 @@
                 android:text="@string/choose_fenbianlv"
                 android:textSize="@dimen/DIMEN_16DP" />
 
-            <ImageView
-                android:id="@+id/img_fenbianlv"
-                android:layout_marginLeft="@dimen/DIMEN_5DP"
-                android:layout_toRightOf="@+id/icon_fenbianlv"
-                android:layout_width="@dimen/DIMEN_25DP"
-                android:visibility="gone"
-                android:layout_below="@+id/txt_fenbianlv"
-                android:layout_height="@dimen/DIMEN_25DP" />
 
             <TextView
                 android:id="@+id/txt_fenbianlv_zhuangtai"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_toLeftOf="@+id/txt_fenbianlv_value"
+                android:layout_marginRight="@dimen/margin_5"
                 android:layout_height="wrap_content"
+                android:text=""
                 android:layout_below="@+id/txt_fenbianlv"
                 android:textColor="@color/orange500"
                 android:layout_marginLeft="@dimen/DIMEN_5DP"
                 android:layout_toRightOf="@+id/icon_fenbianlv"
-                android:text=""
                 android:textSize="@dimen/DIMEN_16DP" />
 
             <TextView
@@ -223,7 +219,7 @@
                 android:textColor="@color/orange500"
                 android:layout_marginRight="@dimen/DIMEN_10DP"
                 android:layout_centerVertical="true"
-                android:text="" />
+                android:text=""/>
         </RelativeLayout>
 
         <RelativeLayout

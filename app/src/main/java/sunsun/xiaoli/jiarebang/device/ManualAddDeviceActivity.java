@@ -25,7 +25,6 @@ import java.util.Observer;
 import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
-import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
 import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -101,81 +100,81 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.device_name_empty));
                     return;
                 }
-                if (AddDeviceNewActivity.name == null) {
-                    if (!did.startsWith("S01")) {
-                        MAlert.alert("请输入" + getString(R.string.device_chitangguolv) + "的设备型号类型");
-                        return;
-                    }
-                } else {
-                    switch (position) {
-                        case 0:
-                            if (!did.startsWith("S03")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 1:
-                            if (!did.startsWith("S03")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 2:
-                            if (!did.startsWith("S03")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 3:
-                            if (!did.startsWith("S02")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 4:
-                            if (!did.startsWith("S04")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 5:
-                            if (!did.startsWith("S05")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 6:
-                            if (!did.startsWith("S01")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 7:
-                            if (!did.startsWith("SCHD")) {
-                                MAlert.alert("请输入" + (AddDeviceNewActivity.name == null ? getString(R.string.device_zhinengshexiangtou) : AddDeviceNewActivity.name[position]) + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 8:
-                            if (!did.startsWith("S06")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 9:
-                            if (!did.startsWith("S07")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                        case 10:
-                            if (!did.startsWith("S08")) {
-                                MAlert.alert("请输入" + AddDeviceNewActivity.name[position] + "的设备型号类型");
-                                return;
-                            }
-                            break;
-                    }
+//                if (AddDeviceNewActivity.name == null) {
+//                    if (!did.startsWith("S01")) {
+//                        MAlert.alert("请输入" + getString(R.string.device_chitangguolv) + "的设备型号类型");
+//                        return;
+//                    }
+//                } else {
+                switch (position) {
+                    case 0:
+                        if (!did.startsWith("S03")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 1:
+                        if (!did.startsWith("S03")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 2:
+                        if (!did.startsWith("S03")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 3:
+                        if (!did.startsWith("S02")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 4:
+                        if (!did.startsWith("S04")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 5:
+                        if (!did.startsWith("S05")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 6:
+                        if (!did.startsWith("S01")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 7:
+                        if (!did.startsWith("SCHD")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 8:
+                        if (!did.startsWith("S06")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 9:
+                        if (!did.startsWith("S07")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
+                    case 10:
+                        if (!did.startsWith("S08")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            return;
+                        }
+                        break;
                 }
+//                }
                 boolean hasAdd = false;
                 //排除已经添加过的设备
 

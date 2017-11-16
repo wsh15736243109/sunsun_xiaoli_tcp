@@ -461,6 +461,12 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         Intent intent = null;
         AlertDialog.Builder alert = null;
         switch (v.getId()) {
+            case R.id.txt_title:
+//                Intent intentWeb=new Intent(this, WebActivity.class);
+//                intentWeb.putExtra("title","ConfigInfo");
+//                intentWeb.putExtra("url","file:///android_asset/html/config_detail.html");
+//                startActivity(intentWeb);
+                break;
             case R.id.img_right:
             case R.id.btn_addnew:
                 if (BuildConfig.APP_TYPE.equals("pondTeam")) {

@@ -213,4 +213,6 @@ public class Const {
     public static int getOnlinStateIntervalTime = 10000;//定时刷新时间
 
     public static double lat = 30.32094, lng = 120.333082;
+
+
 }

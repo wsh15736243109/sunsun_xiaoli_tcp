@@ -25,6 +25,7 @@ import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.ActivityInputWifiAndPass;
 import sunsun.xiaoli.jiarebang.device.AddDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.ManualAddDeviceActivity;
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 
 /**
@@ -41,6 +42,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
     App myApp;
     private String did;
     private String uid;
+    DeviceType deviceType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
         txt_title.setText(getString(R.string.add_device));
         myApp = (App) getApplication();
         myApp.addPondDeviceUI = this;
+        deviceType = DeviceType.DEVICE_GUOLVTONG;
         userPresenter = new UserPresenter(this);
     }
 
@@ -76,7 +79,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
 //                MAlert.alert(getString(R.string.deviceid_empty));
 //                return;
 //            }
-            showPopwindow(1);
+            showPopwindow(6);
 
 
         } else if (i == R.id.btn_cancel) {
@@ -130,6 +133,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
                 Intent intent = new Intent(AddPondDevice.this, ActivityInputWifiAndPass.class);
                 intent.putExtra("device_type", getIntent().getStringExtra("device_type"));
                 intent.putExtra("position", position);
+                intent.putExtra("device", deviceType);
                 startActivity(intent);
             }
         });
@@ -140,9 +144,12 @@ public class AddPondDevice extends BaseActivity implements Observer {
                 // TODO Auto-generated method stub
                 // 添加局域网设备
                 popWindow.dismiss();
-                Intent mainIntent = new Intent(AddPondDevice.this,
+                Intent intent = new Intent(AddPondDevice.this,
                         AddDeviceActivity.class);
-                startActivity(mainIntent);
+                intent.putExtra("device_type", getIntent().getStringExtra("device_type"));
+                intent.putExtra("device", deviceType);
+                intent.putExtra("position", position);
+                startActivity(intent);
             }
         });
         pick_image.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +160,12 @@ public class AddPondDevice extends BaseActivity implements Observer {
                 // 手动添加设备
 
                 popWindow.dismiss();
-                Intent mainIntent = new Intent(AddPondDevice.this,
+                Intent intent = new Intent(AddPondDevice.this,
                         ManualAddDeviceActivity.class);
-                startActivity(mainIntent);
+                intent.putExtra("device_type", getIntent().getStringExtra("device_type"));
+                intent.putExtra("device", deviceType);
+                intent.putExtra("position", position);
+                startActivity(intent);
 //				Intent mainIntent = new Intent(AddDeviceNewActivity.this,
 //						ManualAddDeviceActivity.class);
 //				startActivity(mainIntent);

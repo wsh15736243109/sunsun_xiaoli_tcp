@@ -592,7 +592,7 @@
     <string name="qibeng_status">%1$d档，%2$s，%3$s。</string>
     <string name="qibeng_stop">停止中</string>
     <string name="qibeng_running">运行中</string>
-    <string name="changezidongatfirst" >Please adjust the pattern to auto mode first</string>
+    <string name="changezidongatfirst">Please adjust the pattern to auto mode first</string>
     <string name="hasbeanuserelectricity">已启用电池供电</string>
     <string name="configuration_other">A key configuration</string>
     <string name="LAN_other">Add LAN device</string>
@@ -603,4 +603,8 @@
     <string name="connect_device_did_not_exsit">Device DID is not exist</string>
     <string name="connect_timeout">Connect time out</string>
     <string name="current_resolution">Current resolution:</string>
+    <string name="retry">retry</string>
+    <string name="makesure_retry">try again?</string>
+    <string name="devicetype_error">Please enter the device type of %1$s </string>
+    <string name="video">video</string>
 </resources>

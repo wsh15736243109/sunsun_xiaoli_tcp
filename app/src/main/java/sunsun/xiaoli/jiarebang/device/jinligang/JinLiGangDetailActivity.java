@@ -86,6 +86,12 @@ import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getTimesString;
 
 /**
  * Created by Administrator on 2017/3/6.
+ * 更改日志
+ * 日期 : 2017/11/15
+ *      封装VideoHelper类，用来辅助连接管理视频相关方法
+ *  日期 : 2017/11/16
+ *  内容 : 1、修改视频全屏去掉信息栏恢复竖屏后信息栏消失问题
+ *        2、 增加视频连接超时时重连的方法
  */
 
 
@@ -1409,7 +1415,14 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
     @Override
     public void disConnectCallBack() {
+
         setCameraOpen(false);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mVideoHelper.showVideoMessage(JinLiGangDetailActivity.this, getString(R.string.video)+getString(R.string.current_status) + getString(R.string.video_disconnect) + "," + getString(R.string.makesure_retry));
+            }
+        });
     }
 
     @Override
@@ -1419,15 +1432,30 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
     @Override
     public void videoConnectStatus(int result) {
-        setTextValue(txt_shipin_status,mVideoHelper.getVideoStatus(result));
+        setTextValue(txt_shipin_status, mVideoHelper.getVideoStatus(result));
+        if (result == 0) {
+        } else {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    String msg =getString(R.string.video)+txt_shipin_status.getText().toString();
+                    mVideoHelper.showVideoMessage(JinLiGangDetailActivity.this, msg + "," + getString(R.string.makesure_retry));
+                }
+            });
+        }
     }
 
-    private void setTextValue(final TextView textView,final String value){
+    private void setTextValue(final TextView textView, final String value) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 textView.setText(value);
             }
         });
+    }
+
+    @Override
+    public void videoConnectInit() {
+        setTextValue(txt_shipin_status, getString(R.string.video_connecting));
     }
 }

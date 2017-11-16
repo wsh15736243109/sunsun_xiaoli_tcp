@@ -3,10 +3,11 @@ package sunsun.xiaoli.jiarebang.device.jinligang
 import ChirdSdk.CHD_Client
 import ChirdSdk.ClientCallBack
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.util.Log
-import android.widget.TextView
 import sunsun.xiaoli.jiarebang.R
 import sunsun.xiaoli.jiarebang.app.App
 
@@ -18,7 +19,8 @@ class VideoHelper(activity: Activity, mClient: CHD_Client, iVideoInterface: Vide
     private var mClient: CHD_Client? = null         /* 客户端类 */
     private var activity: Activity? = null
     private var iVideoInterface: VideoInterface? = null
-
+    private var did: String? = null
+    private var password: String? = null
     init {
         this.mClient = mClient
         this.activity = activity
@@ -26,6 +28,8 @@ class VideoHelper(activity: Activity, mClient: CHD_Client, iVideoInterface: Vide
     }
 
     fun connectDevice(did: String, password: String) {
+        this.did=did
+        this.password=password
         MyTask().execute(did, password)
     }
 
@@ -48,12 +52,6 @@ class VideoHelper(activity: Activity, mClient: CHD_Client, iVideoInterface: Vide
 //            setViewVisible(mClient.isConnect())
         }
 
-    }
-
-    private fun setTextValue(textView: TextView, value: String) {
-        activity?.runOnUiThread {
-            textView.setText(value)
-        }
     }
 
     private fun setCallBack(vararg strings: String) {
@@ -126,5 +124,25 @@ class VideoHelper(activity: Activity, mClient: CHD_Client, iVideoInterface: Vide
             }
         }
         Log.v("test", "video status = " + re)
+    }
+
+    fun showVideoMessage(activity: Activity, msg: String){
+        var alert=AlertDialog.Builder(activity,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+        alert.setMessage(msg)
+        alert.setNegativeButton(activity.getString(R.string.cancel), object:DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+
+            }
+        })
+        alert.setPositiveButton(activity.getString(R.string.retry), object:DialogInterface.OnClickListener{
+            override fun onClick(dialog: DialogInterface?, which: Int) {
+                connectDevice(did!!, password!!)
+                iVideoInterface?.videoConnectInit()
+            }
+        })
+        if (!activity.isFinishing()) {
+            alert.create()
+            alert.show()
+        }
     }
 }
