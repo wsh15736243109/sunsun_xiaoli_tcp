@@ -21,6 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 
 public class Util {
@@ -334,8 +335,10 @@ public class Util {
         } else if (did.startsWith("S08")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_weishiqing);
         } else if (did.startsWith("SCHD")) {
-            return MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
+            return BuildConfig.APP_TYPE.equals("小绵羊智能")?MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou_yihu):MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
         }
         return "device";
     }
+
+
 }

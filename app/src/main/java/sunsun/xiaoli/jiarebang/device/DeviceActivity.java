@@ -68,6 +68,7 @@ import sunsun.xiaoli.jiarebang.device.weishiqi.WeiShiQiDetailActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.popwindow.SureDeleteDialog;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
@@ -462,10 +463,10 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         AlertDialog.Builder alert = null;
         switch (v.getId()) {
             case R.id.txt_title:
-//                Intent intentWeb=new Intent(this, WebActivity.class);
-//                intentWeb.putExtra("title","ConfigInfo");
-//                intentWeb.putExtra("url","file:///android_asset/html/config_detail.html");
-//                startActivity(intentWeb);
+                Intent intentWeb=new Intent(this, WebActivity.class);
+                intentWeb.putExtra("title","ConfigInfo");
+                intentWeb.putExtra("url","file:///android_asset/html/config_detail.html");
+                startActivity(intentWeb);
                 break;
             case R.id.img_right:
             case R.id.btn_addnew:

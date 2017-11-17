@@ -606,6 +606,8 @@
     <string name="makesure_retry">是否重试?</string>
     <string name="devicetype_error">请输入%1$s的設備类型 </string>
     <string name="video">视频</string>
+    <string name="device_zhinengshexiangtou_yihu">宜虎智能摄像头</string>
+    <string name="login_yihu">宜虎智能</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

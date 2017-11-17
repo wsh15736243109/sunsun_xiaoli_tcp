@@ -65,6 +65,11 @@ public class LoginActivity extends BaseActivity implements Observer {
             bottom_icon.setBackgroundColor(getResources().getColor(R.color.login_color));
             bottom_icon.setText("pondLink");
             bottom_icon.setTextSize(20);
+        }else if (getPackageName().contains("xiaomianyang")){
+            title_login.setText(getString(R.string.login_yihu));
+            btn_country.setVisibility(View.VISIBLE);
+            editextUsetName.setHint(getString(R.string.user_name));
+            bottom_icon.setVisibility(View.GONE);
         }
     }
 

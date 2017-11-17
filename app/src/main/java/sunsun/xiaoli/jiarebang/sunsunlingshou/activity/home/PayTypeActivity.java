@@ -32,6 +32,7 @@ import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.model.RePayBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 
@@ -53,6 +54,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
     BuyType buyType;
     ArrayList<GoodsDetailBean> goodsModel;
     private OrderBean.ListEntity entityTemp;
+    RePayBean rePayBean;
 
     @Override
     protected int getLayoutId() {
@@ -76,6 +78,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 }
                 break;
             case Buy_LiJiGouMai:
+                createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
                 goodsModel = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("goodsModel");
                 if (goodsModel != null) {
                     View view = View.inflate(this, R.layout.item_goods, null);
@@ -101,7 +104,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 break;
             case Buy_ShopCart:
                 ArrayList<ShopCartBean> ar = (ArrayList<ShopCartBean>) getIntent().getSerializableExtra("shopcart_model");
-                if (ar!=null) {
+                if (ar != null) {
                     for (int i = 0; i < ar.size(); i++) {
                         View view = View.inflate(this, R.layout.item_goods, null);
                         TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
@@ -111,6 +114,9 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                         li_goods.addView(view);
                     }
                 }
+                rePayBean = (RePayBean) getIntent().getSerializableExtra("model");
+                //购物车进入
+//                rePayBean.get
                 break;
             case Buy_YuGangQingLi:
                 createOrderBean = (CreateOrderBean) getIntent().getSerializableExtra("model");
@@ -198,6 +204,18 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     } else {
                         callAliPay(createOrderBean);
                     }
+                }
+                else if (rePayBean != null) {
+                   CreateOrderBean  bean=new CreateOrderBean();
+                    bean.setPay_money(Double.parseDouble(rePayBean.getPay_money()));
+                    bean.setPay_code(bean.getPay_code());
+                    bean.setCreate_time(bean.getCreate_time());
+                    //购物车支付
+                    if (pay_wx.isChecked()) {
+                        callWxPay(bean);
+                    } else {
+                        callAliPay(bean);
+                    }
                 } else {
                     //待付款订单重新支付
                     lingShouPresenter.rePay(getSp(Const.UID), getSp(Const.S_ID), orderBean.getOrder_code());
@@ -211,14 +229,14 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
     private void callWxPay(CreateOrderBean createOrderBean) {
         PayReq req = new PayReq();
         req.appId = BuildConfig.WX_APP_ID;  // 测试用appId
-//        req.appId			= json.getString("appid");
-//        req.partnerId		= json.getString("partnerid");
-//        req.prepayId		= json.getString("prepayid");
-//        req.nonceStr		= json.getString("noncestr");
-//        req.timeStamp		= json.getString("timestamp");
-//        req.packageValue	= json.getString("package");
-//        req.sign			= json.getString("sign");
-//        req.extData			= "app data"; // optional
+        req.appId = BuildConfig.WX_APP_ID;
+        req.partnerId = "partnerid";
+        req.prepayId = ("prepayid");
+        req.nonceStr = ("noncestr");
+        req.timeStamp = ("timestamp");
+        req.packageValue = ("package");
+        req.sign = ("sign");
+        req.extData = "app data"; // optional
 //        Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
         // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
         App.getInstance().iwxapi.sendReq(req);

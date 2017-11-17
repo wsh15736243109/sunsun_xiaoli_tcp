@@ -505,16 +505,16 @@ public class LingShouResponsitory extends BaseNetRepository implements
 
     @Override
     public void getDefaultAddress(String sp, String sp1) {
-        Type type = new TypeToken<AddressBean>() {
+        Type type = new TypeToken<ArrayList<AddressBean>>() {
         }.getType();
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("uid", sp);
         map.put("s_id", sp1);
-        (new ByJsonRequest.Builder<AddressBean>())
+        (new ByJsonRequest.Builder<ArrayList<AddressBean>>())
                 .setTypeVerParamsAndReturnClass(getDefaultAddress, apiVer, map, type)
                 .requestListener(
-                        new BaseSuccessReqListener<AddressBean>(
+                        new BaseSuccessReqListener<ArrayList<AddressBean>>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

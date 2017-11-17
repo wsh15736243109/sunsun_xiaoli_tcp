@@ -115,6 +115,10 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 finish();
                 break;
             case R.id.re_wendu_history:
+                if (myApp.jinLiGangdetailUI.deviceDetailModel==null) {
+                    MAlert.alert(getString(R.string.device_error));
+                    return;
+                }
                 intent = new Intent(this, ActivityTemperature.class);
                 intent.putExtra("isPh", false);
                 intent.putExtra("did", myApp.jinLiGangdetailUI.deviceDetailModel.getDid());

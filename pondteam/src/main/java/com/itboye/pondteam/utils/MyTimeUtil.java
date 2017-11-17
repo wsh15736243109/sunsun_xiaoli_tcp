@@ -37,10 +37,14 @@ public class MyTimeUtil {
     public static String getTimeZone(){
         TimeZone tz = TimeZone.getDefault();
         String s = tz.getDisplayName(false, TimeZone.SHORT);
-        if (s.contains("+")) {
-            s = s.substring(s.indexOf(":") - 1, s.indexOf(":"));
-        } else {
-            s = "-" + s.substring(s.indexOf(":") - 1, s.indexOf(":"));
+        try {
+            if (s.contains("+")) {
+                s = s.substring(s.indexOf(":") - 1, s.indexOf(":"));
+            } else {
+                s = "-" + s.substring(s.indexOf(":") - 1, s.indexOf(":"));
+            }
+        }catch (Exception e){
+            s="";
         }
 
         return s;

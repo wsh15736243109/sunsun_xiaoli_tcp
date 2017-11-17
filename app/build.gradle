@@ -7,8 +7,8 @@ android {
         multiDexEnabled true
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 123
-        versionName "1.2.3"
+        versionCode 124
+        versionName "1.2.4"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         flavorDimensions "sunsunlingshou"
     }
@@ -140,6 +140,7 @@ android {
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
             buildConfigField("String", "APP_TYPE", '"小鲤智能"')
 //            buildConfigField("String", "APP_TYPE", '"森森新零售"')
+//            buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
         }
     }
     lintOptions {

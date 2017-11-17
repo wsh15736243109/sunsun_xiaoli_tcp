@@ -3,8 +3,6 @@
  */
 package com.itboye.pondteam.volley;
 
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.text.Spanned;
 import android.util.Base64;
 import android.util.Log;
@@ -16,6 +14,8 @@ import com.google.gson.GsonBuilder;
 import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.SPUtils;
+import com.itboye.pondteam.utils.udp.VersionUtil;
+
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -57,34 +57,16 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
         private String notify_id = TimesUtils.getStamp();
         private String desContent;
 
-        /**
-         * 获取App的版本号
-         *
-         * @return 返回App的版本号
-         */
-        private String getVersionCode() {
-            int appVersion = 0;
-            try {
 
-                PackageManager pm = MyApplication.getInstance()
-                        .getPackageManager();
-                PackageInfo info = pm.getPackageInfo(MyApplication.getInstance()
-                        .getPackageName(), 0);
-                appVersion = info.versionCode;
-            } catch (Exception e) {
 
-            }
-            return "" + appVersion;
-        }
-
-        String appv = String.valueOf(getVersionCode());
+        String appv = String.valueOf(VersionUtil.getVersionCode());
 
         public Builder() {
             map = new HashMap<String, Object>();
             userParam = new HashMap<String, Object>();
             String autoCode = SPUtils.get(MyApplication.getInstance(), null, Const.S_ID, "") + "";
             // 公共参数
-            map.put(Const.APP_VERSION, getVersionCode());
+            map.put(Const.APP_VERSION, VersionUtil.getVersionCode());
             map.put(Const.APP_TYPE, "android");
             map.put(Const.TIME, time);
 //			map.put(Const.ALG, Const.ALG_VALUE);

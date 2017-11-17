@@ -76,18 +76,21 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                 finish();
                 break;
             case R.id.re_806phzoushi:
-                if (deviceDetailModel == null || !mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
+                if (mApp.jinLiGangdetailUI!=null) {
+                    if (deviceDetailModel == null || !mApp.jinLiGangdetailUI.isConnect) {
+                        MAlert.alert(getString(R.string.disconnect));
+                        return;
+                    }
+
+                    intent = new Intent(this, ActivityTemperature.class);
+                    intent.putExtra("isPh", true);
+                    intent.putExtra("did", deviceDetailModel.getDid());
+                    intent.putExtra("topValue", phH);
+                    intent.putExtra("bottomValue", phL);
+                    intent.putExtra("title", getString(R.string.ph_history));
+                    startActivity(intent);
                 }
 
-                intent = new Intent(this, ActivityTemperature.class);
-                intent.putExtra("isPh", true);
-                intent.putExtra("did", deviceDetailModel.getDid());
-                intent.putExtra("topValue", phH);
-                intent.putExtra("bottomValue", phL);
-                intent.putExtra("title", getString(R.string.ph_history));
-                startActivity(intent);
                 break;
             case R.id.re_806dianjijiaozhun:
                 intent = new Intent(this, Ph806JiaoZhunActivity.class);

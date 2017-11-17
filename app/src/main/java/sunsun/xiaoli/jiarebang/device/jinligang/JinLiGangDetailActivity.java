@@ -88,10 +88,10 @@ import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getTimesString;
  * Created by Administrator on 2017/3/6.
  * 更改日志
  * 日期 : 2017/11/15
- *      封装VideoHelper类，用来辅助连接管理视频相关方法
- *  日期 : 2017/11/16
- *  内容 : 1、修改视频全屏去掉信息栏恢复竖屏后信息栏消失问题
- *        2、 增加视频连接超时时重连的方法
+ * 封装VideoHelper类，用来辅助连接管理视频相关方法
+ * 日期 : 2017/11/16
+ * 内容 : 1、修改视频全屏去掉信息栏恢复竖屏后信息栏消失问题
+ * 2、 增加视频连接超时时重连的方法
  */
 
 
@@ -298,33 +298,35 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(0xffdcdddd);
         }
-        if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
-            //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
-            int push = deviceDetailModel.getPush_cfg();
-            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
-                push = push ^ (int) Math.pow(2, 4);
+        if (deviceDetailModel != null) {
+            if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+                //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
+                int push = deviceDetailModel.getPush_cfg();
+                if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
+                    push = push ^ (int) Math.pow(2, 4);
+                }
+                if ((push & (int) Math.pow(2, 8)) == (int) Math.pow(2, 8)) {
+                    push = push ^ (int) Math.pow(2, 8);
+                }
+                /**
+                 * currentTime:同时同步设备时间
+                 */
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+            } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
+                int push = deviceDetailModel.getPush_cfg();
+                //仅强制关闭水位报警提示
+                if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
+                    push = push ^ (int) Math.pow(2, 4);
+                }
+                /**
+                 * currentTime:同时同步设备时间
+                 */
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+            } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ806")) {
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
             }
-            if ((push & (int) Math.pow(2, 8)) == (int) Math.pow(2, 8)) {
-                push = push ^ (int) Math.pow(2, 8);
-            }
-            /**
-             * currentTime:同时同步设备时间
-             */
-            userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
-        } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
-            int push = deviceDetailModel.getPush_cfg();
-            //仅强制关闭水位报警提示
-            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
-                push = push ^ (int) Math.pow(2, 4);
-            }
-            /**
-             * currentTime:同时同步设备时间
-             */
-            userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
-        } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ806")) {
-            userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+            setData();
         }
-        setData();
         ptr.setPtrHandler(ptrHandler);
         img_right.setBackgroundResource(R.drawable.menu);
         Glide.with(getApplicationContext()).load(R.drawable.smartconfig_loading).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(loading);
@@ -1420,7 +1422,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mVideoHelper.showVideoMessage(JinLiGangDetailActivity.this, getString(R.string.video)+getString(R.string.current_status) + getString(R.string.video_disconnect) + "," + getString(R.string.makesure_retry));
+                mVideoHelper.showVideoMessage(JinLiGangDetailActivity.this, getString(R.string.video) + getString(R.string.current_status) + getString(R.string.video_disconnect) + "," + getString(R.string.makesure_retry));
             }
         });
     }
@@ -1438,7 +1440,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String msg =getString(R.string.video)+txt_shipin_status.getText().toString();
+                    String msg = getString(R.string.video) + txt_shipin_status.getText().toString();
                     mVideoHelper.showVideoMessage(JinLiGangDetailActivity.this, msg + "," + getString(R.string.makesure_retry));
                 }
             });

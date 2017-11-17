@@ -607,4 +607,6 @@
     <string name="makesure_retry">try again?</string>
     <string name="devicetype_error">Please enter the device type of %1$s </string>
     <string name="video">video</string>
+    <string name="device_zhinengshexiangtou_yihu">Smart hd camera</string>
+    <string name="login_yihu">Smart of YiHu</string>
 </resources>

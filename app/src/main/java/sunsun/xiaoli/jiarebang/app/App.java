@@ -181,9 +181,11 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     public void onCreate() {
         super.onCreate();
         instance = this;
+        MobclickAgent.setCatchUncaughtExceptions(true);
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
         Logger.init("request_params");
         SDKInitializer.initialize(getApplicationContext());
-        MobclickAgent.setCatchUncaughtExceptions(true);
         //设置默认语言为英文
 //        String sta = "en";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
 //        if (BuildConfig.APP_TYPE.toLowerCase().equals("PondTeam".toLowerCase())) {
@@ -193,8 +195,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         initDeviceTypeName();
         initLanguage();
         gson = new Gson();//在这里为应用设置异常处理程序，然后我们的程序才能捕获未处理的异常
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.init(this);
+
         aqSmartConfig = new AqSmartConfig(this);
         mLanDeviceList = new ArrayList<>();
         queue = Volley.newRequestQueue(this);
@@ -224,7 +225,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
                 getString(R.string.device_yuancheng_ph),
                 getString(R.string.device_zhinengbianpinshuibeng),
                 getString(R.string.device_chitangguolv),
-                getString(R.string.device_zhinengshexiangtou),
+                BuildConfig.APP_TYPE.equals("小绵羊智能")?getString(R.string.device_zhinengshexiangtou_yihu):getString(R.string.device_zhinengshexiangtou),
                 getString(R.string.device_shuizudeng),
                 getString(R.string.device_zhinengqibeng),
                 getString(R.string.device_weishiqing)};
