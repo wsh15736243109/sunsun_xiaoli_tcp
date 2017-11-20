@@ -608,6 +608,8 @@
     <string name="video">视频</string>
     <string name="device_zhinengshexiangtou_yihu">宜虎智能摄像头</string>
     <string name="login_yihu">宜虎智能</string>
+    <string name="search">搜索</string>
+    <string name="input_place">输入国家地区</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

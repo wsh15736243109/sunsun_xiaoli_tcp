@@ -609,4 +609,6 @@
     <string name="video">video</string>
     <string name="device_zhinengshexiangtou_yihu">Smart hd camera</string>
     <string name="login_yihu">Smart of YiHu</string>
+    <string name="search">搜索</string>
+    <string name="input_place">输入国家地区</string>
 </resources>

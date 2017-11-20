@@ -367,7 +367,7 @@
     <string name="delete_ing">正在刪除中，請稍后</string>
     <string name="device_zhineng806">智能監控AQ-806</string>
     <string name="device_zhinengjiarebang">遠程智能加熱棒</string>
-    <string name="device_zhinengbianpinshuibeng">衹能變頻水泵</string>
+    <string name="device_zhinengbianpinshuibeng">智能變頻水泵</string>
     <string name="device_chitangguolv">池塘過濾系統</string>
     <string name="device_zhinengshexiangtou">小鯉智能攝像頭</string>
     <string name="device_shuizudeng">智能水族燈</string>
@@ -607,4 +607,6 @@
     <string name="devicetype_error">請輸入%1$s的設備類型</string>
     <string name="device_zhinengshexiangtou_yihu">宜虎智能攝像頭</string>
     <string name="login_yihu">宜虎智能</string>
+    <string name="search">搜索</string>
+    <string name="input_place">输入国家地区</string>
 </resources>

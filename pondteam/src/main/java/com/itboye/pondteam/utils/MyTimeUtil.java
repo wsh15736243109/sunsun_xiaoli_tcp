@@ -34,20 +34,17 @@ public class MyTimeUtil {
         return new SimpleDateFormat("HH:mm:ss:EEEE").format(time);
     }
 
-    public static String getTimeZone(){
-        TimeZone tz = TimeZone.getDefault();
-        String s = tz.getDisplayName(false, TimeZone.SHORT);
-        try {
-            if (s.contains("+")) {
-                s = s.substring(s.indexOf(":") - 1, s.indexOf(":"));
-            } else {
-                s = "-" + s.substring(s.indexOf(":") - 1, s.indexOf(":"));
-            }
-        }catch (Exception e){
-            s="";
-        }
-
-        return s;
+    public static int getTimeZone(){
+//        TimeZone tz = TimeZone.getDefault();
+//        String s = tz.getDisplayName(false, TimeZone.SHORT);
+//            if (s.contains("+")) {
+//                s = s.substring(s.indexOf(":") - 1, s.indexOf(":"));
+//            } else {
+//                s = "-" + s.substring(s.indexOf(":") - 1, s.indexOf(":"));
+//            }
+        int offset=TimeZone.getDefault().getRawOffset();//獲取当前手机时间与默认时间的偏移量
+        int timzone=offset/(3600*1000);//化为小时
+        return timzone;
     }
 
 

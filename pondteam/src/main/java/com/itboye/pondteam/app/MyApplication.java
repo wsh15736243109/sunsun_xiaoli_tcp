@@ -124,10 +124,10 @@ public class MyApplication extends MultiDexApplication implements Observer {
     }
 
     public void updateMobile() {
-        String timezone = getTimeZone();
+        int timezone = getTimeZone();
         String lang = MyApplication.getInstance().getLanguage();
         String device_id = getIMEI(getApplicationContext());
-        userPresenter.updateMobileMsg(getSp(Const.UID), device_id, lang, timezone);
+        userPresenter.updateMobileMsg(getSp(Const.UID), device_id, lang, timezone+"");
     }
 
     public String getLanguage() {

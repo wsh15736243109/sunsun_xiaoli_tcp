@@ -806,7 +806,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("device_nickname", device_nickname);
         map.put("device_type", device_type);
-        String s = getTimeZone();
+        int s = getTimeZone();
         map.put("timezone", s);
         map.put("lang", "zh-cn");
         map.put("extra", extra);
