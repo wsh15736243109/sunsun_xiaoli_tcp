@@ -139,6 +139,7 @@ public class TcpUtil {
             if (!soc.isClosed() && !soc.isOutputShutdown()) {
                 os = soc.getOutputStream();
                 message = msg + "\r\n";
+                //不加Thread  android7.0報錯
                 new Thread() {
                     @Override
                     public void run() {

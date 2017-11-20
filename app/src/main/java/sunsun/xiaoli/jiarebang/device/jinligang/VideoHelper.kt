@@ -4,7 +4,6 @@ import ChirdSdk.CHD_Client
 import ChirdSdk.ClientCallBack
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.util.Log
@@ -102,6 +101,8 @@ class VideoHelper(activity: Activity, mClient: CHD_Client, iVideoInterface: Vide
      * @return
      */
     fun getVideoStatus(re: Int): String {
+
+        Log.v("test", "video status = ${re}")
         when (re) {
             -2, -4 -> {
                 return App.getInstance().getString(R.string.current_status) + App.getInstance().getString(R.string.connect_timeout)
@@ -123,24 +124,17 @@ class VideoHelper(activity: Activity, mClient: CHD_Client, iVideoInterface: Vide
                 return ""
             }
         }
-        Log.v("test", "video status = " + re)
     }
 
     fun showVideoMessage(activity: Activity, msg: String){
-        var alert=AlertDialog.Builder(activity,AlertDialog.THEME_DEVICE_DEFAULT_LIGHT)
+        var alert=AlertDialog.Builder(activity,android.R.style.Theme_DeviceDefault_Light_Dialog_Alert)
         alert.setMessage(msg)
-        alert.setNegativeButton(activity.getString(R.string.cancel), object:DialogInterface.OnClickListener{
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-
-            }
-        })
-        alert.setPositiveButton(activity.getString(R.string.retry), object:DialogInterface.OnClickListener{
-            override fun onClick(dialog: DialogInterface?, which: Int) {
-                connectDevice(did!!, password!!)
-                iVideoInterface?.videoConnectInit()
-            }
-        })
-        if (!activity.isFinishing()) {
+        alert.setNegativeButton(activity.getString(R.string.cancel)) { _, _ -> }
+        alert.setPositiveButton(activity.getString(R.string.retry)) { _, _ ->
+            connectDevice(did!!, password!!)
+            iVideoInterface?.videoConnectInit()
+        }
+        if (!activity.isFinishing) {
             alert.create()
             alert.show()
         }

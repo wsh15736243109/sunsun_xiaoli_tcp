@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.MapView;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -26,6 +28,7 @@ import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.GoodsClassifyActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.DeviceTypeModel;
+import sunsun.xiaoli.jiarebang.utils.MapHelper;
 
 import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
 
@@ -44,6 +47,8 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     private GoodsListBean goodsList;
     LinearLayout near_store;
     ProgressBar progress;
+    BaiduMap baiduMap;
+    MapView mapView;
     @SuppressLint("ValidFragment")
     public MyTabFragment(int type) {
         this.type = type;
@@ -56,6 +61,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
 
     @Override
     protected void initData() {
+        baiduMap = mapView.getMap();
         DeviceTypeModel deviceListBean = new DeviceTypeModel(R.drawable.home_aq_806, getString(R.string.device_zhineng806));
         arDevice.add(deviceListBean);
 
@@ -122,6 +128,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 bean = (StoreListBean) entity.getData();
                 HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
                 recycler_aqhardwareorhotgoods.setAdapter(adapter);
+                new MapHelper().setPoint(getActivity(),baiduMap,bean.getList());
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
             }else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_success) {

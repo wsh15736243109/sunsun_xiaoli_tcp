@@ -214,5 +214,8 @@ public class Const {
 
     public static double lat = 30.32094, lng = 120.333082;
 
+    public static float zoom = 12;//地图缩放级别
+
+
 
 }

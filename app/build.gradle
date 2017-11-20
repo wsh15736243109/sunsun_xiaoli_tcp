@@ -10,11 +10,21 @@ android {
         versionCode 125
         versionName "1.2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//        applicationId "com.itboye.lingshou"
         flavorDimensions "sunsunlingshou"
+//        signingConfig signingConfigs.debug
     }
 //        flavorDimensions "xiaoli", "sunsunlingshou", "yihu", "pondTeam", "pondLink"
     /**默认debug模式下的使用的keystore文件*/
     signingConfigs {
+
+        debug {
+            keyAlias '森森新零售'
+            keyPassword 'android'
+            storeFile file('../sunsun_lingshou.jks')
+            storePassword 'android'
+        }
+
         sunsun_xiaoli_debug {
             keyAlias '森森小鲤'
             keyPassword 'android'
@@ -58,6 +68,10 @@ android {
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
             buildConfigField("String", "APP_TYPE", '"森森新零售"')
             buildConfigField("boolean", "IS_CHINESE", 'true')
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 101
+            versionName '1.0.1'
         }
         xiaoli {
             manifestPlaceholders = [PACKAGE: "sunsun.xiaoli.jiarebang", str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b", APP_ID: ""]
@@ -69,8 +83,11 @@ android {
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaoli"')
             buildConfigField("String", "APP_TYPE", '"小鲤智能"')
             buildConfigField("boolean", "IS_CHINESE", 'false')
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 125
+            versionName '1.2.5'
         }
-
         yihu {
             manifestPlaceholders = [PACKAGE: "com.itboye.xiaomianyang", str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd", APP_ID: ""]
             applicationId "com.itboye.xiaomianyang"
@@ -81,8 +98,11 @@ android {
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaomianyang"')
             buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
             buildConfigField("boolean", "IS_CHINESE", 'true')
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 101
+            versionName '1.0.1'
         }
-
         pondTeam {
             manifestPlaceholders = [PACKAGE: "com.itboye.pondteam", str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12", APP_ID: ""]
             applicationId "com.itboye.pondteam"
@@ -93,6 +113,11 @@ android {
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_filter_vat"')
             buildConfigField("String", "APP_TYPE", '"pondTeam"')
             buildConfigField("boolean", "IS_CHINESE", 'false')
+            minSdkVersion 16
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionName '1.0.1'
+            versionCode 101
         }
         pondLink {
             manifestPlaceholders = [PACKAGE: "com.itboye.pondlink", str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c", APP_ID: ""]
@@ -104,8 +129,12 @@ android {
             buildConfigField("String", "UMENG_ALIAS", '"sunsun_pondlink"')
             buildConfigField("String", "APP_TYPE", '"pondTeam"')
             buildConfigField("boolean", "IS_CHINESE", 'false')
+            minSdkVersion 16
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionName '1.0.2'
+            versionCode 102
         }
-
     }
     buildTypes {
         release {
@@ -126,8 +155,8 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.sunsun_xiaoli_debug
-//            signingConfig signingConfigs.sunsun_lingshou_debug
+//            signingConfig signingConfigs.sunsun_xiaoli_debug
+            signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug
@@ -138,8 +167,8 @@ android {
 //            buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
 //            buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
-            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
-//            buildConfigField("String", "APP_TYPE", '"森森新零售"')
+//            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
+            buildConfigField("String", "APP_TYPE", '"森森新零售"')
 //            buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
         }
     }
@@ -206,7 +235,7 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
     compile 'com.yancy.imageselector:imageselector:1.3.0'
-//    compile files('libs/wechat-sdk-android-with-mta-1.3.4.jar')
+    //    compile files('libs/wechat-sdk-android-with-mta-1.3.4.jar')
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.kevin:wraprecyclerview:1.0.1'
     compile files('libs/org.apache.http.legacy.jar')

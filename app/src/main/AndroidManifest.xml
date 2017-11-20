@@ -49,13 +49,13 @@
             android:enabled="true"
             android:process=":remote" />
         <!-- 正式版 -->
-        <!-- <meta-data -->
-        <!-- android:name="com.baidu.lbsapi.API_KEY" -->
-        <!-- android:value="ex8OrzircWcpWZSYlzHDL3Wtjm3Ybam3" /> -->
+         <meta-data
+         android:name="com.baidu.lbsapi.API_KEY"
+         android:value="ex8OrzircWcpWZSYlzHDL3Wtjm3Ybam3" />
         <!-- 测试版 -->
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="SPamVZyiWMqzsUqOFd5LplTxNKsU2Zd5" />
+        <!--<meta-data-->
+            <!--android:name="com.baidu.lbsapi.API_KEY"-->
+            <!--android:value="SPamVZyiWMqzsUqOFd5LplTxNKsU2Zd5" />-->
 
         <!-- String UMENG_APPKEY_VALUE_XIAOLI = "58cb6076677baa0aa300014f"; -->
         <!-- String UMENG_MESSAGE_SECRET_XIAOLI = "af2c2bd3297da0dfd34bb23f14db362b"; -->

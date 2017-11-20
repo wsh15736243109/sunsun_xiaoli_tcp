@@ -127,6 +127,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     txt_product_name.setText("鱼缸清理");
                     txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
                     li_goods.addView(view);
+                }else{
+                    MAlert.alert("订单有误");
                 }
                 break;
             case Buy_YuYueAnZhuang:
@@ -228,8 +230,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
 
     private void callWxPay(CreateOrderBean createOrderBean) {
         PayReq req = new PayReq();
-        req.appId = BuildConfig.WX_APP_ID;  // 测试用appId
-        req.appId = BuildConfig.WX_APP_ID;
+        req.appId = BuildConfig.WX_APP_ID;  //
         req.partnerId = "partnerid";
         req.prepayId = ("prepayid");
         req.nonceStr = ("noncestr");

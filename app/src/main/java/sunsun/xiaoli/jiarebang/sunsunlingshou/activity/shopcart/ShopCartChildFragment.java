@@ -127,10 +127,10 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
 //            recyclerView.postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-////                    List<String> strings = createDataList(mAdapter.getItemCount());
-////                    mDataList.addAll(strings);
+////                    List<String> codeArray = createDataList(mAdapter.getItemCount());
+////                    mDataList.addAll(codeArray);
 ////                    // notifyItemRangeInserted()或者notifyDataSetChanged().
-////                    mAdapter.notifyItemRangeInserted(mDataList.size() - strings.size(), strings.size());
+////                    mAdapter.notifyItemRangeInserted(mDataList.size() - codeArray.size(), codeArray.size());
 //
 //                    // 数据完更多数据，一定要掉用这个方法。
 //                    // 第一个参数：表示此次数据是否为空。
