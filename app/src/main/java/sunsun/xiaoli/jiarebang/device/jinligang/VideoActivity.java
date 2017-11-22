@@ -80,28 +80,28 @@ import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.readfile;
  * Created by Administrator on 2017/3/6.
  * 更改日志
  * 日期 : 2017/11/15
- *      封装VideoHelper类，用来辅助连接管理视频相关方法
+ * 封装VideoHelper类，用来辅助连接管理视频相关方法
  * 日期 : 2017/11/16
  * 内容 : 1、修改视频全屏去掉信息栏恢复竖屏后信息栏消失问题
- *              {
- *                  设置全屏：
-                         Window window = getWindow();
-                         WindowManager.LayoutParams winParams = win.getAttributes();
-                         winParams.flags=winParams.flags|WindowManager.LayoutParams.FLAG_FULLSCREEN；
-                         或
-                         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                         或
-                         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                    取消全屏
-                         Window window = getWindow();
-                         winParams.flags=winParams.flags&~WindowManager.LayoutParams.FLAG_FULLSCREEN;
-                         或
-                         window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                         或
-                         window.setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
- *              }
- *       2、 增加视频连接超时时重连的方法
- *       3、修复视频connectDevice==0时画布不显示bitmap（FrameLayout被隐藏）
+ * {
+ * 设置全屏：
+ * Window window = getWindow();
+ * WindowManager.LayoutParams winParams = win.getAttributes();
+ * winParams.flags=winParams.flags|WindowManager.LayoutParams.FLAG_FULLSCREEN；
+ * 或
+ * window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+ * 或
+ * window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+ * 取消全屏
+ * Window window = getWindow();
+ * winParams.flags=winParams.flags&~WindowManager.LayoutParams.FLAG_FULLSCREEN;
+ * 或
+ * window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+ * 或
+ * window.setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+ * }
+ * 2、 增加视频连接超时时重连的方法
+ * 3、修复视频connectDevice==0时画布不显示bitmap（FrameLayout被隐藏）
  */
 
 public class VideoActivity extends BaseTwoActivity implements Observer, VideoInterface {
@@ -165,7 +165,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vedio);
         Window window = getWindow();
-        winParams=window.getAttributes();
+        winParams = window.getAttributes();
         app = (App) getApplication();
         app.videoUI = this;
         keepScreenOn(this, true);
@@ -435,6 +435,9 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
             setCameraOpen(true);
             initFlowPlus();
         } else {
+            if (handler != null && runnable != null) {
+                handler.removeCallbacks(runnable);
+            }
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -468,7 +471,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
         setPhotoCount();
         if (flag) {
             flag = false;
-            MAlert.alert("正在保存图片");
+//            MAlert.alert("正在保存图片");
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -499,7 +502,6 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     public void paramChangeCallBack(int changeType) {
 //        if (changeType == ClientCallBack.PARAMCHANGE_TYPE_VIDEO_PARAME) {
         txt_fenbianlv_zhuangtai.setVisibility(View.VISIBLE);
-        txt_fenbianlv_zhuangtai.setText(mClient.Video_getResoluWidth() + "x" + mClient.Video_getResoluHeight());
         getQingXiZhuangTai();
 //        }
     }
@@ -745,7 +747,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 
                 break;
             case R.id.txt_fenbianlv_zhuangtai:
-                MAlert.alert(txt_fenbianlv_zhuangtai.getText());
+//                MAlert.alert(txt_fenbianlv_zhuangtai.getText());
                 break;
             case R.id.add:
                 showPopwindow(7);

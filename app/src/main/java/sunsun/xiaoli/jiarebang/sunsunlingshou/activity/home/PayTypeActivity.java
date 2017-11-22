@@ -220,12 +220,11 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     }
                 } else {
                     //待付款订单重新支付
-                    lingShouPresenter.rePay(getSp(Const.UID), getSp(Const.S_ID), orderBean.getOrder_code());
+                    lingShouPresenter.rePay(getSp(Const.UID), getSp(Const.S_ID), entityTemp.getOrder_code());
                 }
                 break;
         }
     }
-
     private static final int SDK_PAY_FLAG = 1;
 
     private void callWxPay(CreateOrderBean createOrderBean) {

@@ -1,5 +1,6 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home;
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
+import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
@@ -45,8 +47,8 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
 
         canPack = getIntent().getIntExtra("canPack", canPack);//0可自提，1不可自提
         if (canPack == 0) {
-            txt_noZiTi.setSelected(true);
-            txt_ziti.setSelected(false);
+            setSelectStatus(txt_noZiTi, true);
+            setSelectStatus(txt_ziti, false);
             re_time_type.setVisibility(View.VISIBLE);
         } else {
             re_time_type.setVisibility(View.GONE);
@@ -98,6 +100,18 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
         });
     }
 
+    private void setSelectStatus(TextView textView, boolean b) {
+        Drawable drawable = null;
+        if (b) {
+            drawable = getResources().getDrawable(R.drawable.btn_border_blue_bg_blue);
+            textView.setTextColor(getResources().getColor(R.color.white));
+        } else {
+            drawable = getResources().getDrawable(R.drawable.bg_white_border_blue);
+            textView.setTextColor(getResources().getColor(R.color.black));
+        }
+        textView.setBackground(drawable);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -106,17 +120,18 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
 
     @Override
     public void onClick(View v) {
+        MAlert.alert(v.getId());
         switch (v.getId()) {
             case R.id.iv_actionbar_left:
                 finish();
                 break;
             case R.id.txt_ziti:
-                txt_ziti.setSelected(true);
-                txt_noZiTi.setSelected(false);
+                setSelectStatus(txt_ziti, true);
+                setSelectStatus(txt_noZiTi, false);
                 break;
             case R.id.txt_noZiTi:
-                txt_noZiTi.setSelected(true);
-                txt_ziti.setSelected(false);
+                setSelectStatus(txt_noZiTi, true);
+                setSelectStatus(txt_ziti, false);
                 break;
         }
     }

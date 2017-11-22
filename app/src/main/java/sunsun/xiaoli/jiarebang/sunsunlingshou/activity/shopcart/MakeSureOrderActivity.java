@@ -227,6 +227,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 txt_choosestore.setText(storeBean.getName());
                 store_id=storeBean.getId();
                 skuPid=skuInfoSelect.getId();
+                btn_addshopcart.setVisibility(View.GONE);
                 adapter = new MakeSureOrderAdapter(this, skuInfoEntityList);
                 order_goods_list.setAdapter(adapter);
                 //获取咨询购买的skuPid

@@ -1,7 +1,6 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.fragment;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,15 +13,10 @@ import android.widget.ImageView;
 import android.widget.ZoomControls;
 
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -39,6 +33,7 @@ import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
+import sunsun.xiaoli.jiarebang.utils.MapHelper;
 
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitlebarStyle1;
 
@@ -148,6 +143,7 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
                 }
                 Intent intent = new Intent(getActivity(), ChooseTimeActivity.class);
                 intent.putExtra("model", listEntity);
+                intent.putExtra("canPack",1);
                 startActivity(intent);
                 break;
         }
@@ -179,24 +175,9 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
         }
     }
 
-    BitmapDescriptor descriptor = null;
-    protected float zoom = 9;
 
     private void setMapPoint() {
-        descriptor = BitmapDescriptorFactory
-                .fromBitmap(BitmapFactory
-                        .decodeResource(getActivity().getResources(),
-                                R.drawable.img_location));
-        for (int i = 0; i < bean.getList().size(); i++) {
-            LatLng l = new LatLng(bean.getList().get(i).getLat(), bean.getList().get(i).getLng());
-            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(l, zoom);
-            baiduMap.animateMapStatus(u);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("model", bean.getList().get(i));
-            MarkerOptions mMarkerOptions = new MarkerOptions().position(l).icon(descriptor).title(bean.getList().get(i).getName()).draggable(true).zIndex(18).extraInfo(bundle);
-            baiduMap.addOverlay(mMarkerOptions);
-
-        }
+        new MapHelper().setPoint(getActivity(),baiduMap,bean.getList());
     }
 
     @Override

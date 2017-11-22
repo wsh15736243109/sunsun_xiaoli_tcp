@@ -58,6 +58,7 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
         actionBar.setNeedTranslucent();
         actionBar.setLeftTitle("");
         actionBar.setLeftIcon(true,R.mipmap.ic_left_light);
+        actionBar.setRight(false);
         lingShouPresenter = new LingShouPresenter(this);
         id = getIntent().getStringExtra("id");
         lingShouPresenter.getGoodsDetail(id);

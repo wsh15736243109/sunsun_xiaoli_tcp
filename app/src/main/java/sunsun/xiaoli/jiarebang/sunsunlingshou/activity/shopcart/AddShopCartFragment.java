@@ -185,6 +185,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
                 intent.putExtra("type", BuyType.Buy_LiJiGouMai);
                 intent.putExtra("model", ar);
                 intent.putExtra("store_id",store_id);
+                intent.putExtra("canPack",0);
                 startActivity(intent);
                 dismiss();
             }

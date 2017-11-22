@@ -67,6 +67,12 @@ public final class TranslucentActionBar extends LinearLayout {
             iconLeft.setBackgroundResource(res);
         }
     }
+    public void setRight(boolean isVisible) {
+        iconRight.setVisibility(isVisible?View.VISIBLE:View.GONE);
+//        if (isVisible) {
+//            iconLeft.setBackgroundResource(res);
+//        }
+    }
 
     public void setBarBackgroundColor(int color) {
         layRoot.setBackgroundColor(color);
