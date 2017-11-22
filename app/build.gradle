@@ -7,12 +7,12 @@ android {
         multiDexEnabled true
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 125
-        versionName "1.2.5"
+//        versionCode 125
+//        versionName "1.2.5"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 //        applicationId "com.itboye.lingshou"
         flavorDimensions "sunsunlingshou"
-//        signingConfig signingConfigs.debug
+        signingConfig signingConfigs.debug
     }
 //        flavorDimensions "xiaoli", "sunsunlingshou", "yihu", "pondTeam", "pondLink"
     /**默认debug模式下的使用的keystore文件*/
@@ -72,6 +72,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 101
             versionName '1.0.1'
+            signingConfig signingConfigs.sunsun_lingshou_debug
         }
         xiaoli {
             manifestPlaceholders = [PACKAGE: "sunsun.xiaoli.jiarebang", str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b", APP_ID: ""]
@@ -87,6 +88,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 125
             versionName '1.2.5'
+            signingConfig signingConfigs.sunsun_xiaoli_debug
         }
         yihu {
             manifestPlaceholders = [PACKAGE: "com.itboye.xiaomianyang", str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd", APP_ID: ""]
@@ -102,6 +104,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 101
             versionName '1.0.1'
+            signingConfig signingConfigs.sunsun_yihu_debug
         }
         pondTeam {
             manifestPlaceholders = [PACKAGE: "com.itboye.pondteam", str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12", APP_ID: ""]
@@ -118,6 +121,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionName '1.0.1'
             versionCode 101
+            signingConfig signingConfigs.sunsun_pondteam_debug
         }
         pondLink {
             manifestPlaceholders = [PACKAGE: "com.itboye.pondlink", str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c", APP_ID: ""]
@@ -134,6 +138,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionName '1.0.2'
             versionCode 102
+            signingConfig signingConfigs.sunsun_pondlink_debug
         }
     }
     buildTypes {
@@ -145,7 +150,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         def file = output.outputFile
-                        def fileName = file.name.replace(".apk", "-" + defaultConfig.versionName
+                        def fileName = file.name.replace(".apk", "-" + "${variant.productFlavors[0].versionName}"
                                 + ".apk")
                         outputFileName = fileName
 //                        output.outputFileName = new File(file.parent, fileName)

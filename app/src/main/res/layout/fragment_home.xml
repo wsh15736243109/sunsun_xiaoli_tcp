@@ -195,7 +195,7 @@
                     <FrameLayout
                         android:id="@+id/tab_content"
                         android:layout_width="match_parent"
-                        android:layout_margin="@dimen/DIMEN_10DP"
+                        android:layout_marginTop="@dimen/DIMEN_10DP"
                         android:layout_height="wrap_content"
                         android:background="@color/white"></FrameLayout>
                     <!--<sunsun.xiaoli.jiarebang.custom.MyGridView-->
@@ -237,7 +237,7 @@
                     android:id="@+id/txt_right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/DIMEN_10DP"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
                     android:layout_marginTop="@dimen/DIMEN_20DP"
                     android:layout_toRightOf="@+id/area_center"
                     android:drawablePadding="@dimen/margin_5"
@@ -251,13 +251,13 @@
                     android:id="@+id/txt_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
                     android:layout_marginTop="@dimen/DIMEN_20DP"
                     android:layout_toLeftOf="@+id/area_center"
                     android:drawablePadding="@dimen/margin_5"
                     android:drawableTop="@drawable/yingjian"
                     android:gravity="center"
-                    android:text="添加智能设备"
+                    android:text="智能设备"
                     android:textColor="@color/white"
                     android:textSize="@dimen/DIMEN_12DP" />
             </RelativeLayout>

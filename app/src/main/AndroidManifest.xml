@@ -187,7 +187,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".wxapi.WXPayEntryActivity"
+            android:name="com.itboye.lingshou.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:scheme="${APP_ID}" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.itboye.lingshou.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
 

@@ -161,7 +161,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText("咨询购买");
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() + "</font>"));
+                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
                     li_goods.addView(view);
                 }
                 break;
@@ -242,7 +242,6 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
 //        req.extData = "app data"; // optional
 //        Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
         // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-        App.getInstance().iwxapi.registerApp(wxPrePayBean.getAppid());
         boolean wx = App.getInstance().iwxapi.sendReq(req);
         Log.v("request_params", "wxPrepayBean  =" + wxPrePayBean.toString() + "   >>" + wx)
         ;
@@ -318,7 +317,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
         ResultEntity entity = handlerError(data);
         if (entity != null) {
             if (entity.getCode() != 0) {
-                MAlert.alert(entity.getMsg() + "code!=0");
+                MAlert.alert(entity.getMsg());
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.payTest_success) {
@@ -347,7 +346,6 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
             } else if (entity.getEventType() == LingShouPresenter.wxPrePay_success) {
                 WxPrePayBean wxPrePayBean = (WxPrePayBean) entity.getData();
                 callWxPay(wxPrePayBean);
-                MAlert.alert(entity.getData() + "success");
             } else if (entity.getEventType() == LingShouPresenter.wxPrePay_fail) {
                 MAlert.alert(entity.getData() + "fail");
             }

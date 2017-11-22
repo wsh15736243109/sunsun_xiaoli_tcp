@@ -38,6 +38,7 @@ public class Const {
     public static final String RELOGIN = "relogin";
     public static final String IS_STORE = "is_stores";
     public static final String STORE_ID = "stores_id";
+    public static final String SELECT_ADDRESS = "select_address";
     public static String CITY_CODE = "330104";
     public static String wrapUrl = "dev.sunsunxiaoli.com";
     //    apisunsun.itboye.com/public => devsunsun.itboye.com=>

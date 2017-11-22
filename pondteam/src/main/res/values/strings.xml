@@ -610,6 +610,8 @@
     <string name="login_yihu">宜虎智能</string>
     <string name="search">搜索</string>
     <string name="input_place">输入国家地区</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_cancel">用户取消支付</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

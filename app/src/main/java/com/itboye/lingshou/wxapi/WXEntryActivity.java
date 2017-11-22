@@ -1,4 +1,4 @@
-package sunsun.xiaoli.jiarebang.wxapi;
+package com.itboye.lingshou.wxapi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,67 +29,11 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler{
         super.onCreate(savedInstanceState);
 		app= (App) getApplication();
     	api = app.getIwxapi();
-		try {
-			api.handleIntent(getIntent(), this);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-//
-//    	regBtn = (Button) findViewById(R.id.reg_btn);
-//    	regBtn.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				// ����appע�ᵽ΢��
-//			    api.registerApp(Constants.APP_ID);
-//			}
-//		});
-//
-//        gotoBtn = (Button) findViewById(R.id.goto_send_btn);
-//        gotoBtn.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//		        startActivity(new Intent(WXEntryActivity.this, SendToWXActivity.class));
-//		        finish();
-//			}
-//		});
-//
-//        launchBtn = (Button) findViewById(R.id.launch_wx_btn);
-//        launchBtn.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				Toast.makeText(WXEntryActivity.this, "launch result = " + api.openWXApp(), Toast.LENGTH_LONG).show();
-//			}
-//		});
-//
-//        checkBtn = (Button) findViewById(R.id.check_timeline_supported_btn);
-//        checkBtn.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				int wxSdkVersion = api.getWXAppSupportAPI();
-//				if (wxSdkVersion >= TIMELINE_SUPPORTED_VERSION) {
-//					Toast.makeText(WXEntryActivity.this, "wxSdkVersion = " + Integer.toHexString(wxSdkVersion) + "\ntimeline supported", Toast.LENGTH_LONG).show();
-//				} else {
-//					Toast.makeText(WXEntryActivity.this, "wxSdkVersion = " + Integer.toHexString(wxSdkVersion) + "\ntimeline not supported", Toast.LENGTH_LONG).show();
-//				}
-//			}
-//		});
-//
-//        scanBtn = (Button) findViewById(R.id.scan_qrcode_login_btn);
-//        scanBtn.setOnClickListener(new View.OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//		        startActivity(new Intent(WXEntryActivity.this, ScanQRCodeLoginActivity.class));
-//		        finish();
-//			}
-//        });
-//
-//		//ע�⣺
-
+        try {
+        	api.handleIntent(getIntent(), this);
+        } catch (Exception e) {
+        	e.printStackTrace();
+        }
     }
 
 	@Override
@@ -100,10 +44,9 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler{
         api.handleIntent(intent, this);
 	}
 
-	// ΢�ŷ������󵽵�����Ӧ��ʱ����ص����÷���
 	@Override
 	public void onReq(BaseReq req) {
-		switch (req.getType()) {
+//		switch (req.getType()) {
 //		case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
 ////			goToGetMsg();
 //			break;
@@ -112,10 +55,9 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler{
 //			break;
 //		default:
 //			break;
-		}
+//		}
 	}
 
-	// ������Ӧ�÷��͵�΢�ŵ�����������Ӧ�������ص����÷���
 	@Override
 	public void onResp(BaseResp resp) {
 		int result = 0;
@@ -136,8 +78,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler{
 			result = R.string.errcode_unknown;
 			break;
 		}
-		
 		MAlert.alert(result);
+		finish();
 	}
 	
 
@@ -145,7 +87,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler{
 //		WXMediaMessage wxMsg = showReq.message;
 //		WXAppExtendObject obj = (WXAppExtendObject) wxMsg.mediaObject;
 //
-//		StringBuffer msg = new StringBuffer(); // ��֯һ������ʾ����Ϣ����
+//		StringBuffer msg = new StringBuffer();
 //		msg.append("description: ");
 //		msg.append(wxMsg.description);
 //		msg.append("\n");

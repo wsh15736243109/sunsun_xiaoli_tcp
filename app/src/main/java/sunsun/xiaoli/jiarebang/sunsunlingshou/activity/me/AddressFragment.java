@@ -60,7 +60,10 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
 		String provinceNo=Integer.toString(addressSelect.getProvinceNo());
 		String cityNo=Integer.toString(addressSelect.getCityNo());
 		String districtNo=Integer.toString(addressSelect.getDistrictNo());
-		this.listener.onGetinforListener(addressSelect.getProvinceName(), addressSelect.getCityName(), addressSelect.getDistrictName(), provinceNo, cityNo, districtNo);
+		String province=addressSelect.getProvinceName();
+		String city=addressSelect.getCityName();
+		String districName= addressSelect.getDistrictName();
+		this.listener.onGetinforListener(province,city, districName, provinceNo, cityNo, districtNo);
 		
 		//添加数据
 //		Bundle bundle=new Bundle();

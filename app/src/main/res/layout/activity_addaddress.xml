@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
         android:id="@+id/actionBar"
@@ -12,155 +12,199 @@
 
     <RelativeLayout
         android:id="@+id/namerela"
-        android:layout_below="@+id/actionBar"
         android:layout_width="match_parent"
-        android:layout_height="50dp" 
+        android:layout_height="50dp"
+        android:layout_below="@+id/actionBar"
         android:background="@color/white">
 
         <EditText
             android:id="@+id/nameedit"
-            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:background="@null"
-            android:textColorHint="#838383"
-            android:hint="姓名"/>
+            android:gravity="center_vertical"
+            android:hint="姓名"
+            android:textColorHint="#838383" />
 
     </RelativeLayout>
-    <View 
+
+    <View
         android:id="@+id/view1"
-        android:layout_below="@id/namerela"
         android:layout_width="match_parent"
-        android:background="@color/gray_BBB"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:layout_below="@id/namerela"
+        android:background="@color/gray_BBB" />
+
     <RelativeLayout
         android:id="@+id/phonerela"
-        android:layout_below="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white" >
+        android:layout_below="@+id/view1"
+        android:background="@color/white">
 
         <EditText
             android:id="@+id/phoneedit"
-            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:inputType="number"
-            android:maxLength="11"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:gravity="center_vertical"
             android:hint="电话"
-            android:background="@null"/>
+            android:inputType="number"
+            android:maxLength="11" />
 
     </RelativeLayout>
-    <View 
+
+    <View
         android:id="@+id/view2"
-        android:layout_below="@+id/phonerela"
         android:layout_width="match_parent"
-        android:background="@color/gray_BBB"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/phonerela"
+        android:background="@color/gray_BBB" />
+
     <RelativeLayout
         android:id="@+id/locationrela"
-        android:layout_below="@id/view2"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white" >
+        android:layout_below="@id/view2"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/provincetext"
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:textColor="#6A6A6A"
-            android:text="省市区"
-            android:gravity="center_vertical"
-            android:textSize="16sp"
-            />
-        <ImageView
+            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="省市区"
+            android:textColor="#6A6A6A"
+            android:textSize="16sp" />
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@mipmap/ic_right_gray"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"/>
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@mipmap/ic_right_gray" />
 
     </RelativeLayout>
-    <View 
+
+    <View
         android:id="@+id/view3"
-        android:layout_below="@+id/locationrela"
         android:layout_width="match_parent"
-        android:background="@color/gray_BBB"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/locationrela"
+        android:background="@color/gray_BBB" />
+
     <RelativeLayout
         android:id="@+id/morelocationrela"
-        android:layout_below="@id/view3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/white" >
+        android:layout_below="@id/view3"
+        android:background="@color/white">
 
         <EditText
             android:id="@+id/detail"
-            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="详细地址"/>
+            android:gravity="center_vertical"
+            android:hint="详细地址" />
 
     </RelativeLayout>
-    <View 
+
+    <View
         android:id="@+id/view4"
-        android:layout_below="@+id/morelocationrela"
         android:layout_width="match_parent"
-        android:background="@color/gray_BBB"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/morelocationrela"
+        android:background="@color/gray_BBB" />
+
     <RelativeLayout
         android:id="@+id/youbianrela"
-        android:layout_below="@id/view4"
         android:layout_width="match_parent"
-        android:layout_height="50dp" 
+        android:layout_height="50dp"
+        android:layout_below="@id/view4"
         android:background="@color/white">
 
         <EditText
             android:id="@+id/zipcode"
-            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
-            android:gravity="center_vertical"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:inputType="number"
-            android:maxLength="6"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="邮编"/>
+            android:gravity="center_vertical"
+            android:hint="邮编"
+            android:inputType="number"
+            android:maxLength="6" />
 
     </RelativeLayout>
-    <View 
+    <View
         android:id="@+id/view5"
-        android:layout_below="@+id/youbianrela"
         android:layout_width="match_parent"
-        android:background="@color/gray_BBB"
-        android:layout_height="0.5dp"/>
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/youbianrela"
+        android:background="@color/gray_BBB" />
+    <RelativeLayout
+        android:id="@+id/re_defualt"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/view5"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/txt_setDetault"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="设置为默认地址" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:text="" />
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view6"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/re_defualt"
+        android:background="@color/gray_BBB" />
 
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="保存地址"
-        android:textColor="@color/white"
-        android:background="@color/main_yellow"
         android:layout_alignParentBottom="true"
-        >
+        android:background="@color/main_yellow"
+        android:text="保存地址"
+        android:textColor="@color/white">
 
     </Button>
+
 
 </RelativeLayout>

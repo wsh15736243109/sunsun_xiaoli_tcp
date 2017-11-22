@@ -608,5 +608,7 @@
     <string name="device_zhinengshexiangtou_yihu">宜虎智能攝像頭</string>
     <string name="login_yihu">宜虎智能</string>
     <string name="search">搜索</string>
-    <string name="input_place">输入国家地区</string>
+    <string name="input_place">輸入國家地區</string>
+    <string name="pay_success">支付成功</string>
+    <string name="pay_cancel">支付取消</string>
 </resources>

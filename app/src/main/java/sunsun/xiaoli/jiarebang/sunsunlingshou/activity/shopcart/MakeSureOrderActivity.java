@@ -69,7 +69,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     RelativeLayout re_addess;
     boolean isShopCart;
     private String address_id = "";
-    private ArrayList<AddressBean> addressBean=new ArrayList<>();
+    private ArrayList<AddressBean> addressBean = new ArrayList<>();
 
     TextView txt_name, txt_phone, txt_address, txt_mnoren;
     private StoreListBean.ListEntity storeBean;
@@ -89,6 +89,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     private TextView txt_peisong;
     private OrderBean.ListEntity entityTemp;
     ArrayList<ShopCartBean> ar;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_make_sure_order;
@@ -97,7 +98,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     @Override
     protected void initData() {
         mApp = (App) getApplication();
-        mApp.makeSureActivity=this;
+        mApp.makeSureActivity = this;
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.getDefaultAddress(getSp(Const.UID), Const.S_ID);
         initTitlebarStyle1(this, actionBar, "确认订单", R.mipmap.ic_left_light, "", 0, "");
@@ -105,7 +106,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         isShopCart = getIntent().getBooleanExtra("isShopCart", false);
         if (isShopCart) {
             btn_addshopcart.setVisibility(View.GONE);
-        }else{
+        } else {
             btn_addshopcart.setVisibility(View.VISIBLE);
         }
         buyType = (BuyType) getIntent().getSerializableExtra("type");
@@ -225,8 +226,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 }
                 btn_contacttime.setText(send_time);
                 txt_choosestore.setText(storeBean.getName());
-                store_id=storeBean.getId();
-                skuPid=skuInfoSelect.getId();
+                store_id = storeBean.getId();
+                skuPid = skuInfoSelect.getId();
                 btn_addshopcart.setVisibility(View.GONE);
                 adapter = new MakeSureOrderAdapter(this, skuInfoEntityList);
                 order_goods_list.setAdapter(adapter);
@@ -242,7 +243,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mApp.makeSureActivity=null;
+        mApp.makeSureActivity = null;
     }
 
     String note = "", store_id = "", send_type = "1", send_time = "", freight_price = "";
@@ -424,7 +425,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         address_id = addressBean.get(0).getId();
         if (!store_id.equals("")) {
             lingShouPresenter.queryFreightPrice(store_id, address_id, getSp(Const.S_ID));
-        }else{
+        } else {
 //            MAlert.alert("地址选择有误");
         }
     }
@@ -434,9 +435,9 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101 && resultCode == 102) {
             //选择收货地址
-            if (addressBean.size()>0) {
-                addressBean.set(0,(AddressBean) data.getSerializableExtra("model")) ;
-            }else{
+            if (addressBean.size() > 0) {
+                addressBean.set(0, (AddressBean) data.getSerializableExtra("model"));
+            } else {
                 addressBean.add((AddressBean) data.getSerializableExtra("model"));
             }
             address_id = addressBean.get(0).getId();
@@ -480,13 +481,13 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             } else if (entity.getEventType() == LingShouPresenter.addShopCart_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_success) {
-                freight_price = ((FreightPriceBean) entity.getData()).getFreight_price() / 100 + "";
-                txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + freight_price + "</font>"));
+                freight_price = ((FreightPriceBean) entity.getData()).getFreight_price() + "";
+                txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + ((FreightPriceBean) entity.getData()).getFreight_price() / 100 + "</font>"));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_success) {
                 RePayBean createOrderBean = (RePayBean) entity.getData();
-                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType",buyType).putExtra("shopcart_model",ar));
+                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType", buyType).putExtra("shopcart_model", ar));
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.goodsOrder_success) {
@@ -496,13 +497,13 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 CreateOrderBean createOrderBean = (CreateOrderBean) entity.getData();
                 Intent intent = new Intent(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
-                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType",buyType).putExtra("goodsModel",goodsDetailBeanArray));
+                startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType", buyType).putExtra("goodsModel", goodsDetailBeanArray));
             } else if (entity.getEventType() == LingShouPresenter.goodsOrder_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
                 addressBean = (ArrayList<AddressBean>) entity.getData();
-                if (addressBean!=null) {
-                    if (addressBean.size()>0) {
+                if (addressBean != null) {
+                    if (addressBean.size() > 0) {
                         setDefaultAddress();
                     }
                 }

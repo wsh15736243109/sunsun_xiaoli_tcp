@@ -20,6 +20,7 @@ import android.widget.ViewFlipper;
 
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.gson.Gson;
 import com.itboye.pondteam.base.IsNeedClick;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.ArticalBean;
@@ -34,6 +35,7 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
+import sunsun.xiaoli.jiarebang.beans.AddressBean;
 import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
@@ -56,8 +58,6 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
 
 import static com.itboye.pondteam.utils.Const.CITY_CODE;
-import static com.itboye.pondteam.utils.Const.lat;
-import static com.itboye.pondteam.utils.Const.lng;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitleBarStyle2;
@@ -75,11 +75,11 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     Button btn_yuyue, btn_qingli, btn_goumai, btn_zaojingzhuangshi;
     EditText ed_actionbar_search;
     RelativeLayout area_left, area_right, area_center;
-//    LinearLayout near_store;
+    //    LinearLayout near_store;
     ArrayList<String> arrayList = new ArrayList<>();
     @IsNeedClick
     TextView txt_center, txt_left, txt_right;
-//    MyGridView recycler_aqhardwareorhotgoods;
+    //    MyGridView recycler_aqhardwareorhotgoods;
     Button haoping, zuijin;
     ArrayList<Integer> aqType = new ArrayList<>();
     LingShouPresenter lingShouPresenter;
@@ -94,19 +94,23 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     ImageView testImg;
     private GoodsListBean goodsList;
     ArrayList<DeviceTypeModel> arDevice = new ArrayList<>();
-//    ProgressBar progress;
+    //    ProgressBar progress;
     ArticalBean articalBean;
     RatioImageView home_img;
     Dialog alert;
-    RadioButton tvTitle,tvMessage;
+    RadioButton tvTitle, tvMessage;
     private StoreListBean.ListEntity listEntity1;
-//    RelativeLayout store_fenlei;
+    //    RelativeLayout store_fenlei;
     FrameLayout tab_content;
 
     MyTabFragment myTabFragment1;
     MyTabFragment myTabFragment2;
     MyTabFragment myTabFragment3;
     private FragmentManager fragmentManager;
+    private String uid;
+    private String selectAddress;
+    private AddressBean selectAddressBean;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_home;
@@ -119,6 +123,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //            testImg.setImageBitmap((bitmap));
         }
     };
+
     /**
      * 将所有的Fragment都置为隐藏状态。
      *
@@ -135,6 +140,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             transaction.hide(myTabFragment3);
         }
     }
+
     public void setTabSelection(int index) {
         // 每次选中之前先清楚掉上次的选中状态
         // 开启一个Fragment事务
@@ -186,7 +192,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         app.homeFragment = this;
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.getBanner(position);//获取轮播图
-        lingShouPresenter.getVerticalArtical(CITY_CODE, lng + "", lat + "");//获取垂直滚动文章
+        lingShouPresenter.getVerticalArtical(CITY_CODE, getSp(Const.LNG), getSp(Const.LAT));//获取垂直滚动文章
         initTitleBarStyle2(getActivity(), actionBar, "", pullzoom_scrollview, this, null);
         DeviceTypeModel deviceListBean = new DeviceTypeModel(R.drawable.home_aq_806, getString(R.string.device_zhineng806));
         arDevice.add(deviceListBean);
@@ -214,6 +220,28 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         actionBar.setNeedTranslucent(true, false);
         actionBar.setSearchBarVisible(true);
         setSelectArea("商家");
+
+        //获取默认收货地址
+        uid = getSp(Const.UID);
+        if (uid.equals("")) {
+
+        } else {
+            selectAddress = getSp(Const.SELECT_ADDRESS);
+            if (!selectAddress.equals("")) {
+                selectAddressBean = new Gson().fromJson(selectAddress, AddressBean.class);
+                if (selectAddressBean != null) {
+                    //获取到默认地址
+                    setCityName(selectAddressBean.getCity(), Double.parseDouble(selectAddressBean.getLat()), Double.parseDouble(selectAddressBean.getLng()));
+                } else {
+                    //没获取到默认地址
+                    setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                }
+            }else{
+                //没获取到默认地址
+                setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+            }
+//            lingShouPresenter.getDefaultAddress(uid,getSp(Const.S_ID) );
+        }
     }
 
     boolean hasRe = false;
@@ -303,7 +331,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 haoping.setTextColor(getActivity().getResources().getColor(R.color.blue500));
                 break;
             case R.id.lay_actionbar_left:
-                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action","location_address"));
+                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action", "location_address"));
                 break;
             case R.id.lay_actionbar_right:
                 LoginController.goToMessageList(getActivity(), null);
@@ -317,9 +345,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 break;
             case R.id.txt_boda:
                 listEntity1 = (StoreListBean.ListEntity) v.getTag();
-                alert = new Dialog(getActivity(),R.style.callphonedialog);
+                alert = new Dialog(getActivity(), R.style.callphonedialog);
                 View view = View.inflate(getActivity(), R.layout.poup_home_callphone, null);
-                view.setMinimumWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth()-100);
+                view.setMinimumWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() - 100);
                 tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
                 tvTitle.setChecked(true);
                 tvTitle.setText("手机:" + listEntity1.getPhone());
@@ -338,17 +366,17 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 break;
             case R.id.tvBtnRight:
                 try {
-                    String number="";
+                    String number = "";
                     if (tvMessage.isChecked()) {
-                        number=listEntity1.getMobile();
-                    }else{
-                        number=listEntity1.getPhone();
+                        number = listEntity1.getMobile();
+                    } else {
+                        number = listEntity1.getPhone();
                     }
                     if (number.equals("")) {
                         MAlert.alert("当前电话不可用");
                         return;
                     }
-                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+number));
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
                     intent.setAction(Intent.ACTION_DIAL);
                     startActivity(intent);
                 } catch (SecurityException e) {
@@ -373,14 +401,14 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //            lingShouPresenter.getHotSearchGoods();
             setTextStyle(txt_center, "热门商品", R.drawable.circle_yellow, area_center, "商品", R.drawable.shangpin);
             setTextStyle(txt_left, "附近商家", R.drawable.rect_green, area_left, "商家", R.drawable.shangjia);
-            setTextStyle(txt_right, "添加智能设备", R.drawable.rect_blue, area_right, "硬件", R.drawable.yingjian);
+            setTextStyle(txt_right, "智能设备", R.drawable.rect_blue, area_right, "硬件", R.drawable.yingjian);
             setTabSelection(0);
         } else if (t.equals("硬件")) {
 //            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
 //            recycler_aqhardwareorhotgoods.setNumColumns(3);
 //            progress.setVisibility(View.GONE);
 //            recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
-            setTextStyle(txt_center, "添加智能设备", R.drawable.circle_blue, area_center, "硬件", R.drawable.yingjian);
+            setTextStyle(txt_center, "智能设备", R.drawable.circle_blue, area_center, "硬件", R.drawable.yingjian);
             setTextStyle(txt_left, "热门商品", R.drawable.rect_yellow, area_left, "商品", R.drawable.shangpin);
             setTextStyle(txt_right, "附近商家", R.drawable.rect_green, area_right, "商家", R.drawable.shangjia);
             GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
@@ -396,7 +424,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //            lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
 //            near_store.setVisibility(View.VISIBLE);
             setTextStyle(txt_center, "附近商家", R.drawable.circle_green, area_center, "商家", R.drawable.shangjia);
-            setTextStyle(txt_left, "添加智能设备", R.drawable.rect_blue, area_left, "硬件", R.drawable.yingjian);
+            setTextStyle(txt_left, "智能设备", R.drawable.rect_blue, area_left, "硬件", R.drawable.yingjian);
             setTextStyle(txt_right, "热门商品", R.drawable.rect_yellow, area_right, "商品", R.drawable.shangpin);
             setTabSelection(2);
         }
@@ -426,7 +454,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
         } else {
             Intent intent = new Intent(getActivity(), GoodsClassifyActivity.class);
-            intent.putExtra("model",bean.getList().get(position));
+            intent.putExtra("model", bean.getList().get(position));
             intent.putExtra("store_id", bean.getList().get(position).getId());
             startActivity(intent);
         }
@@ -498,6 +526,25 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //                recycler_aqhardwareorhotgoods.setAdapter(adapter);
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_fail) {
                 MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
+                MAlert.alert(entity.getData());
+                ArrayList<AddressBean> addressBeanArrayList = (ArrayList<AddressBean>) entity.getData();
+                if (addressBeanArrayList != null) {
+                    if (addressBeanArrayList.size() > 0) {
+                        //获取到默认地址
+                        setCityName(addressBeanArrayList.get(0).getCity(), Double.parseDouble(addressBeanArrayList.get(0).getLat()), Double.parseDouble(addressBeanArrayList.get(0).getLng()));
+                    } else {
+                        //没获取到默认地址
+                        setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                    }
+                } else {
+                    //没获取到默认地址
+                    setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                }
+            } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_fail) {
+                //没获取到默认地址
+                MAlert.alert(entity.getData());
+                setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
             }
         }
     }

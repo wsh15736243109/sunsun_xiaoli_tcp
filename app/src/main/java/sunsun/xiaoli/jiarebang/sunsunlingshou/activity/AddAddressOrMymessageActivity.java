@@ -2,6 +2,7 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,9 +34,10 @@ public class AddAddressOrMymessageActivity extends LingShouBaseActivity implemen
     LingShouPresenter lingShouPresenter;
     EditText nameedit, phoneedit, detail, zipcode;
     TextView provincetext;
-    String provinceId, province, city, cityid, area, areaid, country_id = "+86", country = "中国", lng = Const.lng+"", lat = Const.lat+"";
+    String provinceId, province, city, cityid, area, areaid, country_id = "+86", country = "中国", lng = getSp(Const.LNG), lat = getSp(Const.LAT);
     AddressBean addressBean;
     private int is_default;
+    CheckBox checkBox;
 
     @Override
     protected int getLayoutId() {
@@ -75,6 +77,7 @@ public class AddAddressOrMymessageActivity extends LingShouBaseActivity implemen
                 String phone = phoneedit.getText().toString();
                 String detailAddress = detail.getText().toString();
                 String zip = zipcode.getText().toString();
+                is_default = checkBox.isChecked() ? 1 : 0;
                 if (addressBean != null) {
                     //修改地址
                     lingShouPresenter.updateAddress(getSp(Const.UID), addressBean.getId(), is_default, province, provinceId, city, area, cityid, areaid, detailAddress, name, phone, country_id, country, lng, lat, getSp(Const.S_ID));
@@ -121,6 +124,12 @@ public class AddAddressOrMymessageActivity extends LingShouBaseActivity implemen
         this.provinceId = provinceNo;
         this.cityid = cityNo;
         this.areaid = districtNo;
-        provincetext.setText(province + city + district);
+        if (city.equals("县") || city.equals("市辖区")) {
+            this.city = province;
+            provincetext.setText(province + district);
+        } else {
+
+            provincetext.setText(province + city + district);
+        }
     }
 }

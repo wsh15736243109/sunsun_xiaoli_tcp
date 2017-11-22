@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.SPUtils;
 
 import java.util.List;
 
@@ -181,6 +182,9 @@ public class LocationUtil {
                 }
             }
 //            Log.i("BaiduLocationApiDem", sb.toString());
+            SPUtils.put(context,null,Const.CITY,location.getAddress().city);
+            SPUtils.put(context,null,Const.LAT,location.getLatitude());
+            SPUtils.put(context,null,Const.LNG,location.getLongitude());
             Const.lat=location.getLatitude();
             Const.lng=location.getLongitude();
              locationResult.getLatAndLng(location.getAddress().city,location.getLatitude(),location.getLongitude());

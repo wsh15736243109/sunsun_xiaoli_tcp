@@ -112,6 +112,34 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
         switch (v.getId()) {
             case R.id.iv_actionbar_left:
                 finish();
+//                String imagePath =  getFileSavePath() + "2017-05-10_18-14-00-92.jpg";
+//                WXImageObject imgObj = new WXImageObject();
+//                imgObj.setImagePath(imagePath);
+//
+//                WXMediaMessage msg = new WXMediaMessage();
+//                msg.mediaObject = imgObj;
+//                msg.description="aq806";
+//
+//                Bitmap bmp = BitmapFactory.decodeFile(imagePath);
+//                bmp=compressImage(bmp,32);
+//
+//                int THUMB_SIZE = 150;
+//                Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+//                bmp.recycle();
+//                msg.thumbData = Util.bmpToByteArrayNew(thumbBmp, true);
+//                msg.title=" ";
+//                SendMessageToWX.Req req = new SendMessageToWX.Req();
+//                req.transaction = "img"+String.valueOf(System.currentTimeMillis());
+//                req.message = msg;
+////                if (isWx) {
+//                //微信会话
+//                req.scene = SendMessageToWX.Req.WXSceneSession;
+////                }else{
+////                    //微信朋友圈
+////                    req.scene = SendMessageToWX.Req.WXSceneTimeline;
+////                }
+//                boolean wx= App.getInstance().getIwxapi().sendReq(req);
+//                MAlert.alert(wx + "");
                 break;
         }
     }

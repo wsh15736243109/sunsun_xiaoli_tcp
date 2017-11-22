@@ -506,10 +506,10 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 
     @Override
     public void getLatAndLng(String cityName, double lat, double lng) {
-        try {
-            homeFragment.setCityName(cityName, lat, lng);
-        } catch (Exception e) {
-
-        }
+//        try {
+//            homeFragment.setCityName(cityName, lat, lng);
+//        } catch (Exception e) {
+//
+//        }
     }
 }

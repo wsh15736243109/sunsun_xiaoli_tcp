@@ -10,8 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.itboye.pondteam.base.LingShouBaseActivity;
 import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.SPUtils;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -107,7 +109,9 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                         MAlert.alert(getString(R.string.only_one_address_set_default));
                         return;
                     }
-                    lingShouPresenter.setDefaultAddress(getSp(Const.UID),addressSelect.getId(),getSp(Const.S_ID));
+                    String json=new Gson().toJson(addressSelect);
+                    SPUtils.put(this,null,Const.SELECT_ADDRESS,json);
+//                    lingShouPresenter.setDefaultAddress(getSp(Const.UID),addressSelect.getId(),getSp(Const.S_ID));
                 } else {
                 }
                 break;
