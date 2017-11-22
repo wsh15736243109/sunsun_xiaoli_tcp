@@ -333,4 +333,10 @@ public interface ILingShouInterface<PersonDataBean> {
     void getSkuPidInConsultBuy(String uid,String sId);
 
     void setDefaultAddress(String sp, String id, String sp1);
+
+    /**
+     * 微信预支付
+     * @param pay_code
+     */
+    void wxPrePay(String pay_code);
 }

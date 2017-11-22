@@ -237,7 +237,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 
 
     private void regToWx() {
-        iwxapi = WXAPIFactory.createWXAPI(getApplicationContext(), BuildConfig.WX_APP_ID);
+        iwxapi = WXAPIFactory.createWXAPI(getApplicationContext(), BuildConfig.WX_APP_ID,false);
         iwxapi.registerApp(BuildConfig.WX_APP_ID);
     }
 

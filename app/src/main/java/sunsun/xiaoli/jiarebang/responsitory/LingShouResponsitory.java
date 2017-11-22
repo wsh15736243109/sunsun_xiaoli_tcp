@@ -30,6 +30,7 @@ import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
+import sunsun.xiaoli.jiarebang.beans.WxPrePayBean;
 import sunsun.xiaoli.jiarebang.beans.XuLieNoModel;
 import sunsun.xiaoli.jiarebang.interfaces.ILingShouInterface;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.MyPublishBean;
@@ -90,6 +91,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String queryProNo="By_Order_modellist";
     private String getSkuPidInConsultBuy="By_Order_consultBuy";//咨询购买前置
     private String setDefaultAddress="By_Address_setDefault";//设置默认地址
+    private String wxPrePay="By_Wxpay_prePay";//微信预支付
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -872,6 +874,22 @@ public class LingShouResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(setDefaultAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void wxPrePay(String pay_code) {
+        Type type =new TypeToken<WxPrePayBean>(){
+        }.getType();
+        String apiVer =api;
+        Map<String,Object> map =new HashMap<>();
+        map.put("pay_code",pay_code);
+        (new ByJsonRequest.Builder<WxPrePayBean>())
+                .setTypeVerParamsAndReturnClass(wxPrePay, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<WxPrePayBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

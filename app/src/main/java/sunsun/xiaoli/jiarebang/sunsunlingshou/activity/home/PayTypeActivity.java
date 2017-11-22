@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -22,7 +23,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.alipay.OrderInfoUtil2_0;
 import sunsun.xiaoli.jiarebang.alipay.PayResult;
@@ -31,6 +31,7 @@ import sunsun.xiaoli.jiarebang.beans.CreateOrderBean;
 import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.beans.ShopCartBean;
+import sunsun.xiaoli.jiarebang.beans.WxPrePayBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.RePayBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
@@ -127,7 +128,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     txt_product_name.setText("鱼缸清理");
                     txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
                     li_goods.addView(view);
-                }else{
+                } else {
                     MAlert.alert("订单有误");
                 }
                 break;
@@ -202,19 +203,20 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     //测试支付
 //                    lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),createOrderBean.getPay_money(),getSp(Const.S_ID));
                     if (pay_wx.isChecked()) {
-                        callWxPay(createOrderBean);
+                        //
+                        lingShouPresenter.wxPrePay(createOrderBean.getPay_code());
+//                        callWxPay(createOrderBean);
                     } else {
                         callAliPay(createOrderBean);
                     }
-                }
-                else if (rePayBean != null) {
-                   CreateOrderBean  bean=new CreateOrderBean();
+                } else if (rePayBean != null) {
+                    CreateOrderBean bean = new CreateOrderBean();
                     bean.setPay_money(Double.parseDouble(rePayBean.getPay_money()));
                     bean.setPay_code(bean.getPay_code());
                     bean.setCreate_time(bean.getCreate_time());
                     //购物车支付
                     if (pay_wx.isChecked()) {
-                        callWxPay(bean);
+//                        callWxPay(bean);
                     } else {
                         callAliPay(bean);
                     }
@@ -225,21 +227,25 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 break;
         }
     }
+
     private static final int SDK_PAY_FLAG = 1;
 
-    private void callWxPay(CreateOrderBean createOrderBean) {
+    private void callWxPay(WxPrePayBean wxPrePayBean) {
         PayReq req = new PayReq();
-        req.appId = BuildConfig.WX_APP_ID;  //
-        req.partnerId = "partnerid";
-        req.prepayId = ("prepayid");
-        req.nonceStr = ("noncestr");
-        req.timeStamp = ("timestamp");
-        req.packageValue = ("package");
-        req.sign = ("sign");
-        req.extData = "app data"; // optional
+        req.appId = wxPrePayBean.getAppid();  //
+        req.partnerId = wxPrePayBean.getPartnerid();
+        req.prepayId = wxPrePayBean.getPrepayid();
+        req.nonceStr = wxPrePayBean.getNoncestr();
+        req.timeStamp = wxPrePayBean.getTimestamp() + "";
+        req.packageValue = wxPrePayBean.getPackageValue();
+        req.sign = wxPrePayBean.getSign();
+//        req.extData = "app data"; // optional
 //        Toast.makeText(PayActivity.this, "正常调起支付", Toast.LENGTH_SHORT).show();
         // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-        App.getInstance().iwxapi.sendReq(req);
+        App.getInstance().iwxapi.registerApp(wxPrePayBean.getAppid());
+        boolean wx = App.getInstance().iwxapi.sendReq(req);
+        Log.v("request_params", "wxPrepayBean  =" + wxPrePayBean.toString() + "   >>" + wx)
+        ;
     }
 
     private void callAliPay(CreateOrderBean createOrderBean) {
@@ -319,7 +325,7 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 createOrderBean = (CreateOrderBean) entity.getData();
                 if (pay_wx.isChecked()) {
 
-                    callWxPay(createOrderBean);
+//                    callWxPay(createOrderBean);
                 } else {
                     callAliPay(createOrderBean);
                 }
@@ -331,12 +337,18 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
 //                lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),Double.parseDouble(createOrderBean.getPay_money()),getSp(Const.S_ID));
                 //测试支付
                 if (pay_wx.isChecked()) {
-
-                    callWxPay(createOrderBean);
+                    //调用微信预支付
+                    lingShouPresenter.wxPrePay(createOrderBean.getPay_code());
                 } else {
                     callAliPay(createOrderBean);
                 }
             } else if (entity.getEventType() == LingShouPresenter.rePay_fail) {
+                MAlert.alert(entity.getData() + "fail");
+            } else if (entity.getEventType() == LingShouPresenter.wxPrePay_success) {
+                WxPrePayBean wxPrePayBean = (WxPrePayBean) entity.getData();
+                callWxPay(wxPrePayBean);
+                MAlert.alert(entity.getData() + "success");
+            } else if (entity.getEventType() == LingShouPresenter.wxPrePay_fail) {
                 MAlert.alert(entity.getData() + "fail");
             }
         }

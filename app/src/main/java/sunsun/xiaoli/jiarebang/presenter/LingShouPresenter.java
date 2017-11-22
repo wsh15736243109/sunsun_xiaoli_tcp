@@ -104,6 +104,9 @@ public class LingShouPresenter extends BasePresenter implements
     public static String getSkuPidInConsultBuy_fail = "_getSkuPidInConsultBuy_fail";
     public static String setDefaultAddress_success = "_setDefaultAddress_success";
     public static String setDefaultAddress_fail = "_setDefaultAddress_fail";
+    public static String wxPrePay_success="_wxPrePay_success";
+    public static String wxPrePay_fail="_wxPrePay_fail";
+
 
     public LingShouPresenter(Observer observer) {
         super(observer);
@@ -1116,5 +1119,27 @@ public class LingShouPresenter extends BasePresenter implements
             }
         });
         user.setDefaultAddress(uid, id, sId);
+    }
+
+    @Override
+    public void wxPrePay(String pay_code) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(new ICompleteListener() {
+            @Override
+            public void success(ResultEntity result) {
+                result.setEventTag(Tag_Success);
+                result.setEventType(wxPrePay_success);
+                setChanged();
+                notifyObservers(result);
+            }
+
+            @Override
+            public void failure(ResultEntity result) {
+                result.setEventTag(Tag_Error);
+                result.setEventType(wxPrePay_fail);
+                setChanged();
+                notifyObservers(result);
+            }
+        });
+        user.wxPrePay(pay_code);
     }
 }

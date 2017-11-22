@@ -2,7 +2,6 @@ package sunsun.xiaoli.jiarebang.utils;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -181,7 +180,7 @@ public class LocationUtil {
                     sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
                 }
             }
-            Log.i("BaiduLocationApiDem", sb.toString());
+//            Log.i("BaiduLocationApiDem", sb.toString());
             Const.lat=location.getLatitude();
             Const.lng=location.getLongitude();
              locationResult.getLatAndLng(location.getAddress().city,location.getLatitude(),location.getLongitude());
