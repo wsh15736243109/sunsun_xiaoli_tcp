@@ -51,10 +51,10 @@ public class YuGangChiCunAdapter extends BaseAdapter {
         });
         if (((ServiceBean.SkuInfoEntity) o).isSelect()) {
             holder.setTextColor(R.id.text,context.getResources().getColor(R.color.red500));
-            holder.setViewBackgroundResource(R.id.text, R.drawable.border_red);
+            holder.setViewBackgroundResource(R.id.text, R.drawable.border_red_choosetime);
         } else {
             holder.setTextColor(R.id.text,context.getResources().getColor(android.R.color.darker_gray));
-            holder.setViewBackgroundResource(R.id.text, R.drawable.border_gray);
+            holder.setViewBackgroundResource(R.id.text, R.drawable.border_gray_choosetime);
         }
     }
 }

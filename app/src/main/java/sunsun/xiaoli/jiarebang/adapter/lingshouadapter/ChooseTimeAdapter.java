@@ -6,6 +6,7 @@ import android.view.View;
 import java.util.List;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.BaseAdapter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.ViewHolder;
@@ -45,10 +46,11 @@ public class ChooseTimeAdapter extends BaseAdapter {
             }
         });
         if (((ServiceBean.SkuInfoEntity) o).isSelect()) {
-            holder.setViewBackgroundResource(R.id.text, R.drawable.border_red);
+            holder.setViewBackgroundResource(R.id.text, R.drawable.border_red_choosetime);
+            holder.setTextColor(R.id.text,App.getInstance().getResources().getColor(R.color.red500));
         } else {
-
-            holder.setViewBackgroundResource(R.id.text, R.drawable.border_gray);
+            holder.setViewBackgroundResource(R.id.text, R.drawable.border_gray_choosetime);
+            holder.setTextColor(R.id.text,App.getInstance().getResources().getColor(R.color.gray_dft));
         }
     }
 }

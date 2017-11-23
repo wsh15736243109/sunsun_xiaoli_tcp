@@ -25,6 +25,7 @@
                 android:layout_below="@+id/txt_name"
                 android:layout_marginTop="@dimen/DIMEN_10DP"
                 android:textColor="@color/red500"
+                android:visibility="gone"
                 android:text="[默认]" />
         </RelativeLayout>
 

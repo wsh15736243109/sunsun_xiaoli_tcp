@@ -1,7 +1,10 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.fragment;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -26,6 +29,7 @@ import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.ArticalBean;
 import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.SPUtils;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -48,7 +52,6 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.AppointmentInstallSt
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.RedBagAcitivty;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressListActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.DeviceTypeModel;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
@@ -56,6 +59,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
+import sunsun.xiaoli.jiarebang.utils.Util;
 
 import static com.itboye.pondteam.utils.Const.CITY_CODE;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -110,6 +114,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     private String uid;
     private String selectAddress;
     private AddressBean selectAddressBean;
+    private BroadcastReceiver receiver;
+    private int index;
 
     @Override
     protected int getLayoutId() {
@@ -220,51 +226,84 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         actionBar.setNeedTranslucent(true, false);
         actionBar.setSearchBarVisible(true);
         setSelectArea("商家");
-
+        //注册地址改变广播
+        registerBroadcast();
         //获取默认收货地址
         uid = getSp(Const.UID);
-        if (uid.equals("")) {
+        setSelectAddress();
+    }
 
+    private void registerBroadcast() {
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                setSelectAddress();
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter(Const.ADDRESS_CHANGE);
+        getActivity().registerReceiver(receiver, intentFilter);
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
+    }
+
+    /**
+     * 1、用户选择地址了，设置为改变地址后的city
+     * 2、没登录显示定位的城市
+     * 3、没选择城市选择默认地址的城市
+     * 4、没添加地址选择定位城市
+     */
+    public void setSelectAddress() {
+        uid = getSp(Const.UID);
+        if (uid.equals("")) {
+            //没登录 用定位到的城市
+            if (getSp(Const.LNG).equals("") || getSp(Const.LAT).equals("")) {
+                return;
+            }
+            setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
         } else {
             selectAddress = getSp(Const.SELECT_ADDRESS);
             if (!selectAddress.equals("")) {
+                //用户选择了地址
                 selectAddressBean = new Gson().fromJson(selectAddress, AddressBean.class);
                 if (selectAddressBean != null) {
                     //获取到默认地址
-                    setCityName(selectAddressBean.getCity(), Double.parseDouble(selectAddressBean.getLat()), Double.parseDouble(selectAddressBean.getLng()));
+                    setCityName(selectAddressBean.getCityid(), selectAddressBean.getCity(), Double.parseDouble(selectAddressBean.getLat()), Double.parseDouble(selectAddressBean.getLng()));
                 } else {
                     //没获取到默认地址
-                    setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                    setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
                 }
-            }else{
-                //没获取到默认地址
-                setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+            } else {
+                //用戶沒有選擇地址就獲取默認地址
+                lingShouPresenter.getDefaultAddress(uid, getSp(Const.S_ID));
+//                setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
             }
-//            lingShouPresenter.getDefaultAddress(uid,getSp(Const.S_ID) );
         }
+
     }
 
     boolean hasRe = false;
 
-    public void setCityName(final String cityName, double lat, double lng) {
-        try {
-            //初始actionBar
-//            actionBar.setParent("", R.drawable.img_dingwei, cityName, R.drawable.img_unread, "", null);
-
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    tv_actionbar_left.setText(cityName);
-                }
-            });
-        } catch (Exception e) {
-
+    public void setCityName(String cityId, final String cityName, double lat, double lng) {
+        tv_actionbar_left.setText(cityName);
+        String cityNo = cityId;
+        if ("".equals(cityId)) {
+            cityNo = Util.queryCityNo(cityName);
         }
-//        if (hasRe == false) {
-//            lingShouPresenter.getNearStore(CITY_CODE, lng + "", lat + "", "", "", pageIndex, 10);
-//            hasRe = true;
-//        }
+
+        SPUtils.put(getActivity(), null, Const.LNG, lng);
+        SPUtils.put(getActivity(), null, Const.LAT, lat);
+        SPUtils.put(getActivity(), null, Const.CITY_CODE, cityNo);
+        if (index == 2) {
+            myTabFragment1.getNearStore();
+//        lingShouPresenter.getNearStore(cityNo, lng + "", lat + "", "", "", pageIndex, 10);//根据经纬度获取附近商家
+        }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -331,7 +370,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 haoping.setTextColor(getActivity().getResources().getColor(R.color.blue500));
                 break;
             case R.id.lay_actionbar_left:
-                startActivity(new Intent(getActivity(), AddressListActivity.class).putExtra("title", getString(R.string.choose_address)).putExtra("action", "location_address"));
+                LoginController.goToQueryAddress(getActivity(), null);
                 break;
             case R.id.lay_actionbar_right:
                 LoginController.goToMessageList(getActivity(), null);
@@ -395,6 +434,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //        recycler_aqhardwareorhotgoods.setVisibility(View.GONE);
 //        store_fenlei.setVisibility(View.GONE);
         t = tag + "";
+        index = 0;
         if (t.equals("商品")) {
 //            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
 //            recycler_aqhardwareorhotgoods.setNumColumns(2);
@@ -402,7 +442,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             setTextStyle(txt_center, "热门商品", R.drawable.circle_yellow, area_center, "商品", R.drawable.shangpin);
             setTextStyle(txt_left, "附近商家", R.drawable.rect_green, area_left, "商家", R.drawable.shangjia);
             setTextStyle(txt_right, "智能设备", R.drawable.rect_blue, area_right, "硬件", R.drawable.yingjian);
-            setTabSelection(0);
+            index = 0;
+            setTabSelection(index);
         } else if (t.equals("硬件")) {
 //            recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
 //            recycler_aqhardwareorhotgoods.setNumColumns(3);
@@ -414,7 +455,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 3);
 //            HomeDeivcesAdapter adapter = new HomeDeivcesAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
 //            HomeDeviceAdapter adapter = new HomeDeviceAdapter(getActivity(), arDevice, R.layout.item_lingshou_device);
-            setTabSelection(1);
+            index = 1;
+            setTabSelection(index);
 //            recycler_aqhardwareorhotgoods.setAdapter(adapter);
         } else if (t.equals("商家")) {
 
@@ -426,7 +468,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             setTextStyle(txt_center, "附近商家", R.drawable.circle_green, area_center, "商家", R.drawable.shangjia);
             setTextStyle(txt_left, "智能设备", R.drawable.rect_blue, area_left, "硬件", R.drawable.yingjian);
             setTextStyle(txt_right, "热门商品", R.drawable.rect_yellow, area_right, "商品", R.drawable.shangpin);
-            setTabSelection(2);
+            index = 2;
+            setTabSelection(index);
         }
     }
 
@@ -532,19 +575,19 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 if (addressBeanArrayList != null) {
                     if (addressBeanArrayList.size() > 0) {
                         //获取到默认地址
-                        setCityName(addressBeanArrayList.get(0).getCity(), Double.parseDouble(addressBeanArrayList.get(0).getLat()), Double.parseDouble(addressBeanArrayList.get(0).getLng()));
+                        setCityName(addressBeanArrayList.get(0).getCityid(), addressBeanArrayList.get(0).getCity(), Double.parseDouble(addressBeanArrayList.get(0).getLat()), Double.parseDouble(addressBeanArrayList.get(0).getLng()));
                     } else {
                         //没获取到默认地址
-                        setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                        setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
                     }
                 } else {
                     //没获取到默认地址
-                    setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                    setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
                 }
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_fail) {
                 //没获取到默认地址
                 MAlert.alert(entity.getData());
-                setCityName(getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
             }
         }
     }

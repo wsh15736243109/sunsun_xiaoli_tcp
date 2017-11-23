@@ -11,6 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.itboye.pondteam.base.IsNeedClick;
 import com.itboye.pondteam.base.LingShouBaseActivity;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.SPUtils;
@@ -23,6 +24,7 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.AddressListAdapter;
+import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.AddressBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.AddAddressOrMymessageActivity;
@@ -46,6 +48,8 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
     LinearLayout li_mylocation;
     private String action;
     TextView tv_actionbar_right;
+    @IsNeedClick
+    TextView txt_current_location;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_list;
@@ -63,6 +67,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
             } else if (action.equals("location_address")) {
                 li_mylocation.setVisibility(View.VISIBLE);
                 btn_sure_address.setText(getString(R.string.sure_address));
+                txt_current_location.setText(App.getInstance().locationUtil.getDetailAddress());
                 initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "删除");
             } else {
                 btn_sure_address.setText(getString(R.string.addnew_address));
@@ -111,11 +116,15 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                     }
                     String json=new Gson().toJson(addressSelect);
                     SPUtils.put(this,null,Const.SELECT_ADDRESS,json);
+                    //通知首页更改显示的城市
+                    notifyAddressChanged();
+                    finish();
 //                    lingShouPresenter.setDefaultAddress(getSp(Const.UID),addressSelect.getId(),getSp(Const.S_ID));
                 } else {
                 }
                 break;
             case R.id.txt_relocation://重新定位
+                txt_current_location.setText(App.getInstance().locationUtil.getDetailAddress());
                 break;
             case R.id.txt_add_address:
                 intent = new Intent(this, AddAddressOrMymessageActivity.class);
@@ -164,9 +173,19 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                     finish();
                 } else if (action.equals("my_address")) {
                     //我的地址进入查看地址详情
+                    intent = new Intent(this,AddAddressOrMymessageActivity.class);
+                    intent.putExtra("model", addressBeanArrayList.get(position));
+                    intent.putExtra("title", "修改地址");
+                    startActivity(intent);
                 }
+
                 break;
         }
+    }
+
+    private void notifyAddressChanged() {
+        Intent intent=new Intent(Const.ADDRESS_CHANGE);
+        sendBroadcast(intent);
     }
 
     @Override
@@ -201,11 +220,11 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 } else {
                     adapter.notifyDataSetChanged();
                 }
+                notifyAddressChanged();
             } else if (entity.getEventType() == LingShouPresenter.queryAddress_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.deleteAddress_success) {
                 lingShouPresenter.queryAddress(getSp(Const.UID), getSp(Const.S_ID));//获取地址列表;
-                MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.deleteAddress_fail) {
                 MAlert.alert(entity.getData());
             }else if (entity.getEventType() == LingShouPresenter.setDefaultAddress_success) {

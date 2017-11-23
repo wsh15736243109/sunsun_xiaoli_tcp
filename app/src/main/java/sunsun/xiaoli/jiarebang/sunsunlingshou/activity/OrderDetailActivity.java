@@ -136,6 +136,7 @@ public class OrderDetailActivity extends LingShouBaseActivity implements Observe
         arrow_right.setVisibility(View.GONE);
         txt_phone.setText(orderDetailBean.get_address().getMobile());//收货人电话
         txt_address.setText(orderDetailBean.get_address().getDetailinfo());
+        txt_mnoren.setVisibility(View.GONE);
         txt_heji.setText(Html.fromHtml("合计 <font color='#ff0000'>￥"+ MathUtil.doubleForm(orderDetailBean.getPrice())+"</font>"));
     }
 }

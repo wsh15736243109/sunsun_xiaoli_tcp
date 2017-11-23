@@ -100,7 +100,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         mApp = (App) getApplication();
         mApp.makeSureActivity = this;
         lingShouPresenter = new LingShouPresenter(this);
-        lingShouPresenter.getDefaultAddress(getSp(Const.UID), Const.S_ID);
+        lingShouPresenter.getDefaultAddress(getSp(Const.UID), getSp(Const.S_ID));
         initTitlebarStyle1(this, actionBar, "确认订单", R.mipmap.ic_left_light, "", 0, "");
         goodsDetailBeanArray = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
         isShopCart = getIntent().getBooleanExtra("isShopCart", false);
@@ -235,9 +235,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 lingShouPresenter.getSkuPidInConsultBuy(getSp(Const.UID), getSp(Const.S_ID));
                 break;
         }
-        if (buyType != BuyType.Buy_LiJiGouMai) {
-            order_goods_list.addFooterView(footView);
-        }
+        order_goods_list.addFooterView(footView);
     }
 
     @Override
@@ -428,6 +426,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         } else {
 //            MAlert.alert("地址选择有误");
         }
+        txt_mnoren.setVisibility((addressBean.get(0).getIs_default() == null ? 1 : Integer.parseInt(addressBean.get(0).getIs_default())) == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override

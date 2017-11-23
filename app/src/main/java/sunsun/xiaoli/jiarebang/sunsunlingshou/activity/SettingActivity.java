@@ -108,7 +108,7 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
             List<String> pathList = data.getStringArrayListExtra(ImageSelectorActivity.EXTRA_RESULT);
             File file = new File(pathList.get(0));
             Glide.with(getApplicationContext()).load(pathList.get(0)).placeholder(R.drawable.lingshou_logo).into(img_head);
-            img_head.setTag(pathList.get(0));
+//            img_head.setTag(pathList.get(0));
             new UploadImageUtils(getSp(Const.UID), "avatar").beginUpload("image", file, this);
         }
     }

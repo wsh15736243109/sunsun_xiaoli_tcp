@@ -69,6 +69,7 @@ public class ChooseTimeChildFragment extends LingShouBaseFragment implements IRe
                     MAlert.alert("请选择配送时间");
                     return;
                 }
+                send_time=((ChooseTimeActivity)getActivity()).titlesTag[((ChooseTimeActivity)getActivity()).position]+" "+send_time;
                 if (listEntity==null) {
                     Intent intent=new Intent();
                     intent.putExtra("send_time",send_time);

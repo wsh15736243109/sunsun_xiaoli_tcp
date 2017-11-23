@@ -1,7 +1,7 @@
 package sunsun.xiaoli.jiarebang.utils;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.util.Log;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -19,39 +19,34 @@ import java.util.List;
 
 public class LocationUtil {
     public LocationClient mLocationClient = null;
-    public BDLocationListener myListener=null;
-//    App app;
+    public BDLocationListener myListener = null;
+
+
+
+
+
+    //    App app;
     Context context;
     OnLocationResult locationResult;
-    public LocationUtil(Context context,OnLocationResult locationResult){
-        this.context=  context;
-        this.locationResult=locationResult;
+    private String detailAddress;
+
+    public LocationUtil(Context context, OnLocationResult locationResult) {
+        this.context = context;
+        this.locationResult = locationResult;
         mLocationClient = new LocationClient(context);
         myListener = new MyLocationListener();
         initLocation();
         //声明LocationClient类
-        mLocationClient.registerLocationListener( myListener );
-        mLocationClient.start();
+        mLocationClient.registerLocationListener(myListener);
+        locationStart();
 //        new LocationAskyTask().execute();
     }
 
-    class LocationAskyTask extends AsyncTask<String ,String ,String >{
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
+    private void locationStart() {
+        mLocationClient.start();
     }
 
-
-
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
         //可选，默认高精度，设置定位模式，高精度，低功耗，仅设备
@@ -59,7 +54,7 @@ public class LocationUtil {
         option.setCoorType("bd09ll");
         //可选，默认gcj02，设置返回的定位结果坐标系
 
-        int span=1500;
+        int span = 1500;
         option.setScanSpan(span);
         //可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
 
@@ -113,7 +108,7 @@ public class LocationUtil {
             sb.append("\nradius : ");
             sb.append(location.getRadius());    //获取定位精准度
 
-            if (location.getLocType() == BDLocation.TypeGpsLocation){
+            if (location.getLocType() == BDLocation.TypeGpsLocation) {
 
                 // GPS定位结果
                 sb.append("\nspeed : ");
@@ -134,7 +129,7 @@ public class LocationUtil {
                 sb.append("\ndescribe : ");
                 sb.append("gps定位成功");
 
-            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation){
+            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
 
                 // 网络定位结果
                 sb.append("\naddr : ");
@@ -170,6 +165,7 @@ public class LocationUtil {
             }
 
             sb.append("\nlocationdescribe : ");
+            detailAddress=location.getAddrStr();
             sb.append(location.getLocationDescribe());    //位置语义化信息
 
             List<Poi> list = location.getPoiList();    // POI数据
@@ -181,13 +177,13 @@ public class LocationUtil {
                     sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
                 }
             }
-//            Log.i("BaiduLocationApiDem", sb.toString());
-            SPUtils.put(context,null,Const.CITY,location.getAddress().city);
-            SPUtils.put(context,null,Const.LAT,location.getLatitude());
-            SPUtils.put(context,null,Const.LNG,location.getLongitude());
-            Const.lat=location.getLatitude();
-            Const.lng=location.getLongitude();
-             locationResult.getLatAndLng(location.getAddress().city,location.getLatitude(),location.getLongitude());
+            Log.i("BaiduLocationApiDem", sb.toString());
+            SPUtils.put(context, null, Const.CITY, location.getAddress().city);
+            SPUtils.put(context, null, Const.LAT, location.getLatitude());
+            SPUtils.put(context, null, Const.LNG, location.getLongitude());
+            Const.lat = location.getLatitude();
+            Const.lng = location.getLongitude();
+            locationResult.getLatAndLng(location.getAddress().city, location.getLatitude(), location.getLongitude());
         }
 
         @Override
@@ -196,7 +192,11 @@ public class LocationUtil {
         }
     }
 
-    public interface OnLocationResult{
-        void getLatAndLng(String cityName,double lat ,double lng);
+    public String getDetailAddress(){
+        return detailAddress;
+    }
+
+    public interface OnLocationResult {
+        void getLatAndLng(String cityName, double lat, double lng);
     }
 }

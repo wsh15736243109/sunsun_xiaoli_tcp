@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.itboye.pondteam.base.LingShouBaseActivity;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.TimeCount;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -26,6 +27,7 @@ public class LingShouForgetPassActivity extends LingShouBaseActivity implements 
     EditText ed_phone, ed_yzm, ed_pwd;
     Button btn_ok;
     private String phone;
+    private TimeCount time;// 倒计时
     TextView txt_sendyzm;
     @Override
     protected int getLayoutId() {
@@ -84,7 +86,9 @@ public class LingShouForgetPassActivity extends LingShouBaseActivity implements 
             }else if (entity.getEventType()== UserPresenter.update_pass_bymobile_fail) {
                 MAlert.alert(entity.getData());
             }else if (entity.getEventType()== UserPresenter.send_code_success) {
-                MAlert.alert(entity.getData());
+                MAlert.alert(getString(R.string.send_code_success));
+                time = new TimeCount(60000, 1000, txt_sendyzm);// 构造CountDownTimer对象
+                time.start();
             }else if (entity.getEventType()== UserPresenter.send_code_fail) {
                 MAlert.alert(entity.getData());
             }

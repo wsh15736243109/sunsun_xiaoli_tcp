@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
 import com.itboye.pondteam.base.LingShouBaseFragment;
+import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -30,6 +31,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.DeviceTypeModel;
 import sunsun.xiaoli.jiarebang.utils.MapHelper;
 
+import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
 
 /**
@@ -89,7 +91,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         switch (this.type) {
             case 0:
                 near_store.setVisibility(View.VISIBLE);
-                lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
+                getNearStore();
                 break;
             case 1:
                 progress.setVisibility(View.GONE);
@@ -105,6 +107,13 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 lingShouPresenter.getHotSearchGoods();
                 break;
         }
+    }
+
+    public void getNearStore() {
+        if (lingShouPresenter==null) {
+            lingShouPresenter=new LingShouPresenter(this);
+        }
+        lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", pageIndex, 10);
     }
 
     @Override

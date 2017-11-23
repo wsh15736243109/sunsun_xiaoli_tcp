@@ -39,6 +39,7 @@ public class Const {
     public static final String IS_STORE = "is_stores";
     public static final String STORE_ID = "stores_id";
     public static final String SELECT_ADDRESS = "select_address";
+    public static final String ADDRESS_CHANGE = "address_change";
     public static String CITY_CODE = "330104";
     public static String wrapUrl = "dev.sunsunxiaoli.com";
     //    apisunsun.itboye.com/public => devsunsun.itboye.com=>
@@ -49,7 +50,9 @@ public class Const {
     public static String imagePath;
     public static String patten = "yyyyMMdd";
     public static String language="";
+    public Const() {
 
+    }
     public Const(String wrapUrl) {
         this.wrapUrl = wrapUrl;
         this.URL = "http://" + wrapUrl + "/index.php";
@@ -217,6 +220,8 @@ public class Const {
 
     public static float zoom = 12;//地图缩放级别
 
-
-
+    public static String sendCodeType;
+    public static void setSendCodeType(String sms) {
+        sendCodeType=sms;
+    }
 }

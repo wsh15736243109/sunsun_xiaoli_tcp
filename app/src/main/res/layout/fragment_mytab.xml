@@ -10,7 +10,7 @@
         android:id="@+id/near_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/DIMEN_30DP"
+        android:layout_marginTop="@dimen/DIMEN_10DP"
         android:orientation="vertical">
 
         <RelativeLayout

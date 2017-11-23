@@ -101,7 +101,7 @@ public class TranslucentScrollView extends ScrollView {
      * @param transView 渐变的视图
      */
     public void setTransView(View transView) {
-        setTransView(transView, getResources().getColor(R.color.colorPrimary), SizeUtils.dip2px(getContext(), DFT_TRANSSTARTY), SizeUtils.dip2px(getContext(), DFT_TRANSENDY));
+        setTransView(transView, getResources().getColor(R.color.main_lingshou_orange), SizeUtils.dip2px(getContext(), DFT_TRANSSTARTY), SizeUtils.dip2px(getContext(), DFT_TRANSENDY));
     }
 
     /**

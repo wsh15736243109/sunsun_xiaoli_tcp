@@ -613,4 +613,5 @@
     <string name="input_place">Input country</string>
     <string name="pay_success">Pay success</string>
     <string name="pay_cancel">Pay cancel</string>
+    <string name="send_code_success">验证码发送成功</string>
 </resources>

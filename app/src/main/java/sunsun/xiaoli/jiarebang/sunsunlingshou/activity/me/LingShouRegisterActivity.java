@@ -110,7 +110,7 @@ public class LingShouRegisterActivity extends LingShouBaseActivity implements Ob
                 VertifyBean bean= (VertifyBean) entity.getData();
                 code=bean.getCode();
                 MAlert.alert("验证码是："+code);
-                TimeCount timeCount=new TimeCount(6000,1000,txt_sendyzm);
+                TimeCount timeCount=new TimeCount(60000,1000,txt_sendyzm);
                 timeCount.start();
             }else if (entity.getEventType()== UserPresenter.send_code_fail) {
                 MAlert.alert(entity.getData());

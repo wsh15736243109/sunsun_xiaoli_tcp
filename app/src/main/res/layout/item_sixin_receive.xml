@@ -45,12 +45,13 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/DIMEN_10DP"
                         android:background="@drawable/bg_yellow_border_yellow"
                         android:paddingBottom="5dp"
                         android:paddingLeft="7dp"
                         android:paddingRight="7dp"
                         android:paddingTop="5dp"
-                        android:text="在麼dksahddkd "
+                        android:text=""
                         android:textColor="@android:color/white" />
                 </RelativeLayout>
             </LinearLayout>

@@ -127,7 +127,7 @@ public class UserResponsitory extends BaseNetRepository implements
     private String getDeviceCP1000Detail = "By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
     private String getDeviceWeishiQi = "By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
     private String updateMobileMsg = "By_SunsunUserDevice_update";//更改设备信息
-    private String deviceSet_qibeng="By_SunsunCp1000_devicesCtrl";//CP1000設置接口
+    private String deviceSet_qibeng = "By_SunsunCp1000_devicesCtrl";//CP1000設置接口
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -383,7 +383,8 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("country", country);
         map.put("mobile", mobile);
         map.put("code_type", code_type);
-        map.put("send_type", "sms");
+        /*appType==1：零售   appType==0 小鲤*/
+        map.put("send_type", appType == 1 ? "1" : "sms");
         Type type = new TypeToken<String>() {
         }.getType();
         if (appType == 1) {

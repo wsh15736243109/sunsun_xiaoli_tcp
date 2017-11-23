@@ -13,7 +13,7 @@ import com.itboye.pondteam.utils.Const;
 import java.util.ArrayList;
 
 import sunsun.xiaoli.jiarebang.R;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
@@ -116,15 +116,13 @@ public class MessageDetailAdapter extends android.widget.BaseAdapter {
             case 1:
                 holder1 = (Holder1) convertView.getTag();
                 holder1.messageTv.setText(siXinXiangQingModel.get(position).getContent());
-//                GlidHelper.glidLoad(holder1.img_head_receive,siXinXiangQingModel.get(position).getFrom_id());
-                GlidHelper.glidLoad(holder1.img_head_receive,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503051086668&di=466ae9fc44062c7ff638b1c7be953c25&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160911%2F315ba0a00c8a48b0bc90664ec7480679_th.jpeg");
+                XGlideLoader.displayImageCircular(activity,siXinXiangQingModel.get(position).getFrom_id(),holder1.img_head_receive);
 
                 break;
             case 2:
                 holder2 = (Holder2) convertView.getTag();
                 holder2.messageTv.setText(siXinXiangQingModel.get(position).getContent());
-//                GlidHelper.glidLoad(holder2.img_head_send,siXinXiangQingModel.get(position).getFrom_id());
-                GlidHelper.glidLoad(holder2.img_head_send,"https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503051086668&di=466ae9fc44062c7ff638b1c7be953c25&imgtype=0&src=http%3A%2F%2Fimg.mp.itc.cn%2Fupload%2F20160911%2F315ba0a00c8a48b0bc90664ec7480679_th.jpeg");
+                XGlideLoader.displayImageCircular(activity,siXinXiangQingModel.get(position).getFrom_id(),holder2.img_head_send);
                 break;
 
             default:

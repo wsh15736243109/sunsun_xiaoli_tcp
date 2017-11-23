@@ -31,7 +31,7 @@ public abstract class LingShouBaseFragment extends Fragment implements View.OnCl
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
+        View view = inflater.inflate(getLayoutId(), null);
 
         return view;
     }

@@ -195,7 +195,6 @@
                     <FrameLayout
                         android:id="@+id/tab_content"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/DIMEN_10DP"
                         android:layout_height="wrap_content"
                         android:background="@color/white"></FrameLayout>
                     <!--<sunsun.xiaoli.jiarebang.custom.MyGridView-->

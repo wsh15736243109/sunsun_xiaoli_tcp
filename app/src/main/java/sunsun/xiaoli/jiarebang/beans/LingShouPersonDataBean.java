@@ -604,8 +604,12 @@ public class LingShouPersonDataBean {
                     Const.IS_STORE, "");
             SPUtils.put(MyApplication.getInstance(), null,
                     Const.STORE_ID, "");
+            SPUtils.put(MyApplication.getInstance(), null,
+                    Const.SELECT_ADDRESS, "");
             Intent intent1 = new Intent("exit");// 退出登陆的广播
+            Intent intent2 = new Intent(Const.ADDRESS_CHANGE);// 退出登陆的广播
             MyApplication.getInstance().sendBroadcast(intent1);
+            MyApplication.getInstance().sendBroadcast(intent2);
 
             LoginController.setLoginState(new UnLoginState());
         }

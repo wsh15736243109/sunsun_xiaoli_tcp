@@ -104,6 +104,11 @@ public class LoginedState implements ILoginState {
 	}
 
 	@Override
+	public void goToQueryAddress(Activity activity, Object o) {
+		activity.startActivity(new Intent(activity, AddressListActivity.class).putExtra("title", activity.getString(R.string.choose_address)).putExtra("action", "location_address"));
+	}
+
+	@Override
 	public void onQian(Activity activity, Object obj) {
 //		String pwd= IsUtilUid.isPay();
 //		if(pwd==null || pwd.equals("")){

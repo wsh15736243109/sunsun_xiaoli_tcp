@@ -3,7 +3,7 @@
     android:id="@+id/lay_transroot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="@color/main_lingshou_orange"
     android:orientation="vertical">
 
     <View
@@ -59,8 +59,10 @@
             android:layout_width="match_parent"
             android:layout_centerInParent="true"
             android:hint="分类查找"
+            android:drawableLeft="@drawable/home_search"
             android:gravity="center_vertical"
             android:cursorVisible="false"
+            android:drawablePadding="@dimen/margin_5"
             android:layout_marginBottom="@dimen/DIMEN_10DP"
             android:background="@drawable/btn_border_white_bg_white_oval"
             android:clickable="true"

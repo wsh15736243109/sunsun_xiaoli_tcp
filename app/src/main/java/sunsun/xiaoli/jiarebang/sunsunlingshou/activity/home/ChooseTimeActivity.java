@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
-import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
@@ -34,6 +33,9 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
     int canPack;
     RelativeLayout re_time_type;
     public TextView txt_noZiTi, txt_ziti;
+    public String[] titles;
+    public int position;
+    public String[] titlesTag;
 
     @Override
     protected int getLayoutId() {
@@ -54,7 +56,8 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
             re_time_type.setVisibility(View.GONE);
         }
         initTitlebarStyle1(this, actionBar, "选择时间", R.mipmap.ic_left_light, "", 0, "");
-        String[] titles = ChooseTimeUtil.getNearDays("MM-dd", System.currentTimeMillis(), nearDaysCount);
+        titles = ChooseTimeUtil.getNearDays("MM-dd", System.currentTimeMillis(), nearDaysCount);
+        titlesTag = ChooseTimeUtil.getNearDaysSimple("yyyy-MM-dd", System.currentTimeMillis(), nearDaysCount);
         Fragment[] fragments = new Fragment[nearDaysCount];
         for (int i = 0; i < nearDaysCount; i++) {
             fragments[i] = new ChooseTimeChildFragment();
@@ -63,7 +66,7 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
         order_view_pager.setAdapter(adapter);
         order_view_pager.setOffscreenPageLimit(fragments.length);
         order_tab_layout.setupWithViewPager(order_view_pager);
-        order_view_pager.setCurrentItem(1);
+        order_view_pager.setCurrentItem(position);
         order_view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(order_tab_layout));
         order_tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -90,6 +93,7 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
 
             @Override
             public void onPageSelected(int position) {
+                ChooseTimeActivity.this.position=position;
 //                ((OrderChildFragment)fragments[position]).refresh();
             }
 
@@ -107,7 +111,7 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
             textView.setTextColor(getResources().getColor(R.color.white));
         } else {
             drawable = getResources().getDrawable(R.drawable.bg_white_border_blue);
-            textView.setTextColor(getResources().getColor(R.color.black));
+            textView.setTextColor(getResources().getColor(R.color.blue500));
         }
         textView.setBackground(drawable);
     }
@@ -120,7 +124,6 @@ public class ChooseTimeActivity extends LingShouBaseActivity {
 
     @Override
     public void onClick(View v) {
-        MAlert.alert(v.getId());
         switch (v.getId()) {
             case R.id.iv_actionbar_left:
                 finish();

@@ -144,4 +144,8 @@ public class LoginController {
     public static void goToPublish(FragmentActivity activity, Object o) {
         loginState.goToPublish(activity, o);
     }
+
+    public static void goToQueryAddress(Activity activity, Object o) {
+        loginState.goToQueryAddress(activity, o);
+    }
 }

@@ -1,5 +1,6 @@
 package sunsun.xiaoli.jiarebang.utils;
 
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,8 @@ import android.graphics.Rect;
 import android.util.Log;
 
 import com.itboye.pondteam.app.MyApplication;
+import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.SPUtils;
 
 import junit.framework.Assert;
 
@@ -23,6 +26,8 @@ import java.net.URLConnection;
 
 import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.app.App;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.address.CityModel;
 
 public class Util {
 
@@ -311,7 +316,7 @@ public class Util {
             if (args.length > 1) {
                 type = args[1];
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         if (did.startsWith("S01")) {
@@ -327,7 +332,7 @@ public class Util {
         } else if (did.startsWith("S06")) {
             if (type.equalsIgnoreCase("S06-1")) {
                 return "ADT-C";
-            }else{
+            } else {
                 return "ADT-H";
             }
         } else if (did.startsWith("S07")) {
@@ -335,10 +340,39 @@ public class Util {
         } else if (did.startsWith("S08")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_weishiqing);
         } else if (did.startsWith("SCHD")) {
-            return BuildConfig.APP_TYPE.equals("小绵羊智能")?MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou_yihu):MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
+            return BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou_yihu) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
         }
         return "device";
     }
 
+    /**
+     * 解析市数据
+     */
+    public static String queryCityNo(String cityName) {
+        String table = "common_city";
+        String column = "city";
+        if (cityName.equals("重庆市") || cityName.equals("北京市") || cityName.equals("天津市") || cityName.equals("上海市") || cityName.equals("重庆") || cityName.equals("北京") || cityName.equals("天津") || cityName.equals("上海")) {
+            table = "common_province";
+            column = "province";
+            if (cityName.endsWith("市")) {
+
+            } else {
+                cityName = cityName + "市";
+            }
+        }
+        //查询城市ID
+        String sql = "select * from " + table + " where " + column + " = ?";
+        Cursor cursor = App.getInstance().db.rawQuery(sql, new String[]{cityName});
+        CityModel city = new CityModel();
+        while (cursor.moveToNext()) {
+            city = new CityModel(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+            break;
+        }
+        cursor.close();
+
+        SPUtils.put(App.getInstance(), null, Const.CITY_CODE, city.getNumber());
+        Log.v("request_params", "城市Code" + city.getNumber());
+        return city.getNumber() + "";
+    }
 
 }

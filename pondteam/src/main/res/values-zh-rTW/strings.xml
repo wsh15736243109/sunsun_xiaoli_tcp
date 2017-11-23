@@ -611,4 +611,5 @@
     <string name="input_place">輸入國家地區</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_cancel">支付取消</string>
+    <string name="send_code_success">验证码发送成功</string>
 </resources>

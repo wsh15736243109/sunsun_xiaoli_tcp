@@ -9,6 +9,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -34,6 +35,10 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,6 +144,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     public ChooseTimeActivity chooseTimeActivityUI;
     public OrderDetailActivity orderDetailUI;
     public MakeSureOrderActivity makeSureActivity;
+    public LocationUtil locationUtil;
 
     public List<WeakReference<Activity>> getActivityList() {
         return activityList;
@@ -177,6 +183,9 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     public HomeFragment homeFragment;
     public boolean isStartSearch;
     public String name[] = null;
+    public SQLiteDatabase db;// 数据库
+    private final String DB_FILENAME = "itboye.db";
+    private String DB_PATH;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -208,13 +217,59 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 //        LanguageSettingUtil.init(this);// 初始化
 //        languageSetting = LanguageSettingUtil.get();// 检查是否已经初始化
 //        switchLangObs = new SwitchLanguageObservable();
+        init(getApplicationContext());
+        regToWx();
         initLocation();
         initUmeng();
-        regToWx();
+        Const mConst=new Const();
         if (BuildConfig.APP_TYPE.equals("森森新零售")) {
-            new Const("dev.sale.sunsunxiaoli.com");
+            mConst=new Const("dev.sale.sunsunxiaoli.com");
+            mConst.setSendCodeType("number");
+        }else{
+            mConst=new Const(Const.wrapUrl);
+            mConst.setSendCodeType("sms");
         }
     }
+
+    private void init(Context context) {
+
+        try {
+            DB_PATH = context.getCacheDir().getCanonicalPath() + "/address";
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        db = openDataBase();
+//        db.close();
+    }
+
+    private SQLiteDatabase openDataBase() {
+        try {
+            String dbFileName = DB_PATH + "/" + DB_FILENAME;
+            File dir = new File(DB_PATH);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            if (!new File(DB_PATH, DB_FILENAME).exists()) {
+                new File(DB_PATH, DB_FILENAME).createNewFile();
+                InputStream is = getResources().openRawResource(R.raw.itboye);
+                FileOutputStream fos = new FileOutputStream(dbFileName);
+                byte[] buffer = new byte[8192];
+                int count = 0;
+                while ((count = is.read(buffer)) > 0) {
+                    fos.write(buffer, 0, count);
+                }
+                fos.close();
+                is.close();
+            }
+            db = SQLiteDatabase.openOrCreateDatabase(dbFileName, null);
+            return db;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private void initDeviceTypeName() {
         name = new String[]{
@@ -232,7 +287,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     }
 
     private void initLocation() {
-        new LocationUtil(getApplicationContext(), this);
+        locationUtil=new LocationUtil(getApplicationContext(), this);
     }
 
 

@@ -26,7 +26,7 @@ import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.SettingActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AdviceActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
@@ -67,7 +67,7 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
         boolean isLogin = (boolean) SPUtils.get(getActivity(), null, Const.IS_LOGINED, false);
         if (isLogin) {
             txt_nickname.setText(getSp(Const.NICK));
-            GlidHelper.glidLoad(img_head, Const.imgurl + getSp(Const.HEAD));
+            XGlideLoader.displayImageCircular(getActivity(), getSp(Const.HEAD),img_head);
         } else {
             txt_nickname.setText("未登录");
             img_head.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.lingshou_logo));
@@ -88,7 +88,7 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
         } else {
             //不是商家
             isStore = false;
-            txt_storeOrNormal.setText("反馈建议");
+            txt_storeOrNormal.setText("意见反馈");
             Drawable drawable = getResources().getDrawable(R.drawable.me_suggestion);
             drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
             txt_storeOrNormal.setCompoundDrawables(null, drawable, null, null);
@@ -110,7 +110,7 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
                 }
                 break;
             case R.id.re_advice:
-                startActivity(new Intent(getActivity(), AdviceActivity.class));
+                startActivity(new Intent(getActivity(), AdviceActivity.class).putExtra("title","反馈建议"));
                 break;
             case R.id.img_head:
             case R.id.txt_nickname:

@@ -94,4 +94,9 @@ public class UnLoginState implements ILoginState {
 	public void goToPublish(FragmentActivity activity, Object o) {
 		doUnLogin(activity);
 	}
+
+	@Override
+	public void goToQueryAddress(Activity activity, Object o) {
+		doUnLogin(activity);
+	}
 }

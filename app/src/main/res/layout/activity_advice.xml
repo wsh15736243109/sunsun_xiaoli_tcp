@@ -36,12 +36,13 @@
                     android:text="请输入遇到的问题或建议" />
 
                 <EditText
+                    android:id="@+id/ed_advice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_title"
                     android:layout_marginTop="@dimen/DIMEN_10DP"
                     android:gravity="left"
-                    android:hint="200"
+                    android:hint="填写你的意见或建议"
                     android:paddingRight="@dimen/margin_5" />
 
             </RelativeLayout>

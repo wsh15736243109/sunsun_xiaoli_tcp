@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/DIMEN_10DP"
             android:hint="手机号码"
-            android:inputType="textPassword" />
+            android:inputType="number" />
 
         <RelativeLayout
             android:layout_width="match_parent"

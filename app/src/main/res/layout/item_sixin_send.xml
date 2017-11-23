@@ -29,7 +29,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginLeft="10dp"
                 android:layout_centerVertical="true"
-                android:text="一天前"
+                android:text=""
                 android:textColor="@color/gray"
                 android:textSize="8dp" />
 

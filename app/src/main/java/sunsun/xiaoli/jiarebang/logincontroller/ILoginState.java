@@ -77,4 +77,11 @@ public interface ILoginState {
     void goToMessageList(Activity settingActivity, Object data);
     //我的发布
     void goToPublish(FragmentActivity activity, Object o);
+
+    /**
+     * 查询地址
+     * @param activity
+     * @param o
+     */
+    void goToQueryAddress(Activity activity, Object o);
 }

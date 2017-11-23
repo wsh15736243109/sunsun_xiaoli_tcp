@@ -42,13 +42,13 @@ public class ModeAdapter extends BaseAdapter {
         OrderBean.ListEntity entityList = (OrderBean.ListEntity) o;
         // 0=>全部,1=>待付款,2=>待发货,3=>待收货,4=>已收货,5=>退款/售后,6=>待评价,7=>已完成
         // pay_status:0、待付款，1、已付款
-        holder.setTextColor(R.id.order_pro_status,activity.getResources().getColor(R.color.daifukuan));
+        holder.setTextColor(R.id.order_pro_status,activity.getResources().getColor(R.color.main_lingshou_orange));
         holder.setViewBackgroundDrawable(R.id.order_pro_status,activity.getResources().getDrawable(R.drawable.daifukuan_bg));
         switch (entityList.getPay_status()) {
             case 0:
                 //未付款
                 holder.setText(order_pro_status, App.getInstance().getString(R.string.obligation_order));
-                holder.setViewVisiable(order_cancel, View.VISIBLE);
+                holder.setViewVisiable(order_cancel, View.GONE);
                 break;
             case 1:
                 //已付款
@@ -109,10 +109,10 @@ public class ModeAdapter extends BaseAdapter {
                 TextView order_pro_money = (TextView) viewGoods.findViewById(R.id.order_pro_money);
                 ImageView order_pro_img = (ImageView) viewGoods.findViewById(R.id.order_pro_img);
                 order_pro_name.setText(model.getName());
-                order_pro_time.setText("时间:" + TimesUtils.getStringTime(model.getCreatetime(), "yyyy.MM.dd"));
+                order_pro_time.setText("时间:" + TimesUtils.getStringTime(model.getCreatetime(), "yyyy-MM-dd HH:mm:ss"));
                 order_pro_num.setText("共" + model.getCount() + "件商品");
                 totoalCount += model.getCount();
-                order_pro_money.setText("￥" + Double.parseDouble(entityList.getPrice()) / 100);
+                order_pro_money.setText("￥" + Double.parseDouble(model.getPrice()) / 100);
                 totoalMoney += Double.parseDouble(entityList.getPrice()) / 100 * model.getCount();
                 GlidHelper.glidLoad(order_pro_img, Const.imgurl + model.getImg());
                 li_goodsContainer.addView(viewGoods);

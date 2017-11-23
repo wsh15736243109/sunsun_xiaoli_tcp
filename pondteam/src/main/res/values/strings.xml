@@ -341,7 +341,7 @@
     <string name="pro_order">产品订单</string>
     <string name="ser_order">服务订单</string>
     <string name="all_order">全部</string>
-    <string name="obligation_order">待付款</string>
+    <string name="obligation_order">去支付</string>
     <string name="evaluated_order">待评价</string>
     <string name="finished_order">已完成</string>
     <string name="receiving_order">待收货</string>
@@ -481,7 +481,7 @@
     <string name="shoudong_title2">被添加设备参数</string>
     <string name="turn_to_auto_mode">请先调为自动模式</string>
     <string name="choose_address">选择地址</string>
-    <string name="manage_address">地址管理</string>
+    <string name="manage_address">我的地址</string>
     <string name="sure_address">确认地址</string>
     <string name="addnew_address">添加地址</string>
     <string name="choose_address_at_first">请先选择地址</string>
@@ -612,6 +612,7 @@
     <string name="input_place">输入国家地区</string>
     <string name="pay_success">支付成功</string>
     <string name="pay_cancel">用户取消支付</string>
+    <string name="send_code_success">验证码发送成功</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>
