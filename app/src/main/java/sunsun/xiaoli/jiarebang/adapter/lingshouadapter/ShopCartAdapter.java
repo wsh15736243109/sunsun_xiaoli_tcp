@@ -61,7 +61,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Simple
 //        holder.mContent.setMyText("" + position);
 //        if (mItemTouchListener != null) {
         //jdk1.8使用
-        holder.txt_price_shopcart.setText("￥" + this.mData.get(position).getPrice());
+        holder.txt_price_shopcart.setText("￥" + this.mData.get(position).getPrice() / 100);
         holder.txt_name_shopcart.setText("￥" + this.mData.get(position).getName());
         holder.gwc_num.setText(this.mData.get(position).getCount());
         GlidHelper.glidLoad(holder.img_shopcart, Const.imgurl + this.mData.get(position).getIcon_url());
@@ -81,11 +81,11 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Simple
 //                }
 //            });
 //        }
-        holder.check_img.setTag(R.id.tag_first,mData.get(position).isSelect());
+        holder.check_img.setTag(R.id.tag_first, mData.get(position).isSelect());
         holder.check_img.setTag(position);
         if (mData.get(position).isSelect()) {
             holder.check_img.setBackgroundResource(R.drawable.tiaojie_red);
-        }else{
+        } else {
             holder.check_img.setBackgroundResource(R.drawable.tiaojie_white);
         }
         holder.check_img.setOnClickListener((ShopCartChildFragment) activity);
@@ -97,7 +97,7 @@ public class ShopCartAdapter extends RecyclerView.Adapter<ShopCartAdapter.Simple
 
     public static class SimpleViewHolder extends RecyclerView.ViewHolder {
 
-//        private final View mLeftMenu;
+        //        private final View mLeftMenu;
 //        private final SwipeItemLayout mSwipeItemLayout;
         TextView txt_name_shopcart, txt_price_shopcart, gwc_jian, gwc_jia;
         EditText gwc_num;

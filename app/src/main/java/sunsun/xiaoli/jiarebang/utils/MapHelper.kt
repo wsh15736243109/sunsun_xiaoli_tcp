@@ -31,7 +31,7 @@ class MapHelper {
         descriptor= BitmapDescriptorFactory
                 .fromBitmap(BitmapFactory
                         .decodeResource(activity.resources,
-                                R.drawable.img_location))
+                                R.drawable.location))
         for (listEntity in array) {
             val l = LatLng(listEntity.lat, listEntity.lng)
             val u = MapStatusUpdateFactory.newLatLngZoom(l, Const.zoom)

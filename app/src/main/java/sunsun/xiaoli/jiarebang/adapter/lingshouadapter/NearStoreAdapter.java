@@ -39,7 +39,6 @@ public class NearStoreAdapter extends BaseAdapter {
         try {
             StoreListBean.ListEntity publishArray = (StoreListBean.ListEntity) o;
             holder.setText(txt_storename, publishArray.getName());
-            holder.setText(R.id.txt_boda,"配送费 <font color='#ff0000'>￥"+publishArray.getPay()+"</font>");
             holder.setTag(R.id.re_main,-1,position);
             holder.setOnclickListener(R.id.re_main, new View.OnClickListener() {
                 @Override
@@ -49,6 +48,7 @@ public class NearStoreAdapter extends BaseAdapter {
                     }
                 }
             });
+            holder.setText(R.id.txt_boda,"配送费 <font color='#ff0000'>￥"+publishArray.getFreight_price()/100+"</font>");
         } catch (Exception e) {
 
         }

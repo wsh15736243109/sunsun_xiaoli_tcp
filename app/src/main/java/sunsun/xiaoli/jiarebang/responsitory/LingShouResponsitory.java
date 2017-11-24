@@ -390,7 +390,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void addAddress(String uid, String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
+    public void addAddress(String uid,int is_default,  String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
@@ -407,9 +407,9 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("mobile", phone);
         map.put("country_id", country_id);
         map.put("country", country);
-        map.put("lng", lng);
-        map.put("lat", lat);
-        map.put("default", 0);
+//        map.put("lng", lng);
+//        map.put("lat", lat);
+        map.put("default", is_default);
         map.put("s_id", s_id);
         (new ByJsonRequest.Builder<String>())
                 .setTypeVerParamsAndReturnClass(addAddress, apiVer, map, type)

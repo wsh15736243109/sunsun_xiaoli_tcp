@@ -29,12 +29,14 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/DIMEN_10DP"
+            android:visibility="gone"
             android:text="支付剩余时间" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/DIMEN_10DP"
             android:text="支付剩余时间"
             android:textSize="@dimen/DIMEN_20DP" />
@@ -42,6 +44,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/DIMEN_1DP"
+            android:visibility="gone"
             android:layout_marginBottom="@dimen/DIMEN_10DP"
             android:background="@color/gray_EEEE"></View>
 
@@ -52,6 +55,18 @@
             android:layout_height="wrap_content">
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_1DP"
+            android:background="@color/gray_EEEE"></View>
+        <TextView
+            android:id="@+id/txt_totalprice"
+            android:layout_width="wrap_content"
+            android:layout_margin="@dimen/DIMEN_5DP"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="" />
     </LinearLayout>
 
     <TextView

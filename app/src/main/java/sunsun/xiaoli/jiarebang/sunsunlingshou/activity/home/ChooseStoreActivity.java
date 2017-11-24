@@ -60,8 +60,9 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
     private StoreListBean.ListEntity listEntity;
     private String addressId;
     private double freightPrice;
-    TextView txt_boda;
+    TextView txt_boda, txt_freight;
     private String storeId;
+    AddressBean selectAddressBean;
 
     @Override
     protected int getLayoutId() {
@@ -75,12 +76,13 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
         baiduMap = mapView.getMap();
         //获取用户选择的地址Id,如果没有地址ID,则获取用户默认的地址
         addressId = getIntent().getStringExtra("address_id");
+        selectAddressBean = (AddressBean) getIntent().getSerializableExtra("model");
         if (addressId == null) {
             lingShouPresenter.getDefaultAddress(getSp(Const.UID), getSp(Const.S_ID));
         }
 
         initMapView();
-        initTitlebarStyle1(this, actionBar, "咨询购买", 0, "", 0, "");
+        initTitlebarStyle1(this, actionBar, "选择商家", 0, "", 0, "");
         initRecyclerView();
     }
 
@@ -145,7 +147,8 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
             MAlert.alert(getString(R.string.choose_address_at_first));
             return;
         }
-        queryFreightPrice(storeId, addressId);
+        txt_freight.setText(Html.fromHtml("配送费：<font color='red'>￥" + listEntity.getFreight_price() / 100 + "</font>"));
+//        queryFreightPrice(storeId, addressId);
 
     }
 
@@ -153,7 +156,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview_near_store.setLayoutManager(linearLayoutManager);
-        lingShouPresenter.getNearStore("330100", 120.377819 + "", 120.377819 + "", "", "", pageIndex, 10);
+        lingShouPresenter.getNearStore(selectAddressBean.getCityid(), selectAddressBean.getLng() + "", selectAddressBean.getLat() + "", "", "", pageIndex, 10);
     }
 
     @Override
@@ -184,11 +187,25 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
                 bean = (StoreListBean) entity.getData();
+                if (bean == null) {
+                    MAlert.alert("当前地址附近未搜索到店铺");
+                    return;
+                }
+                if (bean.getList() == null) {
+                    MAlert.alert("当前地址附近未搜索到店铺");
+                    return;
+                }
+                if (bean.getList().size() <= 0) {
+                    MAlert.alert("当前地址附近未搜索到店铺");
+                    return;
+                }
                 NearStoreAdapter adapter = new NearStoreAdapter(this, bean.getList());
                 adapter.setOnItemListener(this);
                 recyclerview_near_store.setAdapter(adapter);
                 //将所有点设置到地图上去
                 setMapPoint();
+                //设置一个默认的商家
+                setDefaultStore();
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
@@ -201,13 +218,23 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
                 //获取成功
                 FreightPriceBean addressBean = (FreightPriceBean) entity.getData();
                 freightPrice = addressBean.getFreight_price();
-                txt_boda.setText(Html.fromHtml("配送费<font color='red'> ￥" + freightPrice/100 + ""));
+                txt_boda.setText(Html.fromHtml("配送费<font color='red'> ￥" + freightPrice / 100 + ""));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             }
         }
 
     }
+
+    private void setDefaultStore() {
+        if (bean.getList() != null) {
+            if (bean.getList().size() > 0) {
+                listEntity = bean.getList().get(0);
+                setSelectStore();
+            }
+        }
+    }
+
 
     @Override
     public void onItemClick(int position) {
@@ -222,7 +249,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
 
 
     private void setMapPoint() {
-        new MapHelper().setPoint(this,baiduMap,bean.getList());
+        new MapHelper().setPoint(this, baiduMap, bean.getList());
 //        descriptor = BitmapDescriptorFactory
 //                .fromBitmap(BitmapFactory
 //                        .decodeResource(getResources(),

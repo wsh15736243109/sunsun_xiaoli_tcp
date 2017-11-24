@@ -34,7 +34,7 @@ public class AddressListAdapter extends BaseAdapter {
         AddressBean bean = (AddressBean) o;
         holder.setText(R.id.txt_name, bean.getContactname());
         holder.setText(R.id.txt_phone, bean.getMobile());
-        holder.setText(R.id.txt_address, bean.getDetailinfo());
+        holder.setText(R.id.txt_address, bean.getProvince() + bean.getCity() + bean.getArea() + bean.getDetailinfo());
         holder.setViewVisiable(R.id.txt_moren, bean.getIs_default().equals("1") ? View.VISIBLE : View.GONE);
         holder.setViewVisiable(R.id.arrow_right, bean.isShow() ? View.VISIBLE : View.INVISIBLE);
         if (bean.isSelect()) {
@@ -44,10 +44,10 @@ public class AddressListAdapter extends BaseAdapter {
         }
         holder.getView(R.id.arrow_right).setTag(position);
         holder.setOnclickListener(R.id.arrow_right, (AddressListActivity) activity);
-        if(AddressListAdapter.this.b){
-            ((TextView)holder.getView(R.id.txt_update)).setText(context.getString(R.string.update_address));
-        }else{
-            ((TextView)holder.getView(R.id.txt_update)).setText(context.getString(R.string.delete));
+        if (AddressListAdapter.this.b) {
+            ((TextView) holder.getView(R.id.txt_update)).setText(context.getString(R.string.update_address));
+        } else {
+            ((TextView) holder.getView(R.id.txt_update)).setText(context.getString(R.string.delete));
         }
         holder.getView(R.id.txt_update).setTag(position);
         holder.setOnclickListener(R.id.txt_update, (AddressListActivity) activity);
@@ -57,6 +57,6 @@ public class AddressListAdapter extends BaseAdapter {
 
 
     public void setUpdate(boolean b) {
-        this.b=b;
+        this.b = b;
     }
 }

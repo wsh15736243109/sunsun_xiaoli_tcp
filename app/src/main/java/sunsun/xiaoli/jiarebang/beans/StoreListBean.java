@@ -11,7 +11,7 @@ public class StoreListBean implements Serializable{
 
     /**
      * count : 3
-     * list : [{"id":"1","name":"杭州大鱼","uid":"1","grade":"0","create_time":"1499916729","update_time":"1500617852","province":"330000","city":"330100","area":"330104","mobile":"18358587556","logo":"2","lng":"120.359904","lat":"30.302337","phone":"58587544","address":"江干区学林街515","contacts":"zyh","pay":"","status":"0","grade_count":"0","distance":"2365"},{"id":"2","name":"xzc","uid":"1","grade":"0","create_time":"1500257710","update_time":"1500518256","province":"330000","city":"330100","area":"330104","mobile":"","logo":"1","lng":"120.346681","lat":"30.30215","phone":"465546","address":"南京路xxx","contacts":"小张","pay":"546454","status":"0","grade_count":"0","distance":"3416"},{"id":"3","name":"测试2","uid":"1","grade":"0","create_time":"1500262214","update_time":"1500518219","province":"330000","city":"330100","area":"330104","mobile":"18568545125","logo":"2","lng":"120.208838","lat":"30.264595","phone":"54665465","address":"三新银座","contacts":"小徐","pay":"8446456","status":"0","grade_count":"0","distance":"17259"}]
+     * list : [{"id":"1","name":"杭州大鱼","uid":"1","grade":"0","create_time":"1499916729","update_time":"1500617852","province":"330000","city":"330100","area":"330104","mobile":"18358587556","logo":"2","lng":"120.359904","lat":"30.302337","phone":"58587544","address":"江干区学林街515","contacts":"zyh","freight_price":"","status":"0","grade_count":"0","distance":"2365"},{"id":"2","name":"xzc","uid":"1","grade":"0","create_time":"1500257710","update_time":"1500518256","province":"330000","city":"330100","area":"330104","mobile":"","logo":"1","lng":"120.346681","lat":"30.30215","phone":"465546","address":"南京路xxx","contacts":"小张","freight_price":"546454","status":"0","grade_count":"0","distance":"3416"},{"id":"3","name":"测试2","uid":"1","grade":"0","create_time":"1500262214","update_time":"1500518219","province":"330000","city":"330100","area":"330104","mobile":"18568545125","logo":"2","lng":"120.208838","lat":"30.264595","phone":"54665465","address":"三新银座","contacts":"小徐","freight_price":"8446456","status":"0","grade_count":"0","distance":"17259"}]
      */
 
     private String count;
@@ -32,7 +32,7 @@ public class StoreListBean implements Serializable{
      * phone : 58587544
      * address : 江干区学林街515
      * contacts : zyh
-     * pay :
+     * freight_price :
      * status : 0
      * grade_count : 0
      * distance : 2365
@@ -73,7 +73,7 @@ public class StoreListBean implements Serializable{
         private String phone;
         private String address;
         private String contacts;
-        private String pay;
+        private double freight_price;
         private String status;
         private String grade_count;
         private String distance;
@@ -142,8 +142,8 @@ public class StoreListBean implements Serializable{
             this.contacts = contacts;
         }
 
-        public void setPay(String pay) {
-            this.pay = pay;
+        public void setFreight_price(double freight_price) {
+            this.freight_price = freight_price;
         }
 
         public void setStatus(String status) {
@@ -222,8 +222,8 @@ public class StoreListBean implements Serializable{
             return contacts;
         }
 
-        public String getPay() {
-            return pay;
+        public double getFreight_price() {
+            return freight_price;
         }
 
         public String getStatus() {

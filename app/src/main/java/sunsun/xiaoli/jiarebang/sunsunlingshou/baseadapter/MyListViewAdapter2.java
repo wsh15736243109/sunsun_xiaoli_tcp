@@ -17,15 +17,15 @@ import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 /**
  * Created by a on 2016/5/13.
  */
-public class MyListViewAdapter2 extends BaseAdapter{
-    private  ArrayList<GoodsListBean.ListEntity> allData;
-    private  Context context;
-    private  int selectIndex;
+public class MyListViewAdapter2 extends BaseAdapter {
+    private ArrayList<GoodsListBean.ListEntity> allData;
+    private Context context;
+    private int selectIndex;
 
     public MyListViewAdapter2(ArrayList<GoodsListBean.ListEntity> allData, Context context, int selectIndex) {
-        this.allData=allData;
-        this.context=context;
-        this.selectIndex=selectIndex;
+        this.allData = allData;
+        this.context = context;
+        this.selectIndex = selectIndex;
     }
 
     @Override
@@ -46,28 +46,28 @@ public class MyListViewAdapter2 extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder vh;
-        if(convertView==null){
-            convertView=View.inflate(context, R.layout.item_listview_2,null);
-            vh=new ViewHolder();
+        if (convertView == null) {
+            convertView = View.inflate(context, R.layout.item_listview_2, null);
+            vh = new ViewHolder();
             vh.txt_price = (TextView) convertView.findViewById(R.id.txt_price);
             vh.img_goods = (ImageView) convertView.findViewById(R.id.img_goods);
             vh.txt_goodsname = (TextView) convertView.findViewById(R.id.txt_goodsname);
             convertView.setTag(vh);
-        }else {
-            vh= (ViewHolder) convertView.getTag();
+        } else {
+            vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.txt_price.setText("￥"+allData.get(position).getMin_price());
+        vh.txt_price.setText("￥" + Double.parseDouble(allData.get(position).getMin_price()) / 100);
         vh.txt_goodsname.setText(allData.get(position).getName());
-        XGlideLoader.displayImage(context,allData.get(position).getMain_img(),vh.img_goods);
+        XGlideLoader.displayImage(context, allData.get(position).getMain_img(), vh.img_goods);
         return convertView;
     }
 
-    public void setIndex(int index){
-        selectIndex=index;
+    public void setIndex(int index) {
+        selectIndex = index;
     }
 
-    class ViewHolder{
+    class ViewHolder {
         TextView txt_price;
         ImageView img_goods;
         TextView txt_goodsname;

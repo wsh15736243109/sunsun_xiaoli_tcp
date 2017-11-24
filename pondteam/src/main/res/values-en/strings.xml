@@ -321,7 +321,7 @@
     <string name="breakline">break line</string>
     <string name="home">首页</string>
     <string name="insurance">订单</string>
-    <string name="pay">咨询购买</string>
+    <string name="freight_price">咨询购买</string>
     <string name="shopcart">购物车</string>
     <string name="business">我的</string>
     <string name="appointment_install">预约安装</string>

@@ -67,8 +67,8 @@ public class AddShopCartFragment extends BaseDialogFragment {
         this.isxuokanzecanshu = isxuokanzecanshu;
     }
 
-    public void setStore_id(String store_id){
-        this.store_id=store_id;
+    public void setStore_id(String store_id) {
+        this.store_id = store_id;
     }
 
     //        rgba(255, 174, 110, 1)
@@ -100,7 +100,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
         uid = SPUtils.get(getActivity(), null, Const.UID, "") + "";
         imgUrl = goodsDetailBeans.getMain_img();
         GlidHelper.glidLoad(pic, Const.imgurl + imgUrl);
-        txt_price.setText("￥" + goodsDetailBeans.getSku_list().get(0).getOri_price());
+        setPrice(goodsDetailBeans.getSku_list().get(0).getOri_price());
         addGuiGe();
         jia.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,13 +159,13 @@ public class AddShopCartFragment extends BaseDialogFragment {
                 int skuPid = 0;
                 int position = -1;
                 List<GoodsDetailBean.SkuListEntity> sku_list = goodsDetailBeans.getSku_list();
-                GoodsDetailBean.SkuListEntity skuListEntity =new GoodsDetailBean.SkuListEntity();
+                GoodsDetailBean.SkuListEntity skuListEntity = new GoodsDetailBean.SkuListEntity();
                 for (int i = 0; i < sku_list.size(); i++) {
-                   skuListEntity = sku_list.get(i);
+                    skuListEntity = sku_list.get(i);
                     if (skuListEntity.getSku_id().equals(s)) {
                         skuListEntity.getPrice();
                         skuPid = Integer.valueOf(skuListEntity.getSku_pkid());
-                        position=i;
+                        position = i;
                         break;
                     }
                 }
@@ -176,16 +176,16 @@ public class AddShopCartFragment extends BaseDialogFragment {
                 goodsDetailBeans.setSelectPositon(position);
                 goodsDetailBeans.setCount(Integer.valueOf(string));
                 goodsDetailBeans.setPrice(Double.parseDouble(skuListEntity.getPrice()));
-                ArrayList<GoodsDetailBean> ar=new ArrayList<GoodsDetailBean>();
+                ArrayList<GoodsDetailBean> ar = new ArrayList<GoodsDetailBean>();
                 ar.add(goodsDetailBeans);
                 Intent intent = new Intent(getActivity(), MakeSureOrderActivity.class);
                 intent.putExtra("skuPid", skuPid);
                 intent.putExtra("isLiJiBuy", true);
-                intent.putExtra("isGoodsBuy",true);
+                intent.putExtra("isGoodsBuy", true);
                 intent.putExtra("type", BuyType.Buy_LiJiGouMai);
                 intent.putExtra("model", ar);
-                intent.putExtra("store_id",store_id);
-                intent.putExtra("canPack",0);
+                intent.putExtra("store_id", store_id);
+                intent.putExtra("canPack", 0);
                 startActivity(intent);
                 dismiss();
             }
@@ -407,7 +407,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
 //                                imgUrl = skuCombinationBean.getIconUrl();
 //                            }
                             txt_fenlei.setText(skuCombinationBean.getSku_desc());
-                            txt_price.setText("￥" + skuCombinationBean.getPrice());
+                            setPrice(skuCombinationBean.getPrice());
                             break;
                         }
                     }
@@ -420,6 +420,10 @@ public class AddShopCartFragment extends BaseDialogFragment {
             }
         }
     };
+
+    private void setPrice(String price) {
+        txt_price.setText("￥" + Double.parseDouble(price) / 100);
+    }
 
     private String isAllFenLeiSelected() {
         StringBuilder sb = new StringBuilder();

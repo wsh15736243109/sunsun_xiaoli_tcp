@@ -83,6 +83,14 @@ public class ChooseTimeChildFragment extends LingShouBaseFragment implements IRe
                 }else{
                     //咨询购买进入
                     //先获取商品信息
+                    if (serviceBeanArrayList==null) {
+                        MAlert.alert("获取服务信息失败");
+                        return;
+                    }
+                    if (serviceBeanArrayList.size()<=0) {
+                        MAlert.alert("获取服务信息失败");
+                        return;
+                    }
                     Intent intent=new Intent(getActivity(), MakeSureOrderActivity.class);
                     intent.putExtra("zixunModel",listEntity);
                     intent.putExtra("send_time",send_time);
@@ -118,7 +126,15 @@ public class ChooseTimeChildFragment extends LingShouBaseFragment implements IRe
             }
             if (entity.getEventType()== LingShouPresenter.getServiceSku_success) {
                 serviceBeanArrayList = (ArrayList<ServiceBean>) entity.getData();
-                serviceBeanArrayList.get(0).getSku_info().get(0).setSelect(true);
+                if (serviceBeanArrayList!=null) {
+                    if (serviceBeanArrayList.size()>0) {
+                        if (serviceBeanArrayList.get(0).getSku_info()!=null) {
+                            if (serviceBeanArrayList.get(0).getSku_info().size()>0) {
+                                serviceBeanArrayList.get(0).getSku_info().get(0).setSelect(true);
+                            }
+                        }
+                    }
+                }
             }else if(entity.getEventType()== LingShouPresenter.getServiceSku_fail){
 
             }

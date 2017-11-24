@@ -21,6 +21,7 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginedState;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.ShopCartChildFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.ConsultationAndBuyFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
@@ -103,6 +104,11 @@ public class LingShouMainActivity extends LingShouBaseActivity {
 
     @Override
     public void onClick(View v) {
+        if (v.getId()!= R.id.index_layout&&v.getId()!=R.id.me_layout) {
+            if (isGoToLogin()){
+                return;
+            }
+        }
         switch (v.getId()) {
             case R.id.index_layout:
                 setTabSelection(0);
@@ -119,6 +125,16 @@ public class LingShouMainActivity extends LingShouBaseActivity {
             case R.id.me_layout:
                 setTabSelection(4);
                 break;
+        }
+    }
+
+    private boolean isGoToLogin() {
+        if (getSp(Const.UID).equals("")) {
+            Intent intent=new Intent(this, LingShouSwitchLoginOrRegisterActivity.class);
+            startActivity(intent);
+            return true;
+        }else{
+            return false;
         }
     }
 

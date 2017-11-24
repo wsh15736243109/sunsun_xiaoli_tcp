@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@+id/txt_price"
-            android:text="龙玉"
+            android:text=""
             android:textSize="@dimen/DIMEN_16DP" />
 
         <TextView
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="详情￥12.00"
+            android:text=""
             android:textSize="@dimen/DIMEN_16DP" />
     </RelativeLayout>
 </LinearLayout>

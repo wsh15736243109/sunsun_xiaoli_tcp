@@ -83,7 +83,7 @@ public class AddAddressOrMymessageActivity extends LingShouBaseActivity implemen
                     lingShouPresenter.updateAddress(getSp(Const.UID), addressBean.getId(), is_default, province, provinceId, city, area, cityid, areaid, detailAddress, name, phone, country_id, country, lng, lat, getSp(Const.S_ID));
                 } else {
                     //增加地址
-                    lingShouPresenter.addAddress(getSp(Const.UID), province, provinceId, city, area, cityid, areaid, detailAddress, name, phone, country_id, country, lng, lat, getSp(Const.S_ID));
+                    lingShouPresenter.addAddress(getSp(Const.UID),is_default, province, provinceId, city, area, cityid, areaid, detailAddress, name, phone, country_id, country, lng, lat, getSp(Const.S_ID));
                 }
 
                 break;
@@ -124,7 +124,7 @@ public class AddAddressOrMymessageActivity extends LingShouBaseActivity implemen
         this.provinceId = provinceNo;
         this.cityid = cityNo;
         this.areaid = districtNo;
-        if (city.equals("县") || city.equals("市辖区")) {
+        if (city.equals("市")||city.equals("县") || city.equals("市辖区")) {
             this.city = province;
             provincetext.setText(province + district);
         } else {

@@ -325,7 +325,7 @@
 
     <string name="home">首页</string>
     <string name="insurance">订单</string>
-    <string name="pay">咨询购买</string>
+    <string name="freight_price">咨询购买</string>
     <string name="shopcart">购物车</string>
     <string name="business">我的</string>
     <string name="appointment_install">预约安装</string>
@@ -604,7 +604,7 @@
     <string name="current_resolution">当前分辨率:</string>
     <string name="retry">重试</string>
     <string name="makesure_retry">是否重试?</string>
-    <string name="devicetype_error">请输入%1$s的設備类型 </string>
+    <string name="devicetype_error">请输入%1$s的设备类型 </string>
     <string name="video">视频</string>
     <string name="device_zhinengshexiangtou_yihu">宜虎智能摄像头</string>
     <string name="login_yihu">宜虎智能</string>

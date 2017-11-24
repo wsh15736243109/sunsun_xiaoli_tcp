@@ -40,6 +40,9 @@ public class Const {
     public static final String STORE_ID = "stores_id";
     public static final String SELECT_ADDRESS = "select_address";
     public static final String ADDRESS_CHANGE = "address_change";
+    public static final String SHOPCART_CHANGE = "shopcart_change";
+    public static final String ORDER_CHANGE = "order_change";
+    public static final String STORE_CHANGE = "store_change";
     public static String CITY_CODE = "330104";
     public static String wrapUrl = "dev.sunsunxiaoli.com";
     //    apisunsun.itboye.com/public => devsunsun.itboye.com=>
@@ -49,15 +52,17 @@ public class Const {
 
     public static String imagePath;
     public static String patten = "yyyyMMdd";
-    public static String language="";
+    public static String language = "";
+
     public Const() {
 
     }
+
     public Const(String wrapUrl) {
         this.wrapUrl = wrapUrl;
         this.URL = "http://" + wrapUrl + "/index.php";
-        this.webUrl="http://"+wrapUrl+"/web.php/web/";
-        this.aboutMe=webUrl+"/about";
+        this.webUrl = "http://" + wrapUrl + "/web.php/web/";
+        this.aboutMe = webUrl + "/about";
     }
 
     //头像上传接口
@@ -76,9 +81,9 @@ public class Const {
     //帮助中心
     public static String helpUrl = "https://api.ryzcgf.com/public/web.php/web/user_manual";
 
-    public static String webUrl="http://"+wrapUrl+"/web.php/web";
+    public static String webUrl = "http://" + wrapUrl + "/web.php/web";
 
-    public static  String aboutMe=webUrl+"/about";
+    public static String aboutMe = webUrl + "/about";
     //银联支付
     public static String zhifu = "http://api.ryzcgf.com/public/index.php/upacp/frontConsume/pay_code/";
     /**
@@ -221,7 +226,8 @@ public class Const {
     public static float zoom = 12;//地图缩放级别
 
     public static String sendCodeType;
+
     public static void setSendCodeType(String sms) {
-        sendCodeType=sms;
+        sendCodeType = sms;
     }
 }

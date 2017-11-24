@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.itboye.pondteam.base.BaseDialogFragment;
-import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.address.AddressSelectView;
@@ -65,7 +64,6 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
 		String city=addressSelect.getCityName();
 		String districName= addressSelect.getDistrictName();
 		this.listener.onGetinforListener(province,city, districName, provinceNo, cityNo, districtNo);
-		MAlert.alert(cityNo+"城市ID");
 		//添加数据
 //		Bundle bundle=new Bundle();
 //		bundle.putString("provincename", addressSelect.getProvinceName());

@@ -48,7 +48,7 @@
             android:gravity="left|center_vertical"
             android:layout_toRightOf="@+id/txt_contacttime"
             android:background="@drawable/bg_eee"
-            android:drawableRight="@drawable/img_location"
+            android:drawableRight="@drawable/img_location_white"
             android:padding="@dimen/DIMEN_10DP"
             android:text="选择附近所在商家" />
 
@@ -80,7 +80,7 @@
             android:gravity="left"
             android:background="@drawable/bg_eee"
             android:padding="@dimen/DIMEN_10DP"
-            android:text="@string/descript_product" />
+            android:hint="@string/descript_product" />
 
     </RelativeLayout>
     <TextView

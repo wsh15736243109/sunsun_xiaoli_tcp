@@ -553,8 +553,11 @@ public class LingShouPersonDataBean {
                         Const.NICK, personDataBean.getNickname());
             }
             if (personDataBean.getAutoLoginCode() != null) {
-                SPUtils.put(MyApplication.getInstance(), null,
-                        Const.S_ID, personDataBean.getAutoLoginCode());
+//                SPUtils.put(MyApplication.getInstance(), null,
+//                        Const.S_ID, personDataBean.getAutoLoginCode());
+                                SPUtils.put(MyApplication.getInstance(), null,
+                        Const.S_ID, "itboye");
+
             }
             if (personDataBean.getSex() != null) {
                 SPUtils.put(MyApplication.getInstance(), null,

@@ -490,7 +490,7 @@ public class LingShouPresenter extends BasePresenter implements
     }
 
     @Override
-    public void addAddress(String uid, String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
+    public void addAddress(String uid,int is_default, String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
                 new ICompleteListener() {
 
@@ -511,7 +511,7 @@ public class LingShouPresenter extends BasePresenter implements
 
                     }
                 });
-        user.addAddress(uid, province, provinceId, city, area, cityid, areaid, detailAddress, name, phone, country_id, country, lng, lat, s_id);
+        user.addAddress(uid, is_default, province, provinceId, city, area, cityid, areaid, detailAddress, name, phone, country_id, country, lng, lat, s_id);
     }
 
     @Override

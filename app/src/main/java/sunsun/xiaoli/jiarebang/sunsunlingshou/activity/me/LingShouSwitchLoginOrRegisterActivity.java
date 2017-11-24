@@ -3,6 +3,7 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
 
@@ -14,7 +15,7 @@ public class LingShouSwitchLoginOrRegisterActivity extends LingShouBaseActivity 
 
     Button btn_register, btn_login;
     App mApp;
-
+    TextView txt_guangguang;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_ling_shou_switch_login_or_register;
@@ -34,6 +35,9 @@ public class LingShouSwitchLoginOrRegisterActivity extends LingShouBaseActivity 
                 break;
             case R.id.btn_login:
                 startActivity(new Intent(this, LingShouLoginActivity.class));
+                break;
+            case R.id.txt_guangguang:
+                finish();
                 break;
         }
     }

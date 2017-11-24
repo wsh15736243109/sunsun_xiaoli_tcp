@@ -1,11 +1,15 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapView;
@@ -51,6 +55,12 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     ProgressBar progress;
     BaiduMap baiduMap;
     MapView mapView;
+    private StoreListBean.ListEntity listEntity1;
+    private Dialog alert;
+    private RadioButton tvTitle;
+    private RadioButton tvMessage;
+    private Intent intent;
+
     @SuppressLint("ValidFragment")
     public MyTabFragment(int type) {
         this.type = type;
@@ -110,15 +120,56 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     }
 
     public void getNearStore() {
-        if (lingShouPresenter==null) {
-            lingShouPresenter=new LingShouPresenter(this);
+        if (lingShouPresenter == null) {
+            lingShouPresenter = new LingShouPresenter(this);
         }
         lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", pageIndex, 10);
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.txt_boda:
+                listEntity1 = (StoreListBean.ListEntity) v.getTag();
+                alert = new Dialog(getActivity(), R.style.callphonedialog);
+                View view = View.inflate(getActivity(), R.layout.poup_home_callphone, null);
+                view.setMinimumWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() - 100);
+                tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
+                tvTitle.setChecked(true);
+                tvTitle.setText("手机:" + listEntity1.getPhone());
+                tvMessage = (RadioButton) view.findViewById(R.id.tvMessage);
+                tvMessage.setText("电话:" + listEntity1.getMobile());
+                TextView tvBtnLeft = (TextView) view.findViewById(R.id.tvBtnLeft);
+                tvBtnLeft.setOnClickListener(this);
+                TextView tvBtnRight = (TextView) view.findViewById(R.id.tvBtnRight);
+                tvBtnRight.setOnClickListener(this);
+                alert.setContentView(view);
+                alert.show();
+                break;
+            case R.id.tvBtnLeft:
+                alert.dismiss();
+                break;
+            case R.id.tvBtnRight:
+                try {
+                    String number = "";
+                    if (tvMessage.isChecked()) {
+                        number = listEntity1.getMobile();
+                    } else {
+                        number = listEntity1.getPhone();
+                    }
+                    if (number.equals("")) {
+                        MAlert.alert("当前电话不可用");
+                        return;
+                    }
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
+                    intent.setAction(Intent.ACTION_DIAL);
+                    startActivity(intent);
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+                alert.dismiss();
+                break;
+        }
     }
 
     @Override
@@ -131,16 +182,16 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
-                recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(),20));
+                recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(), 20));
                 recycler_aqhardwareorhotgoods.setNumColumns(1);
                 recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
                 bean = (StoreListBean) entity.getData();
                 HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
                 recycler_aqhardwareorhotgoods.setAdapter(adapter);
-                new MapHelper().setPoint(getActivity(),baiduMap,bean.getList());
+                new MapHelper().setPoint(getActivity(), baiduMap, bean.getList());
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
-            }else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_success) {
+            } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_success) {
 
                 recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
                 recycler_aqhardwareorhotgoods.setNumColumns(2);
@@ -165,7 +216,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         switch (this.type) {
             case 0:
                 Intent intent = new Intent(getActivity(), GoodsClassifyActivity.class);
-                intent.putExtra("model",bean.getList().get(position));
+                intent.putExtra("model", bean.getList().get(position));
                 intent.putExtra("store_id", bean.getList().get(position).getId());
                 startActivity(intent);
                 break;

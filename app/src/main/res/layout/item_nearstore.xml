@@ -9,7 +9,8 @@
         android:padding="@dimen/DIMEN_10DP"
         android:id="@+id/txt_storename"
         android:layout_marginTop="@dimen/DIMEN_10DP"
-        android:layout_width="250dp"
+        android:layout_width="220dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_white_border_dark"
         android:text=""/>

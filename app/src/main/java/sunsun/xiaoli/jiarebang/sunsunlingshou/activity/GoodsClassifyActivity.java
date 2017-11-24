@@ -1,6 +1,8 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,6 +10,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
@@ -50,6 +53,11 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
     StoreListBean.ListEntity model;
     TextView txt_contact, txt_mobile, txt_boda, txt_address, txt_peisongfei;
     CarouselView lunbo;
+    private StoreListBean.ListEntity listEntity1;
+    private Dialog alert;
+    private RadioButton tvTitle;
+    private RadioButton tvMessage;
+    private Intent intent;
 
     @Override
     protected int getLayoutId() {
@@ -70,11 +78,11 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
         } else {
             actionBar.setTitle(model.getName());
             li_storeinfo.setVisibility(View.VISIBLE);
-            txt_contact.setText("联系人"+model.getContacts());
-            txt_mobile.setText(Html.fromHtml("手机："+model.getPhone()+"<br />电话："+model.getMobile()));
-            txt_address.setText("地址"+model.getAddress());
-            txt_peisongfei.setText("配送费￥"+model.getPay());
-            new LunBoHelper().setLunBoData(this,lunbo,model.getLogo());
+            txt_contact.setText("联系人" + model.getContacts());
+            txt_mobile.setText(Html.fromHtml("手机：" + model.getPhone() + "<br />电话：" + model.getMobile()));
+            txt_address.setText("地址" + model.getAddress());
+            txt_peisongfei.setText("配送费￥" + model.getFreight_price());
+            new LunBoHelper().setLunBoData(this, lunbo, model.getLogo());
         }
 //        adapter2=new MyListViewAdapter2(allData,this,selectIndex);
 //        list_item_2.setAdapter(adapter2);
@@ -141,6 +149,46 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
 //                boolean wx= App.getInstance().getIwxapi().sendReq(req);
 //                MAlert.alert(wx + "");
                 break;
+            case R.id.txt_boda:
+                listEntity1 = (StoreListBean.ListEntity) v.getTag();
+                alert = new Dialog(this, R.style.callphonedialog);
+                View view = View.inflate(this, R.layout.poup_home_callphone, null);
+                view.setMinimumWidth(this.getWindowManager().getDefaultDisplay().getWidth() - 100);
+                tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
+                tvTitle.setChecked(true);
+                tvTitle.setText("手机:" + listEntity1.getPhone());
+                tvMessage = (RadioButton) view.findViewById(R.id.tvMessage);
+                tvMessage.setText("电话:" + listEntity1.getMobile());
+                TextView tvBtnLeft = (TextView) view.findViewById(R.id.tvBtnLeft);
+                tvBtnLeft.setOnClickListener(this);
+                TextView tvBtnRight = (TextView) view.findViewById(R.id.tvBtnRight);
+                tvBtnRight.setOnClickListener(this);
+                alert.setContentView(view);
+                alert.show();
+                break;
+            case R.id.tvBtnLeft:
+                alert.dismiss();
+                break;
+            case R.id.tvBtnRight:
+                try {
+                    String number = "";
+                    if (tvMessage.isChecked()) {
+                        number = listEntity1.getMobile();
+                    } else {
+                        number = listEntity1.getPhone();
+                    }
+                    if (number.equals("")) {
+                        MAlert.alert("当前电话不可用");
+                        return;
+                    }
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
+                    intent.setAction(Intent.ACTION_DIAL);
+                    startActivity(intent);
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+                alert.dismiss();
+                break;
         }
     }
 
@@ -156,8 +204,8 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
                 bean = (ArrayList<ClassifyBean>) entity.getData();
                 adapter1 = new MyListViewAdapter1(bean, this, selectIndex);
                 list_item_1.setAdapter(adapter1);
-                if (bean!=null) {
-                    if (bean.size()>0) {
+                if (bean != null) {
+                    if (bean.size() > 0) {
                         lingShouPresenter.getGoodsList("", bean.get(0).getId(), "", 1, 10);
                     }
                 }

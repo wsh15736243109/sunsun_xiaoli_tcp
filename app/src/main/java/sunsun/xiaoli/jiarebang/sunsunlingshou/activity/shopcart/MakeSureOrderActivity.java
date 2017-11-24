@@ -1,6 +1,7 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -70,7 +71,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     boolean isShopCart;
     private String address_id = "";
     private ArrayList<AddressBean> addressBean = new ArrayList<>();
-
+    private AddressBean selectAddressBean = new AddressBean();
     TextView txt_name, txt_phone, txt_address, txt_mnoren;
     private StoreListBean.ListEntity storeBean;
     ImageView iv_actionbar_left;
@@ -89,6 +90,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     private TextView txt_peisong;
     private OrderBean.ListEntity entityTemp;
     ArrayList<ShopCartBean> ar;
+    TextView txt_totalprice;
+    double totalPrice = 0;//总金额，包括所有费用
 
     @Override
     protected int getLayoutId() {
@@ -138,6 +141,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                         if (serviceBean.getSku_info().size() > 0) {
                             skuInfoSelect = serviceBean.getSku_info().get(0);
                             skuPid = serviceBean.getSku_info().get(0).getId();
+                            totalPrice = Double.parseDouble(serviceBean.getSku_info().get(0).getPrice());
 //                            skuInfoSelect.set;
                         }
                     }
@@ -155,6 +159,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     for (ServiceBean.SkuInfoEntity skuInfoEntity : serviceBean.getSku_info()) {
                         if (skuInfoEntity.isSelect()) {
                             skuInfoSelect = skuInfoEntity;
+                            totalPrice = Double.parseDouble(skuInfoSelect.getPrice());
                             break;
                         }
                     }
@@ -172,6 +177,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     for (ServiceBean.SkuInfoEntity skuInfoEntity : serviceBean.getSku_info()) {
                         if (skuInfoEntity.isSelect()) {
                             skuInfoSelect = skuInfoEntity;
+                            totalPrice = Double.parseDouble(skuInfoSelect.getPrice());
                             break;
                         }
                     }
@@ -189,6 +195,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     for (ServiceBean.SkuInfoEntity skuInfoEntity : serviceBean.getSku_info()) {
                         if (skuInfoEntity.isSelect()) {
                             skuInfoSelect = skuInfoEntity;
+                            totalPrice = Double.parseDouble(skuInfoSelect.getPrice());
                             break;
                         }
                     }
@@ -203,6 +210,9 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 ar = (ArrayList<ShopCartBean>) getIntent().getSerializableExtra("model");
                 adapter = new MakeSureOrderAdapter(this, ar);
                 order_goods_list.setAdapter(adapter);
+                for (ShopCartBean shopCartBean : ar) {
+                    totalPrice += shopCartBean.getPrice() * Integer.parseInt(shopCartBean.getCount());
+                }
                 break;
             case Buy_OrderPay: //订单重新支付进入确认订单
 
@@ -212,6 +222,9 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 goodsDetailBeanArray = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
                 adapter = new MakeSureOrderAdapter(this, goodsDetailBeanArray);
                 order_goods_list.setAdapter(adapter);
+                for (GoodsDetailBean goodsDetailBean : goodsDetailBeanArray) {
+                    totalPrice += (goodsDetailBean.getPrice());
+                }
                 break;
             case Buy_ZiXunGouMai:
                 re_note.setVisibility(View.VISIBLE);
@@ -220,12 +233,14 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     for (ServiceBean.SkuInfoEntity skuInfoEntity : serviceBean.getSku_info()) {
                         if (skuInfoEntity.isSelect()) {
                             skuInfoSelect = skuInfoEntity;
+                            totalPrice = Double.parseDouble(skuInfoSelect.getPrice());
                             break;
                         }
                     }
                 }
                 btn_contacttime.setText(send_time);
                 txt_choosestore.setText(storeBean.getName());
+                setDrawable();
                 store_id = storeBean.getId();
                 skuPid = skuInfoSelect.getId();
                 btn_addshopcart.setVisibility(View.GONE);
@@ -236,6 +251,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 break;
         }
         order_goods_list.addFooterView(footView);
+        txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + totalPrice / 100 + "</font>"));
+
     }
 
     @Override
@@ -244,7 +261,11 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         mApp.makeSureActivity = null;
     }
 
-    String note = "", store_id = "", send_type = "1", send_time = "", freight_price = "";
+    String note = "";
+    String store_id = "";
+    String send_type = "1";
+    String send_time = "";
+    String freight_price = "";
 
     @Override
     public void onClick(View v) {
@@ -406,7 +427,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     MAlert.alert(getString(R.string.choose_address_at_first));
                     return;
                 }
-                startActivityForResult(new Intent(this, ChooseStoreActivity.class).putExtra("address_id", address_id), 201);
+                startActivityForResult(new Intent(this, ChooseStoreActivity.class).putExtra("address_id", address_id).putExtra("model", selectAddressBean), 201);
                 break;
             case R.id.btn_contacttime:
                 Intent intent = new Intent(this, ChooseTimeActivity.class);
@@ -417,16 +438,16 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     }
 
     private void setDefaultAddress() {
-        txt_name.setText(addressBean.get(0).getContactname());
-        txt_phone.setText(addressBean.get(0).getMobile());
-        txt_address.setText(addressBean.get(0).getDetailinfo());
-        address_id = addressBean.get(0).getId();
+        txt_name.setText(selectAddressBean.getContactname());
+        txt_phone.setText(selectAddressBean.getMobile());
+        txt_address.setText(selectAddressBean.getProvince() + selectAddressBean.getCity() + selectAddressBean.getArea() + selectAddressBean.getDetailinfo());
+        address_id = selectAddressBean.getId();
         if (!store_id.equals("")) {
             lingShouPresenter.queryFreightPrice(store_id, address_id, getSp(Const.S_ID));
         } else {
 //            MAlert.alert("地址选择有误");
         }
-        txt_mnoren.setVisibility((addressBean.get(0).getIs_default() == null ? 1 : Integer.parseInt(addressBean.get(0).getIs_default())) == 0 ? View.GONE : View.VISIBLE);
+        txt_mnoren.setVisibility((selectAddressBean.getIs_default() == null ? 1 : Integer.parseInt(selectAddressBean.getIs_default())) == 0 ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -439,7 +460,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             } else {
                 addressBean.add((AddressBean) data.getSerializableExtra("model"));
             }
-            address_id = addressBean.get(0).getId();
+            selectAddressBean = addressBean.get(0);
+            address_id = selectAddressBean.getId();
             setDefaultAddress();
         }
         if (requestCode == 201 && resultCode == 202) {
@@ -447,6 +469,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             storeBean = (StoreListBean.ListEntity) data.getSerializableExtra("model");
             store_id = storeBean.getId();
             txt_choosestore.setText(storeBean.getName());
+            setDrawable();
             //查询配送费用
             lingShouPresenter.queryFreightPrice(store_id, address_id, getSp(Const.S_ID));
         }
@@ -455,6 +478,12 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             send_time = data.getStringExtra("send_time");
             btn_contacttime.setText(send_time);
         }
+    }
+
+    private void setDrawable() {
+        Drawable drawableRight=getResources().getDrawable(R.drawable.img_location_green);
+        drawableRight.setBounds(0,0,drawableRight.getMinimumWidth(),drawableRight.getMinimumHeight());
+        txt_choosestore.setCompoundDrawables(null,null,drawableRight,null);
     }
 
 
@@ -467,8 +496,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.addShopCart_success) {
-                Intent intent = new Intent(Const.LOGIN_ACTION);
-                sendBroadcast(intent);
+                //发送广播个更新UI
+                beginSendBroadCast();
                 MAlert.alert(entity.getData());
                 if (mApp.chooseTimeActivityUI != null) {
                     mApp.chooseTimeActivityUI.finish();
@@ -480,13 +509,19 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
             } else if (entity.getEventType() == LingShouPresenter.addShopCart_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_success) {
-                freight_price = ((FreightPriceBean) entity.getData()).getFreight_price() + "";
-                txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + ((FreightPriceBean) entity.getData()).getFreight_price() / 100 + "</font>"));
+                FreightPriceBean freightPriceBean = (FreightPriceBean) entity.getData();
+                freight_price = freightPriceBean.getFreight_price() + "";
+                txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + freightPriceBean.getFreight_price() / 100 + "</font>"));
+                totalPrice += Double.parseDouble(freight_price);
+                txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + totalPrice / 100 + "</font>"));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_success) {
                 RePayBean createOrderBean = (RePayBean) entity.getData();
                 startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType", buyType).putExtra("shopcart_model", ar));
+                //发送广播个更新UI
+                beginSendBroadCast();
+                finish();
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.goodsOrder_success) {
@@ -494,15 +529,17 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     mApp.yuGangCleanOrHuoTiBuyStepOneActivityUI.finish();
                 }
                 CreateOrderBean createOrderBean = (CreateOrderBean) entity.getData();
-                Intent intent = new Intent(Const.LOGIN_ACTION);
-                sendBroadcast(intent);
+                //发送广播个更新UI
+                beginSendBroadCast();
                 startActivity(new Intent(MakeSureOrderActivity.this, PayTypeActivity.class).putExtra("model", createOrderBean).putExtra("buyType", buyType).putExtra("goodsModel", goodsDetailBeanArray));
+                finish();
             } else if (entity.getEventType() == LingShouPresenter.goodsOrder_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
                 addressBean = (ArrayList<AddressBean>) entity.getData();
                 if (addressBean != null) {
                     if (addressBean.size() > 0) {
+                        selectAddressBean = addressBean.get(0);
                         setDefaultAddress();
                     }
                 }
@@ -521,5 +558,18 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 MAlert.alert(getString(R.string.getSkuPid_Error));
             }
         }
+    }
+
+    private void beginSendBroadCast() {
+//        Intent intent = new Intent(Const.LOGIN_ACTION);
+//        sendBroadcast(intent);
+
+        //订单
+        Intent intentOrder = new Intent(Const.ORDER_CHANGE);
+        sendBroadcast(intentOrder);
+
+        //更新购物车广播
+        Intent intentShopcart = new Intent(Const.SHOPCART_CHANGE);
+        sendBroadcast(intentShopcart);
     }
 }

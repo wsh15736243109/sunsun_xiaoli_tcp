@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
@@ -300,8 +299,11 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         SPUtils.put(getActivity(), null, Const.CITY_CODE, cityNo);
         if (index == 2) {
             myTabFragment1.getNearStore();
-//        lingShouPresenter.getNearStore(cityNo, lng + "", lat + "", "", "", pageIndex, 10);//根据经纬度获取附近商家
         }
+
+        //通知咨询购买Fragment更新数据
+        Intent intent = new Intent(Const.STORE_CHANGE);
+        getActivity().sendBroadcast(intent);
     }
 
 
@@ -382,47 +384,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 intent1.putExtra("ListEntity", listEntity);
                 startActivity(intent1);
                 break;
-            case R.id.txt_boda:
-                listEntity1 = (StoreListBean.ListEntity) v.getTag();
-                alert = new Dialog(getActivity(), R.style.callphonedialog);
-                View view = View.inflate(getActivity(), R.layout.poup_home_callphone, null);
-                view.setMinimumWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() - 100);
-                tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
-                tvTitle.setChecked(true);
-                tvTitle.setText("手机:" + listEntity1.getPhone());
-                tvMessage = (RadioButton) view.findViewById(R.id.tvMessage);
-                tvMessage.setText("电话:" + listEntity1.getMobile());
 
-                TextView tvBtnLeft = (TextView) view.findViewById(R.id.tvBtnLeft);
-                tvBtnLeft.setOnClickListener(this);
-                TextView tvBtnRight = (TextView) view.findViewById(R.id.tvBtnRight);
-                tvBtnRight.setOnClickListener(this);
-                alert.setContentView(view);
-                alert.show();
-                break;
-            case R.id.tvBtnLeft:
-                alert.dismiss();
-                break;
-            case R.id.tvBtnRight:
-                try {
-                    String number = "";
-                    if (tvMessage.isChecked()) {
-                        number = listEntity1.getMobile();
-                    } else {
-                        number = listEntity1.getPhone();
-                    }
-                    if (number.equals("")) {
-                        MAlert.alert("当前电话不可用");
-                        return;
-                    }
-                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
-                    intent.setAction(Intent.ACTION_DIAL);
-                    startActivity(intent);
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                }
-                alert.dismiss();
-                break;
         }
     }
 
@@ -570,7 +532,6 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
-                MAlert.alert(entity.getData());
                 ArrayList<AddressBean> addressBeanArrayList = (ArrayList<AddressBean>) entity.getData();
                 if (addressBeanArrayList != null) {
                     if (addressBeanArrayList.size() > 0) {

@@ -50,6 +50,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
     TextView tv_actionbar_right;
     @IsNeedClick
     TextView txt_current_location;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_address_list;
@@ -98,10 +99,10 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 } else if (action.equals("location_address")) {
                     //设置默认地址
                     int count = 0;
-                    AddressBean addressSelect=null;
+                    AddressBean addressSelect = null;
                     for (int i = 0; i < addressBeanArrayList.size(); i++) {
                         if (addressBeanArrayList.get(i).isSelect()) {
-                            addressSelect=addressBeanArrayList.get(i);
+                            addressSelect = addressBeanArrayList.get(i);
                             count++;
                         }
                     }
@@ -114,8 +115,8 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                         MAlert.alert(getString(R.string.only_one_address_set_default));
                         return;
                     }
-                    String json=new Gson().toJson(addressSelect);
-                    SPUtils.put(this,null,Const.SELECT_ADDRESS,json);
+                    String json = new Gson().toJson(addressSelect);
+                    SPUtils.put(this, null, Const.SELECT_ADDRESS, json);
                     //通知首页更改显示的城市
                     notifyAddressChanged();
                     finish();
@@ -152,13 +153,13 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 break;
             case R.id.txt_update:
                 position = (int) v.getTag();
-                if (((TextView)v).getText().equals(getString(R.string.update_address))) {
+                if (((TextView) v).getText().equals(getString(R.string.update_address))) {
                     //修改地址
                     intent = new Intent(this, AddAddressOrMymessageActivity.class);
                     intent.putExtra("title", "修改地址");
                     intent.putExtra("model", addressBeanArrayList.get(position));
                     startActivity(intent);
-                }else{
+                } else {
                     //删除地址
                     lingShouPresenter.deleteAddress(getSp(Const.UID), addressBeanArrayList.get(position).getId(), getSp(Const.S_ID));
                 }
@@ -173,7 +174,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                     finish();
                 } else if (action.equals("my_address")) {
                     //我的地址进入查看地址详情
-                    intent = new Intent(this,AddAddressOrMymessageActivity.class);
+                    intent = new Intent(this, AddAddressOrMymessageActivity.class);
                     intent.putExtra("model", addressBeanArrayList.get(position));
                     intent.putExtra("title", "修改地址");
                     startActivity(intent);
@@ -184,7 +185,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
     }
 
     private void notifyAddressChanged() {
-        Intent intent=new Intent(Const.ADDRESS_CHANGE);
+        Intent intent = new Intent(Const.ADDRESS_CHANGE);
         sendBroadcast(intent);
     }
 
@@ -215,9 +216,11 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                     adapter = new AddressListAdapter(this, R.layout.item_address, addressBeanArrayList);
                     if (action.equals("location_address")) {
                         adapter.setUpdate(true);
+//                        setTopAddress();
                     }
                     recyclerview_address.setAdapter(adapter);
                 } else {
+//                    setTopAddress();
                     adapter.notifyDataSetChanged();
                 }
                 notifyAddressChanged();
@@ -227,12 +230,31 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 lingShouPresenter.queryAddress(getSp(Const.UID), getSp(Const.S_ID));//获取地址列表;
             } else if (entity.getEventType() == LingShouPresenter.deleteAddress_fail) {
                 MAlert.alert(entity.getData());
-            }else if (entity.getEventType() == LingShouPresenter.setDefaultAddress_success) {
+            } else if (entity.getEventType() == LingShouPresenter.setDefaultAddress_success) {
                 lingShouPresenter.queryAddress(getSp(Const.UID), getSp(Const.S_ID));//获取地址列表;
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.setDefaultAddress_fail) {
                 MAlert.alert(entity.getData());
             }
         }
+    }
+
+    private void setTopAddress() {
+        //将默认地址置顶
+        AddressBean defaultAddress = new AddressBean();
+        for (int i = 0; i < addressBeanArrayList.size(); i++) {
+            AddressBean addressBean = addressBeanArrayList.get(i);
+            if (1 == Double.parseDouble(addressBean.getIs_default())) {
+                defaultAddress = addressBean;
+                addressBeanArrayList.remove(i);
+                break;
+            }
+        }
+        if (addressBeanArrayList.size() > 0) {
+            addressBeanArrayList.add(0, defaultAddress);
+        } else {
+            addressBeanArrayList.add(defaultAddress);
+        }
+        addressBeanArrayList.get(0).setSelect(true);
     }
 }

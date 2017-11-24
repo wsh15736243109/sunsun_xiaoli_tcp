@@ -1,7 +1,10 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.OrderFragments;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -103,6 +106,22 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
                 beginRequest();
             }
         });
+
+        IntentFilter intentFilter = new IntentFilter(Const.ORDER_CHANGE);
+        getActivity().registerReceiver(receiver, intentFilter);
+    }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            beginRequest();
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     public void beginRequest() {

@@ -1,5 +1,6 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
@@ -7,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -56,6 +58,9 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
     ArrayList<GoodsDetailBean> goodsModel;
     private OrderBean.ListEntity entityTemp;
     RePayBean rePayBean;
+    ImageView iv_actionbar_left;
+    TextView txt_totalprice;
+    double price = 0;
 
     @Override
     protected int getLayoutId() {
@@ -74,7 +79,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText("活体购买");
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+//                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    price += createOrderBean.getPay_money();
                     li_goods.addView(view);
                 }
                 break;
@@ -86,7 +92,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText(goodsModel.get(0).getName());
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + goodsModel.get(0).getPrice() / 100 + "</font>"));
+//                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + goodsModel.get(0).getPrice() / 100 + "</font>"));
+                    price += goodsModel.get(0).getPrice();
                     li_goods.addView(view);
                 }
                 break;
@@ -98,9 +105,11 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                         TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                         TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                         txt_product_name.setText(entityTemp.getItems().get(i).getName());
-                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + Double.parseDouble(entityTemp.getItems().get(i).getPrice()) / 100 + "</font>"));
+//                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + Double.parseDouble(entityTemp.getItems().get(i).getPrice()) / 100 + "</font>"));
+//                        price += Double.parseDouble(entityTemp.getItems().get(i).getPrice());
                         li_goods.addView(view);
                     }
+                    price += Double.parseDouble(entityTemp.getPrice());
                 }
                 break;
             case Buy_ShopCart:
@@ -111,7 +120,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                         TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                         TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                         txt_product_name.setText(ar.get(i).getName());
-                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + (ar.get(0).getPrice()) / 100 + "</font>"));
+//                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + (ar.get(0).getPrice()) / 100 + "</font>"));
+                        price += ar.get(0).getPrice() * Integer.parseInt(ar.get(i).getCount());
                         li_goods.addView(view);
                     }
                 }
@@ -126,7 +136,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText("鱼缸清理");
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+//                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    price += createOrderBean.getPay_money();
                     li_goods.addView(view);
                 } else {
                     MAlert.alert("订单有误");
@@ -139,7 +150,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText("预约安装");
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+//                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    price += createOrderBean.getPay_money();
                     li_goods.addView(view);
                 }
                 break;
@@ -150,7 +162,8 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText("造景装饰");
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+//                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    price += createOrderBean.getPay_money();
                     li_goods.addView(view);
                 }
                 break;
@@ -161,11 +174,13 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_product_name = (TextView) view.findViewById(R.id.txt_product_name);
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText("咨询购买");
-                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+//                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + createOrderBean.getPay_money() / 100 + "</font>"));
+                    price += createOrderBean.getPay_money();
                     li_goods.addView(view);
                 }
                 break;
         }
+        txt_totalprice.setText(Html.fromHtml("总计 <font color='red'>￥" + price / 100 + "</font>"));
         lingShouPresenter = new LingShouPresenter(this);
         initTitlebarStyle1(this, actionBar, "支付方式", R.mipmap.ic_left_light, "", 0, "");
 //        if (getIntent().getSerializableExtra("model") instanceof CreateOrderBean) {
@@ -295,6 +310,9 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     if (TextUtils.equals(resultStatus, "9000")) {
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         MAlert.alert("支付成功");
+
+                        beginSendBroadcast();
+
                         if (mApp.makeSureActivity != null) {
                             mApp.makeSureActivity.finish();
                         }
@@ -311,6 +329,18 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
             }
         }
     };
+
+
+    private void beginSendBroadcast() {
+        Intent intent = new Intent(Const.SHOPCART_CHANGE);
+        sendBroadcast(intent);
+
+        Intent intentOrder = new Intent(Const.ORDER_CHANGE);
+        sendBroadcast(intentOrder);
+
+        Intent intentLogin = new Intent(Const.LOGIN_ACTION);
+        sendBroadcast(intentLogin);
+    }
 
     @Override
     public void update(Observable o, Object data) {

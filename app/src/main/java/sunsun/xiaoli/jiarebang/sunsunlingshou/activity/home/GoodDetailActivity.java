@@ -46,6 +46,7 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
     ImageView iv_actionbar_left;
     private AddShopCartFragment jiaru;
     String store_id;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_good_detail;
@@ -53,11 +54,11 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
 
     @Override
     protected void initData() {
-        store_id=getIntent().getStringExtra("store_id");
+        store_id = getIntent().getStringExtra("store_id");
         initTitleBarStyle2(this, actionBar, "", trans_scrollview, this, null);
         actionBar.setNeedTranslucent();
         actionBar.setLeftTitle("");
-        actionBar.setLeftIcon(true,R.mipmap.ic_left_light);
+        actionBar.setLeftIcon(true, R.mipmap.ic_left_light);
         actionBar.setRight(false);
         lingShouPresenter = new LingShouPresenter(this);
         id = getIntent().getStringExtra("id");
@@ -122,7 +123,7 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
     private void setOtherData() {
         name.setText(bean.getName());
         xinghao.setText(bean.getSku_list().get(0).getSku_desc());
-        jiage.setText("￥" + bean.getSku_list().get(0).getPrice());
+        jiage.setText("￥" + Double.parseDouble(bean.getSku_list().get(0).getPrice()) / 100);
         webAdapter = new WebAdapter();
         xlistview.setAdapter(webAdapter);
     }
@@ -132,7 +133,7 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
         for (int i = 0; i < arCarsourImage.size(); i++) {
             String s = arCarsourImage.get(i);
             if (!s.startsWith("http")) {
-                arCarsourImage.set(i,Const.imgurl + s);
+                arCarsourImage.set(i, Const.imgurl + s);
             }
         }
         new LunBoHelper().setLunBoData(this, lunbo, arCarsourImage);
@@ -140,13 +141,15 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
 
     private class WebAdapter extends BaseAdapter {
         ImageView imageView;
+
         public WebAdapter() {
             imageView = new ImageView(GoodDetailActivity.this);
         }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             imageView = new ImageView(GoodDetailActivity.this);
-            GlidHelper.glidLoad(imageView,Const.imgurl+bean.getDetail_img().get(position).getImg_id());
+            GlidHelper.glidLoad(imageView, Const.imgurl + bean.getDetail_img().get(position).getImg_id());
             return imageView;
         }
 

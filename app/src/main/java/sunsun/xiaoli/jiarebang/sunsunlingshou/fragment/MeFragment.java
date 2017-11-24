@@ -67,7 +67,7 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
         boolean isLogin = (boolean) SPUtils.get(getActivity(), null, Const.IS_LOGINED, false);
         if (isLogin) {
             txt_nickname.setText(getSp(Const.NICK));
-            XGlideLoader.displayImageCircular(getActivity(), getSp(Const.HEAD),img_head);
+            XGlideLoader.displayImageCircular(getActivity(), getSp(Const.HEAD), img_head);
         } else {
             txt_nickname.setText("未登录");
             img_head.setImageBitmap(BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.lingshou_logo));
@@ -100,6 +100,10 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.re_settings:
+                if (getSp(Const.UID).equals("")) {
+                    startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
+                    return;
+                }
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.re_mymessage:
@@ -110,7 +114,11 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
                 }
                 break;
             case R.id.re_advice:
-                startActivity(new Intent(getActivity(), AdviceActivity.class).putExtra("title","反馈建议"));
+                if (getSp(Const.UID).equals("")) {
+                    startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
+                    return;
+                }
+                startActivity(new Intent(getActivity(), AdviceActivity.class).putExtra("title", "反馈建议"));
                 break;
             case R.id.img_head:
             case R.id.txt_nickname:

@@ -1,8 +1,10 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -62,11 +64,12 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
     int product_type = 1;
     private ArrayList<ShopCartBean> arrayList = new ArrayList<>();
     TextView noData, heji;
-//    PtrFrameLayout ptrFrame;
+    //    PtrFrameLayout ptrFrame;
     CheckBox all_chekbox;
     TranslucentActionBar actionBar;
-//    VpSwipeRefreshLayout swipe_layout;
+    //    VpSwipeRefreshLayout swipe_layout;
     SwipeRefreshLayout refresh_layout;
+
     public ShopCartChildFragment(int product_type) {
         this.product_type = product_type;
     }
@@ -93,7 +96,7 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        DefaultItemDecoration defaultItem=new DefaultItemDecoration(ContextCompat.getColor(getActivity(), R.color.gray_eee));
+        DefaultItemDecoration defaultItem = new DefaultItemDecoration(ContextCompat.getColor(getActivity(), R.color.gray_eee));
         defaultItem.setmDividerHeight(getResources().getDimensionPixelSize(R.dimen.DIMEN_20DP));
         recyclerView.addItemDecoration(defaultItem);
         recyclerView.setSwipeMenuCreator(swipeMenuCreator);
@@ -104,7 +107,24 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
 //        recyclerView.setLoadMoreView(loadMoreView); // 设置LoadMoreView更新监听。
 //        recyclerView.setLoadMoreListener(mLoadMoreListener); // 加载更多的监听。
         recyclerView.setSwipeMenuItemClickListener(mMenuItemClickListener);
-        li_bottom.setVisibility(View.VISIBLE);
+//        li_bottom.setVisibility(View.VISIBLE);
+
+        IntentFilter intentFilter = new IntentFilter(Const.SHOPCART_CHANGE);
+        getActivity().registerReceiver(receiver, intentFilter);
+
+    }
+
+    BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            beginRequest();
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     /**
@@ -307,7 +327,7 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         for (ShopCartBean shopCartBean : arrayList) {
             if (shopCartBean.isSelect()) {
                 hasSelect = true;
-                totalPrice += shopCartBean.getPrice()*Integer.parseInt(shopCartBean.getCount());
+                totalPrice += shopCartBean.getPrice() / 100 * Integer.parseInt(shopCartBean.getCount());
             }
         }
         if (!hasSelect) {
@@ -406,9 +426,6 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
         judgeIsVisible();
         caculateMoney();
     }
-
-
-
 
 
     /**

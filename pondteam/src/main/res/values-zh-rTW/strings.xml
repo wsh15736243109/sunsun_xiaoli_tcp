@@ -324,7 +324,7 @@
 
     <string name="home">首頁</string>
     <string name="insurance">訂單</string>
-    <string name="pay">咨詢購買</string>
+    <string name="freight_price">咨詢購買</string>
     <string name="shopcart">購物車</string>
     <string name="business">我的</string>
     <string name="appointment_install">預約安裝</string>

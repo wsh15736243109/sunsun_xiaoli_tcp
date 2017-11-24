@@ -35,7 +35,7 @@ class WebActivity : BaseActivity() {
         setContentView(R.layout.activity_web)
         txt_title.text = intent.getStringExtra("title")
         webView.loadUrl(intent.getStringExtra("url"))
-        webView.addJavascriptInterface(JSInterface(),"android")
+        webView.addJavascriptInterface(JSInterface(), "android")
         webSettings = webView.settings
         //设置支持JavaScript
         webSettings?.javaScriptEnabled = true
@@ -43,20 +43,20 @@ class WebActivity : BaseActivity() {
         webView.setWebViewClient(object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 if (intent.getStringExtra("title") == "ConfigInfo") {
-                    webView.loadUrl("javascript:getVersionCode('" + VersionUtil.getVersionCode()+":"+getSp(Const.UID) + "')")
+                    webView.loadUrl("javascript:getVersionCode('" + VersionUtil.getVersionCode() + ":" + getSp(Const.UID) + "')")
 //                    webView.reload()
                 }
 //                super.onPageFinished(view, url)
 
             }
         })
-
+        img_back.setOnClickListener(WebActivity@ this)
     }
 
-    class JSInterface{
+    class JSInterface {
         @JavascriptInterface
-        fun getSomeThing(){
-            MAlert.alert("调用了")
+        fun getSomeThing() {
+            MAlert.alert("当前应用版本号：" + VersionUtil.getVersionCode())
         }
     }
 }

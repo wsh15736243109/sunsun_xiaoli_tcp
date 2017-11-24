@@ -44,7 +44,7 @@ public class MakeSureOrderAdapter extends BaseAdapter {
             GoodsDetailBean goodsDetailBean= (GoodsDetailBean) o;
             holder.setText(R.id.txt_goodsname, goodsDetailBean.getName());
             holder.setText(R.id.txt_guige,goodsDetailBean.getSku_list().get(goodsDetailBean.getSelectPositon()).getSku_desc());
-            holder.setText(R.id.txt_price,"￥"+goodsDetailBean.getSku_list().get(goodsDetailBean.getSelectPositon()).getPrice());
+            holder.setText(R.id.txt_price,"￥"+Double.parseDouble(goodsDetailBean.getSku_list().get(goodsDetailBean.getSelectPositon()).getPrice())/100);
             holder.setText(R.id.txt_count,"x"+goodsDetailBean.getCount());
             GlidHelper.glidLoad((ImageView) holder.getView(R.id.sure_order_icon), Const.imgurl+goodsDetailBean.getSku_list().get(goodsDetailBean.getSelectPositon()).getSkuimg());
             holder.setOnclickListener(R.id.sure_order_root,(MakeSureOrderActivity)context);
@@ -52,7 +52,7 @@ public class MakeSureOrderAdapter extends BaseAdapter {
             ShopCartBean shopCartBean= (ShopCartBean) o;
             holder.setText(R.id.txt_goodsname, shopCartBean.getName());
             holder.setText(R.id.txt_guige,shopCartBean.getSku_desc());
-            holder.setText(R.id.txt_price,"￥"+shopCartBean.getPrice());
+            holder.setText(R.id.txt_price,"￥"+(shopCartBean.getPrice())/100);
             holder.setText(R.id.txt_count,"x"+shopCartBean.getCount());
             GlidHelper.glidLoad((ImageView) holder.getView(R.id.sure_order_icon), Const.imgurl+shopCartBean.getIcon_url());
             holder.setOnclickListener(R.id.sure_order_root,(MakeSureOrderActivity)context);
@@ -61,7 +61,7 @@ public class MakeSureOrderAdapter extends BaseAdapter {
             holder.setText(R.id.txt_goodsname, this.serviceBean.getProduct_info().getName());
             holder.setText(R.id.txt_guige,serviceBean.getSku_desc());
             GlidHelper.glidLoad((ImageView) holder.getView(R.id.sure_order_icon),Const.imgurl+this.serviceBean.getImg().getId());
-            holder.setText(R.id.txt_price,"￥"+serviceBean.getPrice());
+            holder.setText(R.id.txt_price,"￥"+Double.parseDouble(serviceBean.getPrice())/100);
         }
     }
 }
