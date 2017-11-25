@@ -34,6 +34,7 @@ public class UserResponsitory extends BaseNetRepository implements
         IUserInfoInterface<PersonDataBean> {
 
 
+    private final ByJsonRequest.Builder<String> byjsonRequest;
     private String getMostNewWaterPumpDevice = "By_SunsunWaterPump_queryLatest";
     private String cameraUnBind = "By_SunsunSlaveDevice_unbind";//从设备解除绑定
     String api = "103";//接口版本号
@@ -131,6 +132,7 @@ public class UserResponsitory extends BaseNetRepository implements
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
+        byjsonRequest=new ByJsonRequest.Builder<String>();
     }
 
     @Override
@@ -204,7 +206,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("ws_off_tm", ws_off_tm);
         }
         map.put("debug", "0");
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(devidceSet, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -602,60 +604,8 @@ public class UserResponsitory extends BaseNetRepository implements
                 .desEncodeThenBuildAndSend();
     }
 
-    @Override
-    public void sijiRenZheng(String uid, String id_number, String realname, String id_certs) {
-        Type type = new TypeToken<String>() {
-        }.getType();
-        String apiVer = "100";
-        Map<String, Object> map = new HashMap<>();
-        map.put("uid", uid);
-        map.put("id_number", id_number);
-        map.put("realname", realname);
-        map.put("id_certs", id_certs);
-        (new ByJsonRequest.Builder<String>())
-                .setTypeVerParamsAndReturnClass(renzheng, apiVer, map, type)
-                .requestListener(
-                        new BaseSuccessReqListener<String>(
-                                getListener()))
-                .errorListener(new BaseErrorListener(getListener()))
-                .desEncodeThenBuildAndSend();
-    }
 
-    @Override
-    public void jigongRenZheng(String uid, String skills) {
-        Type type = new TypeToken<String>() {
-        }.getType();
-        String apiVer = "100";
-        Map<String, Object> map = new HashMap<>();
-        map.put("uid", uid);
-        map.put("skill_ids", skills);
-        (new ByJsonRequest.Builder<String>())
-                .setTypeVerParamsAndReturnClass(jigongRenZheng, apiVer, map, type)
-                .requestListener(
-                        new BaseSuccessReqListener<String>(
-                                getListener()))
-                .errorListener(new BaseErrorListener(getListener()))
-                .desEncodeThenBuildAndSend();
-    }
 
-    @Override
-    public void weiZhiUpdate(String id, String lat, String lng, String s_id) {
-        Type type = new TypeToken<String>() {
-        }.getType();
-        String apiVer = "100";
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", id);
-        map.put("lat", lat);
-        map.put("lng", lng);
-        map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
-                .setTypeVerParamsAndReturnClass(weizhiUpdate, apiVer, map, type)
-                .requestListener(
-                        new BaseSuccessReqListener<String>(
-                                getListener()))
-                .errorListener(new BaseErrorListener(getListener()))
-                .desEncodeThenBuildAndSend();
-    }
 
     @Override
     public void getConfigApp() {

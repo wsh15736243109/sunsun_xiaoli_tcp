@@ -156,32 +156,6 @@ public interface IUserInfoInterface<PersonDataBean> {
      */
     void updateAddress(String s_id, String id, String uid, String contactname, String mobile, String postal_code, String province, String city, String area, String detailinfo, String defaults, String country, String country_id);
 
-    /**
-     * 司机认证申请
-     *
-     * @param uid
-     * @param id_number 身份证号
-     * @param realname  真实姓名
-     * @param id_certs  身份证图片id,多个英文逗号分割
-     */
-    void sijiRenZheng(String uid, String id_number, String realname, String id_certs);
-
-    /**
-     * 技工认证
-     *
-     * @param uid
-     * @param skills
-     */
-    void jigongRenZheng(String uid, String skills);
-
-    /**
-     * 地理位置更新
-     *
-     * @param id
-     * @param lat 维度
-     * @param lng 经度
-     */
-    void weiZhiUpdate(String id, String lat, String lng, String s_id);
 
     /**
      * 获取全局配置

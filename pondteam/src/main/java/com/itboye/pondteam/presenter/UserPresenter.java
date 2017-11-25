@@ -72,19 +72,6 @@ public class UserPresenter extends BasePresenter implements
     public static String update_address_success = "_update_address_success";
     public static String update_address_fail = "_update_address_fail";
 
-    //司机认证
-    public static String renzheng_success = "_renzheng_success";
-    public static String renzheng_fail = "_renzheng_fail";
-
-
-    //技工认证
-    public static String jg_success = "_jg_success";
-    public static String jg_fail = "_jg_fail";
-    //地理位置更新
-    public static String weizhiUpdate_success = "_weizhiUpdate_success";
-    public static String weizhiUpdate_fail = "_weizhiUpdate_fail";
-
-
     //获取配置
     public static String config_success = "_config_success";
     public static String config_fail = "_config_fail";
@@ -539,81 +526,6 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.updateAddress(s_id, id, uid, contactname, mobile, postal_code, province, city, area, detailinfo, defaults, country, country_id);
-    }
-
-    @Override
-    public void sijiRenZheng(String uid, String id_number, String realname, String id_certs) {
-        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
-                new ICompleteListener() {
-
-                    @Override
-                    public void success(ResultEntity result) {
-                        result.setEventTag(Tag_Success);
-                        result.setEventType(renzheng_success);
-                        UserPresenter.this.setChanged();
-                        UserPresenter.this.notifyObservers(result);
-                    }
-
-                    @Override
-                    public void failure(ResultEntity result) {
-                        result.setEventTag(Tag_Error);
-                        result.setEventType(renzheng_fail);
-                        UserPresenter.this.setChanged();
-                        UserPresenter.this.notifyObservers(result);
-
-                    }
-                });
-        user.sijiRenZheng(uid, id_number, realname, id_certs);
-    }
-
-    @Override
-    public void jigongRenZheng(String uid, String skills) {
-        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
-                new ICompleteListener() {
-
-                    @Override
-                    public void success(ResultEntity result) {
-                        result.setEventTag(Tag_Success);
-                        result.setEventType(jg_success);
-                        UserPresenter.this.setChanged();
-                        UserPresenter.this.notifyObservers(result);
-                    }
-
-                    @Override
-                    public void failure(ResultEntity result) {
-                        result.setEventTag(Tag_Error);
-                        result.setEventType(jg_fail);
-                        UserPresenter.this.setChanged();
-                        UserPresenter.this.notifyObservers(result);
-
-                    }
-                });
-        user.jigongRenZheng(uid, skills);
-    }
-
-    @Override
-    public void weiZhiUpdate(String id, String lat, String lng, String s_id) {
-        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
-                new ICompleteListener() {
-
-                    @Override
-                    public void success(ResultEntity result) {
-                        result.setEventTag(Tag_Success);
-                        result.setEventType(weizhiUpdate_success);
-                        UserPresenter.this.setChanged();
-                        UserPresenter.this.notifyObservers(result);
-                    }
-
-                    @Override
-                    public void failure(ResultEntity result) {
-                        result.setEventTag(Tag_Error);
-                        result.setEventType(weizhiUpdate_fail);
-                        UserPresenter.this.setChanged();
-                        UserPresenter.this.notifyObservers(result);
-
-                    }
-                });
-        user.weiZhiUpdate(id, lat, lng, s_id);
     }
 
     @Override
