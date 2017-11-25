@@ -70,7 +70,7 @@ public class ActivityStepFirst extends BaseActivity {
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_jiarebang)));
                 img.setBackgroundResource(R.drawable.add_jiarebangnew);
             } else if (deviceType == DeviceType.DEVICE_GUOLVTONG) {
-                img.setBackgroundResource(R.drawable.add_jiarebang);
+                img.setBackgroundResource(R.drawable.pondteam_smartconfig);
             } else if (deviceType == DeviceType.DEVICE_SHUIZUDENG) {
                 img.setBackgroundResource(R.drawable.smart_light);
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_smart_light)));

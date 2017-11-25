@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/DIMEN_20DP"
-                android:background="@drawable/add_img2"
+                android:background="@drawable/pondteam_smartconfig"
                 app:ratio="2" />
 
             <TextView
