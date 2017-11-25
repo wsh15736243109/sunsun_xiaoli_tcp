@@ -12,6 +12,7 @@ import com.itboye.pondteam.bean.PondTeamMostNewModel;
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.interfaces.IUserInfoInterface;
+import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.volley.BaseErrorListener;
 import com.itboye.pondteam.volley.BaseNetRepository;
 import com.itboye.pondteam.volley.BaseSuccessReqListener;
@@ -34,7 +35,7 @@ public class UserResponsitory extends BaseNetRepository implements
         IUserInfoInterface<PersonDataBean> {
 
 
-    private final ByJsonRequest.Builder<String> byjsonRequest;
+    private  ByJsonRequest.Builder byjsonRequest;
     private String getMostNewWaterPumpDevice = "By_SunsunWaterPump_queryLatest";
     private String cameraUnBind = "By_SunsunSlaveDevice_unbind";//从设备解除绑定
     String api = "103";//接口版本号
@@ -132,7 +133,8 @@ public class UserResponsitory extends BaseNetRepository implements
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
-        byjsonRequest=new ByJsonRequest.Builder<String>();
+        byjsonRequest=new ByJsonRequest.Builder();
+        byjsonRequest.setBaseWrapUrl(Const.xiaoli_wrapUrl);
     }
 
     @Override
@@ -234,7 +236,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("code", code);
         map.put("email", mobile);
         map.put("password", password);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updatePass, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -250,7 +252,7 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("did", did);
-        (new ByJsonRequest.Builder<DeviceDetailModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getDeviceStatus, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
@@ -280,7 +282,7 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = getMostNewADT;
         }
         map.put("did", did);
-        (new ByJsonRequest.Builder<PondTeamMostNewModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<PondTeamMostNewModel>(
@@ -310,7 +312,7 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = beginUpdateADT;
         }
         map.put("did", did);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -335,7 +337,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (appType.equals("森森新零售")) {
             key = loginTypeKey;
         }
-        (new ByJsonRequest.Builder<PersonDataBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(key, "104", map, type)
                 .requestListener(
                         new BaseSuccessReqListener<PersonDataBean>(
@@ -358,7 +360,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("password", password);
         map.put("from", "0");
         map.put("code", code);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(registerByEmail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -392,7 +394,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (appType == 1) {
             type = new TypeToken<VertifyBean>() {
             }.getType();
-            (new ByJsonRequest.Builder<VertifyBean>())
+            byjsonRequest
                     .setTypeVerParamsAndReturnClass(sendVertificationCode, apiVer, map, type)
                     .requestListener(
                             new BaseSuccessReqListener<VertifyBean>(
@@ -400,7 +402,7 @@ public class UserResponsitory extends BaseNetRepository implements
                     .errorListener(new BaseErrorListener(getListener()))
                     .desEncodeThenBuildAndSend();
         } else {
-            (new ByJsonRequest.Builder<String>())
+            byjsonRequest
                     .setTypeVerParamsAndReturnClass(sendVertificationCode, apiVer, map, type)
                     .requestListener(
                             new BaseSuccessReqListener<String>(
@@ -428,7 +430,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("mobile", mobile);
         map.put("code", code);
         map.put("code_type", code_type);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(yanzhengVertificationCode, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -455,7 +457,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("code", code);
         map.put("email", mobile);
         map.put("password", password);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updatePassByEmail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -475,7 +477,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("code", code);
         map.put("mobile", mobile);
         map.put("password", password);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updatePassByPhone, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -499,7 +501,7 @@ public class UserResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         map.put(types, content);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updateXinxi, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -524,7 +526,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("password", password);
         map.put("new_password", new_password);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(modify_pass, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -551,7 +553,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("default", defaults);
         map.put("country", country);
         map.put("country_id", country_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(address_pass, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -595,7 +597,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("default", defaults);
         map.put("country", country);
         map.put("country_id", country_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(update_address, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -634,7 +636,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("password", oldPass);
         map.put("new_password", newPass);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updatePwdByPwd, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -675,7 +677,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (did.startsWith("S08")) {
             typeKey = getDeviceWeishiQi;
         }
-        (new ByJsonRequest.Builder<DeviceDetailModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
@@ -693,7 +695,7 @@ public class UserResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("did", did);
         map.put("uid", uid);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(bindDevice, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -709,7 +711,7 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
-        (new ByJsonRequest.Builder<ArrayList<DeviceListBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(devidceList, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<DeviceListBean>>(
@@ -738,7 +740,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("dev_lock", dev_lock);
         }
 
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(devidceSet_jiarebang, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -762,7 +764,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("lang", "zh-cn");
         map.put("extra", extra);
         String typeKey = addDevice;
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -779,7 +781,7 @@ public class UserResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("uid", uid);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(devidceDelete, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -822,7 +824,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("is_state_notify", is_state_notify);
 
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deviceUpdate, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -847,7 +849,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (type.equals("S03")) {
             str = getMostNewAq;
         }
-        (new ByJsonRequest.Builder<PondTeamMostNewModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(str, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<PondTeamMostNewModel>(
@@ -863,7 +865,7 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("did", did);
-        (new ByJsonRequest.Builder<DeviceDetailModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getDeviceGuoLvTongDeviceDetail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
@@ -879,7 +881,7 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("did", did);
-        (new ByJsonRequest.Builder<DeviceDetailModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getDeviceJiaReBangStatus, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
@@ -900,7 +902,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("tel", tel);
         map.put("uid", uid);
         map.put("text", text);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(feedBack, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -922,7 +924,7 @@ public class UserResponsitory extends BaseNetRepository implements
         } else if (did.startsWith("S03")) {
             typeKey = beginUpdateVersionOfAq806;
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(beginUpdateVersionOfJiaReBang, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -956,7 +958,7 @@ public class UserResponsitory extends BaseNetRepository implements
                 typeKey = getHistoryTemper_300Ph;
             }
         }
-        (new ByJsonRequest.Builder<ArrayList<TemperatureHistoryBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<TemperatureHistoryBean>>(
@@ -975,7 +977,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("username", username);
         map.put("code", code);
         map.put("password", password);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(registerByPhone, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1015,7 +1017,7 @@ public class UserResponsitory extends BaseNetRepository implements
             //CP1000验证
             typekey = authDevicePwd_CP;
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typekey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1111,7 +1113,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("ph_cmd", ph_cmd);
         }
         map.put("debug", "0");
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deviceSet_806, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1157,7 +1159,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("ph_cmd", ph_cmd);
         }
         map.put("debug", "1");
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deviceSet_300, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1192,7 +1194,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("fcd", fcd);
         }
         map.put("debug", "0");
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deviceSet_shuiBeng, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1208,7 +1210,7 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("master_did", did);
-        (new ByJsonRequest.Builder<ArrayList<DeviceListBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(cameraQuery, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<DeviceListBean>>(
@@ -1229,7 +1231,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("slave_device_type", slave_device_type);
         map.put("slave_name", slave_name);
         map.put("slave_pwd", slave_pwd);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(cameraBind, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1246,7 +1248,7 @@ public class UserResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("master_did", master_did);
         map.put("slave_did", slave_did);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(cameraUnBind, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1283,7 +1285,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (last_upd != -1) {
             map.put("last_update_time", last_upd);
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updateJiaoZhunTime, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1317,7 +1319,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (temp_l != -1) {
             map.put("temp_l", temp_l);
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(update806ph, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1334,7 +1336,7 @@ public class UserResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("abnormal", abnormal);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(jiaReBangExtraUpdate, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1351,7 +1353,7 @@ public class UserResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("id", id);
         map.put("push", s);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(adtExtraUpdate, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1395,7 +1397,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("per", str);
         }
         map.put("debug", "0");
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deviceSet_led, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1420,7 +1422,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (state != -1) {
             map.put("state", state);
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(shuibengExtraUpdate, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1438,7 +1440,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("email", email);
         map.put("code_type", code_type);
         map.put("send_type", send_type);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(sendEmailCode, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1480,7 +1482,7 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         map.put("did", did);
         map.put("uid", uid);
-        (new ByJsonRequest.Builder<DeviceDetailModel>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<DeviceDetailModel>(
@@ -1499,7 +1501,7 @@ public class UserResponsitory extends BaseNetRepository implements
         map.put("device_id", device_id);
         map.put("lang", lang);
         map.put("timezone", timezone);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updateMobileMsg, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -1539,7 +1541,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (push_cfg != -1) {
             map.put("push_cfg", push_cfg);
         }
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deviceSet_qibeng, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(

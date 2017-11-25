@@ -92,7 +92,6 @@ public class XJsonRequest<T> extends Request<T> {
         this.errorListener = errlistener;
     }
 
-
     @Override
     protected void deliverResponse(T response) {
         if (null != listener) {

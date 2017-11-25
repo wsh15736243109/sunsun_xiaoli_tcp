@@ -221,14 +221,14 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         regToWx();
         initLocation();
         initUmeng();
-        Const mConst=new Const();
-        if (BuildConfig.APP_TYPE.equals("森森新零售")) {
-            mConst=new Const("dev.sale.sunsunxiaoli.com");
-            mConst.setSendCodeType("number");
-        }else{
-            mConst=new Const(Const.xiaoli_wrapUrl);
-            mConst.setSendCodeType("sms");
-        }
+//        Const mConst=new Const();
+//        if (BuildConfig.APP_TYPE.equals("森森新零售")) {
+//            mConst=new Const("dev.sale.sunsunxiaoli.com");
+//            mConst.setSendCodeType("number");
+//        }else{
+//            mConst=new Const(Const.xiaoli_wrapUrl);
+//            mConst.setSendCodeType("sms");
+//        }
     }
 
     private void init(Context context) {

@@ -104,7 +104,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
         mApp.mCameraDevice = this;
         dbManager = new DBManager(this);
         aq_did = getIntent().getStringExtra("did");
-        img_right.setBackgroundResource(R.drawable.add_device);
+        img_right.setBackgroundResource(R.drawable.add_device_52);
         txt_title.setText(getString(R.string.myadvice));
         footerView = LayoutInflater.from(this).inflate(R.layout.device_list_footer, null);
         nodata = (RelativeLayout) footerView.findViewById(R.id.nodata);

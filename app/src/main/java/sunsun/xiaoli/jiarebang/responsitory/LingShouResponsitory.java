@@ -9,6 +9,7 @@ import com.itboye.pondteam.bean.ArticalBean;
 import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.bean.MessageListBean;
 import com.itboye.pondteam.bean.PersonDataBean;
+import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.volley.BaseErrorListener;
 import com.itboye.pondteam.volley.BaseNetRepository;
@@ -49,7 +50,7 @@ import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 public class LingShouResponsitory extends BaseNetRepository implements
         ILingShouInterface<PersonDataBean> {
 
-    String api="100";
+    String api = "100";
     private String getNearStore = "By_Stores_queryNearby";// 附近商家
     private String storeDetail = "By_Seller_detail";//商家详情
     private String getMainClassify = "By_Category_queryMainCategory";//获取主要商品分类
@@ -80,21 +81,25 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String getHotSearchGoods = "By_Product_hotsearch";
     private String getServiceSku = "By_Product_serviceSku";
     private String payTest = "By_Order_payOrder";
-    private String getOrderDetail="By_Order_detail";
-    private String tuihuo="By_Order_refundApply";//申请退货
-    private String shouhuo="By_Order_receiveGoods";//确认收货
-    private String storePingJia="By_Order_evaluate";//订单评价
-    private String isMerchant="By_Stores_isStores";//是否为商家
-    private String getMyPublish="By_Stores_storesArt";//我的发布
-    private String addArtical="By_Stores_addArt";
-    private String ArticleInfo="By_Stores_ArtDetail";
-    private String queryProNo="By_Order_modellist";
-    private String getSkuPidInConsultBuy="By_Order_consultBuy";//咨询购买前置
-    private String setDefaultAddress="By_Address_setDefault";//设置默认地址
-    private String wxPrePay="By_Wxpay_prePay";//微信预支付
+    private String getOrderDetail = "By_Order_detail";
+    private String tuihuo = "By_Order_refundApply";//申请退货
+    private String shouhuo = "By_Order_receiveGoods";//确认收货
+    private String storePingJia = "By_Order_evaluate";//订单评价
+    private String isMerchant = "By_Stores_isStores";//是否为商家
+    private String getMyPublish = "By_Stores_storesArt";//我的发布
+    private String addArtical = "By_Stores_addArt";
+    private String ArticleInfo = "By_Stores_ArtDetail";
+    private String queryProNo = "By_Order_modellist";
+    private String getSkuPidInConsultBuy = "By_Order_consultBuy";//咨询购买前置
+    private String setDefaultAddress = "By_Address_setDefault";//设置默认地址
+    private String wxPrePay = "By_Wxpay_prePay";//微信预支付
+
+    private final ByJsonRequest.Builder byjsonRequest;
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
+        byjsonRequest = new ByJsonRequest.Builder();
+        byjsonRequest.setBaseWrapUrl(Const.lingshou_wrapUrl);
     }
 
     public String getDeviceToken() {
@@ -116,7 +121,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("maxDistance", maxDistance);
         map.put("page_index", page_index);
         map.put("page_size", page_size);
-        (new ByJsonRequest.Builder<StoreListBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getNearStore, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<StoreListBean>(
@@ -132,7 +137,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("seller_id", seller_id[0]);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(storeDetail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -147,7 +152,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         }.getType();
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
-        (new ByJsonRequest.Builder<ArrayList<ClassifyBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getMainClassify, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<ClassifyBean>>(
@@ -163,7 +168,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("cate_id", cate_id);
-        (new ByJsonRequest.Builder<GoodsListBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getSeconfClassify, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<GoodsListBean>(
@@ -183,7 +188,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("keyword", keyword);
         map.put("page_index", page_index);
         map.put("page_size", page_size);
-        (new ByJsonRequest.Builder<GoodsListBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getGoodsList, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<GoodsListBean>(
@@ -199,7 +204,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("keyword", keyword);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getKeywordsList, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -215,7 +220,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("id", id[0]);
-        (new ByJsonRequest.Builder<GoodsDetailBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getGoodsDetail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<GoodsDetailBean>(
@@ -236,7 +241,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("page_index", page_index);
         map.put("page_size", page_size);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<OrderBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(queryOrder, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<OrderBean>(
@@ -256,7 +261,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("id", id);
         map.put("sku_pkid", sku_pkid);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(addShopCart, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -274,7 +279,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("product_type", product_type);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<ArrayList<ShopCartBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getShopCart, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<ShopCartBean>>(
@@ -293,7 +298,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("id", id);
         map.put("count", currrentCount);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updateShopCart, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -311,7 +316,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("id", id);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deleteShopCart, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -336,7 +341,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("send_time", send_time);
         map.put("freight_price", freight_price);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<RePayBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(shopCartOrder, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<RePayBean>(
@@ -361,7 +366,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("send_time", send_time);
         map.put("freight_price", freight_price);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<CreateOrderBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(goodsOrder, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<CreateOrderBean>(
@@ -380,7 +385,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("stores_id", stores_id);
         map.put("s_id", s_id);
         map.put("address_id", address_id);
-        (new ByJsonRequest.Builder<FreightPriceBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(queryFreightPrice, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<FreightPriceBean>(
@@ -390,7 +395,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void addAddress(String uid,int is_default,  String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
+    public void addAddress(String uid, int is_default, String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
@@ -411,7 +416,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
 //        map.put("lat", lat);
         map.put("default", is_default);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(addAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -428,7 +433,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<ArrayList<AddressBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(queryAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<AddressBean>>(
@@ -446,7 +451,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("id", id);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(deleteAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -464,7 +469,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("product_code", xuliehao);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(checkProductCode, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -496,7 +501,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("lng", lng);
         map.put("lat", lat);
         map.put("s_id", sp1);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(updateAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -513,7 +518,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("uid", sp);
         map.put("s_id", sp1);
-        (new ByJsonRequest.Builder<ArrayList<AddressBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getDefaultAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<AddressBean>>(
@@ -531,7 +536,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("s_id", s_id);
         map.put("order_code", order_code);
-        (new ByJsonRequest.Builder<CreateOrderBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(rePay, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<CreateOrderBean>(
@@ -549,7 +554,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("area", area);
         map.put("lng", lng);
         map.put("lat", lat);
-        (new ByJsonRequest.Builder<ArticalBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getVerticalArtical, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArticalBean>(
@@ -565,7 +570,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("position", position);
-        (new ByJsonRequest.Builder<ArrayList<BannerBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getBanner, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<BannerBean>>(
@@ -582,7 +587,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         map.put("msg_type", msgType);
-        (new ByJsonRequest.Builder<ArrayList<MessageListBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getMessageList, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<MessageListBean>>(
@@ -599,7 +604,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
         map.put("from_id", from_id);
-        (new ByJsonRequest.Builder<ArrayList<MessageListBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getChatDetail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<MessageListBean>>(
@@ -621,7 +626,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("summary", summary);
         map.put("content", content);
         map.put("extra", extra);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(addMessage, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -636,7 +641,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         }.getType();
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
-        (new ByJsonRequest.Builder<GoodsListBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getHotSearchGoods, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<GoodsListBean>(
@@ -652,7 +657,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("service_type", service_type);
-        (new ByJsonRequest.Builder<ArrayList<ServiceBean>>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getServiceSku, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<ServiceBean>>(
@@ -662,7 +667,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void payTest(String uid,String pay_code, double pay_money, String s_id) {
+    public void payTest(String uid, String pay_code, double pay_money, String s_id) {
         Type type = new TypeToken<CreateOrderBean>() {
         }.getType();
         String apiVer = "100";
@@ -671,7 +676,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("money", pay_money);
         map.put("uid", uid);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<CreateOrderBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(payTest, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<CreateOrderBean>(
@@ -689,7 +694,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", sp);
         map.put("order_code", order_code);
         map.put("s_id", sp1);
-        (new ByJsonRequest.Builder<OrderDetailBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getOrderDetail, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<OrderDetailBean>(
@@ -709,7 +714,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("reason", reason);
         map.put("order_id", order_id);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(tuihuo, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -730,7 +735,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("uid", uid);
         map.put("order_code", order_code);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<SureReceiveGoodsBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(shouhuo, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<SureReceiveGoodsBean>(
@@ -749,7 +754,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("order_code", order_code);
         map.put("evaluate", evaluate);
         map.put("s_id", s_id);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(storePingJia, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -765,7 +770,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = api;
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(isMerchant, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -781,7 +786,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         String apiVer = api;
         Map<String, Object> map = new HashMap<>();
         map.put("uid", uid);
-        (new ByJsonRequest.Builder<MyPublishBean>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getMyPublish, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<MyPublishBean>(
@@ -801,7 +806,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("title", title);
         map.put("img", imgId);
         map.put("detail", content);
-        (new ByJsonRequest.Builder<String>())
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(addArtical, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -813,12 +818,12 @@ public class LingShouResponsitory extends BaseNetRepository implements
     @Override
     public void getArticleInfo(String id) {
 
-        Type type =new TypeToken<MyPublishBean.PublishBean>(){
+        Type type = new TypeToken<MyPublishBean.PublishBean>() {
         }.getType();
-        String apiVer =api;
-        Map<String,Object> map =new HashMap<>();
-        map.put("id",id);
-        (new ByJsonRequest.Builder<MyPublishBean.PublishBean>())
+        String apiVer = api;
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(ArticleInfo, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<MyPublishBean.PublishBean>(
@@ -828,14 +833,14 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void queryProNo(String uid,String s_id) {
-        Type type =new TypeToken<ArrayList<XuLieNoModel>>(){
+    public void queryProNo(String uid, String s_id) {
+        Type type = new TypeToken<ArrayList<XuLieNoModel>>() {
         }.getType();
-        String apiVer =api;
-        Map<String,Object> map =new HashMap<>();
-        map.put("s_id",s_id);
-        map.put("uid",uid);
-        (new ByJsonRequest.Builder<ArrayList<XuLieNoModel>>())
+        String apiVer = api;
+        Map<String, Object> map = new HashMap<>();
+        map.put("s_id", s_id);
+        map.put("uid", uid);
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(queryProNo, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<XuLieNoModel>>(
@@ -845,14 +850,14 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void getSkuPidInConsultBuy(String uid,String sId) {
-        Type type =new TypeToken<String>(){
+    public void getSkuPidInConsultBuy(String uid, String sId) {
+        Type type = new TypeToken<String>() {
         }.getType();
-        String apiVer =api;
-        Map<String,Object> map =new HashMap<>();
-        map.put("s_id",sId);
-        map.put("uid",uid);
-        (new ByJsonRequest.Builder<String>())
+        String apiVer = api;
+        Map<String, Object> map = new HashMap<>();
+        map.put("s_id", sId);
+        map.put("uid", uid);
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(getSkuPidInConsultBuy, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -863,14 +868,14 @@ public class LingShouResponsitory extends BaseNetRepository implements
 
     @Override
     public void setDefaultAddress(String sp, String id, String sp1) {
-        Type type =new TypeToken<String>(){
+        Type type = new TypeToken<String>() {
         }.getType();
-        String apiVer =api;
-        Map<String,Object> map =new HashMap<>();
-        map.put("s_id",sp1);
-        map.put("uid",sp);
-        map.put("id",id);
-        (new ByJsonRequest.Builder<String>())
+        String apiVer = api;
+        Map<String, Object> map = new HashMap<>();
+        map.put("s_id", sp1);
+        map.put("uid", sp);
+        map.put("id", id);
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(setDefaultAddress, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
@@ -881,17 +886,83 @@ public class LingShouResponsitory extends BaseNetRepository implements
 
     @Override
     public void wxPrePay(String pay_code) {
-        Type type =new TypeToken<WxPrePayBean>(){
+        Type type = new TypeToken<WxPrePayBean>() {
         }.getType();
-        String apiVer =api;
-        Map<String,Object> map =new HashMap<>();
-        map.put("pay_code",pay_code);
-        (new ByJsonRequest.Builder<WxPrePayBean>())
+        String apiVer = api;
+        Map<String, Object> map = new HashMap<>();
+        map.put("pay_code", pay_code);
+        byjsonRequest
                 .setTypeVerParamsAndReturnClass(wxPrePay, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<WxPrePayBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();
+    }
+
+
+    private String updatePassByPhone = "By_User_updatePwd";//通过手机号码改密码
+    @Override
+    public void updatePassByPhone(String sid, String country, String code, String mobile, String password) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "101";
+        Map<String, Object> map = new HashMap<>();
+        map.put("s_id", sid);
+        map.put("country", country);
+        map.put("code", code);
+        map.put("mobile", mobile);
+        map.put("password", password);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(updatePassByPhone, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    /**
+     * 发送验证码
+     *
+     * @param country   +86
+     * @param mobile
+     * @param code_type
+     */
+
+    private String sendVertificationCode = "By_SecurityCode_send";//发送验证码
+    @Override
+    public void sendVerificationCode(String country, String mobile, String code_type, int appType) {
+//        if (appType == 1) {
+//            s = VertifyBean.class;
+//        }
+        String apiVer = "101";
+        Map<String, Object> map = new HashMap<>();
+        map.put("country", country);
+        map.put("mobile", mobile);
+        map.put("code_type", code_type);
+        /*appType==1：零售   appType==0 小鲤*/
+        map.put("send_type", appType == 1 ? "1" : "sms");
+        Type type = new TypeToken<String>() {
+        }.getType();
+        if (appType == 1) {
+            type = new TypeToken<VertifyBean>() {
+            }.getType();
+            byjsonRequest
+                    .setTypeVerParamsAndReturnClass(sendVertificationCode, apiVer, map, type)
+                    .requestListener(
+                            new BaseSuccessReqListener<VertifyBean>(
+                                    getListener()))
+                    .errorListener(new BaseErrorListener(getListener()))
+                    .desEncodeThenBuildAndSend();
+        } else {
+            byjsonRequest
+                    .setTypeVerParamsAndReturnClass(sendVertificationCode, apiVer, map, type)
+                    .requestListener(
+                            new BaseSuccessReqListener<String>(
+                                    getListener()))
+                    .errorListener(new BaseErrorListener(getListener()))
+                    .desEncodeThenBuildAndSend();
+        }
     }
 }

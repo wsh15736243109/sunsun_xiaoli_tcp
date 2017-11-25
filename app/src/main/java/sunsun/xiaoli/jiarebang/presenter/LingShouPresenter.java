@@ -1,6 +1,8 @@
 package sunsun.xiaoli.jiarebang.presenter;
 
 import com.itboye.pondteam.bean.PersonDataBean;
+import com.itboye.pondteam.interfaces.IUserInfoInterface;
+import com.itboye.pondteam.responsitory.UserResponsitory;
 import com.itboye.pondteam.volley.BasePresenter;
 import com.itboye.pondteam.volley.ICompleteListener;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -1141,5 +1143,60 @@ public class LingShouPresenter extends BasePresenter implements
             }
         });
         user.wxPrePay(pay_code);
+    }
+
+    public static String update_pass_bymobile_success = "_update_pass_bymobile_success";
+    public static String update_pass_bymobile_fail = "_update_pass_bymobile_fail";
+    @Override
+    public void updatePassByPhone(String sid, String country, String code, String mobile, String password) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(update_pass_bymobile_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(update_pass_bymobile_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.updatePassByPhone(sid, country, code, mobile, password);
+    }
+
+    //发送验证码
+    public static String send_code_fail = "_Send_code_fail";
+    public static String send_code_success = "_Send_code_success";
+    @Override
+    public void sendVerificationCode(String country, String mobile, String code_type, int appType) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(send_code_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(send_code_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.sendVerificationCode(country, mobile, code_type, appType);
     }
 }

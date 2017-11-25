@@ -66,6 +66,10 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
                 Intent intent = new Intent();
                 intent.setAction(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
+
+                Intent intentDevice=new Intent();
+                intentDevice.setAction(Const.DEVICE_CHANGE);
+                sendBroadcast(intentDevice);
                 MAlert.alert("退出成功");
                 finish();
                 break;

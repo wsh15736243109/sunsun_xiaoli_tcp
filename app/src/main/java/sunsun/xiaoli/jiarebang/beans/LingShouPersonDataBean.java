@@ -565,12 +565,14 @@ public class LingShouPersonDataBean {
             }
             SPUtils.put(MyApplication.getInstance(), null,
                     Const.IS_STORE, personDataBean.getIs_stores()+"");
-            if (personDataBean.getIs_stores() .equals("1")) {
-                SPUtils.put(MyApplication.getInstance(), null,
-                        Const.STORE_ID, personDataBean.getStores_id());
-            } else {
-                SPUtils.put(MyApplication.getInstance(), null,
-                        Const.STORE_ID, "");
+            if (personDataBean.getIs_stores()!=null) {
+                if (personDataBean.getIs_stores() .equals("1")) {
+                    SPUtils.put(MyApplication.getInstance(), null,
+                            Const.STORE_ID, personDataBean.getStores_id());
+                } else {
+                    SPUtils.put(MyApplication.getInstance(), null,
+                            Const.STORE_ID, "");
+                }
             }
 //            if (personDataBean.getSign()!=null){
 //                SPUtils.put(MyApplication.getInstance(), null,

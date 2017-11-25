@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@drawable/add_device" />
+            android:src="@drawable/add_device_52" />
     </RelativeLayout>
 
 </LinearLayout>

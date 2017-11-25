@@ -299,11 +299,11 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         SPUtils.put(getActivity(), null, Const.CITY_CODE, cityNo);
         if (index == 2) {
             myTabFragment1.getNearStore();
+            //通知咨询购买Fragment更新数据
+            Intent intent = new Intent(Const.STORE_CHANGE);
+            getActivity().sendBroadcast(intent);
         }
 
-        //通知咨询购买Fragment更新数据
-        Intent intent = new Intent(Const.STORE_CHANGE);
-        getActivity().sendBroadcast(intent);
     }
 
 

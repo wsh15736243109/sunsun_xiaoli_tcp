@@ -65,12 +65,12 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.device_weishiqi,
     };
     int add[] = {
-            R.drawable.add_device, R.drawable.add_device,
-            R.drawable.add_device, R.drawable.add_device,
-            R.drawable.add_device, R.drawable.add_device,
-            R.drawable.add_device, R.drawable.add_device,
-            R.drawable.add_device, R.drawable.add_device,
-            R.drawable.add_device, R.drawable.add_device};
+            R.drawable.add_device_52, R.drawable.add_device_52,
+            R.drawable.add_device_52, R.drawable.add_device_52,
+            R.drawable.add_device_52, R.drawable.add_device_52,
+            R.drawable.add_device_52, R.drawable.add_device_52,
+            R.drawable.add_device_52, R.drawable.add_device_52,
+            R.drawable.add_device_52, R.drawable.add_device_52};
 
     PopupWindow popupWindow;
     private App myApp;

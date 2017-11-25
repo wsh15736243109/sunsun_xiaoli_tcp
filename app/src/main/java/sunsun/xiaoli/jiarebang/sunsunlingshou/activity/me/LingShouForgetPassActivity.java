@@ -17,13 +17,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 public class LingShouForgetPassActivity extends LingShouBaseActivity implements Observer {
 
 
-    UserPresenter userPresenter;
+    LingShouPresenter userPresenter;
     EditText ed_phone, ed_yzm, ed_pwd;
     Button btn_ok;
     private String phone;
@@ -36,7 +37,7 @@ public class LingShouForgetPassActivity extends LingShouBaseActivity implements 
 
     @Override
     protected void initData() {
-        userPresenter = new UserPresenter(this);
+        userPresenter = new LingShouPresenter(this);
     }
 
     @Override

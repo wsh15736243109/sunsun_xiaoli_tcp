@@ -43,6 +43,7 @@ public class Const {
     public static final String SHOPCART_CHANGE = "shopcart_change";
     public static final String ORDER_CHANGE = "order_change";
     public static final String STORE_CHANGE = "store_change";
+    public static final String DEVICE_CHANGE = "device_change";
     public static String CITY_CODE = "330104";
     public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
     public static String lingshou_wrapUrl = "dev.sale.sunsunxiaoli.com";

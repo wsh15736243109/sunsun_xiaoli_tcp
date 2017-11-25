@@ -85,6 +85,11 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                 Intent intent=new Intent();
                 intent.setAction(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
+
+                //通知首页设备列表更新设备
+                Intent intentDevice=new Intent();
+                intentDevice.setAction(Const.DEVICE_CHANGE);
+                sendBroadcast(intentDevice);
                 if (mApp.lingShouSwitchRL!=null) {
                     mApp.lingShouSwitchRL.finish();
                 }

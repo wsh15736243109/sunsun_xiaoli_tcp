@@ -16,7 +16,6 @@ import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.SPUtils;
 import com.itboye.pondteam.utils.udp.VersionUtil;
 
-
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -29,7 +28,8 @@ import java.util.Set;
  * @author w
  */
 public class ByJsonRequest<E> extends XJsonRequest<E> {
-
+    //
+    String baseURl="";
     ByJsonRequest(String url, XRequestListener<E> listener,
                   XErrorListener errlistener) {
         super(url, listener, errlistener);
@@ -38,6 +38,7 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
     ByJsonRequest(int method, String url, XRequestListener<E> listener,
                   XErrorListener errlistener) {
         super(method, url, listener, errlistener);
+
 
     }
 
@@ -60,11 +61,15 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
 
 
         String appv = String.valueOf(VersionUtil.getVersionCode());
+        public Builder<T> setBaseWrapUrl(String wrapUrl){
+            String autoCode = SPUtils.get(MyApplication.getInstance(), null, Const.S_ID, "") + "";
+            this.url="http://" + wrapUrl + "/index.php" + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode + "&lang=" + Const.language;;
+            return this;
+        }
 
         public Builder() {
             map = new HashMap<String, Object>();
             userParam = new HashMap<String, Object>();
-            String autoCode = SPUtils.get(MyApplication.getInstance(), null, Const.S_ID, "") + "";
             // 公共参数
             map.put(Const.APP_VERSION, VersionUtil.getVersionCode());
             map.put(Const.APP_TYPE, "android");
@@ -74,11 +79,11 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
             map.put("client_id", Const.CLIENT_ID);
 
             Const.language = MyApplication.getInstance().getLanguage();
-            if (autoCode.equals("")) {
-                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&lang=" + Const.language;
-            } else {
-                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode + "&lang=" + Const.language;
-            }
+//            if (autoCode.equals("")) {
+//                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&lang=" + Const.language;
+//            } else {
+//                this.url = url + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode + "&lang=" + Const.language;
+//            }
             System.out.println("接口地址" + url);
         }
 
@@ -188,6 +193,8 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
             String jsonStr = gson.toJson(this.userParam);
 
             Log.d("request_params", "----------------------------------请求开始---------------------------------------");
+            Log.d("request_params", url);
+            Log.d("request_params", "----------------------------------url---------------------------------------");
             Log.d("request_params", "请求参数" + jsonStr);
             this.desContent = DESUtil.encode(jsonStr,
                     Const.CLIENT_SECERET);

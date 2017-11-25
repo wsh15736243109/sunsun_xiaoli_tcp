@@ -372,4 +372,25 @@ public interface ILingShouInterface<PersonDataBean> {
      * @param pay_code
      */
     void wxPrePay(String pay_code);
+
+
+    /**
+     * 修改密码通过手机号
+     *
+     * @param sid
+     * @param country
+     * @param code
+     * @param mobile
+     * @param password
+     */
+    void updatePassByPhone(String sid, String country, String code, String mobile, String password);
+
+    /**
+     * 发送验证码
+     *
+     * @param country   +86
+     * @param mobile
+     * @param code_type
+     */
+    void sendVerificationCode(String country, String mobile, String code_type,int appType);
 }
