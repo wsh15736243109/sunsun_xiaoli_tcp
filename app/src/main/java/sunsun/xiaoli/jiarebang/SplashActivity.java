@@ -1,6 +1,7 @@
 package sunsun.xiaoli.jiarebang;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         mApp = (App) getApplication();
+//        getAppDetailSettingIntent(this);
         if (SpContants.APP_TYPE.equals("小鲤智能")) {
             img_splash.setBackgroundResource(R.mipmap.splash);
         } else if (SpContants.APP_TYPE.equals("小绵羊智能")) {
@@ -63,6 +65,33 @@ public class SplashActivity extends BaseActivity {
         } catch (Exception e) {
 
         }
+//        sendNotification();
+
+    }
+
+//    private void sendNotification() {
+//        Notification notification = new Notification.Builder(this)
+//                .setSmallIcon(R.drawable.device_002)//设置小图标
+//                .setContentTitle("这是标题")
+//                .setContentText("这是内容")
+//                .build();
+//        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        notificationManager.notify(0, notification);
+//    }
+
+//    以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
+    private void getAppDetailSettingIntent(Context context) {
+        Intent localIntent = new Intent();
+        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        if (Build.VERSION.SDK_INT >= 9) {
+//            localIntent.setAction("com.android.settings.SubSettings");
+//            localIntent.setData(Uri.fromParts("package", getPackageName(), null));
+//        } else if (Build.VERSION.SDK_INT <= 8) {
+            localIntent.setAction(Intent.ACTION_VIEW);
+            localIntent.setClassName("com.android.settings","com.android.settings.SubSettings");
+            localIntent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+//        }
+        startActivity(localIntent);
     }
 
     private String paserTime(long milliseconds) {
