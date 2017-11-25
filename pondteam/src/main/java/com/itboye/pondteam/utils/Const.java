@@ -44,11 +44,12 @@ public class Const {
     public static final String ORDER_CHANGE = "order_change";
     public static final String STORE_CHANGE = "store_change";
     public static String CITY_CODE = "330104";
-    public static String wrapUrl = "dev.sunsunxiaoli.com";
+    public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
+    public static String lingshou_wrapUrl = "dev.sale.sunsunxiaoli.com";
     //    apisunsun.itboye.com/public => devsunsun.itboye.com=>
 //    dev.sale.sunsunxiaoli.com
-    public static String URL = "http://" + wrapUrl + "/index.php";
-    public static String updaloadURL = "http://" + wrapUrl + "/index.php/file/upload";
+    public static String URL = "http://" + xiaoli_wrapUrl + "/index.php";
+    public static String updaloadURL = "http://" + xiaoli_wrapUrl + "/index.php/file/upload";
 
     public static String imagePath;
     public static String patten = "yyyyMMdd";
@@ -58,10 +59,10 @@ public class Const {
 
     }
 
-    public Const(String wrapUrl) {
-        this.wrapUrl = wrapUrl;
-        this.URL = "http://" + wrapUrl + "/index.php";
-        this.webUrl = "http://" + wrapUrl + "/web.php/web/";
+    public Const(String xiaoli_wrapUrl) {
+        this.xiaoli_wrapUrl = xiaoli_wrapUrl;
+        this.URL = "http://" + xiaoli_wrapUrl + "/index.php";
+        this.webUrl = "http://" + xiaoli_wrapUrl + "/web.php/web/";
         this.aboutMe = webUrl + "/about";
     }
 
@@ -81,7 +82,7 @@ public class Const {
     //帮助中心
     public static String helpUrl = "https://api.ryzcgf.com/public/web.php/web/user_manual";
 
-    public static String webUrl = "http://" + wrapUrl + "/web.php/web";
+    public static String webUrl = "http://" + xiaoli_wrapUrl + "/web.php/web";
 
     public static String aboutMe = webUrl + "/about";
     //银联支付

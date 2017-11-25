@@ -512,8 +512,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 FreightPriceBean freightPriceBean = (FreightPriceBean) entity.getData();
                 freight_price = freightPriceBean.getFreight_price() + "";
                 txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + freightPriceBean.getFreight_price() / 100 + "</font>"));
-                totalPrice += Double.parseDouble(freight_price);
-                txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + totalPrice / 100 + "</font>"));
+//                totalPrice += Double.parseDouble(freight_price);
+                txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + (totalPrice + Double.parseDouble(freight_price))/ 100 + "</font>"));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_success) {

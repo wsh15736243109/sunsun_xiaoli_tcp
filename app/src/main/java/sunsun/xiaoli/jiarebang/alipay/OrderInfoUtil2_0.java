@@ -83,8 +83,8 @@ public class OrderInfoUtil2_0 {
         keyValues.put("version", "1.0");
 
 
-        keyValues.put("notify_url", "http://" + Const.wrapUrl + "/index.php/Alipay/notify");
-        System.out.println("回调    http://" + Const.wrapUrl + "/index.php/Alipay/notify");
+        keyValues.put("notify_url", "http://" + Const.xiaoli_wrapUrl + "/index.php/Alipay/notify");
+        System.out.println("回调    http://" + Const.xiaoli_wrapUrl + "/index.php/Alipay/notify");
 
         return keyValues;
     }

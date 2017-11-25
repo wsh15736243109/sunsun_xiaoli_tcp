@@ -226,7 +226,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
             mConst=new Const("dev.sale.sunsunxiaoli.com");
             mConst.setSendCodeType("number");
         }else{
-            mConst=new Const(Const.wrapUrl);
+            mConst=new Const(Const.xiaoli_wrapUrl);
             mConst.setSendCodeType("sms");
         }
     }
