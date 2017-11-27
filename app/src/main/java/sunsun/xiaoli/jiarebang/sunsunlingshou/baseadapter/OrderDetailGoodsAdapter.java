@@ -58,11 +58,11 @@ public class OrderDetailGoodsAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.txt_count.setText("X"+orderBean.getItems().get(position).getCount());
+        viewHolder.txt_count.setText("X" + orderBean.getItems().get(position).getCount());
         viewHolder.txt_goodsname.setText(orderBean.getItems().get(position).getName());
-        viewHolder.txt_price.setText("￥"+ MathUtil.doubleForm(orderBean.getItems().get(position).getPrice()));
-        viewHolder.txt_guige.setText("X"+orderBean.getItems().get(position).getSku_desc());
-        GlidHelper.glidLoad(viewHolder.sure_order_icon,Const.imgurl+orderBean.getItems().get(position).getImg());
+        viewHolder.txt_price.setText("￥" + MathUtil.doubleForm(orderBean.getItems().get(position).getPrice()));
+        viewHolder.txt_guige.setText(orderBean.getItems().get(position).getSku_desc());
+        GlidHelper.glidLoad(viewHolder.sure_order_icon, Const.imgurl + orderBean.getItems().get(position).getImg());
         return convertView;
     }
 

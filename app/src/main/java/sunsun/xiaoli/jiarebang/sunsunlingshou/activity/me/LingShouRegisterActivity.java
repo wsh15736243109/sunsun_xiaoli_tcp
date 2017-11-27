@@ -19,11 +19,12 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
+import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 
 public class LingShouRegisterActivity extends LingShouBaseActivity implements Observer {
 
 
-    UserPresenter userPresenter;
+    LingShouPresenter userPresenter;
     EditText ed_phone, ed_pwd1, ed_pwd2, ed_yanzhengma;
     CheckBox check_xieyi;
     TextView txt_sendyzm;
@@ -41,7 +42,7 @@ public class LingShouRegisterActivity extends LingShouBaseActivity implements Ob
     @Override
     protected void initData() {
         mApp= (App) getApplication();
-        userPresenter = new UserPresenter(this);
+        userPresenter = new LingShouPresenter(this);
     }
 
     @Override
@@ -106,13 +107,13 @@ public class LingShouRegisterActivity extends LingShouBaseActivity implements Ob
                 finish();
             }else if (entity.getEventType()== UserPresenter.registerByPhone_fail) {
                 MAlert.alert(entity.getData());
-            }else if (entity.getEventType()== UserPresenter.send_code_success) {
+            }else if (entity.getEventType()== LingShouPresenter.send_code_success) {
                 VertifyBean bean= (VertifyBean) entity.getData();
                 code=bean.getCode();
                 MAlert.alert("验证码是："+code);
                 TimeCount timeCount=new TimeCount(60000,1000,txt_sendyzm);
                 timeCount.start();
-            }else if (entity.getEventType()== UserPresenter.send_code_fail) {
+            }else if (entity.getEventType()== LingShouPresenter.send_code_fail) {
                 MAlert.alert(entity.getData());
             }
         }

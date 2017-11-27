@@ -119,6 +119,9 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                     SPUtils.put(this, null, Const.SELECT_ADDRESS, json);
                     //通知首页更改显示的城市
                     notifyAddressChanged();
+                    Intent intent=new Intent();
+                    intent.putExtra("model",addressSelect);
+                    setResult(103,intent);
                     finish();
 //                    lingShouPresenter.setDefaultAddress(getSp(Const.UID),addressSelect.getId(),getSp(Const.S_ID));
                 } else {

@@ -72,7 +72,7 @@ public class SPUtils {
 		}
 		SharedPreferences sp = context.getSharedPreferences(file_name, Context.MODE_PRIVATE);
 		if (defaultObject instanceof String){
-			return sp.getString(key, (String) defaultObject);
+			return sp.getString(key,  defaultObject+"");
 		} else if (defaultObject instanceof Integer){
 			return sp.getInt(key, (Integer) defaultObject);
 		} else if (defaultObject instanceof Boolean){

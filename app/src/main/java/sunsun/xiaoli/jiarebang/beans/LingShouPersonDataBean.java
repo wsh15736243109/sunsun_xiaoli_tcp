@@ -546,7 +546,7 @@ public class LingShouPersonDataBean {
             }
             if (personDataBean.getHead() != null) {
                 SPUtils.put(MyApplication.getInstance(), null,
-                        Const.HEAD, personDataBean.getHead());
+                        Const.imgurl+Const.HEAD, personDataBean.getHead());
             }
             if (personDataBean.getNickname() != null) {
                 SPUtils.put(MyApplication.getInstance(), null,

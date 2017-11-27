@@ -179,8 +179,8 @@ public class LocationUtil {
             }
             Log.i("BaiduLocationApiDem", sb.toString());
             SPUtils.put(context, null, Const.CITY, location.getAddress().city);
-            SPUtils.put(context, null, Const.LAT, location.getLatitude());
-            SPUtils.put(context, null, Const.LNG, location.getLongitude());
+            SPUtils.put(context, null, Const.LOCATION_LAT, location.getLatitude());
+            SPUtils.put(context, null, Const.LOCATION_LNG, location.getLongitude());
             Const.lat = location.getLatitude();
             Const.lng = location.getLongitude();
             locationResult.getLatAndLng(location.getAddress().city, location.getLatitude(), location.getLongitude());

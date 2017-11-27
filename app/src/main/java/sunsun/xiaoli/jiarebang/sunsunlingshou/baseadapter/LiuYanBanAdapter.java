@@ -35,7 +35,7 @@ public class LiuYanBanAdapter extends BaseAdapter {
         holder.setText(R.id.txt_nickname, entityList.getNickname());
         holder.setText(R.id.txt_time, TimesUtils.getStringTime(entityList.getSend_time(), "yyyy.MM.dd"));
         holder.setText(R.id.txt_content, entityList.getContent());
-        XGlideLoader.displayImageCircular(activity, entityList.getFrom_id(), (ImageView) holder.getView(R.id.img_head));
+        XGlideLoader.displayImageCircularForUser(activity, entityList.getFrom_id(), (ImageView) holder.getView(R.id.img_head));
         if (entityList.getMsg_status() == 0) {
             //旧消息
             holder.setViewBackgroundResource(R.id.img_news, R.drawable.liuyanban_old);

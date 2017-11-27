@@ -15,7 +15,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.OrderFragments.OrderChildFragment;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static sunsun.xiaoli.jiarebang.R.id.order_cancel;
 import static sunsun.xiaoli.jiarebang.R.id.order_pro_status;
@@ -114,7 +114,7 @@ public class ModeAdapter extends BaseAdapter {
                 totoalCount += model.getCount();
                 order_pro_money.setText("￥" + Double.parseDouble(model.getPrice()) / 100);
 //                totoalMoney += Double.parseDouble(entityList.getPrice()) / 100 * model.getCount();
-                GlidHelper.glidLoad(order_pro_img, Const.imgurl + model.getImg());
+                XGlideLoader.displayImage(activity.getContext(), Const.imgurl + model.getImg(),order_pro_img);
                 li_goodsContainer.addView(viewGoods);
             }
         }

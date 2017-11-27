@@ -42,7 +42,7 @@ public class ProductOrderFragment extends LingShouBaseFragment {
         orderChildFragment4 = new OrderChildFragment(7);
         orderChildFragment5 = new OrderChildFragment(6);
         fragments = new Fragment[]{orderChildFragment1, orderChildFragment2, orderChildFragment3, orderChildFragment4, orderChildFragment5};
-        pageTitles = new String[]{getString(R.string.all_order), getString(R.string.obligation_order), getString(R.string.receiving_order), getString(R.string.finished_order), getString(R.string.evaluated_order)};
+        pageTitles = new String[]{getString(R.string.all_order), getString(R.string.daizhifu_order), getString(R.string.receiving_order), getString(R.string.finished_order), getString(R.string.evaluated_order)};
         adapter = new BaseFragmentAdapter(getChildFragmentManager(), fragments, pageTitles);
         order_view_pager.setAdapter(adapter);
         order_view_pager.setOffscreenPageLimit(fragments.length);

@@ -1,10 +1,12 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.OrderFragments;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,8 +30,10 @@ import sunsun.xiaoli.jiarebang.beans.OrderBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.OrderDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.StorePingJiaActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.TuiKuanShenQingActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.PayTypeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.ModeAdapter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.model.OrderDetailBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.refreshrecyvlerview.callback.PullToRefreshListener;
 
@@ -55,6 +59,9 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
     private OrderBean.ListEntity entityTemp;
 
     PtrFrameLayout ptrFrame;
+    private OrderDetailBean orderDetailBean;
+
+    ProgressDialog progressDialog;
 
     public OrderChildFragment(int status) {
         this.status = status;
@@ -73,7 +80,7 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
 
     @Override
     protected void initData() {
-
+        progressDialog = new ProgressDialog(getActivity());
 //        lingShouPresenter.queryOrder("11",query_status,keyword,page_index,page_size,"itboye");
         //-------------------GridView Style-----------------
         //  final GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
@@ -152,8 +159,14 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
             case R.id.order_pro_status:
                 entityTemp = (OrderBean.ListEntity) v.getTag();
                 if (entityTemp.getPay_status() == 0) {
-                    BuyType buyType=BuyType.Buy_OrderPay;
-                    startActivity(new Intent(getActivity(), PayTypeActivity.class).putExtra("model", entityTemp).putExtra("buyType",buyType));
+                    BuyType buyType = BuyType.Buy_OrderPay;
+                    startActivity(new Intent(getActivity(), PayTypeActivity.class).putExtra("model", entityTemp).putExtra("buyType", buyType));
+                } else if (entityTemp.getPay_status() == 1 && entityTemp.getOrder_status() == 5) {
+                    //已经确认收货的订单
+                    progressDialog.setMessage(getString(R.string.get_order_info_ing));
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+                    lingShouPresenter.getOrderDetail(getSp(Const.UID), entityTemp.getOrder_code(), getSp(Const.S_ID));
                 }
 
                 break;
@@ -179,11 +192,21 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());
+                try {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setDialoadDismiss(progressDialog);
+                        }
+                    }, 1500);
+                } catch (Exception e) {
+
+                }
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.queryOrder_success) {
                 orderBean = (OrderBean) entity.getData();
-                if (page_index==1) {
+                if (page_index == 1) {
                     listEntityArrayList.clear();
                 }
                 listEntityArrayList.addAll(orderBean.getList());
@@ -204,7 +227,46 @@ public class OrderChildFragment extends LingShouBaseFragment implements PullToRe
                 }
             } else if (entity.getEventType() == LingShouPresenter.queryOrder_success) {
                 MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == LingShouPresenter.getOrderDetail_success) {
+                orderDetailBean = (OrderDetailBean) entity.getData();
+                if (orderDetailBean == null) {
+                    progressDialog.setMessage(getString(R.string.get_order_info_error));
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setDialoadDismiss(progressDialog);
+                        }
+                    }, 1500);
+                    return;
+                }else{
+                    progressDialog.setMessage(getString(R.string.get_order_info_success));
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            setDialoadDismiss(progressDialog);
+                        }
+                    }, 1500);
+                    startActivity(new Intent(getActivity(), TuiKuanShenQingActivity.class).putExtra("model", orderDetailBean).putExtra("type", "SHOUHUO"));
+                }
+            } else if (entity.getEventType() == LingShouPresenter.getOrderDetail_fail) {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setDialoadDismiss(progressDialog);
+                    }
+                }, 1500);
+                MAlert.alert(entity.getData());
             }
+        }
+    }
+
+    private void setDialoadDismiss(ProgressDialog loadingDialog) {
+        try {
+            if (loadingDialog != null && loadingDialog.isShowing() && !getActivity().isFinishing() && this != null) {
+                loadingDialog.dismiss();
+            }
+        } catch (Exception e) {
+
         }
     }
 }

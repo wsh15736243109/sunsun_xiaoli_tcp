@@ -186,6 +186,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     public SQLiteDatabase db;// 数据库
     private final String DB_FILENAME = "itboye.db";
     private String DB_PATH;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -280,19 +281,19 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
                 getString(R.string.device_yuancheng_ph),
                 getString(R.string.device_zhinengbianpinshuibeng),
                 getString(R.string.device_chitangguolv),
-                BuildConfig.APP_TYPE.equals("小绵羊智能")?getString(R.string.device_zhinengshexiangtou_yihu):getString(R.string.device_zhinengshexiangtou),
+                BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou),
                 getString(R.string.device_shuizudeng),
                 getString(R.string.device_zhinengqibeng),
                 getString(R.string.device_weishiqing)};
     }
 
     private void initLocation() {
-        locationUtil=new LocationUtil(getApplicationContext(), this);
+        locationUtil = new LocationUtil(getApplicationContext(), this);
     }
 
 
     private void regToWx() {
-        iwxapi = WXAPIFactory.createWXAPI(getApplicationContext(), BuildConfig.WX_APP_ID,false);
+        iwxapi = WXAPIFactory.createWXAPI(getApplicationContext(), BuildConfig.WX_APP_ID, false);
         iwxapi.registerApp(BuildConfig.WX_APP_ID);
     }
 
@@ -326,7 +327,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
 
             @Override
             public void onSuccess(String deviceToken) {
-                System.out.println(">>>deviceToken成功" + deviceToken+">>package"+getPackageName());
+                System.out.println(">>>deviceToken成功" + deviceToken + ">>package" + getPackageName());
                 token = deviceToken;
 //                MAlert.alert(">>>deviceToken"+deviceToken);
             }
@@ -559,12 +560,13 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         getQueue().add(request);
     }
 
+
     @Override
     public void getLatAndLng(String cityName, double lat, double lng) {
-//        try {
-//            homeFragment.setCityName(cityName, lat, lng);
-//        } catch (Exception e) {
-//
-//        }
+        try {
+            homeFragment.setCityName("", cityName, lat, lng);
+        } catch (Exception e) {
+
+        }
     }
 }

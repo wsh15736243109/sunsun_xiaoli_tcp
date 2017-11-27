@@ -62,7 +62,6 @@ public class LingShouForgetPassActivity extends LingShouBaseActivity implements 
                 userPresenter.updatePassByPhone(getSp(Const.S_ID), "+86", yzm, phone, pwd);
                 break;
             case R.id.txt_sendyzm:
-
                 phone = ed_phone.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     MAlert.alert("请输入手机号码");

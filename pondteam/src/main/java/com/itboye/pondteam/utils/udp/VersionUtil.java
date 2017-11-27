@@ -38,4 +38,24 @@ public class VersionUtil {
         }
         return "" + appVersion;
     }
+
+    /**
+     * 获取App的版本号
+     *
+     * @return 返回App的版本号
+     */
+    public static String getVersionName() {
+        String appVersion = "";
+        try {
+
+            PackageManager pm = MyApplication.getInstance()
+                    .getPackageManager();
+            PackageInfo info = pm.getPackageInfo(MyApplication.getInstance()
+                    .getPackageName(), 0);
+            appVersion = info.versionName;
+        } catch (Exception e) {
+
+        }
+        return "" + appVersion;
+    }
 }

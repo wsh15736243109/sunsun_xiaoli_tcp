@@ -70,12 +70,13 @@ public class HomeNearStoreAdapter extends BaseAdapter {
         holder.txt_shangjianame.setText(list.getName());
         holder.txt_people.setText("联系人:" + list.getContacts());
         holder.txt_juli.setText("距离:" + list.getDistance() + "m");
-        holder.txt_phone.setText("手机:" + list.getPhone());
-        holder.txt_mobile.setText("电话:" + list.getMobile());
+        holder.txt_phone.setText("手机:" + list.getMobile() );
+        holder.txt_mobile.setText("电话:" + list.getPhone());
         holder.txt_addr.setText("地址:" + list.getAddress());
         holder.score.setNumStars(5);
         holder.score.setRating(Integer.parseInt(list.getGrade()));
         holder.txt_boda.setTag(list);
+        holder.txt_boda.setOnClickListener(context);
         XGlideLoader.displayImageCircular(context.getActivity(), list.getLogo(), holder.img_shangjia);
         return convertView;
     }

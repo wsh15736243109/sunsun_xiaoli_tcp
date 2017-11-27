@@ -1,8 +1,7 @@
 package sunsun.xiaoli.jiarebang.presenter;
 
 import com.itboye.pondteam.bean.PersonDataBean;
-import com.itboye.pondteam.interfaces.IUserInfoInterface;
-import com.itboye.pondteam.responsitory.UserResponsitory;
+import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.volley.BasePresenter;
 import com.itboye.pondteam.volley.ICompleteListener;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -108,6 +107,8 @@ public class LingShouPresenter extends BasePresenter implements
     public static String setDefaultAddress_fail = "_setDefaultAddress_fail";
     public static String wxPrePay_success="_wxPrePay_success";
     public static String wxPrePay_fail="_wxPrePay_fail";
+    public static String updateUserMessage_success="_updateUserMessage_success";
+    public static String updateUserMessage_fail="_updateUserMessage_success";
 
 
     public LingShouPresenter(Observer observer) {
@@ -1149,7 +1150,7 @@ public class LingShouPresenter extends BasePresenter implements
     public static String update_pass_bymobile_fail = "_update_pass_bymobile_fail";
     @Override
     public void updatePassByPhone(String sid, String country, String code, String mobile, String password) {
-        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
                 new ICompleteListener() {
 
                     @Override
@@ -1198,5 +1199,85 @@ public class LingShouPresenter extends BasePresenter implements
                     }
                 });
         user.sendVerificationCode(country, mobile, code_type, appType);
+    }
+
+    public static String registerByPhone_success = "_registerByPhone_success";
+    public static String registerByPhone_fail = "_registerByPhone_fail";
+    @Override
+    public void registerByPhone(String s, String username, String code, String password) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(registerByPhone_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(registerByPhone_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+                });
+        user.registerByPhone(s, username, code, password);
+    }
+    // 用户登录
+    public static final String login_success = UserPresenter.class.getName()
+            + "_User_success";
+    public static final String login_fail = UserPresenter.class.getName()
+            + "_User_fail";
+    @Override
+    public void login(String country, String username, String pwd, String appType) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(login_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(login_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.login(country, username, pwd, appType);
+    }
+
+    @Override
+    public void updateUserMessage(String sid, String uid, String nickName, int sex, String sign, String email, String weixin, String company, String job_title, String loc_country, String loc_area) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(updateUserMessage_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(updateUserMessage_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.updateUserMessage( sid,  uid,  nickName,  sex,  sign,  email,  weixin,  company,  job_title,  loc_country,  loc_area);
     }
 }

@@ -26,12 +26,12 @@
                 android:layout_marginTop="@dimen/DIMEN_5DP"
                 app:ratio="1.5">
 
-                <com.baidu.mapapi.map.MapView
+                <com.baidu.mapapi.map.TextureMapView
                     android:id="@+id/mapView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </com.baidu.mapapi.map.MapView>
+                </com.baidu.mapapi.map.TextureMapView>
             </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
 
             <RelativeLayout

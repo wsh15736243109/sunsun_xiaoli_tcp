@@ -1,6 +1,7 @@
 package sunsun.xiaoli.jiarebang.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -15,25 +16,62 @@ import sunsun.xiaoli.jiarebang.R;
 public class XGlideLoader {
     /**
      * 单图片查看--加载图片
+     *
      * @param context
      * @param path
      * @param imageView
      */
     public static void displayImage(Context context, String path, ImageView imageView) {
-        Glide.with(context).load(Const.imgurl +path).error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo).into(imageView);
+
+        String imgPath=path.startsWith("http") ?path : Const.imgurl + path;
+        Glide.with(context).load(imgPath).error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo).into(imageView);
+        Log.v("request_params", "图片路径"+imgPath);
     }
     /**
+     * 单图片查看--加载图片
+     *
+     * @param context
+     * @param path
+     * @param imageView
+     */
+    public static void displayImageForUser(Context context, String path, ImageView imageView) {
+        String imgPath=path.startsWith("http") ?path : Const.imgurl + path;
+        Glide.with(context).load(imgPath).error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo).into(imageView);
+        Log.v("request_params", "图片路径"+imgPath);
+    }
+
+    /**
      * 单图片查看--加载图片(圆形图片)
+     *
      * @param context
      * @param path
      * @param imageView
      */
     public static void displayImageCircular(Context context, String path, ImageView imageView) {
+        String imgPath=path.startsWith("http") ?path : Const.imgurl + path;
         Glide.with(context)
-                .load(Const.imgurl+path)
+                .load(imgPath)
                 .transform(new GlideCircleTransform(context))
                 .error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo)
                 .into(imageView);
+        Log.v("request_params", "图片路径"+imgPath);
+
+    }
+    /**
+     * 单图片查看--加载图片(圆形图片)
+     *
+     * @param context
+     * @param path
+     * @param imageView
+     */
+    public static void displayImageCircularForUser(Context context, String path, ImageView imageView) {
+        String imgPath=path.startsWith("http") ?path : Const.IMAGE_HEAD + path;
+        Glide.with(context)
+                .load(imgPath)
+                .transform(new GlideCircleTransform(context))
+                .error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo)
+                .into(imageView);
+        Log.v("request_params", "图片路径"+imgPath);
 
     }
 

@@ -28,11 +28,10 @@
 
         <ImageView
             android:id="@+id/img_head"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/DIMEN_40DP"
+            android:layout_height="@dimen/DIMEN_40DP"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/img_arrow"
-            android:background="@mipmap/ic_launcher_round" />
+            android:layout_toLeftOf="@+id/img_arrow" />
 
         <ImageView
             android:id="@+id/img_arrow"
@@ -97,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/version_arrow"
-            android:text="1.1.2" />
+            android:text="" />
 
         <ImageView
             android:id="@+id/version_arrow"

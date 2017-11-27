@@ -136,7 +136,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         switch (this.type) {
             case 0:
                 near_store.setVisibility(View.VISIBLE);
-                getNearStore();
+//                getNearStore();
                 break;
             case 1:
                 getDeviceList();
@@ -166,9 +166,9 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(Const.STORE_CHANGE)) {
-                lingShouPresenter.getHotSearchGoods();
-            } else if (action.equals(Const.DEVICE_CHANGE)) {
+            if (action.equals(Const.STORE_CHANGE) && type == 0) {
+                getNearStore();
+            } else if (action.equals(Const.DEVICE_CHANGE) && type == 1) {
                 getDeviceList();
             }
         }
@@ -178,7 +178,14 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         if (lingShouPresenter == null) {
             lingShouPresenter = new LingShouPresenter(this);
         }
-        lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", pageIndex, 10);
+        if (!(getSp(Const.CITY_CODE) + "").equals("") && !(getSp(Const.LNG) + "").equals("")) {
+            lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", pageIndex, 10);
+        } else if (!(getSp(Const.LOCATION_LAT) + "").equals("") && !(getSp(Const.LOCATION_LNG) + "").equals("")) {
+            lingShouPresenter.getNearStore("", getSp(Const.LOCATION_LAT) + "", getSp(Const.LOCATION_LNG) + "", "", "", pageIndex, 10);
+        } else {
+            //什么都没有获取到则将默认的经纬度cityCode获取附近商家
+            lingShouPresenter.getNearStore("330100", Const.lat + "", Const.lat + "", "", "", pageIndex, 10);
+        }
     }
 
     @Override
@@ -191,9 +198,9 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 view.setMinimumWidth(getActivity().getWindowManager().getDefaultDisplay().getWidth() - 100);
                 tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
                 tvTitle.setChecked(true);
-                tvTitle.setText("手机:" + listEntity1.getPhone());
+                tvTitle.setText("手机:" + listEntity1.getMobile());
                 tvMessage = (RadioButton) view.findViewById(R.id.tvMessage);
-                tvMessage.setText("电话:" + listEntity1.getMobile());
+                tvMessage.setText("电话:" + listEntity1.getPhone());
                 TextView tvBtnLeft = (TextView) view.findViewById(R.id.tvBtnLeft);
                 tvBtnLeft.setOnClickListener(this);
                 TextView tvBtnRight = (TextView) view.findViewById(R.id.tvBtnRight);
@@ -233,7 +240,19 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         progress.setVisibility(View.GONE);
         if (entity != null) {
             if (entity.getCode() != 0) {
-                MAlert.alert(entity.getMsg());
+                try {
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            if (loadingDialog != null) {
+                                setDialoadDismiss(loadingDialog);
+                            }
+                        }
+                    }, 2000);
+                } catch (Exception e) {
+
+                }
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
@@ -241,6 +260,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 recycler_aqhardwareorhotgoods.setNumColumns(1);
                 recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
                 bean = (StoreListBean) entity.getData();
+//                MAlert.alert(bean.getList().size()+"獲取到");
                 HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
                 recycler_aqhardwareorhotgoods.setAdapter(adapter);
                 new MapHelper().setPoint(getActivity(), baiduMap, bean.getList());
@@ -415,7 +435,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
             case 1:
                 if (arrayList != null) {
                     if (arrayList.size() > 0) {
-                        if (position == arrayList.size() - 1 && arrayList.size() < 9) {
+                        if (position == arrayList.size() && arrayList.size() < 9) {
                             //添加更多设备
                             if (getSp(Const.UID).equals("")) {
                                 intent = new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class);
@@ -423,7 +443,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                                 intent = new Intent(getActivity(), AddDeviceNewActivity.class);
                             }
                             startActivity(intent);
-                        } else if (arrayList.size() >= 9) {
+                        } else if (arrayList.size() >= 9 && position == 8) {
                             //查看更多设备
                             intent = new Intent(getActivity(), DeviceActivity.class);
                             startActivity(intent);

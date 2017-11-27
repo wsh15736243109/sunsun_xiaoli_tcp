@@ -116,13 +116,13 @@ public class MessageDetailAdapter extends android.widget.BaseAdapter {
             case 1:
                 holder1 = (Holder1) convertView.getTag();
                 holder1.messageTv.setText(siXinXiangQingModel.get(position).getContent());
-                XGlideLoader.displayImageCircular(activity,siXinXiangQingModel.get(position).getFrom_id(),holder1.img_head_receive);
+                XGlideLoader.displayImageCircularForUser(activity,siXinXiangQingModel.get(position).getFrom_id(),holder1.img_head_receive);
 
                 break;
             case 2:
                 holder2 = (Holder2) convertView.getTag();
                 holder2.messageTv.setText(siXinXiangQingModel.get(position).getContent());
-                XGlideLoader.displayImageCircular(activity,siXinXiangQingModel.get(position).getFrom_id(),holder2.img_head_send);
+                XGlideLoader.displayImageCircularForUser(activity,siXinXiangQingModel.get(position).getFrom_id(),holder2.img_head_send);
                 break;
 
             default:

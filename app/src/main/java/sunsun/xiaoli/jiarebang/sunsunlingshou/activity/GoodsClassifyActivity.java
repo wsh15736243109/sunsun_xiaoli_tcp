@@ -79,9 +79,10 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
             actionBar.setTitle(model.getName());
             li_storeinfo.setVisibility(View.VISIBLE);
             txt_contact.setText("联系人" + model.getContacts());
-            txt_mobile.setText(Html.fromHtml("手机：" + model.getPhone() + "<br />电话：" + model.getMobile()));
+            txt_mobile.setText(Html.fromHtml("手机：" + model.getMobile() + "<br />电话：" + model.getPhone()));
             txt_address.setText("地址" + model.getAddress());
             txt_peisongfei.setText("配送费￥" + model.getFreight_price());
+            txt_boda.setTag(model);
             new LunBoHelper().setLunBoData(this, lunbo, model.getLogo());
         }
 //        adapter2=new MyListViewAdapter2(allData,this,selectIndex);

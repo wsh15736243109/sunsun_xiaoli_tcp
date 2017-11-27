@@ -95,6 +95,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String wxPrePay = "By_Wxpay_prePay";//微信预支付
 
     private final ByJsonRequest.Builder byjsonRequest;
+    private String updateUserMessage="By_User_update";
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -942,7 +943,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("mobile", mobile);
         map.put("code_type", code_type);
         /*appType==1：零售   appType==0 小鲤*/
-        map.put("send_type", appType == 1 ? "1" : "sms");
+        map.put("send_type", code_type);
         Type type = new TypeToken<String>() {
         }.getType();
         if (appType == 1) {
@@ -964,5 +965,68 @@ public class LingShouResponsitory extends BaseNetRepository implements
                     .errorListener(new BaseErrorListener(getListener()))
                     .desEncodeThenBuildAndSend();
         }
+    }
+
+    private String registerByPhone = "By_User_register";
+    @Override
+    public void registerByPhone(String s, String username, String code, String password) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "102";
+        Map<String, Object> map = new HashMap<>();
+        map.put("country", s);
+        map.put("username", username);
+        map.put("code", code);
+        map.put("password", password);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(registerByPhone, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    private String loginTypeKey = "By_User_login";// 用户登录
+    @Override
+    public void login(String country, String username, String pwd, String appType) {
+        Type type = new TypeToken<PersonDataBean>() {
+        }.getType();
+        String apiVer = api;
+        Map<String, Object> map = new HashMap<>();
+        map.put("username", username);
+        map.put("password", pwd);
+        map.put("device_type", "android");
+        map.put("country", country);
+//        map.put("role","role_skilled_worker");
+        map.put("device_token", getDeviceToken());
+        String key = loginTypeKey;
+        if (appType.equals("森森新零售")) {
+            key = loginTypeKey;
+        }
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(key, "104", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<PersonDataBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void updateUserMessage(String sid, String uid, String nickName, int sex, String sign, String email, String weixin, String company, String job_title, String loc_country, String loc_area) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        Map<String, Object> map = new HashMap<>();
+        map.put("s_id", sid);
+        map.put("uid", uid);
+        map.put("nickname", nickName);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(updateUserMessage, "100", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
     }
 }

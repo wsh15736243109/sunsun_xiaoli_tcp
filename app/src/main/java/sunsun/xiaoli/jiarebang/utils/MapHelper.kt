@@ -27,6 +27,7 @@ class MapHelper {
     var descriptor: BitmapDescriptor?=null
     var array: List<out StoreListBean.ListEntity>? = null
     fun setPoint(activity: Activity, baiduMap: BaiduMap, array: List<out StoreListBean.ListEntity>) {
+        baiduMap.clear()
         this.array=array
         descriptor= BitmapDescriptorFactory
                 .fromBitmap(BitmapFactory

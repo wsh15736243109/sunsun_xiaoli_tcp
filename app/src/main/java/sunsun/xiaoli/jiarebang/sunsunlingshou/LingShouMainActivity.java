@@ -46,14 +46,14 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     @IsNeedClick
     TextView index_text, order_text, zixun_buy, shopcart_text, me_text;
     @IsNeedClick
-    ImageView index_image,order_image,zixun_image,shopcart_image,me_image;
+    ImageView index_image, order_image, zixun_image, shopcart_image, me_image;
 
-    int[] selectResource=new int[5];
-    int[] unSelectResource=new int[5];
-    private BroadcastReceiver receiver=new BroadcastReceiver() {
+    int[] selectResource = new int[5];
+    int[] unSelectResource = new int[5];
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Intent intent1=new Intent(LingShouMainActivity.this, LingShouLoginActivity.class);
+            Intent intent1 = new Intent(LingShouMainActivity.this, LingShouLoginActivity.class);
             startActivity(intent1);
         }
     };
@@ -62,15 +62,17 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     protected int getLayoutId() {
         return R.layout.activity_lingshou_main;
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
 //        super.onSaveInstanceState(outState);
     }
+
     @Override
     protected void initData() {
         if (getSp(Const.UID).equals("")) {
             LoginController.setLoginState(new UnLoginState());
-        }else{
+        } else {
             LoginController.setLoginState(new LoginedState());
         }
         fragmentManager = getSupportFragmentManager();
@@ -85,27 +87,38 @@ public class LingShouMainActivity extends LingShouBaseActivity {
         img_value[3] = shopcart_image;
         img_value[4] = me_image;
 
-        selectResource[0]=R.drawable.home_select;
-        selectResource[1]=R.drawable.order_select;
-        selectResource[2]=R.drawable.main_zixunbuy;
-        selectResource[3]=R.drawable.shopcart_select;
-        selectResource[4]=R.drawable.me_select;
-        unSelectResource[0]=R.drawable.home_unselect;
-        unSelectResource[1]=R.drawable.order_unselect;
-        unSelectResource[2]=R.drawable.main_zixunbuy;
-        unSelectResource[3]=R.drawable.shopcart_unselect;
-        unSelectResource[4]=R.drawable.me_unselect;
+        selectResource[0] = R.drawable.home_select;
+        selectResource[1] = R.drawable.order_select;
+        selectResource[2] = R.drawable.main_zixunbuy;
+        selectResource[3] = R.drawable.shopcart_select;
+        selectResource[4] = R.drawable.me_select;
+        unSelectResource[0] = R.drawable.home_unselect;
+        unSelectResource[1] = R.drawable.order_unselect;
+        unSelectResource[2] = R.drawable.main_zixunbuy;
+        unSelectResource[3] = R.drawable.shopcart_unselect;
+        unSelectResource[4] = R.drawable.me_unselect;
         // 第一次启动时选中第0个tab
         setTabSelection(0);
 
-        IntentFilter intentFilter=new IntentFilter(RELOGIN);
-        registerReceiver(receiver,intentFilter);
+        IntentFilter intentFilter = new IntentFilter(RELOGIN);
+        registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        homeFragment = null;
+        orderFragment = null;
+        consultationAndBuyFragment = null;
+        shopCartFragment = null;
+        meFragment = null;
+        unregisterReceiver(receiver);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId()!= R.id.index_layout&&v.getId()!=R.id.me_layout) {
-            if (isGoToLogin()){
+        if (v.getId() != R.id.index_layout && v.getId() != R.id.me_layout) {
+            if (isGoToLogin()) {
                 return;
             }
         }
@@ -130,10 +143,10 @@ public class LingShouMainActivity extends LingShouBaseActivity {
 
     private boolean isGoToLogin() {
         if (getSp(Const.UID).equals("")) {
-            Intent intent=new Intent(this, LingShouSwitchLoginOrRegisterActivity.class);
+            Intent intent = new Intent(this, LingShouSwitchLoginOrRegisterActivity.class);
             startActivity(intent);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -141,8 +154,11 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (shopCartFragment!=null) {
-            shopCartFragment.onActivityResult(requestCode,resultCode,data);
+        if (shopCartFragment != null) {
+            shopCartFragment.onActivityResult(requestCode, resultCode, data);
+        }
+        if (homeFragment != null) {
+            homeFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -157,7 +173,7 @@ public class LingShouMainActivity extends LingShouBaseActivity {
         }
         for (int i = 0; i < img_value.length; i++) {
             ImageView imageView = img_value[i];
-            if (imageView.getId()!= R.id.zixun_image) {
+            if (imageView.getId() != R.id.zixun_image) {
                 imageView.setBackgroundResource(unSelectResource[i]);
             }
         }

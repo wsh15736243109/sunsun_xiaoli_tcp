@@ -160,8 +160,8 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.sunsun_xiaoli_debug
-//            signingConfig signingConfigs.sunsun_lingshou_debug
+//            signingConfig signingConfigs.sunsun_xiaoli_debug
+            signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug
@@ -172,8 +172,8 @@ android {
 //            buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
 //            buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
-            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
-//            buildConfigField("String", "APP_TYPE", '"森森新零售"')
+//            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
+            buildConfigField("String", "APP_TYPE", '"森森新零售"')
 //            buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
         }
     }

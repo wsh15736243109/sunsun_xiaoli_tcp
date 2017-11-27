@@ -44,7 +44,11 @@ public class Const {
     public static final String ORDER_CHANGE = "order_change";
     public static final String STORE_CHANGE = "store_change";
     public static final String DEVICE_CHANGE = "device_change";
-    public static String CITY_CODE = "330104";
+    public static final String USERINFO_CHANGE = "userinfo_change";
+    public static final String LOCATION_LAT = "location_lat";
+    public static final String LOCATION_LNG = "location_lng";
+
+    public static String CITY_CODE = "330100";
     public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
     public static String lingshou_wrapUrl = "dev.sale.sunsunxiaoli.com";
     //    apisunsun.itboye.com/public => devsunsun.itboye.com=>
@@ -72,9 +76,10 @@ public class Const {
 //
 //    public static final String TN_URL_01 = "https://api.ryzcgf.com/public/index.php/upacp/appPreauth";//银联支付
     public static int time = 0;
-    //单列图片查看接口
-    public static final String IMAGE_HEAD = "https://api.ryzcgf.com/public/index.php/picture/index?id=";
+    //用户头像查看接口
+    public static final String IMAGE_HEAD = "http://dev.sale.sunsunxiaoli.com/index.php/picture/avatar?uid=";
 
+    //单图片查看接口
     public static final String imgurl = "http://dev.sale.sunsunxiaoli.com/index.php/picture/index?id=";
     //注册
     public static String webRegisterUrl = "http://api.ryzcgf.com/public/web.php/registerByEmail/repairer";

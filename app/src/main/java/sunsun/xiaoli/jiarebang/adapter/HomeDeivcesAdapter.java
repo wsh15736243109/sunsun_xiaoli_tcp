@@ -59,21 +59,20 @@ public class HomeDeivcesAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         Drawable drawableTop = null;
-        if (position == 8 && deviceTypeArray.size() >= 8) {
+        if (position == 8 && deviceTypeArray.size() >= 9) {
             holder.txt_device.setText("更多");
-        } else if (deviceTypeArray.size() < 8 && position == deviceTypeArray.size()) {
+        } else if (deviceTypeArray.size() <= 9 && position == deviceTypeArray.size()) {
             holder.txt_device.setText("添加设备");
             drawableTop = context.getResources().getDrawable(R.drawable.add_device_90);
             drawableTop.setBounds(0, 0, drawableTop.getMinimumWidth(), drawableTop.getMinimumHeight());
             holder.txt_device.setCompoundDrawables(null, drawableTop, null, null);
-        } else if (position <= deviceTypeArray.size() - 2) {
+        } else if (position <= deviceTypeArray.size() - 1) {
             DeviceListBean deviceListBean = deviceTypeArray.get(position);
             if (deviceListBean.getDid().startsWith("S01")) {
                 //过滤桶
                 drawableTop = context.getResources().getDrawable(R.drawable.device_chitangguolv);
             } else if (deviceListBean.getDevice_type().startsWith("S02")) {
                 //加热棒
-
                 drawableTop = context.getResources().getDrawable(R.drawable.device_jiarebang);
             } else if (deviceListBean.getDevice_type().equalsIgnoreCase("S03")) {
                 //806

@@ -4,12 +4,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.itboye.pondteam.base.BaseActivity;
+import com.itboye.pondteam.base.LingShouBaseActivity;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.SPUtils;
 
@@ -31,7 +30,7 @@ import sunsun.xiaoli.jiarebang.utils.SpContants;
  *
  * @author young
  */
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends LingShouBaseActivity {
 
     Handler handler;
     boolean hasLogined = false;
@@ -40,9 +39,12 @@ public class SplashActivity extends BaseActivity {
     private boolean isFirstInstall;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    protected int getLayoutId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    protected void initData() {
         mApp = (App) getApplication();
 //        getAppDetailSettingIntent(this);
         if (SpContants.APP_TYPE.equals("小鲤智能")) {
@@ -52,21 +54,20 @@ public class SplashActivity extends BaseActivity {
         } else if (SpContants.APP_TYPE.equals("pondTeam")) {
             img_splash.setBackgroundResource(R.drawable.splash_pondteam);
         }else if (SpContants.APP_TYPE.equals("森森新零售")) {
-            img_splash.setBackgroundResource(R.drawable.splash_pondteam);
+//            setStatusBarColor(getResources().getColor(R.color.main_lingshou_orange));
+            img_splash.setBackgroundResource(R.drawable.splash_lingshou);
         }
         System.out.println(SpContants.APP_TYPE+"getPackageName()"+getPackageName());
         if (getPackageName().contains("pondlink")) {
             img_splash.setBackgroundResource(R.drawable.pondlink_splash);
         }
-        setStatusBarColor(R.color.gray_eee);
+//        setStatusBarColor(R.color.gray_eee);
         try {
             isFirstInstall = (boolean) SPUtils.get(this, null, Const.IS_FIRST, true);
             hasLogined = (boolean) SPUtils.get(this, null, Const.IS_LOGINED, false);
         } catch (Exception e) {
 
         }
-//        sendNotification();
-
     }
 
 //    private void sendNotification() {

@@ -105,7 +105,7 @@ public class LoginedState implements ILoginState {
 
 	@Override
 	public void goToQueryAddress(Activity activity, Object o) {
-		activity.startActivity(new Intent(activity, AddressListActivity.class).putExtra("title", activity.getString(R.string.choose_address)).putExtra("action", "location_address"));
+		activity.startActivityForResult(new Intent(activity, AddressListActivity.class).putExtra("title", activity.getString(R.string.choose_address)).putExtra("action", "location_address"),101);
 	}
 
 	@Override

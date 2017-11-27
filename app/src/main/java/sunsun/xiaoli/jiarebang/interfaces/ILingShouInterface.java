@@ -393,4 +393,11 @@ public interface ILingShouInterface<PersonDataBean> {
      * @param code_type
      */
     void sendVerificationCode(String country, String mobile, String code_type,int appType);
+
+    void registerByPhone(String s, String phone, String code, String pwd1);
+
+    void login(String country, String phone, String pwd, String appName);
+
+    void updateUserMessage(String sid, String uid, String nickName, int sex, String sign, String email, String weixin, String company, String job_title, String loc_country, String loc_area);
+
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 
 public class HomeHotGoodsAdapter extends BaseAdapter {
@@ -60,10 +60,11 @@ public class HomeHotGoodsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         GoodsListBean.ListEntity publishArray = benas.get(position);
         holder.txt_goodsname.setText(publishArray.getName());
         holder.txt_price.setText("￥" + publishArray.getMin_price());
-        GlidHelper.glidLoad(holder.img_goods, Const.imgurl + publishArray.getMain_img());
+        XGlideLoader.displayImage(context, Const.imgurl + publishArray.getMain_img(),holder.img_goods);
         return convertView;
     }
 

@@ -38,7 +38,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/iv_actionbar_left"
                 android:gravity="center_vertical"
-                android:maxLength="2"
+                android:maxLength="4"
                 android:singleLine="true"
                 android:text="返回"
                 android:visibility="gone" />

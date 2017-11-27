@@ -114,7 +114,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     private String selectAddress;
     private AddressBean selectAddressBean;
     private BroadcastReceiver receiver;
-    private int index;
+    private int index=2;
 
     @Override
     protected int getLayoutId() {
@@ -190,6 +190,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
     @Override
     protected void initData() {
+        hasRe = false;
         fragmentManager = getActivity().getSupportFragmentManager();
 //        Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503478934176&di=45c483741d5b9e90c51e2d5a77cd85ba&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D2183734545c2d562e605d8ae8f78fa9a%2F8435e5dde71190efee7d4ffac41b9d16fdfa6015.jpg").into(testImg);
 //        Glide.with(getActivity()).load("https://www.baidu.com/img/bdlogo.png").transform(new GlideRoundTransform(getActivity(),10)).into(testImg);
@@ -229,7 +230,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         registerBroadcast();
         //获取默认收货地址
         uid = getSp(Const.UID);
-        setSelectAddress();
+//        setSelectAddress();
     }
 
     private void registerBroadcast() {
@@ -248,6 +249,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(receiver);
+        myTabFragment1=null;
+        myTabFragment2=null;
+        myTabFragment3=null;
     }
 
     /**
@@ -288,12 +292,19 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     boolean hasRe = false;
 
     public void setCityName(String cityId, final String cityName, double lat, double lng) {
-        tv_actionbar_left.setText(cityName);
+        if (hasRe == false) {
+            getStore(cityId,cityName,lat,lng);
+            hasRe = true;
+        }
+
+    }
+
+    private void getStore(String cityId, final String cityName, double lat, double lng) {
         String cityNo = cityId;
         if ("".equals(cityId)) {
             cityNo = Util.queryCityNo(cityName);
         }
-
+        tv_actionbar_left.setText(cityName);
         SPUtils.put(getActivity(), null, Const.LNG, lng);
         SPUtils.put(getActivity(), null, Const.LAT, lat);
         SPUtils.put(getActivity(), null, Const.CITY_CODE, cityNo);
@@ -303,7 +314,6 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             Intent intent = new Intent(Const.STORE_CHANGE);
             getActivity().sendBroadcast(intent);
         }
-
     }
 
 
@@ -421,7 +431,6 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             setTabSelection(index);
 //            recycler_aqhardwareorhotgoods.setAdapter(adapter);
         } else if (t.equals("商家")) {
-
 //            recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(),20));
 //            recycler_aqhardwareorhotgoods.setNumColumns(1);
 //            store_fenlei.setVisibility(View.VISIBLE);
@@ -432,6 +441,15 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             setTextStyle(txt_right, "热门商品", R.drawable.rect_yellow, area_right, "商品", R.drawable.shangpin);
             index = 2;
             setTabSelection(index);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 101 && resultCode == 103) {
+            AddressBean addressBean = (AddressBean) data.getSerializableExtra("model");
+            getStore(addressBean.getCityid(),addressBean.getCity(),Double.parseDouble(addressBean.getLat()),Double.parseDouble(addressBean.getLng()));
         }
     }
 

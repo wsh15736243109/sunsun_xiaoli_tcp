@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
 import com.itboye.pondteam.bean.PersonDataBean;
-import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -22,6 +21,7 @@ import java.util.Observer;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.LingShouPersonDataBean;
+import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 
 public class LingShouLoginActivity extends LingShouBaseActivity implements Observer {
 
@@ -62,7 +62,7 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                     MAlert.alert("请输入密码");
                     return;
                 }
-                UserPresenter userPresenter=new UserPresenter(this);
+                LingShouPresenter userPresenter=new LingShouPresenter(this);
                 userPresenter.login(country,phone,pwd,"森森小鲤智能");
                 break;
 
@@ -78,7 +78,7 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                 MAlert.alert(entity.getMsg());
                 return;
             }
-            if (entity.getEventType()== UserPresenter.login_success) {
+            if (entity.getEventType()== LingShouPresenter.login_success) {
                 MAlert.alert("登录成功");
                 PersonDataBean personDataBean= (PersonDataBean) entity.getData();
                 new LingShouPersonDataBean().setPersonData(personDataBean);
@@ -99,7 +99,7 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                 imm.showSoftInput(ed_pwd,InputMethodManager.SHOW_FORCED);
                 imm.hideSoftInputFromWindow(ed_pwd.getWindowToken(), 0); //强制隐藏键盘
                 finish();
-            }else if (entity.getEventType()== UserPresenter.login_fail) {
+            }else if (entity.getEventType()== LingShouPresenter.login_fail) {
                 MAlert.alert(entity.getData());
             }
         }
