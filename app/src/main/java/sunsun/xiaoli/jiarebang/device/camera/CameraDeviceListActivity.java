@@ -379,6 +379,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 Intent intent = new Intent(CameraDeviceListActivity.this, ActivityStepFirst.class);
                 intent.putExtra("aq_did", aq_did);
                 intent.putExtra("device_type", "摄像头");
+                intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 intent.putExtra("position", position);
                 startActivity(intent);
 //						Intent mainIntent = new Intent(AddDeviceNewActivity.this,
@@ -397,6 +398,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                         AddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
                 intent.putExtra("position", position);
+                intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
             }
         });
