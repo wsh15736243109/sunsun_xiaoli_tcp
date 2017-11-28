@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.itboye.pondteam.base.IsNeedClick;
 import com.itboye.pondteam.base.LingShouBaseActivity;
@@ -26,9 +27,9 @@ public class AdviceActivity extends LingShouBaseActivity implements Observer {
     TranslucentActionBar actionBar;
     Button btn_submit;
     @IsNeedClick
-    EditText ed_advice, ed_contact;
+    EditText ed_advice, edit_contact;
     UserPresenter userPresenter;
-
+    ImageView iv_actionbar_left;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_advice;
@@ -38,6 +39,7 @@ public class AdviceActivity extends LingShouBaseActivity implements Observer {
     protected void initData() {
         initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "");
         userPresenter = new UserPresenter(this);
+        edit_contact.setText(getSp(Const.MOBILE));
     }
 
     @Override
@@ -48,7 +50,7 @@ public class AdviceActivity extends LingShouBaseActivity implements Observer {
                 break;
             case R.id.btn_submit:
                 String advice = ed_advice.getText().toString();
-                String contact = ed_contact.getText().toString();
+                String contact = edit_contact.getText().toString();
                 if (advice.equals("")) {
                     MAlert.alert("请输入意见或者建议");
                     return;

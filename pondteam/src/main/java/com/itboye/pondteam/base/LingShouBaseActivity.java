@@ -187,10 +187,15 @@ public abstract class LingShouBaseActivity extends FragmentActivity implements V
      */
     @SuppressLint("NewApi")
     public void closeProgressDialog() {
-        if (progressDialog != null) {
+        try {
+            if (progressDialog != null) {
 //			if (progressDialog.getDialog().isShowing()) {
-            progressDialog.dismiss();
+                progressDialog.dismiss();
 //			}
+            }
+        }catch (Exception e){
+
         }
+
     }
 }

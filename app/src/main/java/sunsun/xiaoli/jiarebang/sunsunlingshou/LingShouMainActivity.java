@@ -107,14 +107,13 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        homeFragment = null;
-        orderFragment = null;
-        consultationAndBuyFragment = null;
-        shopCartFragment = null;
-        meFragment = null;
+//        homeFragment = null;
+//        orderFragment = null;
+//        consultationAndBuyFragment = null;
+//        shopCartFragment = null;
+//        meFragment = null;
         unregisterReceiver(receiver);
     }
-
     @Override
     public void onClick(View v) {
         if (v.getId() != R.id.index_layout && v.getId() != R.id.me_layout) {

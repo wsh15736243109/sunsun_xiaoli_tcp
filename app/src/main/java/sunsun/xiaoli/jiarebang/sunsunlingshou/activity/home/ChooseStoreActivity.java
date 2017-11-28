@@ -37,6 +37,7 @@ import sunsun.xiaoli.jiarebang.beans.FreightPriceBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
 import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
 import sunsun.xiaoli.jiarebang.utils.MapHelper;
@@ -60,7 +61,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
     private StoreListBean.ListEntity listEntity;
     private String addressId;
     private double freightPrice;
-    TextView txt_boda, txt_freight;
+    TextView txt_boda, txt_freight, txt_service_fanwei;
     private String storeId;
     AddressBean selectAddressBean;
 
@@ -173,6 +174,10 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
                 intent.putExtra("model", listEntity);
                 setResult(202, intent);
                 finish();
+                break;
+            case R.id.txt_service_fanwei:
+                startActivity(new Intent(this, WebActivity.class).putExtra("url", Const.SERVICE_FANWEI)
+                        .putExtra("title", "服务范围"));
                 break;
         }
     }

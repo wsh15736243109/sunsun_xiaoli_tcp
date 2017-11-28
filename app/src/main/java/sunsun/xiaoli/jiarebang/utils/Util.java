@@ -370,7 +370,7 @@ public class Util {
         }
         cursor.close();
 
-        SPUtils.put(App.getInstance(), null, Const.CITY_CODE, city.getNumber());
+        SPUtils.put(App.getInstance(), null, Const.CITY_CODE, city.getNumber()+"");
         Log.v("request_params", "城市Code" + city.getNumber());
         return city.getNumber() + "";
     }

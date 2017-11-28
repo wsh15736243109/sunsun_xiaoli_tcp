@@ -109,6 +109,8 @@ public class LingShouPresenter extends BasePresenter implements
     public static String wxPrePay_fail="_wxPrePay_fail";
     public static String updateUserMessage_success="_updateUserMessage_success";
     public static String updateUserMessage_fail="_updateUserMessage_success";
+    public static String getAppConfig_success="_getAppConfig_success";
+    public static String getAppConfig_fail="_getAppConfig_fail";
 
 
     public LingShouPresenter(Observer observer) {
@@ -1279,5 +1281,30 @@ public class LingShouPresenter extends BasePresenter implements
                     }
                 });
         user.updateUserMessage( sid,  uid,  nickName,  sex,  sign,  email,  weixin,  company,  job_title,  loc_country,  loc_area);
+    }
+
+    @Override
+    public void getAppConfig() {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(getAppConfig_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(getAppConfig_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.getAppConfig();
     }
 }

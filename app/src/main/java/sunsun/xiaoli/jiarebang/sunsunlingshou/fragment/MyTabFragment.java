@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,7 +55,6 @@ import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.GoodsClassifyActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.model.DeviceTypeModel;
 import sunsun.xiaoli.jiarebang.utils.MapHelper;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -69,7 +69,6 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     public int type = 0;
     LingShouPresenter lingShouPresenter;
     MyGridView recycler_aqhardwareorhotgoods;
-    ArrayList<DeviceTypeModel> arDevice = new ArrayList<>();
     private int pageIndex = 1;
     private StoreListBean bean;
     private GoodsListBean goodsList;
@@ -105,28 +104,6 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     protected void initData() {
         baiduMap = mapView.getMap();
         loadingDialog = new ProgressDialog(getActivity());
-        DeviceTypeModel deviceListBean = new DeviceTypeModel(R.drawable.home_aq_806, getString(R.string.device_zhineng806));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_jiarebang, getString(R.string.device_zhinengjiarebang));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_ph, getString(R.string.device_yuancheng_ph));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shuibeng, getString(R.string.device_zhinengbianpinshuibeng));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_guolvtong, getString(R.string.device_chitangguolv));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shenxiangtou, getString(R.string.device_zhinengshexiangtou));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shuizudeng, getString(R.string.device_shuizudeng));
-        arDevice.add(deviceListBean);
-        deviceListBean = new DeviceTypeModel(R.drawable.home_aq_228, getString(R.string.device_zhineng228));
-        arDevice.add(deviceListBean);
         //零售接口
         lingShouPresenter = new LingShouPresenter(this);
 
@@ -134,14 +111,15 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         userPresenter = new UserPresenter(this);
         recycler_aqhardwareorhotgoods.setOnItemClickListener(this);
         switch (this.type) {
-            case 0:
+            case 2:
                 near_store.setVisibility(View.VISIBLE);
-//                getNearStore();
+                getNearStore();
                 break;
             case 1:
+                near_store.setVisibility(View.GONE);
                 getDeviceList();
                 break;
-            case 2:
+            case 0:
                 near_store.setVisibility(View.GONE);
                 lingShouPresenter.getHotSearchGoods();
                 break;
@@ -166,7 +144,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(Const.STORE_CHANGE) && type == 0) {
+            if (action.equals(Const.STORE_CHANGE) && type == 2) {
                 getNearStore();
             } else if (action.equals(Const.DEVICE_CHANGE) && type == 1) {
                 getDeviceList();
@@ -178,13 +156,25 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         if (lingShouPresenter == null) {
             lingShouPresenter = new LingShouPresenter(this);
         }
-        if (!(getSp(Const.CITY_CODE) + "").equals("") && !(getSp(Const.LNG) + "").equals("")) {
-            lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", pageIndex, 10);
-        } else if (!(getSp(Const.LOCATION_LAT) + "").equals("") && !(getSp(Const.LOCATION_LNG) + "").equals("")) {
-            lingShouPresenter.getNearStore("", getSp(Const.LOCATION_LAT) + "", getSp(Const.LOCATION_LNG) + "", "", "", pageIndex, 10);
+//        double lng = (double) SPUtils.get(getActivity(), null, Const.LNG, 0);
+//        double lat = (double) SPUtils.get(getActivity(), null, Const.LAT, 0);
+
+
+        String lng = getSp(Const.LNG);
+        String lat = getSp(Const.LAT);
+
+        String location_lng =  getSp(Const.LOCATION_LNG);
+        String location_lat =  getSp(Const.LOCATION_LAT);
+
+//        double location_lng = (double) SPUtils.get(getActivity(), null, Const.LOCATION_LNG, 0);
+//        double location_lat = (double) SPUtils.get(getActivity(), null, Const.LOCATION_LAT, 0);
+        if (!(getSp(Const.CITY_CODE) + "").equals("") && !lng.equals("")&& !lat.equals("")) {
+            lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), lng + "", lat + "", "", "", pageIndex, 10);
+        } else if (!location_lat .equals("") && !location_lng .equals("")) {
+            lingShouPresenter.getNearStore("", location_lat + "", location_lng + "", "", "", pageIndex, 10);
         } else {
             //什么都没有获取到则将默认的经纬度cityCode获取附近商家
-            lingShouPresenter.getNearStore("330100", Const.lat + "", Const.lat + "", "", "", pageIndex, 10);
+            lingShouPresenter.getNearStore("330100", Const.lng + "", Const.lat + "", "", "", pageIndex, 10);
         }
     }
 
@@ -234,6 +224,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         }
     }
 
+
     @Override
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
@@ -249,20 +240,27 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                                 setDialoadDismiss(loadingDialog);
                             }
                         }
-                    }, 2000);
+                    }, 1500);
                 } catch (Exception e) {
 
                 }
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
+
+                near_store.setVisibility(View.VISIBLE);
                 recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(), 20));
                 recycler_aqhardwareorhotgoods.setNumColumns(1);
                 recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
                 bean = (StoreListBean) entity.getData();
-//                MAlert.alert(bean.getList().size()+"獲取到");
-                HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
-                recycler_aqhardwareorhotgoods.setAdapter(adapter);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(MyTabFragment.this, bean.getList(), R.layout.item_home_nearshangjia);
+                        recycler_aqhardwareorhotgoods.setAdapter(adapter);
+                    }
+                });
+
                 new MapHelper().setPoint(getActivity(), baiduMap, bean.getList());
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
@@ -271,6 +269,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 recycler_aqhardwareorhotgoods.setVerticalSpacing(0);
                 recycler_aqhardwareorhotgoods.setNumColumns(2);
                 recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
+                near_store.setVisibility(View.GONE);
                 goodsList = (GoodsListBean) entity.getData();
                 ArrayList<GoodsListBean.ListEntity> arTemp = new ArrayList<>();
                 if (goodsList != null) {
@@ -282,10 +281,13 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 recycler_aqhardwareorhotgoods.setAdapter(adapter);
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_fail) {
                 MAlert.alert(entity.getData());
+                near_store.setVisibility(View.GONE);
             } else if (entity.getEventType() == UserPresenter.getMyDeviceList_success) {
+                near_store.setVisibility(View.GONE);
                 arrayList = (ArrayList<DeviceListBean>) entity.getData();
                 refreshDeviceList();
             } else if (entity.getEventType() == UserPresenter.getMyDeviceList_fail) {
+                near_store.setVisibility(View.GONE);
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 deviceDetailModel = (DeviceDetailModel) entity.getData();
@@ -297,7 +299,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                         public void run() {
                             setDialoadDismiss(loadingDialog);
                         }
-                    }, 2000);
+                    }, 1500);
                     return;
                 } else {
                     loadingDialog.setMessage(getString(R.string.get_device_status_success));
@@ -309,7 +311,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                             public void run() {
                                 setDialoadDismiss(loadingDialog);
                             }
-                        }, 2000);
+                        }, 1500);
                         return;
                     }
                     JSONObject jsonObject = null;
@@ -337,9 +339,14 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                     public void run() {
                         setDialoadDismiss(loadingDialog);
                     }
-                }, 2000);
+                }, 1500);
             }
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
     }
 
     private void startDeviceUI(final boolean hasPsw) {

@@ -107,13 +107,14 @@
                     android:layout_width="wrap_content"
                     android:layout_margin="@dimen/DIMEN_10DP"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:background="@drawable/qq_login" />
 
                 <ImageView
                     android:id="@+id/login_by_WX"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/DIMEN_10DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP"
                     android:layout_toRightOf="@+id/login_by_QQ"
                     android:background="@drawable/weixin_login" />
             </RelativeLayout>

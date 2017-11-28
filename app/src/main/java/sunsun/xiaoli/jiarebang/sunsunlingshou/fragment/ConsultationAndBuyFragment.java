@@ -42,6 +42,7 @@ import sunsun.xiaoli.jiarebang.beans.StoreListBean;
 import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
 import sunsun.xiaoli.jiarebang.utils.MapHelper;
@@ -70,9 +71,8 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
     private AddressBean selectAddressBean;
     private String addressId;
     private String storeId;
-    TextView txt_freight;
+    TextView txt_freight,txt_service_fanwei;
     private ProgressDialog loadingDialog;
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_consultationandbuy;
@@ -207,6 +207,10 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
                 intent.putExtra("model", listEntity);
                 intent.putExtra("canPack", 1);
                 startActivity(intent);
+                break;
+            case R.id.txt_service_fanwei:
+                startActivity(new Intent(getActivity(), WebActivity.class).putExtra("url", Const.SERVICE_FANWEI)
+                        .putExtra("title", "服务范围"));
                 break;
         }
     }

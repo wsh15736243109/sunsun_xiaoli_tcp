@@ -1,10 +1,13 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,6 +32,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.beans.AppConfigBean;
 import sunsun.xiaoli.jiarebang.beans.LingShouPersonDataBean;
 import sunsun.xiaoli.jiarebang.beans.UploadImageBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
@@ -51,7 +55,7 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
 
     RelativeLayout re_sensen;
 
-    RelativeLayout re_nick;
+    RelativeLayout re_nick, re_tiaokuan, re_kefu;
     private LingShouPresenter lingShouPresenter;
     private EditText editText;
     String sign, email, weixin, company, job_title, loc_country, loc_area;
@@ -59,6 +63,9 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
     @IsNeedClick
     TextView txt_nickname, txt_ver;
     private SaveAlertView saveDialog;
+    private Dialog alert;
+    private RadioButton tvTitle;
+    private AppConfigBean appConfigBean;
 
     @Override
     protected int getLayoutId() {
@@ -68,6 +75,7 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
     @Override
     protected void initData() {
         lingShouPresenter = new LingShouPresenter(this);
+        lingShouPresenter.getAppConfig();
         initTitlebarStyle1(this, actionBar, "设置", R.mipmap.ic_left_light, "", 0, "");
         //初始actionBar
         actionBar.setData("设置", 0, "", 0, "", null);
@@ -116,6 +124,48 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
                 break;
             case R.id.re_nick:
                 doUpdateDevice("修改昵称");
+                break;
+            case R.id.re_tiaokuan:
+                startActivity(
+                        new Intent(this, WebActivity.class)
+                                .putExtra("url", Const.TIAOKUAN)
+                                .putExtra("title", "使用条款与协议"));
+                break;
+            case R.id.re_kefu:
+                alert = new Dialog(this, R.style.callphonedialog);
+                View view = View.inflate(this, R.layout.poup_home_callphone, null);
+                view.setMinimumWidth(this.getWindowManager().getDefaultDisplay().getWidth() - 100);
+                tvTitle = (RadioButton) view.findViewById(R.id.tvTitle);
+                tvTitle.setChecked(true);
+                tvTitle.setText("电话:" + appConfigBean.getCustomer_phone().getTel());
+                RadioButton tvMessage = (RadioButton) view.findViewById(R.id.tvMessage);
+//                tvMessage.setText("电话:" + listEntity1.getPhone());
+                tvMessage.setVisibility(View.GONE);
+                TextView tvBtnLeft = (TextView) view.findViewById(R.id.tvBtnLeft);
+                tvBtnLeft.setOnClickListener(this);
+                TextView tvBtnRight = (TextView) view.findViewById(R.id.tvBtnRight);
+                tvBtnRight.setOnClickListener(this);
+                alert.setContentView(view);
+                alert.show();
+                break;
+            case R.id.tvBtnLeft:
+                alert.dismiss();
+                break;
+            case R.id.tvBtnRight:
+                try {
+                    String number = "";
+                    number = appConfigBean.getCustomer_phone().getTel();
+                    if (number.equals("")) {
+                        MAlert.alert("当前电话不可用");
+                        return;
+                    }
+                    intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
+                    intent.setAction(Intent.ACTION_DIAL);
+                    startActivity(intent);
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+                alert.dismiss();
                 break;
         }
     }
@@ -215,6 +265,11 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
                 Intent intent = new Intent(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
             } else if (entity.getEventType() == LingShouPresenter.updateUserMessage_fail) {
+                MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == LingShouPresenter.getAppConfig_success) {
+                appConfigBean = (AppConfigBean) entity.getData();
+
+            } else if (entity.getEventType() == LingShouPresenter.getAppConfig_fail) {
                 MAlert.alert(entity.getData());
             }
         }

@@ -90,7 +90,14 @@ public class Const {
 
     public static String webUrl = "http://" + xiaoli_wrapUrl + "/web.php/web";
 
-    public static String aboutMe = webUrl + "/about";
+    //[关于森森]
+    public static String aboutMe = "http://" + lingshou_wrapUrl + "/web.php/web/about";
+    //[使用条款与协议]
+    public static String TIAOKUAN = "http://" + lingshou_wrapUrl + "/web.php/web/agreement";
+    //[服务介绍]
+    public static String SERVICE = "http://" + lingshou_wrapUrl + "/web.php/web/about";
+    //[咨询购买的服务范围]
+    public static String SERVICE_FANWEI = "http://" + lingshou_wrapUrl + "/web.php/web/about";
     //银联支付
     public static String zhifu = "http://api.ryzcgf.com/public/index.php/upacp/frontConsume/pay_code/";
     /**

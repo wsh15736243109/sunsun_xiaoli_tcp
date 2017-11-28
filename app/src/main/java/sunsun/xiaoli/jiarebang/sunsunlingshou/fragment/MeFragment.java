@@ -26,6 +26,7 @@ import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.SettingActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AdviceActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -36,7 +37,7 @@ import static com.itboye.pondteam.utils.EmptyUtil.getSp;
  */
 public class MeFragment extends LingShouBaseFragment implements Observer {
 
-    RelativeLayout re_settings, re_mymessage, re_mypublish, re_advice;
+    RelativeLayout re_settings, re_mymessage, re_mypublish, re_advice,re_service_jieshao;
     TextView txt_nickname;
     ImageView img_head;
     LingShouPresenter lingShouPresenter;
@@ -118,13 +119,19 @@ public class MeFragment extends LingShouBaseFragment implements Observer {
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                startActivity(new Intent(getActivity(), AdviceActivity.class).putExtra("title", "反馈建议"));
+                startActivity(new Intent(getActivity(), AdviceActivity.class).putExtra("title", "意见反馈"));
                 break;
             case R.id.img_head:
             case R.id.txt_nickname:
                 if (getSp(Const.UID).equals("")) {
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                 }
+                break;
+            case R.id.re_service_jieshao:
+                startActivity(
+                        new Intent(getActivity(), WebActivity.class)
+                                .putExtra("url", Const.SERVICE)
+                                .putExtra("title", "服务介绍"));
                 break;
         }
     }

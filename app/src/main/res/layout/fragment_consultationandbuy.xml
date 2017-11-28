@@ -64,6 +64,7 @@
             android:text="" />
 
         <TextView
+            android:id="@+id/txt_service_fanwei"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/DIMEN_10DP"

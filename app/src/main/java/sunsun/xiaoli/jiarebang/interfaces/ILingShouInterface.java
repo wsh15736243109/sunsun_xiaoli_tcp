@@ -400,4 +400,8 @@ public interface ILingShouInterface<PersonDataBean> {
 
     void updateUserMessage(String sid, String uid, String nickName, int sex, String sign, String email, String weixin, String company, String job_title, String loc_country, String loc_area);
 
+    /**
+     * 获取App的某些配置信息
+     */
+    void getAppConfig();
 }

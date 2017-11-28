@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import sunsun.xiaoli.jiarebang.beans.AddressBean;
+import sunsun.xiaoli.jiarebang.beans.AppConfigBean;
 import sunsun.xiaoli.jiarebang.beans.ClassifyBean;
 import sunsun.xiaoli.jiarebang.beans.CreateOrderBean;
 import sunsun.xiaoli.jiarebang.beans.FreightPriceBean;
@@ -95,7 +96,8 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String wxPrePay = "By_Wxpay_prePay";//微信预支付
 
     private final ByJsonRequest.Builder byjsonRequest;
-    private String updateUserMessage="By_User_update";
+    private String updateUserMessage = "By_User_update";
+    private String getAppConfig = "By_Config_app";
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -903,6 +905,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
 
 
     private String updatePassByPhone = "By_User_updatePwd";//通过手机号码改密码
+
     @Override
     public void updatePassByPhone(String sid, String country, String code, String mobile, String password) {
         Type type = new TypeToken<String>() {
@@ -932,6 +935,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
      */
 
     private String sendVertificationCode = "By_SecurityCode_send";//发送验证码
+
     @Override
     public void sendVerificationCode(String country, String mobile, String code_type, int appType) {
 //        if (appType == 1) {
@@ -968,6 +972,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     private String registerByPhone = "By_User_register";
+
     @Override
     public void registerByPhone(String s, String username, String code, String password) {
         Type type = new TypeToken<String>() {
@@ -988,6 +993,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     }
 
     private String loginTypeKey = "By_User_login";// 用户登录
+
     @Override
     public void login(String country, String username, String pwd, String appType) {
         Type type = new TypeToken<PersonDataBean>() {
@@ -1025,6 +1031,20 @@ public class LingShouResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(updateUserMessage, "100", map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void getAppConfig() {
+        Type type = new TypeToken<AppConfigBean>() {
+        }.getType();
+        Map<String, Object> map = new HashMap<>();
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(getAppConfig, "100", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<AppConfigBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

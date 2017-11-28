@@ -52,7 +52,6 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.RedBagAcitivty;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.model.DeviceTypeModel;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
@@ -96,7 +95,6 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     TextView tv_actionbar_left;
     ImageView testImg;
     private GoodsListBean goodsList;
-    ArrayList<DeviceTypeModel> arDevice = new ArrayList<>();
     //    ProgressBar progress;
     ArticalBean articalBean;
     RatioImageView home_img;
@@ -114,7 +112,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     private String selectAddress;
     private AddressBean selectAddressBean;
     private BroadcastReceiver receiver;
-    private int index=2;
+    private int index = 2;
 
     @Override
     protected int getLayoutId() {
@@ -154,30 +152,30 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         hideFragments(transaction);
 
         switch (index) {
-            case 0://首页
+            case 0://商品
                 if (myTabFragment3 == null) {
                     //如果HomeFragment为空，则创建一个添加到界面
-                    myTabFragment3 = new MyTabFragment(2);
+                    myTabFragment3 = new MyTabFragment(index);
                     transaction.add(R.id.tab_content, myTabFragment3);
                 } else {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(myTabFragment3);
                 }
                 break;
-            case 1://
+            case 1://硬件
                 if (myTabFragment2 == null) {
                     //如果HomeFragment为空，则创建一个添加到界面
-                    myTabFragment2 = new MyTabFragment(1);
+                    myTabFragment2 = new MyTabFragment(index);
                     transaction.add(R.id.tab_content, myTabFragment2);
                 } else {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(myTabFragment2);
                 }
                 break;
-            case 2://
+            case 2://附近商家
                 if (myTabFragment1 == null) {
                     //如果HomeFragment为空，则创建一个添加到界面
-                    myTabFragment1 = new MyTabFragment(0);
+                    myTabFragment1 = new MyTabFragment(index);
                     transaction.add(R.id.tab_content, myTabFragment1);
                 } else {
                     // 如果HomeFragment不为空，则直接将它显示出来
@@ -188,44 +186,22 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         transaction.commit();
     }
 
+
     @Override
     protected void initData() {
         hasRe = false;
-        fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager = getChildFragmentManager();
 //        Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503478934176&di=45c483741d5b9e90c51e2d5a77cd85ba&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D2183734545c2d562e605d8ae8f78fa9a%2F8435e5dde71190efee7d4ffac41b9d16fdfa6015.jpg").into(testImg);
 //        Glide.with(getActivity()).load("https://www.baidu.com/img/bdlogo.png").transform(new GlideRoundTransform(getActivity(),10)).into(testImg);
         app = (App) getActivity().getApplication();
         app.homeFragment = this;
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.getBanner(position);//获取轮播图
-        lingShouPresenter.getVerticalArtical(CITY_CODE, getSp(Const.LNG), getSp(Const.LAT));//获取垂直滚动文章
         initTitleBarStyle2(getActivity(), actionBar, "", pullzoom_scrollview, this, null);
-        DeviceTypeModel deviceListBean = new DeviceTypeModel(R.drawable.home_aq_806, getString(R.string.device_zhineng806));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_jiarebang, getString(R.string.device_zhinengjiarebang));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_ph, getString(R.string.device_yuancheng_ph));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shuibeng, getString(R.string.device_zhinengbianpinshuibeng));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_guolvtong, getString(R.string.device_chitangguolv));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shenxiangtou, getString(R.string.device_zhinengshexiangtou));
-        arDevice.add(deviceListBean);
-
-        deviceListBean = new DeviceTypeModel(R.drawable.home_shuizudeng, getString(R.string.device_shuizudeng));
-        arDevice.add(deviceListBean);
-        deviceListBean = new DeviceTypeModel(R.drawable.home_aq_228, getString(R.string.device_zhineng228));
-        arDevice.add(deviceListBean);
         //开启渐变
         actionBar.setNeedTranslucent(true, false);
         actionBar.setSearchBarVisible(true);
-        setSelectArea("商家");
+        setSelectArea("硬件");
         //注册地址改变广播
         registerBroadcast();
         //获取默认收货地址
@@ -249,9 +225,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(receiver);
-        myTabFragment1=null;
-        myTabFragment2=null;
-        myTabFragment3=null;
+//        myTabFragment1=null;
+//        myTabFragment2=null;
+//        myTabFragment3=null;
     }
 
     /**
@@ -293,7 +269,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
     public void setCityName(String cityId, final String cityName, double lat, double lng) {
         if (hasRe == false) {
-            getStore(cityId,cityName,lat,lng);
+            getStore(cityId, cityName, lat, lng);
+            lingShouPresenter.getVerticalArtical(CITY_CODE, lat + "", lng + "");//获取垂直滚动文章
             hasRe = true;
         }
 
@@ -305,8 +282,8 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             cityNo = Util.queryCityNo(cityName);
         }
         tv_actionbar_left.setText(cityName);
-        SPUtils.put(getActivity(), null, Const.LNG, lng);
-        SPUtils.put(getActivity(), null, Const.LAT, lat);
+        SPUtils.put(getActivity(), null, Const.LNG, lng + "");
+        SPUtils.put(getActivity(), null, Const.LAT, lat + "");
         SPUtils.put(getActivity(), null, Const.CITY_CODE, cityNo);
         if (index == 2) {
             myTabFragment1.getNearStore();
@@ -449,7 +426,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 101 && resultCode == 103) {
             AddressBean addressBean = (AddressBean) data.getSerializableExtra("model");
-            getStore(addressBean.getCityid(),addressBean.getCity(),Double.parseDouble(addressBean.getLat()),Double.parseDouble(addressBean.getLng()));
+            getStore(addressBean.getCityid(), addressBean.getCity(), Double.parseDouble(addressBean.getLat()), Double.parseDouble(addressBean.getLng()));
+
+            lingShouPresenter.getVerticalArtical(CITY_CODE, Double.parseDouble(addressBean.getLat()) + "", Double.parseDouble(addressBean.getLng()) + "");//获取垂直滚动文章
         }
     }
 
@@ -498,15 +477,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 MAlert.alert(entity.getMsg());
                 return;
             }
-            if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
-//                recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
-//                bean = (StoreListBean) entity.getData();
-//                HomeNearStoreAdapter adapter = new HomeNearStoreAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
-////                HomeNearShangJiaAdapter adapter = new HomeNearShangJiaAdapter(this, bean.getList(), R.layout.item_home_nearshangjia);
-//                recycler_aqhardwareorhotgoods.setAdapter(adapter);
-            } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
-                MAlert.alert(entity.getData());
-            } else if (entity.getEventType() == LingShouPresenter.getVerticalArtical_success) {
+            if (entity.getEventType() == LingShouPresenter.getVerticalArtical_success) {
                 articalBean = (ArticalBean) entity.getData();
                 if (articalBean != null) {
                     if (articalBean.getList() != null) {
@@ -534,20 +505,6 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                     new LunBoHelper().setLunBoData(getActivity(), home_carouseview, imgUrl);
                 }
             } else if (entity.getEventType() == LingShouPresenter.getBanner_fail) {
-                MAlert.alert(entity.getData());
-            } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_success) {
-//                recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
-                goodsList = (GoodsListBean) entity.getData();
-                ArrayList<GoodsListBean.ListEntity> arTemp = new ArrayList<>();
-                if (goodsList != null) {
-                    if (goodsList.getList() != null) {
-                        arTemp.addAll(goodsList.getList());
-                    }
-                }
-//                HomeHotGoodsAdapter adapter = new HomeHotGoodsAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
-////                HomeShangPinAdapter adapter = new HomeShangPinAdapter(getActivity(), arTemp, R.layout.item_home_shangpin);
-//                recycler_aqhardwareorhotgoods.setAdapter(adapter);
-            } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_success) {
                 ArrayList<AddressBean> addressBeanArrayList = (ArrayList<AddressBean>) entity.getData();

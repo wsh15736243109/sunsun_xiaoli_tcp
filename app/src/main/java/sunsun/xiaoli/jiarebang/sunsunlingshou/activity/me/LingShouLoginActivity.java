@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
@@ -14,6 +15,7 @@ import com.itboye.pondteam.bean.PersonDataBean;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -32,6 +34,7 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
     String country;
     TextView btn_country;
     App mApp;
+    ImageView login_by_WX;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_ling_shou_login;
@@ -64,15 +67,28 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                 }
                 LingShouPresenter userPresenter=new LingShouPresenter(this);
                 userPresenter.login(country,phone,pwd,"森森小鲤智能");
+                showProgressDialog("登录中,请稍后",true);
+                break;
+            case R.id.login_by_WX:
+                wxLogin();
                 break;
 
         }
+    }
+
+    private void wxLogin() {
+        //发起登录请求
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "零售";
+        App.getInstance().getIwxapi().sendReq(req);
     }
 
 
     @Override
     public void update(Observable o, Object data) {
         ResultEntity entity=handlerError(data);
+        closeProgressDialog();
         if (entity!=null) {
             if (entity.getCode()!=0) {
                 MAlert.alert(entity.getMsg());

@@ -70,6 +70,7 @@
                     </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
 
                     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+                        android:id="@+id/re_service_jieshao"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/DIMEN_1DP"
