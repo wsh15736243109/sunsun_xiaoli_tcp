@@ -106,6 +106,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="无相关订单哦"
+        android:background="@drawable/empty"
         android:visibility="gone" />
 </RelativeLayout>

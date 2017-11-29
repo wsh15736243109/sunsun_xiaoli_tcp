@@ -89,8 +89,15 @@
                 android:layout_below="@+id/li_mylocation">
 
             </android.support.v7.widget.RecyclerView>
-        </RelativeLayout>
 
+        </RelativeLayout>
+    <TextView
+        android:id="@+id/noData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/empty"
+        android:visibility="gone" />
     <Button
         android:id="@+id/btn_sure_address"
         android:layout_width="match_parent"

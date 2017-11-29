@@ -105,12 +105,14 @@ public class LingShouPresenter extends BasePresenter implements
     public static String getSkuPidInConsultBuy_fail = "_getSkuPidInConsultBuy_fail";
     public static String setDefaultAddress_success = "_setDefaultAddress_success";
     public static String setDefaultAddress_fail = "_setDefaultAddress_fail";
-    public static String wxPrePay_success="_wxPrePay_success";
-    public static String wxPrePay_fail="_wxPrePay_fail";
-    public static String updateUserMessage_success="_updateUserMessage_success";
-    public static String updateUserMessage_fail="_updateUserMessage_success";
-    public static String getAppConfig_success="_getAppConfig_success";
-    public static String getAppConfig_fail="_getAppConfig_fail";
+    public static String wxPrePay_success = "_wxPrePay_success";
+    public static String wxPrePay_fail = "_wxPrePay_fail";
+    public static String updateUserMessage_success = "_updateUserMessage_success";
+    public static String updateUserMessage_fail = "_updateUserMessage_success";
+    public static String getAppConfig_success = "_getAppConfig_success";
+    public static String getAppConfig_fail = "_getAppConfig_fail";
+    public static String feedback_success = "_feedback_success";
+    public static String feedback_fail = "_feedback_fail";
 
 
     public LingShouPresenter(Observer observer) {
@@ -495,7 +497,7 @@ public class LingShouPresenter extends BasePresenter implements
     }
 
     @Override
-    public void addAddress(String uid,int is_default, String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
+    public void addAddress(String uid, int is_default, String province, String provinceId, String city, String area, String cityid, String areaid, String detailAddress, String name, String phone, String country_id, String country, String lng, String lat, String s_id) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
                 new ICompleteListener() {
 
@@ -1150,6 +1152,7 @@ public class LingShouPresenter extends BasePresenter implements
 
     public static String update_pass_bymobile_success = "_update_pass_bymobile_success";
     public static String update_pass_bymobile_fail = "_update_pass_bymobile_fail";
+
     @Override
     public void updatePassByPhone(String sid, String country, String code, String mobile, String password) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
@@ -1178,6 +1181,7 @@ public class LingShouPresenter extends BasePresenter implements
     //发送验证码
     public static String send_code_fail = "_Send_code_fail";
     public static String send_code_success = "_Send_code_success";
+
     @Override
     public void sendVerificationCode(String country, String mobile, String code_type, int appType) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
@@ -1205,6 +1209,7 @@ public class LingShouPresenter extends BasePresenter implements
 
     public static String registerByPhone_success = "_registerByPhone_success";
     public static String registerByPhone_fail = "_registerByPhone_fail";
+
     @Override
     public void registerByPhone(String s, String username, String code, String password) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
@@ -1228,11 +1233,13 @@ public class LingShouPresenter extends BasePresenter implements
                 });
         user.registerByPhone(s, username, code, password);
     }
+
     // 用户登录
     public static final String login_success = UserPresenter.class.getName()
             + "_User_success";
     public static final String login_fail = UserPresenter.class.getName()
             + "_User_fail";
+
     @Override
     public void login(String country, String username, String pwd, String appType) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
@@ -1280,7 +1287,7 @@ public class LingShouPresenter extends BasePresenter implements
 
                     }
                 });
-        user.updateUserMessage( sid,  uid,  nickName,  sex,  sign,  email,  weixin,  company,  job_title,  loc_country,  loc_area);
+        user.updateUserMessage(sid, uid, nickName, sex, sign, email, weixin, company, job_title, loc_country, loc_area);
     }
 
     @Override
@@ -1306,5 +1313,30 @@ public class LingShouPresenter extends BasePresenter implements
                     }
                 });
         user.getAppConfig();
+    }
+
+    @Override
+    public void feedback(String name, String email, String tel, String uid, String text) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(feedback_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(feedback_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.feedback(name, email, tel, uid, text);
     }
 }

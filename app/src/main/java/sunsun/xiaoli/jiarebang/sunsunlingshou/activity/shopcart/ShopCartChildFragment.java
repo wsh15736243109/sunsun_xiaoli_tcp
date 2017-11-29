@@ -212,6 +212,7 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
 
             if (direction == SwipeMenuRecyclerView.RIGHT_DIRECTION) {
                 lingShouPresenter.deleteShopCart(getSp(Const.UID), arrayList.get(adapterPosition).getId(), getSp(Const.S_ID));
+                showProgressDialog("正在删除中,请稍后", true);
 //                Toast.makeText(ViewTypeActivity.this, "list第" + adapterPosition + "; 右侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
             } else if (direction == SwipeMenuRecyclerView.LEFT_DIRECTION) {
 //                Toast.makeText(ViewTypeActivity.this, "list第" + adapterPosition + "; 左侧菜单第" + menuPosition, Toast.LENGTH_SHORT).show();
@@ -365,6 +366,11 @@ public class ShopCartChildFragment extends LingShouBaseFragment implements PullT
 
     @Override
     public void update(Observable o, Object data) {
+        try {
+            closeProgressDialog();
+        }catch (Exception e){
+
+        }
         ResultEntity entity = handlerError(data);
         refresh_layout.setRefreshing(false);
         recyclerView.loadMoreFinish(false, true);

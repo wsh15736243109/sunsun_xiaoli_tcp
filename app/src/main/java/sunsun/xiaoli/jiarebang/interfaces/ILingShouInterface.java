@@ -404,4 +404,6 @@ public interface ILingShouInterface<PersonDataBean> {
      * 获取App的某些配置信息
      */
     void getAppConfig();
+
+    void feedback(String name, String email, String tel, String uid, String text);
 }

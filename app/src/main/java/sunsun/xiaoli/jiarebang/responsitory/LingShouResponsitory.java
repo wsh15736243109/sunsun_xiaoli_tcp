@@ -98,6 +98,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private final ByJsonRequest.Builder byjsonRequest;
     private String updateUserMessage = "By_User_update";
     private String getAppConfig = "By_Config_app";
+    private String feedback="By_Suggest_add";
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1045,6 +1046,25 @@ public class LingShouResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(getAppConfig, "100", map, type)
                 .requestListener(
                         new BaseSuccessReqListener<AppConfigBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void feedback(String name, String email, String tel, String uid, String text) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        Map<String, Object> map = new HashMap<>();
+        map.put("name",name);
+        map.put("email",email);
+        map.put("tel",tel);
+        map.put("uid",uid);
+        map.put("text",text);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(feedback, "100", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

@@ -1,5 +1,6 @@
 package com.itboye.pondteam.base;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.itboye.pondteam.utils.loadingutil.LoadingDialog;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -21,11 +23,49 @@ import static com.itboye.pondteam.base.BaseTwoActivity.EVENT_TYPE_UNKNOWN;
  */
 
 public abstract class LingShouBaseFragment extends Fragment implements View.OnClickListener {
+
+    LoadingDialog progressDialog = null;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        progressDialog = new LoadingDialog();
         smartInject();
         initData();
+    }
+
+    /**
+     * 显示进度对话框,带有消息 flag 是否可以取消
+     */
+    @SuppressLint("NewApi")
+    public void showProgressDialog(String message, boolean flag) {
+        if (progressDialog == null)
+            return;
+        setProgressDialogMessage(message);
+        if (!progressDialog.isAdded()) {
+            progressDialog.show(getActivity().getFragmentManager(), message);
+            progressDialog.setCancelable(flag);
+        }
+    }
+
+    /**
+     * 设置进度对话框消息
+     *
+     * @param message
+     */
+    public void setProgressDialogMessage(String message) {
+        progressDialog.setMsg(message);
+    }
+
+    /**
+     * 关闭进度对话框
+     */
+    @SuppressLint("NewApi")
+    public void closeProgressDialog() {
+        if (progressDialog != null) {
+//			if (progressDialog.getDialog().isShowing()) {
+            progressDialog.dismiss();
+//			}
+        }
     }
 
     @Nullable
