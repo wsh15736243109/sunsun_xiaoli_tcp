@@ -369,19 +369,19 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     case Buy_OrderPay: //订单重新支付进入确认订单
                         break;
                     case Buy_LiJiGouMai://立即购买进入确认订单
-//                        if (address_id.equals("")) {
-//                            MAlert.alert("请选择收货地址");
-//                            return;
-//                        }
-//                        if (send_time == null || "".equals(send_time)) {
-//                            MAlert.alert("请选择配送时间");
-//                            return;
-//                        }
-//                        if (store_id == null || "".equals(store_id)) {
-//                            MAlert.alert("请选择商家");
-//                            return;
-//                        }
-                        lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, Double.parseDouble(freight_price) * 100 + "", getSp(Const.S_ID));
+                        if (address_id.equals("")) {
+                            MAlert.alert("请选择收货地址");
+                            return;
+                        }
+                        if (send_time == null || "".equals(send_time)) {
+                            MAlert.alert("请选择配送时间");
+                            return;
+                        }
+                        if (store_id == null || "".equals(store_id)) {
+                            MAlert.alert("请选择商家");
+                            return;
+                        }
+                        lingShouPresenter.goodsOrder(getSp(Const.UID), goodsDetailBeanArray.get(0).getCount(), goodsDetailBeanArray.get(0).getSku_list().get(goodsDetailBeanArray.get(0).getSelectPositon()).getSku_pkid(), address_id, note, store_id, send_type, send_time, Double.parseDouble(freight_price) + "", getSp(Const.S_ID));
                         break;
                     case Buy_ZiXunGouMai:
                         if (address_id.equals("")) {

@@ -93,9 +93,10 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                     TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                     txt_product_name.setText(goodsModel.get(0).getName());
 //                    txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + goodsModel.get(0).getPrice() / 100 + "</font>"));
-                    price += goodsModel.get(0).getPrice();
+//                    price += goodsModel.get(0).getPrice();
                     li_goods.addView(view);
                 }
+                price+=createOrderBean.getPay_money();
                 break;
             case Buy_OrderPay:
                 entityTemp = (OrderBean.ListEntity) getIntent().getSerializableExtra("model");
@@ -121,11 +122,12 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                         TextView txt_price = (TextView) view.findViewById(R.id.txt_price);
                         txt_product_name.setText(ar.get(i).getName());
 //                        txt_price.setText(Html.fromHtml("详情 <font color='red'>￥" + (ar.get(0).getPrice()) / 100 + "</font>"));
-                        price += ar.get(0).getPrice() * Integer.parseInt(ar.get(i).getCount());
+//                        price += ar.get(0).getPrice() * Integer.parseInt(ar.get(i).getCount());
                         li_goods.addView(view);
                     }
                 }
                 rePayBean = (RePayBean) getIntent().getSerializableExtra("model");
+                price= Double.parseDouble(rePayBean.getPay_money());
                 //购物车进入
 //                rePayBean.get
                 break;
@@ -227,11 +229,11 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
                 } else if (rePayBean != null) {
                     CreateOrderBean bean = new CreateOrderBean();
                     bean.setPay_money(Double.parseDouble(rePayBean.getPay_money()));
-                    bean.setPay_code(bean.getPay_code());
-                    bean.setCreate_time(bean.getCreate_time());
+                    bean.setPay_code(rePayBean.getPay_code());
+                    bean.setCreate_time(rePayBean.getCreate_time());
                     //购物车支付
                     if (pay_wx.isChecked()) {
-//                        callWxPay(bean);
+                        lingShouPresenter.wxPrePay(rePayBean.getPay_code());
                     } else {
                         callAliPay(bean);
                     }
@@ -353,7 +355,6 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
             if (entity.getEventType() == LingShouPresenter.payTest_success) {
                 createOrderBean = (CreateOrderBean) entity.getData();
                 if (pay_wx.isChecked()) {
-
 //                    callWxPay(createOrderBean);
                 } else {
                     callAliPay(createOrderBean);
@@ -361,7 +362,6 @@ public class PayTypeActivity extends LingShouBaseActivity implements Observer {
             } else if (entity.getEventType() == LingShouPresenter.payTest_fail) {
                 MAlert.alert(entity.getData() + "fail");
             } else if (entity.getEventType() == LingShouPresenter.rePay_success) {
-                MAlert.alert(entity.getData() + "success");
                 CreateOrderBean createOrderBean = (CreateOrderBean) entity.getData();
 //                lingShouPresenter.payTest(getSp(Const.UID),createOrderBean.getPay_code(),Double.parseDouble(createOrderBean.getPay_money()),getSp(Const.S_ID));
                 //测试支付

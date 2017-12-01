@@ -463,9 +463,9 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         AlertDialog.Builder alert = null;
         switch (v.getId()) {
             case R.id.txt_title:
-                Intent intentWeb=new Intent(this, WebActivity.class);
-                intentWeb.putExtra("title","ConfigInfo");
-                intentWeb.putExtra("url","file:///android_asset/html/config_detail.html");
+                Intent intentWeb = new Intent(this, WebActivity.class);
+                intentWeb.putExtra("title", "ConfigInfo");
+                intentWeb.putExtra("url", "file:///android_asset/html/config_detail.html");
                 startActivity(intentWeb);
                 break;
             case R.id.img_right:
@@ -623,13 +623,8 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 } catch (JSONException e) {
                     psw = "sunsun123456";
                 }
-//                String psw = dbManager.queryDevicePswByDid(currentDid, getSp(Const.UID));
-                if (psw.equals("")) {
-                    startDeviceUI(false);
-                } else {
-                    System.out.println("设备密码" + psw);
-                    userPresenter.authDevicePwd(currentDid, psw, currentType);
-                }
+                System.out.println("设备密码" + psw);
+                userPresenter.authDevicePwd(currentDid, "sunsun123456", currentType);
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
                 new Handler().postDelayed(new Runnable() {

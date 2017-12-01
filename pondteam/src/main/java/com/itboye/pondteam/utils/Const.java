@@ -7,6 +7,9 @@ package com.itboye.pondteam.utils;
 
 public class Const {
 
+    public static final String TAG_SUNSUN = "SUNSUN_XIAOLI";
+
+    public static final String TAG_LINGSHOU = "SUNSUN_XIAOLI";
     public static final String LOGIN_ACTION = "LOGIN_ACTION";
     public static final String ALI_APPID = "2017102409486552";
     public static final String RSA_PRIVATE = "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxTkCQyZn8QtIP\n" +

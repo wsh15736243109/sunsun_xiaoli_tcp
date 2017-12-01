@@ -7,6 +7,8 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -121,7 +123,6 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         mSnifferSmartLinker.setOnSmartLinkListener(this);
         if (!type.contains("摄像头")) {
             loadingDialog = new ProgressDialog(this);
-            loadingDialog.setTitle(getString(R.string.tips));
             loadingDialog.setMessage(getString(R.string.peizhiing));
             loadingDialog.setCanceledOnTouchOutside(false);
             loadingDialog.show();
@@ -398,12 +399,51 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
 //        setZhuangTai(smartConfigType);
     }
 
+    boolean configSuccess = false;
+    int time = 0;
+
     @Override
     public void onCompleted() {
         isBusy = true;
         smartConfigType = SmartConfigType.REGISTER_FINISH;
         setZhuangTai(smartConfigType);
         loadingDialog.setMessage(getString(R.string.smartconfig_finish));
+        configSuccess = true;
+        new Thread(runnable).start();
+    }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            time += 1000;
+            handler.sendEmptyMessage(1);
+        }
+    };
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            Log.v(Const.TAG_SUNSUN,time+"");
+            if (time>=30000) {
+                configSuccess=false;
+                time=0;
+                loadingDialog.dismiss();
+                showReason();
+                smartConfigType = SmartConfigType.RESEARCH;
+                setZhuangTai(smartConfigType);
+                handler.removeCallbacks(runnable);
+            }else {
+                handler.postDelayed(runnable, 1000);
+            }
+        }
+    };
+
+
+    private void showReason(){
+        AlertDialog.Builder alert=new AlertDialog.Builder(this);
+        alert.setMessage(Html.fromHtml(getString(R.string.timeout_reason)));
+        alert.setPositiveButton(getString(R.string.i_know),null);
+        alert.show();
     }
 
 
@@ -452,6 +492,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 break;
             case RESEARCH://重新搜索
                 progress_search.setVisibility(View.GONE);
+                img_finish_search.setVisibility(View.GONE);
                 btn_next.setText(getString(R.string.research));
                 re_search.setVisibility(View.VISIBLE);
                 re_register.setVisibility(View.GONE);
@@ -467,6 +508,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         mSnifferSmartLinker.stop();
         mApp.addDeviceThird = null;
         mApp.isStartSearch = false;
+        try {
+            handler.removeCallbacks(runnable);
+        }catch (Exception e){
+
+        }
     }
 
     @Override
@@ -591,7 +637,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         if (autoDismissDialog != null) {
             autoDismissDialog.dismiss();
         }
+        try {
+            handler.removeCallbacks(runnable);
+        }catch (Exception e){
 
+        }
         Log.d("stepThree", "配置完成");
         smartConfigType = SmartConfigType.SEARCH_FINISH;
         try {
@@ -625,7 +675,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         dialog = alert.create();
         if (!isShow) {
 //            if (!dialog.isShowing()) {
-        alert.show();
+            alert.show();
 //            } else {
 //                dialog.dismiss();
 //            }

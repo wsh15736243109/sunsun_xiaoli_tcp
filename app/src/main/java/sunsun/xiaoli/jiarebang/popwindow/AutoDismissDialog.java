@@ -69,7 +69,7 @@ public class AutoDismissDialog extends ProgressDialog implements DialogInterface
                     if (count == timeOutSeconds * 3) {
                         msg.what = FLAG_TIMEOUT;
                         smartConfigListener.cameraConfigTimeOut();
-                    } else if (count >= timeOutSeconds-15||((ActivityStepThree)context).isBusy) {
+                    } else if (count >= timeOutSeconds-12||((ActivityStepThree)context).isBusy) {
                         //一分钟时间，应该是配置好了
                         smartConfigListener.cameraCloseConfig();
                     } else if (count < timeOutSeconds) {
