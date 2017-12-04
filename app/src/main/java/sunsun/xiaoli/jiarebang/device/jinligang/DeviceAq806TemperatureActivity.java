@@ -83,7 +83,9 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         popupWindow = new CameraConsolePopupWindow(
                 DeviceAq806TemperatureActivity.this, this);
         img_progress.setMaxCount(35);
-        userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.did, "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+        if (myApp.jinLiGangdetailUI!=null) {
+            userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.did, "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+        }
         setDeviceTitle(getString(R.string.wendu));
         setDeviceData();
     }

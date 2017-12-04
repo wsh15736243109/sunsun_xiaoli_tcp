@@ -1,10 +1,6 @@
 package sunsun.xiaoli.jiarebang.responsitory;
 
-import android.content.Context;
-import android.telephony.TelephonyManager;
-
 import com.google.gson.reflect.TypeToken;
-import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.bean.ArticalBean;
 import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.bean.MessageListBean;
@@ -41,6 +37,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.model.RePayBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.ServiceBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.model.SureReceiveGoodsBean;
 
+import static com.itboye.pondteam.utils.Const.getDeviceToken;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 
@@ -98,7 +95,9 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private final ByJsonRequest.Builder byjsonRequest;
     private String updateUserMessage = "By_User_update";
     private String getAppConfig = "By_Config_app";
-    private String feedback="By_Suggest_add";
+    private String feedback = "By_Suggest_add";
+    private String wxLogin = "By_Weixin_login";
+    private String bindPhone = "By_User_bind";
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -106,11 +105,6 @@ public class LingShouResponsitory extends BaseNetRepository implements
         byjsonRequest.setBaseWrapUrl(Const.lingshou_wrapUrl);
     }
 
-    public String getDeviceToken() {
-        TelephonyManager tm = (TelephonyManager) MyApplication.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
-        String DEVICE_ID = tm.getDeviceId();
-        return DEVICE_ID;
-    }
 
     @Override
     public void getNearStore(String city_code, String lng, String lat, String name, String maxDistance, int page_index, int page_size) {
@@ -1007,6 +1001,8 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("country", country);
 //        map.put("role","role_skilled_worker");
         map.put("device_token", getDeviceToken());
+
+
         String key = loginTypeKey;
         if (appType.equals("森森新零售")) {
             key = loginTypeKey;
@@ -1056,13 +1052,47 @@ public class LingShouResponsitory extends BaseNetRepository implements
         Type type = new TypeToken<String>() {
         }.getType();
         Map<String, Object> map = new HashMap<>();
-        map.put("name",name);
-        map.put("email",email);
-        map.put("tel",tel);
-        map.put("uid",uid);
-        map.put("text",text);
+        map.put("name", name);
+        map.put("email", email);
+        map.put("tel", tel);
+        map.put("uid", uid);
+        map.put("text", text);
         byjsonRequest
                 .setTypeVerParamsAndReturnClass(feedback, "100", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void wxLogin(String deviceToken, String android, String code) {
+        Type type = new TypeToken<PersonDataBean>() {
+        }.getType();
+        Map<String, Object> map = new HashMap<>();
+        map.put("device_token", deviceToken);
+        map.put("device_type", android);
+        map.put("code", code);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(wxLogin, "100", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<PersonDataBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void bindPhone(String uid, String phone, String yzm) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("mobile", phone);
+        map.put("code", yzm);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(bindPhone, "100", map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
                                 getListener()))

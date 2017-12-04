@@ -1,5 +1,10 @@
 package com.itboye.pondteam.utils;
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
+
+import com.itboye.pondteam.app.MyApplication;
+
 /**
  * 常量类
  * Created by wsh on 2016/11/28.
@@ -50,6 +55,7 @@ public class Const {
     public static final String USERINFO_CHANGE = "userinfo_change";
     public static final String LOCATION_LAT = "location_lat";
     public static final String LOCATION_LNG = "location_lng";
+    public static final String WX_LOGIN = "wx_login";
 
     public static String CITY_CODE = "330100";
     public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
@@ -246,5 +252,11 @@ public class Const {
 
     public static void setSendCodeType(String sms) {
         sendCodeType = sms;
+    }
+
+    public static String getDeviceToken() {
+        TelephonyManager tm = (TelephonyManager) MyApplication.getInstance().getSystemService(Context.TELEPHONY_SERVICE);
+        String DEVICE_ID = tm.getDeviceId();
+        return DEVICE_ID;
     }
 }

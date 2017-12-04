@@ -150,10 +150,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    MAlert.alert(getString(R.string.turnonfirst));
 //                    return;
 //                }
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 setTimePicker(period_textView3, 1, true);
             }
         });
@@ -165,10 +162,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    MAlert.alert(getString(R.string.turnonfirst));
 //                    return;
 //                }
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 setTimePicker(period_textView5, 1, false);
             }
         });
@@ -180,10 +174,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    MAlert.alert(getString(R.string.turnonfirst));
 //                    return;
 //                }
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 setTimePicker(period_textView8, 2, true);
             }
         });
@@ -195,10 +186,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    MAlert.alert(getString(R.string.turnonfirst));
 //                    return;
 //                }
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 setTimePicker(period_textView10, 2, false);
             }
         });
@@ -210,10 +198,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    MAlert.alert(getString(R.string.turnonfirst));
 //                    return;
 //                }
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 setTimePicker(period_textView13, 3, true);
             }
         });
@@ -221,17 +206,19 @@ public class PeriodActivity extends BaseActivity implements Observer {
         period_button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (!(Boolean) period_switch3.getTag()) {
-//                    MAlert.alert(getString(R.string.turnonfirst));
-//                    return;
-//                }
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 setTimePicker(period_textView15, 3, false);
             }
         });
+    }
+
+    private void showIsConnectMsg(){
+        if (mApp.jinLiGangdetailUI!=null) {
+            if (!mApp.jinLiGangdetailUI.isConnect) {
+                MAlert.alert(getString(R.string.disconnect));
+                return;
+            }
+        }
     }
 
 
@@ -365,10 +352,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 setCurrentItem(type);
                 break;
             case R.id.period_switch1:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 status2 = (Boolean) period_switch2.getTag();
                 status3 = (Boolean) period_switch3.getTag();
                 if (status2 == false && status3 == false) {
@@ -416,10 +400,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
                 break;
             case R.id.period_switch2:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 status1 = (Boolean) period_switch1.getTag();
                 status3 = (Boolean) period_switch3.getTag();
                 if (status1 == false && status3 == false) {
@@ -468,10 +449,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
                 break;
             case R.id.period_switch3:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 status1 = (Boolean) period_switch1.getTag();
                 status2 = (Boolean) period_switch2.getTag();
                 if (status1 == false && status2 == false) {
@@ -519,10 +497,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
                 break;
             case R.id.btn_ok:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 saveConfig();
 
                 showProgressDialog(getString(R.string.requesting), true);
@@ -532,17 +507,11 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 showSaveDialog(2);
                 break;
             case R.id.btn_reset:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 showSaveDialog(3);
                 break;
             case R.id.switch_yichangbaojing:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 cfg = 0;
                 //异常报警
                 switch (type) {
@@ -565,18 +534,12 @@ public class PeriodActivity extends BaseActivity implements Observer {
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1);
                 break;
             case R.id.switch_qingling:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
 //                yanChiFinish = false;
                 qingLing();
                 break;
             case R.id.switch_dongtaitishi:
-                if (!mApp.jinLiGangdetailUI.isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
+                showIsConnectMsg();
                 cfg = 0;
                 switch (type) {
                     case 1://灯光照明异常报警

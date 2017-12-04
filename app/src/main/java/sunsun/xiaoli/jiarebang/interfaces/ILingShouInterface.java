@@ -406,4 +406,8 @@ public interface ILingShouInterface<PersonDataBean> {
     void getAppConfig();
 
     void feedback(String name, String email, String tel, String uid, String text);
+
+    void wxLogin(String deviceToken, String android, String code);
+
+    void bindPhone(String uid, String phone, String yzm);
 }

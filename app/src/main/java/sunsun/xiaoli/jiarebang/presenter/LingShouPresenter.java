@@ -113,6 +113,10 @@ public class LingShouPresenter extends BasePresenter implements
     public static String getAppConfig_fail = "_getAppConfig_fail";
     public static String feedback_success = "_feedback_success";
     public static String feedback_fail = "_feedback_fail";
+    public static String wxLogin_success = "_wxLogin_success";
+    public static String wxLogin_fail = "_wxLogin_fail";
+    public static String bindPhone_success = "_bindPhone_success";
+    public static String bindPhone_fail = "_bindPhone_fail";
 
 
     public LingShouPresenter(Observer observer) {
@@ -1338,5 +1342,55 @@ public class LingShouPresenter extends BasePresenter implements
                     }
                 });
         user.feedback(name, email, tel, uid, text);
+    }
+
+    @Override
+    public void wxLogin(String deviceToken, String android, String code) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(wxLogin_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(wxLogin_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.wxLogin(deviceToken, android, code);
+    }
+
+    @Override
+    public void bindPhone(String uid, String phone, String yzm) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(bindPhone_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(bindPhone_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.bindPhone(uid, phone, yzm);
     }
 }

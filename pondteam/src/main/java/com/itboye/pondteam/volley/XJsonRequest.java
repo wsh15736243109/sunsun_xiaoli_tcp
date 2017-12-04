@@ -212,11 +212,11 @@ public class XJsonRequest<T> extends Request<T> {
                 if (errorListener != null) {
                     String data = decodeJsonObj.getString("data");
                     if (data != null) {
-                        Log.v("request_params", "-----------------------------------------请求失败-------------------------------2" + data);
+                        Log.v("request_params", "-----------------------------------------请求失败-------------------------------2" + parsed);
 //                        Logger.v("request_params", "-----------------------------------------请求失败-------------------------------2" + data);
                         handlerError(new CodeErrorException(data), code, data);
                     } else {
-                        Log.v("request_params", "-----------------------------------------请求失败-------------------------------2" + data);
+                        Log.v("request_params", "-----------------------------------------请求失败-------------------------------2" + parsed);
 //                        Logger.v("request_params", "-------------------------------------请求失败----------------------------1!" + data);
                         handlerError(new CodeErrorException("请求失败!"), code, data);
                     }

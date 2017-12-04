@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/main_lingshou_orange"
     android:layout_height="match_parent"
+    android:background="@color/main_lingshou_orange"
     tools:context="sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity">
 
     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
@@ -50,18 +50,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:textColor="@color/main_lingshou_orange"
                 android:layout_centerVertical="true"
-                android:text="发送验证" />
+                android:text="获取验证码" />
         </RelativeLayout>
 
-
-        <EditText
-            android:id="@+id/ed_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/DIMEN_10DP"
-            android:hint="重置密码"
-            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/btn_ok"
