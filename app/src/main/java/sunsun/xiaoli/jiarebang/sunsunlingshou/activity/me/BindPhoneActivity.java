@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.SPUtils;
+import com.itboye.pondteam.utils.TimeCount;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -33,6 +35,7 @@ public class BindPhoneActivity extends BaseOtherActivity implements Observer {
     LingShouPresenter lingShouPresenter;
     TextView txt_sendyzm;
     Button btn_ok;
+    TimeCount timeCount;
 
     @Override
     protected int getLayoutId() {
@@ -41,8 +44,9 @@ public class BindPhoneActivity extends BaseOtherActivity implements Observer {
 
     @Override
     protected void initData() {
-        initTitlebarStyle1(this, action_bar, "绑定手机", R.mipmap.ic_left_light, "", 0, "");
+        initTitlebarStyle1(this, action_bar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "");
         lingShouPresenter = new LingShouPresenter(this);
+        timeCount = new TimeCount(60000, 1000, txt_sendyzm);
     }
 
     @Override
@@ -88,14 +92,16 @@ public class BindPhoneActivity extends BaseOtherActivity implements Observer {
                 VertifyBean vertifyBean = (VertifyBean) entity.getData();
                 if (vertifyBean != null) {
                     MAlert.alert("你的驗證碼是" + vertifyBean.getCode());
-                }else
-                {
-                    MAlert.alert("为空"+vertifyBean);
+                    timeCount.start();
+                } else {
+                    MAlert.alert("为空" + vertifyBean);
                 }
             } else if (entity.getEventType() == LingShouPresenter.send_code_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.bindPhone_success) {
+                SPUtils.put(this, null, Const.MOBILE, phone);
                 MAlert.alert(entity.getData());
+                finish();
             } else if (entity.getEventType() == LingShouPresenter.bindPhone_fail) {
                 MAlert.alert(entity.getData());
 

@@ -231,6 +231,8 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
             } else if (entity.getEventType() == LingShouPresenter.queryAddress_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.deleteAddress_success) {
+                Intent intent=new Intent(Const.ADDRESS_DELEETE);
+                sendBroadcast(intent);
                 lingShouPresenter.queryAddress(getSp(Const.UID), getSp(Const.S_ID));//获取地址列表;
             } else if (entity.getEventType() == LingShouPresenter.deleteAddress_fail) {
                 MAlert.alert(entity.getData());

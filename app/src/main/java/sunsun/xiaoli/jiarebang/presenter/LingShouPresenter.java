@@ -117,6 +117,8 @@ public class LingShouPresenter extends BasePresenter implements
     public static String wxLogin_fail = "_wxLogin_fail";
     public static String bindPhone_success = "_bindPhone_success";
     public static String bindPhone_fail = "_bindPhone_fail";
+    public static String addCharge_success="_addCharge_success";
+    public static String addCharge_fail="_addCharge_fail";
 
 
     public LingShouPresenter(Observer observer) {
@@ -1392,5 +1394,31 @@ public class LingShouPresenter extends BasePresenter implements
                     }
                 });
         user.bindPhone(uid, phone, yzm);
+    }
+
+    @Override
+    public void addCharge(String uid, String s_id) {
+        ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
+                new ICompleteListener() {
+
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(addCharge_success);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(addCharge_fail);
+                        LingShouPresenter.this.setChanged();
+                        LingShouPresenter.this.notifyObservers(result);
+
+                    }
+                });
+        user.addCharge(uid, s_id);
+
     }
 }

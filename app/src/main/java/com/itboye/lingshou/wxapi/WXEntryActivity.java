@@ -37,6 +37,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
     private IWXAPI api;
     LingShouPresenter lingShouPresenter;
     App app;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +89,6 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
                 result = R.string.errcode_unknown;
                 break;
         }
-        MAlert.alert(result);
-//        finish();
     }
 
 
@@ -125,12 +124,12 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
         ResultEntity entity = handlerError(data);
         if (entity != null) {
             if (entity.getCode() != 0) {
-                MAlert.alert(entity.getMsg()+"fail11");
+                MAlert.alert(entity.getMsg() + "fail11");
                 return;
             }
             if (entity.getEventType() == LingShouPresenter.wxLogin_success) {
-                PersonDataBean personDataBean= (PersonDataBean) entity.getData();
-                if (personDataBean!=null) {
+                PersonDataBean personDataBean = (PersonDataBean) entity.getData();
+                if (personDataBean != null) {
                     MAlert.alert(personDataBean.toString());
                     MAlert.alert("登录成功");
                     new LingShouPersonDataBean().setPersonData(personDataBean);
@@ -142,22 +141,26 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler,
                     Intent intentDevice = new Intent();
                     intentDevice.setAction(Const.DEVICE_CHANGE);
                     sendBroadcast(intentDevice);
+                    //通知《登录》界面finish
+                    if (app.lingshouLogin != null) {
+                        app.lingshouLogin.finish();
+                    }
+                    //通知《登录或者注册》界面finish
                     if (app.lingShouSwitchRL != null) {
                         app.lingShouSwitchRL.finish();
                     }
                     if (personDataBean.getPhoneValidate().equals("1")) {
                         //已经绑定过手机
-                    }else{
+                    } else {
                         //没有绑定跳转绑定手机界面
-                        startActivity(new Intent(this, BindPhoneActivity.class));
+                        startActivity(new Intent(this, BindPhoneActivity.class).putExtra("title", "绑定手机"));
                     }
                     finish();
-                }else{
-                    MAlert.alert(entity.getData()+"success");
+                } else {
+                    MAlert.alert("获取信息有误");
                 }
             } else if (entity.getEventType() == LingShouPresenter.wxLogin_fail) {
-                MAlert.alert(entity.getData()+"fail22");
-
+                MAlert.alert(entity.getData());
             }
         }
     }

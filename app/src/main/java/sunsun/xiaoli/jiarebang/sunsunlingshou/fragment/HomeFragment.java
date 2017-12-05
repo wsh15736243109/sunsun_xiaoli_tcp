@@ -201,7 +201,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         //开启渐变
         actionBar.setNeedTranslucent(true, false);
         actionBar.setSearchBarVisible(true);
-        setSelectArea("硬件");
+        setSelectArea("商家");
         //注册地址改变广播
         registerBroadcast();
         //获取默认收货地址
@@ -209,14 +209,38 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 //        setSelectAddress();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //是否领取过优惠券
+       setYouHuiQuan();
+    }
+
+    private void setYouHuiQuan() {
+        String hasCharge=getSp(Const.HAS_CHARGE);
+        if (hasCharge.equals("0")) {
+            //没有领取过
+            home_img.setBackgroundResource(R.drawable.home_nocharge);
+        }else{
+            //领取过
+            home_img.setBackgroundResource(R.drawable.home_charge);
+        }
+    }
+
+
     private void registerBroadcast() {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                setSelectAddress();
+                if (intent.getAction().equals(Const.YOUHUIQUAN_CHANGE)) {
+                    setYouHuiQuan();
+                }else {
+                    setSelectAddress();
+                }
             }
         };
         IntentFilter intentFilter = new IntentFilter(Const.ADDRESS_CHANGE);
+        intentFilter.addAction(Const.YOUHUIQUAN_CHANGE);
         getActivity().registerReceiver(receiver, intentFilter);
     }
 
@@ -339,6 +363,10 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 startActivity(intent);
                 break;
             case R.id.home_img:
+                if (getSp(Const.UID).equals("")) {
+                    startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
+                    return;
+                }
                 startActivity(new Intent(getActivity(), RedBagAcitivty.class));
                 break;
             case R.id.area_left:

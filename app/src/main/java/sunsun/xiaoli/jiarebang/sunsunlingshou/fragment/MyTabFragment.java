@@ -433,7 +433,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = null;
         switch (this.type) {
-            case 0:
+            case 2:
                 intent = new Intent(getActivity(), GoodsClassifyActivity.class);
                 intent.putExtra("model", bean.getList().get(position));
                 intent.putExtra("store_id", bean.getList().get(position).getId());
@@ -492,7 +492,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                     MAlert.alert("未获取到设备列表信息");
                 }
                 break;
-            case 2:
+            case 0:
                 intent = new Intent(getActivity(), GoodDetailActivity.class);
                 intent.putExtra("id", goodsList.getList().get(position).getId());
                 intent.putExtra("store_id", goodsList.getList().get(position).getStore_id());

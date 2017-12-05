@@ -44,6 +44,7 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
     @Override
     protected void initData() {
         mApp = (App) getApplication();
+        mApp.lingshouLogin = this;
         ed_phone.setText("15736243109");
         ed_pwd.setText("123456");
     }
@@ -103,7 +104,10 @@ public class LingShouLoginActivity extends LingShouBaseActivity implements Obser
                 Intent intent = new Intent();
                 intent.setAction(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
-
+                //优惠券
+                Intent intentYouHuiQuan = new Intent();
+                intentYouHuiQuan.setAction(Const.YOUHUIQUAN_CHANGE);
+                sendBroadcast(intentYouHuiQuan);
                 //通知首页设备列表更新设备
                 Intent intentDevice = new Intent();
                 intentDevice.setAction(Const.DEVICE_CHANGE);

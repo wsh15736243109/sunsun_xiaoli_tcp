@@ -59,6 +59,15 @@ public class LingShouPersonDataBean {
     private String baichuanUid;
     private String walletPassword;
     private String auto_login_code;
+    private String has_charge;
+
+    public String getHas_charge() {
+        return has_charge;
+    }
+
+    public void setHas_charge(String has_charge) {
+        this.has_charge = has_charge;
+    }
 
     public String getAuto_login_code() {
         return auto_login_code;
@@ -574,6 +583,10 @@ public class LingShouPersonDataBean {
                             Const.STORE_ID, "");
                 }
             }
+            if (personDataBean.getHas_charge() != null) {
+                SPUtils.put(MyApplication.getInstance(), null,
+                        Const.HAS_CHARGE, personDataBean.getHas_charge());
+            }
 //            if (personDataBean.getSign()!=null){
 //                SPUtils.put(MyApplication.getInstance(), null,
 //                        Const.SIGN, personDataBean.getSign());
@@ -609,6 +622,8 @@ public class LingShouPersonDataBean {
                     Const.IS_STORE, "");
             SPUtils.put(MyApplication.getInstance(), null,
                     Const.STORE_ID, "");
+            SPUtils.put(MyApplication.getInstance(), null,
+                    Const.HAS_CHARGE, "");
             SPUtils.put(MyApplication.getInstance(), null,
                     Const.SELECT_ADDRESS, "");
             Intent intent1 = new Intent("exit");// 退出登陆的广播

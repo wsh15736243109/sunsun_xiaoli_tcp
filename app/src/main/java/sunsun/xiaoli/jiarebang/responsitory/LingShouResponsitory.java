@@ -98,6 +98,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
     private String feedback = "By_Suggest_add";
     private String wxLogin = "By_Weixin_login";
     private String bindPhone = "By_User_bind";
+    private String addCharge = "By_Order_addCharge";
 
     public LingShouResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1093,6 +1094,22 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("code", yzm);
         byjsonRequest
                 .setTypeVerParamsAndReturnClass(bindPhone, "100", map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void addCharge(String uid, String s_id) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("s_id", s_id);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(addCharge, "101", map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
                                 getListener()))

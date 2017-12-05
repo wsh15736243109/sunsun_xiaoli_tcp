@@ -410,4 +410,6 @@ public interface ILingShouInterface<PersonDataBean> {
     void wxLogin(String deviceToken, String android, String code);
 
     void bindPhone(String uid, String phone, String yzm);
+
+    void addCharge(String uid, String s_id);
 }

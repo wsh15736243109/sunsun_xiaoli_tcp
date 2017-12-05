@@ -58,6 +58,15 @@ public class PersonDataBean {
     private String walletPassword;
     private String stores_id;
     private String is_stores;
+    private String has_charge;
+
+    public String getHas_charge() {
+        return has_charge;
+    }
+
+    public void setHas_charge(String has_charge) {
+        this.has_charge = has_charge;
+    }
 
     public String getStores_id() {
         return stores_id;

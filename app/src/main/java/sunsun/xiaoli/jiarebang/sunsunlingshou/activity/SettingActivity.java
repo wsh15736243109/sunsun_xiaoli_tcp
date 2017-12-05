@@ -36,6 +36,7 @@ import sunsun.xiaoli.jiarebang.beans.AppConfigBean;
 import sunsun.xiaoli.jiarebang.beans.LingShouPersonDataBean;
 import sunsun.xiaoli.jiarebang.beans.UploadImageBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.BindPhoneActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.GlideLoader;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
@@ -55,17 +56,18 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
 
     RelativeLayout re_sensen;
 
-    RelativeLayout re_nick, re_tiaokuan, re_kefu;
+    RelativeLayout re_nick, re_tiaokuan, re_kefu, re_bindphone;
     private LingShouPresenter lingShouPresenter;
     private EditText editText;
     String sign, email, weixin, company, job_title, loc_country, loc_area;
     private String nickName;
     @IsNeedClick
-    TextView txt_nickname, txt_ver;
+    TextView txt_nickname, txt_ver, txt_bindphone;
     private SaveAlertView saveDialog;
     private Dialog alert;
     private RadioButton tvTitle;
     private AppConfigBean appConfigBean;
+    ImageView iv_actionbar_left;
 
     @Override
     protected int getLayoutId() {
@@ -77,8 +79,6 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
         lingShouPresenter = new LingShouPresenter(this);
         lingShouPresenter.getAppConfig();
         initTitlebarStyle1(this, actionBar, "设置", R.mipmap.ic_left_light, "", 0, "");
-        //初始actionBar
-        actionBar.setData("设置", 0, "", 0, "", null);
         //开启渐变
 //        actionBar.setNeedTranslucent();
         //设置状态栏高度
@@ -86,6 +86,17 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
         actionBar.setBarBackgroundColor(getResources().getColor(R.color.main_yellow));
         setUserMessage();
         setAppVersion();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setBindPhone();
+    }
+
+    private void setBindPhone() {
+        txt_bindphone.setText(getSp(Const.MOBILE).equals("") ? "未绑定" : getSp(Const.MOBILE));
     }
 
     private void setAppVersion() {
@@ -106,6 +117,10 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
                 Intent intent = new Intent();
                 intent.setAction(Const.LOGIN_ACTION);
                 sendBroadcast(intent);
+                //优惠券
+                Intent intentYouHuiQuan = new Intent();
+                intentYouHuiQuan.setAction(Const.YOUHUIQUAN_CHANGE);
+                sendBroadcast(intentYouHuiQuan);
 
                 Intent intentDevice = new Intent();
                 intentDevice.setAction(Const.DEVICE_CHANGE);
@@ -166,6 +181,12 @@ public class SettingActivity extends LingShouBaseActivity implements UploadImage
                     e.printStackTrace();
                 }
                 alert.dismiss();
+                break;
+            case R.id.re_bindphone:
+                startActivity(new Intent(this, BindPhoneActivity.class).putExtra("title","更换绑定"));
+                break;
+            case R.id.iv_actionbar_left:
+                finish();
                 break;
         }
     }

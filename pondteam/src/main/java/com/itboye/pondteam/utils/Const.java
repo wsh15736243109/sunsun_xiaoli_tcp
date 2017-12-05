@@ -56,6 +56,8 @@ public class Const {
     public static final String LOCATION_LAT = "location_lat";
     public static final String LOCATION_LNG = "location_lng";
     public static final String WX_LOGIN = "wx_login";
+    public static final String ADDRESS_DELEETE = "address_delete";
+    public static final String YOUHUIQUAN_CHANGE = "charge_change";
 
     public static String CITY_CODE = "330100";
     public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
@@ -177,6 +179,11 @@ public class Const {
      * 真实姓名
      */
     public static final String RealName = "realName";
+
+    /**
+     * 是否领取过优惠券
+     */
+    public static final String HAS_CHARGE = "has_charge";
 
     /**
      * 用户角色信息

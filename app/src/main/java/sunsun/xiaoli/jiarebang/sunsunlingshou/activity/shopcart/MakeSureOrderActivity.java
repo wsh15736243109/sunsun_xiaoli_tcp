@@ -1,6 +1,10 @@
 package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart;
 
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
@@ -92,6 +96,8 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     ArrayList<ShopCartBean> ar;
     TextView txt_totalprice;
     double totalPrice = 0;//总金额，包括所有费用
+    ProgressDialog progressDialog;
+    TextView nodata;
 
     @Override
     protected int getLayoutId() {
@@ -102,7 +108,11 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     protected void initData() {
         mApp = (App) getApplication();
         mApp.makeSureActivity = this;
+        progressDialog = new ProgressDialog(this);
         lingShouPresenter = new LingShouPresenter(this);
+        //获取地址信息
+        progressDialog.setMessage("正在获取地址信息");
+        progressDialog.show();
         lingShouPresenter.getDefaultAddress(getSp(Const.UID), getSp(Const.S_ID));
         initTitlebarStyle1(this, actionBar, "确认订单", R.mipmap.ic_left_light, "", 0, "");
         goodsDetailBeanArray = (ArrayList<GoodsDetailBean>) getIntent().getSerializableExtra("model");
@@ -252,8 +262,19 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         }
         order_goods_list.addFooterView(footView);
         txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + totalPrice / 100 + "</font>"));
-
+        //地址改变广播通知
+        IntentFilter intentFilter=new IntentFilter(Const.ADDRESS_DELEETE);
+        registerReceiver(receiver,intentFilter);
     }
+
+    BroadcastReceiver receiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Const.ADDRESS_DELEETE)) {
+//                lingShouPresenter.getDefaultAddress(getSp(Const.UID), getSp(Const.S_ID));
+            }
+        }
+    };
 
     @Override
     protected void onDestroy() {
@@ -443,10 +464,14 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
         txt_address.setText(selectAddressBean.getProvince() + selectAddressBean.getCity() + selectAddressBean.getArea() + selectAddressBean.getDetailinfo());
         address_id = selectAddressBean.getId();
         if (!store_id.equals("")) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("正在获取配送费信息");
+            progressDialog.show();
             lingShouPresenter.queryFreightPrice(store_id, address_id, getSp(Const.S_ID));
         } else {
 //            MAlert.alert("地址选择有误");
         }
+        nodata.setVisibility(View.GONE);
         txt_mnoren.setVisibility((selectAddressBean.getIs_default() == null ? 1 : Integer.parseInt(selectAddressBean.getIs_default())) == 0 ? View.GONE : View.VISIBLE);
     }
 
@@ -481,14 +506,17 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
     }
 
     private void setDrawable() {
-        Drawable drawableRight=getResources().getDrawable(R.drawable.img_location_green);
-        drawableRight.setBounds(0,0,drawableRight.getMinimumWidth(),drawableRight.getMinimumHeight());
-        txt_choosestore.setCompoundDrawables(null,null,drawableRight,null);
+        Drawable drawableRight = getResources().getDrawable(R.drawable.img_location_green);
+        drawableRight.setBounds(0, 0, drawableRight.getMinimumWidth(), drawableRight.getMinimumHeight());
+        txt_choosestore.setCompoundDrawables(null, null, drawableRight, null);
     }
 
 
     @Override
     public void update(Observable o, Object data) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
         ResultEntity entity = handlerError(data);
         if (entity != null) {
             if (entity.getCode() != 0) {
@@ -513,7 +541,7 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                 freight_price = freightPriceBean.getFreight_price() + "";
                 txt_peisong.setText(Html.fromHtml("配送费<font color='red'>￥" + freightPriceBean.getFreight_price() / 100 + "</font>"));
 //                totalPrice += Double.parseDouble(freight_price);
-                txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + (totalPrice + Double.parseDouble(freight_price))/ 100 + "</font>"));
+                txt_totalprice.setText(Html.fromHtml("合计： <font color='red'>￥" + (totalPrice + Double.parseDouble(freight_price)) / 100 + "</font>"));
             } else if (entity.getEventType() == LingShouPresenter.queryFreightPrice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.shopCartOrder_success) {
@@ -541,7 +569,11 @@ public class MakeSureOrderActivity extends LingShouBaseActivity implements Obser
                     if (addressBean.size() > 0) {
                         selectAddressBean = addressBean.get(0);
                         setDefaultAddress();
+                    } else {
+                        nodata.setVisibility(View.VISIBLE);
                     }
+                } else {
+                    nodata.setVisibility(View.VISIBLE);
                 }
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_fail) {
                 MAlert.alert(entity.getData());
