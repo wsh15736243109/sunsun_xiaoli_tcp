@@ -108,7 +108,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
 
 
     @Override
-    public void getNearStore(String city_code, String lng, String lat, String name, String maxDistance, int page_index, int page_size) {
+    public void getNearStore(String city_code, String lng, String lat, String name, String maxDistance,int bygr, int page_index, int page_size) {
         Type type = new TypeToken<StoreListBean>() {
         }.getType();
         String apiVer = "100";
@@ -117,6 +117,7 @@ public class LingShouResponsitory extends BaseNetRepository implements
         map.put("lng", lng);
         map.put("lat", lat);
         map.put("name", name);
+        map.put("bygr", bygr);
         map.put("maxDistance", maxDistance);
         map.put("page_index", page_index);
         map.put("page_size", page_size);

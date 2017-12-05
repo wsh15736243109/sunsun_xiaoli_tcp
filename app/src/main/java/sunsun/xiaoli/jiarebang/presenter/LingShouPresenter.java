@@ -127,7 +127,7 @@ public class LingShouPresenter extends BasePresenter implements
 
 
     @Override
-    public void getNearStore(String city_code, String lng, String lat, String name, String maxDistance, int page_index, int page_size) {
+    public void getNearStore(String city_code, String lng, String lat, String name, String maxDistance,int bygr, int page_index, int page_size) {
         ILingShouInterface<PersonDataBean> user = new LingShouResponsitory(
                 new ICompleteListener() {
 
@@ -148,7 +148,7 @@ public class LingShouPresenter extends BasePresenter implements
 
                     }
                 });
-        user.getNearStore(city_code, lng, lat, name, maxDistance, page_index, page_size);
+        user.getNearStore(city_code, lng, lat, name, maxDistance,bygr, page_index, page_size);
     }
 
     @Override

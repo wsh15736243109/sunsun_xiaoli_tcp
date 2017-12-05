@@ -99,7 +99,7 @@ import sunsun.xiaoli.jiarebang.utils.wifiutil.AqSmartConfig;
  * Created by admin on 2016/12/6.
  */
 
-public class App extends MyApplication implements LocationUtil.OnLocationResult {
+public class App extends MyApplication {
     //    private LanguageSettingUtil languageSetting;
 //    private SwitchLanguageObservable switchLangObs;
 //    public List<WeakReference<Activity>> activityList = new LinkedList<>();
@@ -290,7 +290,7 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
     }
 
     private void initLocation() {
-        locationUtil = new LocationUtil(getApplicationContext(), this);
+
     }
 
 
@@ -562,13 +562,4 @@ public class App extends MyApplication implements LocationUtil.OnLocationResult 
         getQueue().add(request);
     }
 
-
-    @Override
-    public void getLatAndLng(String cityName, double lat, double lng) {
-        try {
-            homeFragment.setCityName("", cityName, lat, lng);
-        } catch (Exception e) {
-
-        }
-    }
 }

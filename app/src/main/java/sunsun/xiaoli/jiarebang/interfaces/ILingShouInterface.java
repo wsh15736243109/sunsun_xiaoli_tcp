@@ -16,7 +16,7 @@ public interface ILingShouInterface<PersonDataBean> {
      * @param page_index
      * @param page_size
      */
-    void getNearStore(String city_code, String lng, String lat, String name, String maxDistance, int page_index, int page_size);
+    void getNearStore(String city_code, String lng, String lat, String name, String maxDistance,int bygr, int page_index, int page_size);
 
     /**
      * 获取商家详情

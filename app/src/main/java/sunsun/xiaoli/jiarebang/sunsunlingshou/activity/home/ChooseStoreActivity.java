@@ -64,6 +64,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
     TextView txt_boda, txt_freight, txt_service_fanwei;
     private String storeId;
     AddressBean selectAddressBean;
+    int bygr = 1;
 
     @Override
     protected int getLayoutId() {
@@ -157,7 +158,7 @@ public class ChooseStoreActivity extends LingShouBaseActivity implements Observe
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerview_near_store.setLayoutManager(linearLayoutManager);
-        lingShouPresenter.getNearStore(selectAddressBean.getCityid(), selectAddressBean.getLng() + "", selectAddressBean.getLat() + "", "", "", pageIndex, 10);
+        lingShouPresenter.getNearStore(selectAddressBean.getCityid(), selectAddressBean.getLng() + "", selectAddressBean.getLat() + "", "", "", bygr, pageIndex, 10);
     }
 
     @Override

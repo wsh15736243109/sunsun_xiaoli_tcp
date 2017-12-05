@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -89,6 +90,8 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
 
     private ProgressDialog loadingDialog;
     private DeviceDetailModel deviceDetailModel;
+    Button haoping, zuijin;
+    int bygr = 1;
 
     @SuppressLint("ValidFragment")
     public MyTabFragment(int type) {
@@ -163,18 +166,18 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         String lng = getSp(Const.LNG);
         String lat = getSp(Const.LAT);
 
-        String location_lng =  getSp(Const.LOCATION_LNG);
-        String location_lat =  getSp(Const.LOCATION_LAT);
+        String location_lng = getSp(Const.LOCATION_LNG);
+        String location_lat = getSp(Const.LOCATION_LAT);
 
 //        double location_lng = (double) SPUtils.get(getActivity(), null, Const.LOCATION_LNG, 0);
 //        double location_lat = (double) SPUtils.get(getActivity(), null, Const.LOCATION_LAT, 0);
-        if (!(getSp(Const.CITY_CODE) + "").equals("") && !lng.equals("")&& !lat.equals("")) {
-            lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), lng + "", lat + "", "", "", pageIndex, 10);
-        } else if (!location_lat .equals("") && !location_lng .equals("")) {
-            lingShouPresenter.getNearStore("", location_lat + "", location_lng + "", "", "", pageIndex, 10);
+        if (!(getSp(Const.CITY_CODE) + "").equals("") && !lng.equals("") && !lat.equals("")) {
+            lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), lng + "", lat + "", "", "", bygr, pageIndex, 10);
+        } else if (!location_lat.equals("") && !location_lng.equals("")) {
+            lingShouPresenter.getNearStore("", location_lat + "", location_lng + "", "", "", bygr, pageIndex, 10);
         } else {
             //什么都没有获取到则将默认的经纬度cityCode获取附近商家
-            lingShouPresenter.getNearStore("330100", Const.lng + "", Const.lat + "", "", "", pageIndex, 10);
+            lingShouPresenter.getNearStore("330100", Const.lng + "", Const.lat + "", "", "", bygr, pageIndex, 10);
         }
     }
 
@@ -220,6 +223,22 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                     e.printStackTrace();
                 }
                 alert.dismiss();
+                break;
+            case R.id.haoping:
+                zuijin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_white));
+                haoping.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_blue));
+                zuijin.setTextColor(getResources().getColor(R.color.blue500));
+                haoping.setTextColor(getResources().getColor(R.color.white));
+                bygr = 1;
+                getNearStore();
+                break;
+            case R.id.zuijin:
+                zuijin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_blue));
+                haoping.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_white));
+                haoping.setTextColor(getResources().getColor(R.color.blue500));
+                zuijin.setTextColor(getResources().getColor(R.color.white));
+                bygr = 0;
+                getNearStore();
                 break;
         }
     }

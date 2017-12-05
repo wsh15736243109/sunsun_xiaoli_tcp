@@ -57,6 +57,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
+import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
 
 import static com.itboye.pondteam.utils.Const.CITY_CODE;
@@ -68,7 +69,7 @@ import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitleBarS
 /**
  * 首页
  */
-public class HomeFragment extends LingShouBaseFragment implements TranslucentScrollView.TranslucentChangedListener, IRecycleviewClick, Observer {
+public class HomeFragment extends LingShouBaseFragment implements TranslucentScrollView.TranslucentChangedListener, IRecycleviewClick, Observer, LocationUtil.OnLocationResult {
 
     private TranslucentActionBar actionBar;//可渐变的标题栏
     private TranslucentScrollView pullzoom_scrollview;//添加滑动监听的滑动组件
@@ -113,6 +114,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     private AddressBean selectAddressBean;
     private BroadcastReceiver receiver;
     private int index = 2;
+    private LocationUtil locationUtil;
 
     @Override
     protected int getLayoutId() {
@@ -190,6 +192,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     @Override
     protected void initData() {
         hasRe = false;
+        locationUtil = new LocationUtil(getActivity(), this);
         fragmentManager = getChildFragmentManager();
 //        Glide.with(getActivity()).load("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1503478934176&di=45c483741d5b9e90c51e2d5a77cd85ba&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimage%2Fc0%253Dshijue1%252C0%252C0%252C294%252C40%2Fsign%3D2183734545c2d562e605d8ae8f78fa9a%2F8435e5dde71190efee7d4ffac41b9d16fdfa6015.jpg").into(testImg);
 //        Glide.with(getActivity()).load("https://www.baidu.com/img/bdlogo.png").transform(new GlideRoundTransform(getActivity(),10)).into(testImg);
@@ -213,18 +216,19 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     public void onResume() {
         super.onResume();
         //是否领取过优惠券
-       setYouHuiQuan();
+        setYouHuiQuan();
     }
 
     private void setYouHuiQuan() {
-        String hasCharge=getSp(Const.HAS_CHARGE);
-        if (hasCharge.equals("0")) {
+        String hasCharge = getSp(Const.HAS_CHARGE);
+        if (hasCharge.equals("0") || hasCharge.equals("")) {
             //没有领取过
             home_img.setBackgroundResource(R.drawable.home_nocharge);
-        }else{
+        } else {
             //领取过
             home_img.setBackgroundResource(R.drawable.home_charge);
         }
+        home_img.setTag(hasCharge);
     }
 
 
@@ -234,7 +238,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             public void onReceive(Context context, Intent intent) {
                 if (intent.getAction().equals(Const.YOUHUIQUAN_CHANGE)) {
                     setYouHuiQuan();
-                }else {
+                } else {
                     setSelectAddress();
                 }
             }
@@ -367,7 +371,11 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                startActivity(new Intent(getActivity(), RedBagAcitivty.class));
+                if (home_img.getTag().equals("1") || home_img.getTag().equals("")) {
+
+                } else {
+                    startActivity(new Intent(getActivity(), RedBagAcitivty.class));
+                }
                 break;
             case R.id.area_left:
             case R.id.area_right:
@@ -554,5 +562,15 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
             }
         }
+    }
+
+    @Override
+    public void getLatAndLng(final String cityName, final double lat, final double lng) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setCityName("", cityName, lat, lng);
+            }
+        });
     }
 }

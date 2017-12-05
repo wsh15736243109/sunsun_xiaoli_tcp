@@ -73,6 +73,7 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
     private String storeId;
     TextView txt_freight,txt_service_fanwei;
     private ProgressDialog loadingDialog;
+    int bygr=1;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_consultationandbuy;
@@ -96,7 +97,7 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
     }
 
     private void queryStore() {
-        lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", pageIndex, 10);
+        lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "",bygr, pageIndex, 10);
     }
 
     @Override
