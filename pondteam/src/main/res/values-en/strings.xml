@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="app_xiaoli_name">smart xiaoli sunsun</string>
+    <string name="app_lingshou_name">sunsun lingshou</string>
+    <string name="app_pondteam_name">PondTeam</string>
+    <string name="app_pondlink_name">PondLink</string>
+    <string name="app_yihu_name">yi hu</string>
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>

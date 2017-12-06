@@ -1,5 +1,9 @@
 <resources>
-    <!--<string name="app_name">PondTeam</string>-->
+    <string name="app_xiaoli_name">小鲤智能</string>
+    <string name="app_lingshou_name">森森新零售</string>
+    <string name="app_pondteam_name">PondTeam</string>
+    <string name="app_pondlink_name">PondLink</string>
+    <string name="app_yihu_name">宜虎</string>
     <string name="add_new_device">添加新设备</string>
     <string name="MondayQ">Monday</string>
     <string name="TuesdayQ">Tuesday</string>

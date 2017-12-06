@@ -18,12 +18,12 @@ android {
     /**默认debug模式下的使用的keystore文件*/
     signingConfigs {
 
-        debug {
-            keyAlias '森森新零售'
-            keyPassword 'android'
-            storeFile file('../sunsun_lingshou.jks')
-            storePassword 'android'
-        }
+//        debug {
+//            keyAlias '森森新零售'
+//            keyPassword 'android'
+//            storeFile file('../sunsun_lingshou.jks')
+//            storePassword 'android'
+//        }
 
         sunsun_xiaoli_debug {
             keyAlias '森森小鲤'
@@ -59,9 +59,10 @@ android {
 
     productFlavors {
         sunsunlingshou {
+            signingConfig signingConfigs.sunsun_lingshou_debug
             manifestPlaceholders = [PACKAGE: "com.itboye.lingshou", str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "59fffc78f43e487e9000026a", UMENG_MESSAGE_SECRET: "a11d73ec66d4323df2b8c8d8ddcf5399", APP_ID: "wx3aa59deb67aa6823"]
             applicationId "com.itboye.lingshou"
-            resValue "string", "app_name", "森森新零售"
+            resValue "string", "app_name", "@string/app_lingshou_name"
             resValue "bool", "isrRank", 'true'
 //            dimension "sunsunlingshou"
             buildConfigField("String", "WX_APP_ID", '"wx3aa59deb67aa6823"')
@@ -72,12 +73,12 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 101
             versionName '1.0.1'
-            signingConfig signingConfigs.sunsun_lingshou_debug
         }
         xiaoli {
+            signingConfig signingConfigs.sunsun_xiaoli_debug
             manifestPlaceholders = [PACKAGE: "sunsun.xiaoli.jiarebang", str: "releaseStr", package_name: "sunsun.xiaoli.jiarebang", UMENG_applicationId: "sunsun.xiaoli.jiarebang", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b", APP_ID: ""]
             applicationId "sunsun.xiaoli.jiarebang"
-            resValue "string", "app_name", "小鲤智能"
+            resValue "string", "app_name", "@string/app_xiaoli_name"
             resValue "bool", "isrRank", 'true'
 //            dimension "xiaoli"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
@@ -88,12 +89,12 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 126
             versionName '1.2.6'
-            signingConfig signingConfigs.sunsun_xiaoli_debug
         }
         yihu {
+            signingConfig signingConfigs.sunsun_yihu_debug
             manifestPlaceholders = [PACKAGE: "com.itboye.xiaomianyang", str: "releaseStr", package_name: "com.itboye.xiaomianyang", UMENG_applicationId: "com.itboye.xiaomianyang", ENVIRONMENT: "xiaomianyang", app_icon: "@drawable/logo_leihu", UMENG_APPKEY: "593a05b107fe6503860006d2", UMENG_MESSAGE_SECRET: "1a027af744788535fb3a388755c01dfd", APP_ID: ""]
             applicationId "com.itboye.xiaomianyang"
-            resValue "string", "app_name", "宜虎"
+            resValue "string", "app_name", "@string/app_yihu_name"
             resValue "bool", "isrRank", 'true'
 //            dimension "yihu"
             buildConfigField("String", "WX_APP_ID", '"wx60f47b0798e9850e"')
@@ -104,12 +105,12 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionCode 101
             versionName '1.0.1'
-            signingConfig signingConfigs.sunsun_yihu_debug
         }
         pondTeam {
+            signingConfig signingConfigs.sunsun_pondteam_debug
             manifestPlaceholders = [PACKAGE: "com.itboye.pondteam", str: "releaseStr", package_name: "com.itboye.pondteam", UMENG_applicationId: "com.itboye.pondteam", ENVIRONMENT: "pondTeam", app_icon: "@mipmap/icon", UMENG_APPKEY: "58cb5fdb07fe651912000684", UMENG_MESSAGE_SECRET: "bdde2d9c17c09ff67da7ea6d4f7a6a12", APP_ID: ""]
             applicationId "com.itboye.pondteam"
-            resValue "string", "app_name", "PondTeam"
+            resValue "string", "app_name", "@string/app_pondteam_name"
             resValue "bool", "isrRank", 'true'
 //            dimension "pondTeam"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
@@ -121,12 +122,12 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionName '1.0.1'
             versionCode 101
-            signingConfig signingConfigs.sunsun_pondteam_debug
         }
         pondLink {
+            signingConfig signingConfigs.sunsun_pondlink_debug
             manifestPlaceholders = [PACKAGE: "com.itboye.pondlink", str: "releaseStr", package_name: "com.itboye.pondlink", UMENG_applicationId: "com.itboye.pondlink", ENVIRONMENT: "pondLink", app_icon: "@drawable/pondlink_logo", UMENG_APPKEY: "59c869e1c62dca69c300000d", UMENG_MESSAGE_SECRET: "8004ad0ab94d9e1907e00d6e23d8781c", APP_ID: ""]
             applicationId "com.itboye.pondlink"
-            resValue "string", "app_name", "PondLink"
+            resValue "string", "app_name", "@string/app_pondlink_name"
             resValue "bool", "isrRank", 'true'
 //            dimension "pondLink"
             buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
@@ -138,7 +139,7 @@ android {
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
             versionName '1.0.2'
             versionCode 102
-            signingConfig signingConfigs.sunsun_pondlink_debug
+
         }
     }
     buildTypes {
@@ -173,7 +174,7 @@ android {
 //            buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
 //            buildConfigField("String", "APP_TYPE", '"pondTeam"')
 //            buildConfigField("String", "APP_TYPE", '"小鲤智能"')
-            buildConfigField("String", "APP_TYPE", '"森森新零售"')
+//            buildConfigField("String", "APP_TYPE", '"森森新零售"')
 //            buildConfigField("String", "APP_TYPE", '"小绵羊智能"')
         }
     }

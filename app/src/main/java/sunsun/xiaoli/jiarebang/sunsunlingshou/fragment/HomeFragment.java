@@ -105,7 +105,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     //    RelativeLayout store_fenlei;
     FrameLayout tab_content;
 
-    MyTabFragment myTabFragment1;
+    public MyTabFragment myTabFragment1;
     MyTabFragment myTabFragment2;
     MyTabFragment myTabFragment3;
     private FragmentManager fragmentManager;
@@ -113,8 +113,9 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     private String selectAddress;
     private AddressBean selectAddressBean;
     private BroadcastReceiver receiver;
-    private int index = 2;
+    public int index = 2;
     private LocationUtil locationUtil;
+    private FragmentTransaction transaction;
 
     @Override
     protected int getLayoutId() {
@@ -146,10 +147,15 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
+
     public void setTabSelection(int index) {
         // 每次选中之前先清楚掉上次的选中状态
         // 开启一个Fragment事务
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction = fragmentManager.beginTransaction();
         // 先隐藏掉所有的Fragment，以防止有多个Fragment显示在界面上的情况
         hideFragments(transaction);
 

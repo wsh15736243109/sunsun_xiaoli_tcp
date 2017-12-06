@@ -10,17 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
 
+
     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout
+        android:id="@+id/re_map"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:ratio="1.5">
 
-        <com.baidu.mapapi.map.MapView
+        <com.baidu.mapapi.map.TextureMapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
-        </com.baidu.mapapi.map.MapView>
+        </com.baidu.mapapi.map.TextureMapView>
     </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout>
 
     <RelativeLayout
@@ -35,9 +37,9 @@
             android:layout_marginLeft="@dimen/DIMEN_10DP"
             android:layout_toLeftOf="@+id/btn_sure_store"
             android:background="@drawable/border_gray"
-            android:hint=""
             android:enabled="false"
             android:gravity="center"
+            android:hint=""
             android:padding="@dimen/DIMEN_10DP" />
 
         <Button
@@ -69,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/DIMEN_10DP"
             android:layout_toRightOf="@+id/txt_freight"
-            android:drawablePadding="@dimen/margin_5"
             android:drawableLeft="@drawable/jiamucenter"
+            android:drawablePadding="@dimen/margin_5"
             android:text="服务范围" />
     </RelativeLayout>
 
@@ -78,8 +80,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="~附近商家~"
         android:layout_marginTop="@dimen/margin_5"
+        android:text="~附近商家~"
         android:textColor="@color/blue500" />
 
     <android.support.v7.widget.RecyclerView

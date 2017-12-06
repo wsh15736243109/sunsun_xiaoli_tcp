@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,7 +20,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.TextureMapView;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
@@ -73,10 +74,10 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     private int pageIndex = 1;
     private StoreListBean bean;
     private GoodsListBean goodsList;
-    LinearLayout near_store;
+    public LinearLayout near_store;
     ProgressBar progress;
-    BaiduMap baiduMap;
-    MapView mapView;
+    public BaiduMap baiduMap;
+    public TextureMapView mapView_mytab;
     private StoreListBean.ListEntity listEntity1;
     private Dialog alert;
     private RadioButton tvTitle;
@@ -98,6 +99,19 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         this.type = type;
     }
 
+    static MyTabFragment myTabFragment;
+
+    public static MyTabFragment getMyTabFragment() {
+        return myTabFragment;
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView_mytab.onPause();
+    }
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_mytab;
@@ -105,7 +119,11 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
 
     @Override
     protected void initData() {
-        baiduMap = mapView.getMap();
+        getActivity().getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
+                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+        myTabFragment = this;
+        baiduMap = mapView_mytab.getMap();
         loadingDialog = new ProgressDialog(getActivity());
         //零售接口
         lingShouPresenter = new LingShouPresenter(this);
@@ -115,7 +133,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         recycler_aqhardwareorhotgoods.setOnItemClickListener(this);
         switch (this.type) {
             case 2:
-                near_store.setVisibility(View.VISIBLE);
+//                near_store.setVisibility(View.VISIBLE);
                 getNearStore();
                 break;
             case 1:
@@ -132,6 +150,17 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         intentFilter.addAction(Const.STORE_CHANGE);
         intentFilter.addAction(Const.DEVICE_CHANGE);
         getActivity().registerReceiver(receiver, intentFilter);
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+//        if (hidden == false) {
+//            mapView_mytab.setVisibility(View.VISIBLE);
+//        } else {
+//            mapView_mytab.setVisibility(View.GONE);
+//        }
+//        MAlert.alert("我也调用了" + hidden);
     }
 
     private void getDeviceList() {
@@ -267,7 +296,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
             }
             if (entity.getEventType() == LingShouPresenter.getNearStore_success) {
 
-                near_store.setVisibility(View.VISIBLE);
+//                near_store.setVisibility(View.VISIBLE);
                 recycler_aqhardwareorhotgoods.setVerticalSpacing(getDimension(getActivity(), 20));
                 recycler_aqhardwareorhotgoods.setNumColumns(1);
                 recycler_aqhardwareorhotgoods.setVisibility(View.VISIBLE);
@@ -443,8 +472,15 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mapView_mytab.onResume();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        mapView_mytab.onDestroy();
         getActivity().unregisterReceiver(receiver);
     }
 

@@ -21,8 +21,8 @@ import android.widget.ZoomControls;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.InfoWindow;
 import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.google.gson.Gson;
 import com.itboye.pondteam.base.LingShouBaseFragment;
@@ -43,6 +43,7 @@ import sunsun.xiaoli.jiarebang.interfaces.IRecycleviewClick;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
 import sunsun.xiaoli.jiarebang.utils.MapHelper;
@@ -64,16 +65,18 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
     LingShouPresenter lingShouPresenter;
     private StoreListBean bean;
     private int pageIndex = 1;
-    MapView mapView;
+    TextureMapView mapView;
     BaiduMap baiduMap;
     private StoreListBean.ListEntity listEntity;
     private String selectAddress;
     private AddressBean selectAddressBean;
     private String addressId;
     private String storeId;
-    TextView txt_freight,txt_service_fanwei;
+    TextView txt_freight, txt_service_fanwei;
     private ProgressDialog loadingDialog;
-    int bygr=1;
+    int bygr = 1;
+    public RatioRelativeLayout re_map;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_consultationandbuy;
@@ -81,6 +84,7 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
 
     @Override
     protected void initData() {
+        re_map = (RatioRelativeLayout) getActivity().findViewById(R.id.re_map);
         //初始actionBar
         loadingDialog = new ProgressDialog(getActivity());
         lingShouPresenter = new LingShouPresenter(this);
@@ -89,7 +93,6 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
         baiduMap = mapView.getMap();
         initMapView();
         initRecyclerView();
-
 //        caculateFreight();
         IntentFilter intentFilter = new IntentFilter(Const.STORE_CHANGE);
 
@@ -97,14 +100,10 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
     }
 
     private void queryStore() {
-        lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "",bygr, pageIndex, 10);
+        lingShouPresenter.getNearStore(getSp(Const.CITY_CODE), getSp(Const.LNG) + "", getSp(Const.LAT) + "", "", "", bygr, pageIndex, 10);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        getActivity().unregisterReceiver(receiver);
-    }
+
 
     private void caculateFreight() {
         selectAddress = getSp(Const.SELECT_ADDRESS);
@@ -130,6 +129,32 @@ public class ConsultationAndBuyFragment extends LingShouBaseFragment implements 
         }
     };
 
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden == false) {
+            mapView.setVisibility(View.VISIBLE);
+        } else {
+            mapView.setVisibility(View.GONE);
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+        getActivity().unregisterReceiver(receiver);
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
 
     private void initMapView() {
         baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {

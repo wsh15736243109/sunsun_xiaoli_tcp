@@ -114,6 +114,7 @@ public class LingShouMainActivity extends LingShouBaseActivity {
 //        meFragment = null;
         unregisterReceiver(receiver);
     }
+
     @Override
     public void onClick(View v) {
         if (v.getId() != R.id.index_layout && v.getId() != R.id.me_layout) {

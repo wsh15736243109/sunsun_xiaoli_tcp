@@ -27,7 +27,6 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -105,6 +104,7 @@
         <activity android:name=".sunsunlingshou.activity.GoodsClassifyActivity" />
         <activity
             android:name=".sunsunlingshou.LingShouMainActivity"
+            android:hardwareAccelerated="true"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
@@ -177,7 +177,7 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="@string/app_xiaoli_name"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -190,7 +190,7 @@
         <activity
             android:name="com.itboye.lingshou.wxapi.WXEntryActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="@string/app_xiaoli_name"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
