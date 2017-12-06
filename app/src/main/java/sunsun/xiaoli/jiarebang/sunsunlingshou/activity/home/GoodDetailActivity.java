@@ -6,10 +6,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
-import com.itboye.pondteam.custom.MyListView;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -22,21 +22,19 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.AddShopCartFragment;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
-
-import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitleBarStyle2;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 public class GoodDetailActivity extends LingShouBaseActivity implements TranslucentScrollView.TranslucentChangedListener, Observer {
 
 
-    MyListView xlistview;
+    ListView xlistview;
     WebAdapter webAdapter;
     TranslucentActionBar actionBar;
-    TranslucentScrollView trans_scrollview;
+//    TranslucentScrollView trans_scrollview;
     String id;
     LingShouPresenter lingShouPresenter;
     private GoodsDetailBean bean;
@@ -55,11 +53,9 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
     @Override
     protected void initData() {
         store_id = getIntent().getStringExtra("store_id");
-        initTitleBarStyle2(this, actionBar, "", trans_scrollview, this, null);
+        actionBar.setData("", R.mipmap.ic_left_light, "", 0, "", null);
+        actionBar.setStatusBarHeight(getStatusBarHeight());
         actionBar.setNeedTranslucent();
-        actionBar.setLeftTitle("");
-        actionBar.setLeftIcon(true, R.mipmap.ic_left_light);
-        actionBar.setRight(false);
         lingShouPresenter = new LingShouPresenter(this);
         id = getIntent().getStringExtra("id");
         lingShouPresenter.getGoodsDetail(id);
@@ -149,7 +145,9 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             imageView = new ImageView(GoodDetailActivity.this);
-            GlidHelper.glidLoad(imageView, Const.imgurl + bean.getDetail_img().get(position).getImg_id());
+//            ViewGroup.LayoutParams layoutParams=new ViewGroup.LayoutParams(getWindowManager().getDefaultDisplay().getWidth(),getWindowManager().getDefaultDisplay().getWidth());
+//            imageView.setLayoutParams(layoutParams);
+            XGlideLoader.displayRatioImageByScreenWidth(GoodDetailActivity.this, Const.imgurl + bean.getDetail_img().get(position).getImg_id(), imageView);
             return imageView;
         }
 
@@ -167,7 +165,7 @@ public class GoodDetailActivity extends LingShouBaseActivity implements Transluc
 
         @Override
         public int getCount() {
-            return 1;
+            return bean.getDetail_img() == null ? 0 : bean.getDetail_img().size();
         }
     }
 

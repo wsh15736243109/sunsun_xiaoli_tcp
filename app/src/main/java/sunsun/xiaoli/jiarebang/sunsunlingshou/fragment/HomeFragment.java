@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -76,7 +75,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     ViewFlipper vf_home;
     CarouselView home_carouseview;
     Button btn_yuyue, btn_qingli, btn_goumai, btn_zaojingzhuangshi;
-    EditText ed_actionbar_search;
+    TextView ed_actionbar_search;
     RelativeLayout area_left, area_right, area_center;
     //    LinearLayout near_store;
     ArrayList<String> arrayList = new ArrayList<>();
@@ -114,7 +113,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
     private AddressBean selectAddressBean;
     private BroadcastReceiver receiver;
     public int index = 2;
-    private LocationUtil locationUtil;
+    public LocationUtil locationUtil;
     private FragmentTransaction transaction;
 
     @Override
@@ -145,6 +144,12 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
         if (myTabFragment3 != null) {
             transaction.hide(myTabFragment3);
         }
+    }
+
+    static HomeFragment myHomeFragment;
+
+    public static HomeFragment getHomeFragment() {
+        return myHomeFragment;
     }
 
     @Override
@@ -197,6 +202,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
     @Override
     protected void initData() {
+        myHomeFragment = this;
         hasRe = false;
         locationUtil = new LocationUtil(getActivity(), this);
         fragmentManager = getChildFragmentManager();

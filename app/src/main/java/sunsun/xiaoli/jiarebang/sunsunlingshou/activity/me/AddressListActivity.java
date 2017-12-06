@@ -24,10 +24,10 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.lingshouadapter.AddressListAdapter;
-import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.AddressBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.AddAddressOrMymessageActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -68,7 +68,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
             } else if (action.equals("location_address")) {
                 li_mylocation.setVisibility(View.VISIBLE);
                 btn_sure_address.setText(getString(R.string.sure_address));
-                txt_current_location.setText(App.getInstance().locationUtil.getDetailAddress());
+                txt_current_location.setText(HomeFragment.getHomeFragment().locationUtil.getDetailAddress());
                 initTitlebarStyle1(this, actionBar, getIntent().getStringExtra("title"), R.mipmap.ic_left_light, "", 0, "删除");
             } else {
                 btn_sure_address.setText(getString(R.string.addnew_address));
@@ -128,7 +128,7 @@ public class AddressListActivity extends LingShouBaseActivity implements Observe
                 }
                 break;
             case R.id.txt_relocation://重新定位
-                txt_current_location.setText(App.getInstance().locationUtil.getDetailAddress());
+                txt_current_location.setText(HomeFragment.getHomeFragment().locationUtil.getDetailAddress());
                 break;
             case R.id.txt_add_address:
                 intent = new Intent(this, AddAddressOrMymessageActivity.class);

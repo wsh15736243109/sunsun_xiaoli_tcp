@@ -73,24 +73,14 @@
                 android:orientation="horizontal"
                 android:visibility="invisible">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="库存"
-                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/kucun"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="21"
+                    android:text="0"
                     android:textColor="@color/black" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="件"
-                    android:textColor="@color/black" />
             </LinearLayout>
 
             <TextView
@@ -98,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="125dp"
-                android:text="请选择分类"
+                android:text=""
                 android:textColor="@color/black" />
 
             <FrameLayout

@@ -4,90 +4,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--<sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView-->
+    <!--android:id="@+id/trans_scrollview"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:background="@color/green"-->
+    <!--android:layout_marginBottom="@dimen/DIMEN_20DP"-->
+    <!--android:layout_above="@+id/activity_goodsdetail_bottom"-->
+    <!--android:scrollbars="none">-->
+
+    <ListView
+        android:id="@+id/xlistview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_above="@+id/activity_goodsdetail_bottom"
+        android:layout_alignParentTop="true"></ListView>
+    <!--</sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView>-->
+
     <LinearLayout
-        android:id="@+id/bottom"
+        android:id="@+id/activity_goodsdetail_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:orientation="horizontal">
-
-        <LinearLayout  android:visibility="gone"
-            android:id="@+id/kefu"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_launcher_round" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="咨询"
-                android:textColor="@color/black"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0.2dp"
-            android:layout_height="match_parent"
-            android:background="@color/gray_EEEE" />
-
-        <LinearLayout  android:visibility="gone"
-            android:id="@+id/shangcheng"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_launcher_round" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="商城"
-                android:textColor="@color/black"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0.2dp"  android:visibility="gone"
-            android:layout_height="match_parent"
-            android:background="@color/gray_EEEE" />
-
-        <LinearLayout
-            android:id="@+id/shoucang"
-            android:visibility="gone"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@mipmap/ic_launcher_round" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="收藏"
-                android:textColor="@color/black"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="0.2dp"
-            android:visibility="gone"
-            android:layout_height="match_parent"
-            android:background="@color/gray_EEEE" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -101,17 +43,17 @@
                 android:layout_weight="1.0"
                 android:clickable="true"
                 android:singleLine="true"
-                android:visibility="gone"
                 android:src="@mipmap/ic_launcher_round"
                 android:text="加入购物车"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/liJiGouMai"
                 android:layout_width="0dp"
-                android:background="@color/red500"
                 android:layout_height="match_parent"
                 android:layout_weight="1.0"
+                android:background="@color/red500"
                 android:clickable="true"
                 android:singleLine="true"
                 android:src="@mipmap/ic_launcher_round"
@@ -120,18 +62,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView
-        android:id="@+id/trans_scrollview"
-        android:scrollbars="none"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom">
-
-        <com.itboye.pondteam.custom.MyListView
-            android:id="@+id/xlistview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.itboye.pondteam.custom.MyListView>
-    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView>
 
     <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
         android:id="@+id/actionBar"

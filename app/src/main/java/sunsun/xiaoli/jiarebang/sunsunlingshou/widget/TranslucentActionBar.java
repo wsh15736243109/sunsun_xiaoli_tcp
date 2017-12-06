@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,7 +29,7 @@ public final class TranslucentActionBar extends LinearLayout {
     private TextView tvRight;
     private View iconLeft;
     private View iconRight;
-    private EditText ed_actionbar_search;
+    private TextView ed_actionbar_search;
 
     public TranslucentActionBar(Context context) {
         this(context, null);
@@ -55,7 +54,7 @@ public final class TranslucentActionBar extends LinearLayout {
         tvRight = (TextView) contentView.findViewById(R.id.tv_actionbar_right);
         iconLeft = contentView.findViewById(R.id.iv_actionbar_left);
         iconRight = contentView.findViewById(R.id.v_actionbar_right);
-        ed_actionbar_search = (EditText) contentView.findViewById(R.id.ed_actionbar_search);
+        ed_actionbar_search = (TextView) contentView.findViewById(R.id.ed_actionbar_search);
     }
 
     public void setSearchBarVisible(boolean isVisible) {

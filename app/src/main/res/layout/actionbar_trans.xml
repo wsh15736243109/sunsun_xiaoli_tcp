@@ -50,7 +50,7 @@
             android:layout_centerInParent="true"
             android:text=""
             android:textSize="16sp" />
-        <EditText
+        <TextView
             android:layout_toRightOf="@+id/lay_actionbar_left"
             android:layout_toLeftOf="@+id/lay_actionbar_right"
             android:id="@+id/ed_actionbar_search"
@@ -58,10 +58,9 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:layout_centerInParent="true"
-            android:hint="分类查找"
+            android:text="分类查找"
             android:drawableLeft="@drawable/home_search"
             android:gravity="center_vertical"
-            android:cursorVisible="false"
             android:drawablePadding="@dimen/margin_5"
             android:layout_marginBottom="@dimen/DIMEN_10DP"
             android:background="@drawable/btn_border_white_bg_white_oval"

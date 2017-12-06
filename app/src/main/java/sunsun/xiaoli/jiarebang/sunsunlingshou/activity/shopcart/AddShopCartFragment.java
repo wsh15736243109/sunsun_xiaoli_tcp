@@ -31,6 +31,7 @@ import sunsun.xiaoli.jiarebang.beans.GoodsDetailBean;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.BuyType;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.FlowLayout;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.base.BaseActivity.EVENT_TYPE_UNKNOWN;
 
@@ -148,11 +149,11 @@ public class AddShopCartFragment extends BaseDialogFragment {
                 if (s == null) {
                     return;
                 }
-                String tString = kucun.getText().toString();
+                String tString = kucun.getTag().toString();
                 String string = input.getText().toString();
                 System.out.println(tString + "tString" + string);
-                if (Integer.parseInt(kucun.getText().toString()) < Integer
-                        .parseInt(input.getText().toString())) {
+                if (Integer.parseInt(tString) < Integer
+                        .parseInt(string)) {
                     Toast.makeText(getContext(), "库存不足", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -303,6 +304,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
 
             try {
                 kucun.setText("");
+                kucun.setTag("0");
                 txt_price.setText("");
                 txt_fenlei.setText("");
                 if (v.isSelected()) {
@@ -311,7 +313,7 @@ public class AddShopCartFragment extends BaseDialogFragment {
                     imgUrl = goodsDetailBeans.getMain_img();
                     if ((!goodsDetailBeans.getMain_img().isEmpty())
                             & goodsDetailBeans.getMain_img() != null) {
-                        GlidHelper.glidLoad(pic, Const.imgurl + goodsDetailBeans.getMain_img());
+                        XGlideLoader.displayImage(getActivity(), Const.imgurl + goodsDetailBeans.getMain_img(), pic);
                     }
                     return;
                 }
@@ -371,8 +373,9 @@ public class AddShopCartFragment extends BaseDialogFragment {
                             .getSku_list();
                     for (GoodsDetailBean.SkuListEntity skuCombinationBean : list) {
                         if (skuCombinationBean.getSku_id().equals(s)) {
-                            kucun.setText(skuCombinationBean.getQuantity()
-                                    + "");
+                            kucun.setText("库存" + skuCombinationBean.getQuantity()
+                                    + "件");
+                            kucun.setTag(skuCombinationBean.getQuantity() + "");
                             price = skuCombinationBean.getPrice();
 //                            if (!skuCombinationBean.getOri_price()
 //                                    .equals("0.00")

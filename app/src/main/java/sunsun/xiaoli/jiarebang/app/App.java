@@ -88,7 +88,6 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrR
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.MakeSureOrderActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
 import sunsun.xiaoli.jiarebang.utils.AqDeviceFind;
-import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.AqSmartConfig;
 
 //import sunsun.xiaoli.jiarebang.device.ActivityStepThree;
@@ -145,7 +144,6 @@ public class App extends MyApplication {
     public ChooseTimeActivity chooseTimeActivityUI;
     public OrderDetailActivity orderDetailUI;
     public MakeSureOrderActivity makeSureActivity;
-    public LocationUtil locationUtil;
     public LingShouLoginActivity lingshouLogin;
 
     public List<WeakReference<Activity>> getActivityList() {

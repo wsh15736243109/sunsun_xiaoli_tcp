@@ -33,6 +33,7 @@ import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 public class LingShouMainActivity extends LingShouBaseActivity {
 
+    public static int WIDTH = 0;
     RelativeLayout index_layout, order_layout, consultation_layout, shopcart_layout, me_layout;
     private FragmentManager fragmentManager;
     HomeFragment homeFragment = null;
@@ -70,6 +71,7 @@ public class LingShouMainActivity extends LingShouBaseActivity {
 
     @Override
     protected void initData() {
+        WIDTH=getWindowManager().getDefaultDisplay().getWidth();
         if (getSp(Const.UID).equals("")) {
             LoginController.setLoginState(new UnLoginState());
         } else {
