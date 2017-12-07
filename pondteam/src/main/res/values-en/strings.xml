@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_xiaoli_name">smart xiaoli sunsun</string>
-    <string name="app_lingshou_name">sunsun lingshou</string>
+    <string name="app_xiaoli_name">Smart Xiaoli Sunsun</string>
+    <string name="app_lingshou_name">Sunsun lingshou</string>
     <string name="app_pondteam_name">PondTeam</string>
     <string name="app_pondlink_name">PondLink</string>
-    <string name="app_yihu_name">yi hu</string>
+    <string name="app_yihu_name">Yi hu</string>
     <string name="Monday">Monday</string>
     <string name="Tuesday">Tuesday</string>
     <string name="Wednesday">Wednesday</string>
@@ -627,4 +627,5 @@
     <string name="timeout_reason">搜索设备超时,设备可能已经添加过了</string>
     <string name="i_know">我知道了</string>
     <string name="bindphone">绑定手机</string>
+    <string name="device_type_empty">device type is empty</string>
 </resources>

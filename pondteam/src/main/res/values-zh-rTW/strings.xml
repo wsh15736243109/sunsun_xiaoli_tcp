@@ -624,4 +624,5 @@
     <string name="timeout_reason">搜索设备超时,设备可能已经添加过了</string>
     <string name="i_know">我知道了</string>
     <string name="bindphone">绑定手机</string>
+    <string name="device_type_empty">設備類型為空</string>
 </resources>

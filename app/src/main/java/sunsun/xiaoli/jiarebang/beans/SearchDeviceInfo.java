@@ -52,4 +52,15 @@ public class SearchDeviceInfo {
     public void setVer(String ver) {
         this.ver = ver;
     }
+
+    @Override
+    public String toString() {
+        return "SearchDeviceInfo{" +
+                "res='" + res + '\'' +
+                ", type='" + type + '\'' +
+                ", did='" + did + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", ver='" + ver + '\'' +
+                '}';
+    }
 }

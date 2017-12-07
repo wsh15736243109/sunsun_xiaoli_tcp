@@ -630,6 +630,7 @@
     <br />5、查看说明书设备联网成功后指示灯的闪烁状态,设备可能未成功连上网络，请检查输入的wifi密码是否正确后尝试重新配置<a>点击</a>]]></Data></string>
     <string name="i_know">我知道了</string>
     <string name="bindphone">绑定手机</string>
+    <string name="device_type_empty">设备类型为空</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

@@ -59,6 +59,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
     int position;
     TextView txt_title_2;
     DeviceType deviceType;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +86,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 String psw = listItems.get(position).get("ItemPsw").toString();
                 mSelectDeviceInfo.setDid(did);
                 mSelectDeviceInfo.setPwd(psw);
+                mSelectDeviceInfo.setType(listItems.get(position).get("ItemDeviceType").toString());
                 if ((boolean) (listItems.get(position).get("add_status"))) {
                     new AlertDialog.Builder(mContext)
                             .setTitle(getString(R.string.tips))
@@ -110,7 +112,11 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                 String type = mSelectDeviceInfo.getType();
                                 HashMap<String, Object> hashMap = new HashMap<>();
                                 Gson gson = new Gson();
-                                if (mSelectDeviceInfo.getDid()==null) {
+                                if (type == null) {
+                                    MAlert.alert(getString(R.string.device_type_empty) + "-------->" + mSelectDeviceInfo.toString());
+                                    return;
+                                }
+                                if (mSelectDeviceInfo.getDid() == null) {
                                     MAlert.alert(getString(R.string.did_empty));
                                     return;
                                 }
@@ -137,7 +143,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                             userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[2], "S03-2", extra);
                                             break;
 //                                        case DEVICE_SHUIZUDENG:
-//                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid()), mSelectDeviceInfo.getType(), extra);
+//                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), type.equalsIgnoreCase("S06-1") ? "ADT-C" : "ADT-H", mSelectDeviceInfo.getType(), extra);
 //                                            break;
                                         default:
                                             userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid(),type), mSelectDeviceInfo.getType(), extra);
@@ -295,7 +301,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);
             } else if (deviceInfo.getType().equalsIgnoreCase("SCHD")) {
                 map.put("ItemIcon", R.drawable.device_shexiangtou);
-            }else if (deviceInfo.getType().equalsIgnoreCase("S08")) {
+            } else if (deviceInfo.getType().equalsIgnoreCase("S08")) {
                 map.put("ItemIcon", R.drawable.device_weishiqi);
             } else {
                 map.put("ItemIcon", R.drawable.ic_aplacher);
@@ -311,6 +317,9 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
             map.put("ItemRightArrow", null);
             map.put("add_status", hasAdd);
             map.put("ItemPsw", deviceInfo.getPwd());
+            map.put("ItemDeviceType", deviceInfo.getType());
+            map.put("ItemDeviceVer", deviceInfo.getVer());
+            map.put("ItemDeviceRes", deviceInfo.getRes());
             listItems.add(map);
         }
         SimpleAdapter listItemsAdapter = new SimpleAdapter(this, listItems, R.layout.device_item,
