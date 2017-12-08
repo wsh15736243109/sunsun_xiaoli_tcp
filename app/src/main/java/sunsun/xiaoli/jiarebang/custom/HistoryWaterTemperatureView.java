@@ -8,6 +8,7 @@ import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -272,6 +273,7 @@ public class HistoryWaterTemperatureView extends View {
                 RectF rect = new RectF((int) (ar.get(i).x - min_left_x + 10), (int) (maxPoint_Y - min_left_x), (int) (ar.get(i).x + min_left_x - 10), (int) (maxPoint_Y));
                 Rect rectMessure = new Rect();
                 float pointX = i * (float) keduX + min_left_x;
+                Log.v("ph_history","topTemperature-"+topTemperature+"  bottomTemperatue-"+bottomTemperatue);
                 if (Float.parseFloat(value) < topTemperature && Float.parseFloat(value) > bottomTemperatue) {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);
