@@ -133,7 +133,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         recycler_aqhardwareorhotgoods.setOnItemClickListener(this);
         switch (this.type) {
             case 2:
-//                near_store.setVisibility(View.VISIBLE);
+                setMyLocation();//显示当前定位
                 getNearStore();
                 break;
             case 1:
@@ -150,6 +150,10 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
         intentFilter.addAction(Const.STORE_CHANGE);
         intentFilter.addAction(Const.DEVICE_CHANGE);
         getActivity().registerReceiver(receiver, intentFilter);
+    }
+
+    private void setMyLocation() {
+        new MapHelper().setMyLocation(getActivity(),baiduMap);
     }
 
     @Override
@@ -308,8 +312,8 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                         recycler_aqhardwareorhotgoods.setAdapter(adapter);
                     }
                 });
-
-                new MapHelper().setPoint(getActivity(), baiduMap, bean.getList());
+                    //设置显示所有商家到地图上
+//                new MapHelper().setPoint(getActivity(), baiduMap, bean.getList());
             } else if (entity.getEventType() == LingShouPresenter.getNearStore_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == LingShouPresenter.getHotSearchGoods_success) {
@@ -475,6 +479,7 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
     public void onResume() {
         super.onResume();
         mapView_mytab.onResume();
+        setMyLocation();
     }
 
     @Override

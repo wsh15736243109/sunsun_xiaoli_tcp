@@ -48,7 +48,6 @@ public class EmptyUtil {
     }
 
     public static String getSp(Object object) {
-
         return SPUtils.get(MyApplication.getInstance(), null, object + "", "") + "";
     }
 }
