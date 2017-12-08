@@ -85,8 +85,8 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                     intent = new Intent(this, ActivityTemperature.class);
                     intent.putExtra("isPh", true);
                     intent.putExtra("did", deviceDetailModel.getDid());
-                    intent.putExtra("topValue", phH);
-                    intent.putExtra("bottomValue", phL);
+                    intent.putExtra("topValue", phH+"");
+                    intent.putExtra("bottomValue", phL+"");
                     intent.putExtra("title", getString(R.string.ph_history));
                     startActivity(intent);
                 }

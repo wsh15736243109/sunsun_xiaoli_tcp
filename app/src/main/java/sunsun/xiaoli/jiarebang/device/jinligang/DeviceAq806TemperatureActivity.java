@@ -83,7 +83,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         popupWindow = new CameraConsolePopupWindow(
                 DeviceAq806TemperatureActivity.this, this);
         img_progress.setMaxCount(35);
-        if (myApp.jinLiGangdetailUI!=null) {
+        if (myApp.jinLiGangdetailUI != null) {
             userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.did, "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
         }
         setDeviceTitle(getString(R.string.wendu));
@@ -117,15 +117,15 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 finish();
                 break;
             case R.id.re_wendu_history:
-                if (myApp.jinLiGangdetailUI.deviceDetailModel==null) {
+                if (myApp.jinLiGangdetailUI.deviceDetailModel == null) {
                     MAlert.alert(getString(R.string.device_error));
                     return;
                 }
                 intent = new Intent(this, ActivityTemperature.class);
                 intent.putExtra("isPh", false);
                 intent.putExtra("did", myApp.jinLiGangdetailUI.deviceDetailModel.getDid());
-                intent.putExtra("topValue", (myApp.jinLiGangdetailUI.deviceDetailModel.getTh()) / 10 + "");
-                intent.putExtra("bottomValue", (myApp.jinLiGangdetailUI.deviceDetailModel.getTl()) / 10 + "");
+                intent.putExtra("topValue", th + "");
+                intent.putExtra("bottomValue", tl + "");
                 intent.putExtra("title", getString(R.string.lishishuiwen));
                 startActivity(intent);
                 break;
@@ -288,7 +288,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
         }
         setImageViewCheckOrUnCheck(wendu_baojing);
         double wenduValue = 0;
-        String ex_dev=myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev()==null?"":myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev();
+        String ex_dev = myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev() == null ? "" : myApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev();
         if (ex_dev.equalsIgnoreCase("AQ500")) {
             re_settemperature.setVisibility(View.GONE);
         } else {

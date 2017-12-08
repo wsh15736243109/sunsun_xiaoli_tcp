@@ -90,6 +90,9 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
     TextView txt_status;
     private TcpUtil tcp;
     TextView txt_wendu_warn;
+    private int th;
+    private int tl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,8 +218,8 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 intent.putExtra("did", did);
                 intent.putExtra("isPh", false);
                 intent.putExtra("title", getString(R.string.lishishuiwen));
-                intent.putExtra("topValue", txt_wendu_sheding_high.getText().toString().substring(0, txt_wendu_sheding_high.getText().toString().length() - 1));
-                intent.putExtra("bottomValue", txt_wendu_sheding_low.getText().toString().substring(0, txt_wendu_sheding_low.getText().toString().length() - 1));
+                intent.putExtra("topValue", th + "");
+                intent.putExtra("bottomValue", tl + "");
                 startActivity(intent);
                 break;
             case R.id.tvUpdate:
@@ -625,8 +628,8 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        int th = deviceDetailModel.getTemp_max();
-        int tl = deviceDetailModel.getTemp_min();
+        th = deviceDetailModel.getTemp_max();
+        tl = deviceDetailModel.getTemp_min();
         if ((wenduValue < th / 10 && wenduValue > tl / 10)) {
             txt_wendu_warn.setCompoundDrawables(null, null, null, null);
         } else if ((wenduValue > th / 10 || wenduValue < tl / 10) && wenDuBaoJingStatus) {
@@ -637,8 +640,8 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         setImageViewCheckOrUnCheck(toggle_exception_warn, wendu_baojing, toggle_jieshoustatus);
 
         txt_wendu_setting.setText(mNewTempValue + "℃");
-        txt_wendu_sheding_high.setText(Float.parseFloat(deviceDetailModel.getTemp_max() + "") / 10 + "℃");
-        txt_wendu_sheding_low.setText(Float.parseFloat(deviceDetailModel.getTemp_min() + "") / 10 + "℃");
+        txt_wendu_sheding_high.setText(Float.parseFloat(th + "") / 10 + "℃");
+        txt_wendu_sheding_low.setText(Float.parseFloat(tl + "") / 10 + "℃");
     }
 
     private void setImageViewCheckOrUnCheck(ImageView toggle_exception_warn, ImageView wendu_baojing, ImageView toggle_jieshoustatus) {

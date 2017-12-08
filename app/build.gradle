@@ -87,8 +87,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'false')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 127
-            versionName '1.2.7'
+            versionCode 128
+            versionName '1.2.8'
         }
         yihu {
             signingConfig signingConfigs.sunsun_yihu_debug
