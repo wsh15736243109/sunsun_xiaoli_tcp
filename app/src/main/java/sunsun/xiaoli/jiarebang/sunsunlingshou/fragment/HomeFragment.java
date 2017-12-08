@@ -233,9 +233,11 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
     private void setYouHuiQuan() {
         String hasCharge = getSp(Const.HAS_CHARGE);
-        if (hasCharge.equals("0") || hasCharge.equals("")) {
+        if (hasCharge.equals("0")) {
             //没有领取过
             home_img.setBackgroundResource(R.drawable.home_nocharge);
+        } else if (hasCharge.equals("")) {
+            home_img.setBackgroundResource(R.drawable.home_charge);
         } else {
             //领取过
             home_img.setBackgroundResource(R.drawable.home_charge);

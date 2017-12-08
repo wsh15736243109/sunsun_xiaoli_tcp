@@ -175,7 +175,9 @@ public class HistoryWaterTemperatureView extends View {
                 RectF rect = new RectF((int) (ar.get(i).x - min_left_x + 10), (int) (maxPoint_Y - min_left_x), (int) (ar.get(i).x + min_left_x - 10), (int) (maxPoint_Y));
                 Rect rectMessure = new Rect();
                 float pointX = i * (float) keduX + min_left_x;
-                if (Float.parseFloat(array.get(i).getAvg_temp()) / 10.f < topTemperature && Float.parseFloat(array.get(i).getAvg_temp()) / 10.f > bottomTemperatue) {
+
+                Log.v("history_value", "topTemperature: " + topTemperature + " bottomTemperatue:" + bottomTemperatue + " array.get(i).getAvg_temp()" + array.get(i).getAvg_temp());
+                if (Float.parseFloat(array.get(i).getAvg_temp())  < topTemperature && Float.parseFloat(array.get(i).getAvg_temp())  > bottomTemperatue) {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);
                     rectMessure = new Rect();
@@ -273,7 +275,7 @@ public class HistoryWaterTemperatureView extends View {
                 RectF rect = new RectF((int) (ar.get(i).x - min_left_x + 10), (int) (maxPoint_Y - min_left_x), (int) (ar.get(i).x + min_left_x - 10), (int) (maxPoint_Y));
                 Rect rectMessure = new Rect();
                 float pointX = i * (float) keduX + min_left_x;
-                Log.v("ph_history","topTemperature-"+topTemperature+"  bottomTemperatue-"+bottomTemperatue);
+                Log.v("history_value", "topPH: " + topTemperature + " bottomPH:" + bottomTemperatue + " value" + value);
                 if (Float.parseFloat(value) < topTemperature && Float.parseFloat(value) > bottomTemperatue) {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);

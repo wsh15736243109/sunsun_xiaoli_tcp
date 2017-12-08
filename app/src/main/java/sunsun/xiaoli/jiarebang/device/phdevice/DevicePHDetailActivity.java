@@ -102,7 +102,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
         tcp.start();
         deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
-        userPresenter.deviceSet_300Ph(did, -1,-1,-1,-1,-1,-1,-1,-1,-1);
+        userPresenter.deviceSet_300Ph(did, -1, -1, -1, -1, -1, -1, -1, -1, -1);
         threadStart();
     }
 
@@ -139,6 +139,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
             handler.postDelayed(runnable, Const.intervalTime);
         }
     };
+
     public void setData() {
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         txt_title.setText(deviceDetailModel.getDevice_nickname());
@@ -171,7 +172,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (detailModelTcp!=null) {
+        if (detailModelTcp != null) {
             txt_ph.setText(String.format("%.2f ", detailModelTcp.getPh() / 100));
             txt_wendu.setText(String.format("%.1f ", detailModelTcp.getT() / 10) + "℃");
             //设置固件更新UI
@@ -181,7 +182,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 }
             }
 
-            if (myApp.phJiaoZhunUI!=null) {
+            if (myApp.phJiaoZhunUI != null) {
                 myApp.phJiaoZhunUI.setData();
             }
         }
@@ -191,7 +192,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     }
 
     private void beginRequest() {
-        userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
+        userPresenter.getDeviceOnLineState(did, getSp(Const.UID));
     }
 
     @Override
@@ -200,7 +201,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         NumberPicker mPicker = null;
         switch (v.getId()) {
             case R.id.re_dianjijiaozhun:
-                if (detailModelTcp==null) {
+                if (detailModelTcp == null) {
                     return;
                 }
                 intent = new Intent(this, PhJiaoZhunActivity.class);
@@ -251,8 +252,8 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 intent = new Intent(this, ActivityTemperature.class);
                 intent.putExtra("isPh", true);
                 intent.putExtra("did", did);
-                intent.putExtra("topValue", deviceDetailModel.getPhh() / 100 + "");
-                intent.putExtra("bottomValue", deviceDetailModel.getPhl() / 100 + "");
+                intent.putExtra("topValue", ph_h / 100 + "");
+                intent.putExtra("bottomValue", ph_l / 100 + "");
                 intent.putExtra("title", getString(R.string.ph_history));
                 startActivity(intent);
                 break;
@@ -260,8 +261,8 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 intent = new Intent(this, ActivityTemperature.class);
                 intent.putExtra("isPh", false);
                 intent.putExtra("did", did);
-                intent.putExtra("topValue", deviceDetailModel.getTh() / 10 + "");
-                intent.putExtra("bottomValue", deviceDetailModel.getTl() / 10 + "");
+                intent.putExtra("topValue", temp_h + "");
+                intent.putExtra("bottomValue", temp_l + "");
                 intent.putExtra("title", getString(R.string.lishishuiwen));
                 startActivity(intent);
                 break;
@@ -468,9 +469,11 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         intent.putExtra("deviceType", "S06");
         startActivity(intent);
     }
+
     public void threadStart() {
         RequestUtil.threadStart(handler, runnable);
     }
+
     @Override
     public void update(Observable o, Object data) {
         setLoadingIsVisible(false);
@@ -508,11 +511,11 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_fail) {
                 MAlert.alert(entity.getData());
-            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_success){
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
                 DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
                 isConnect = detailModel.getIs_disconnect().equals("0");
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
-            }else if(entity.getEventType()==UserPresenter.getDeviceOnLineState_fail){
+            } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
