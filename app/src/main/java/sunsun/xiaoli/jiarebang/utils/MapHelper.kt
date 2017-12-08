@@ -54,22 +54,23 @@ class MapHelper {
                         .decodeResource(activity.resources,
                                 R.drawable.location))
         if (getSp(Const.LOCATION_LAT).equals("") && getSp(Const.LOCATION_LNG).equals("")) {
-            return
+
+        }else {
+            var lat: Double = getSp(Const.LOCATION_LAT).toDouble()
+            var lng: Double = getSp(Const.LOCATION_LNG).toDouble()
+            var ll = LatLng(lat, lng)
+            var builder = MapStatus.Builder()
+            //设置缩放中心点；缩放比例；
+            builder.target(ll).zoom(18.0f)
+            //给地图设置状态
+            baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()))
+            //构建MarkerOption，用于在地图上添加Marker
+            val option = MarkerOptions()
+                    .position(ll)
+                    .icon(descriptor)
+            //在地图上添加Marker，并显示
+            baiduMap.addOverlay(option)
         }
-        var lat: Double = getSp(Const.LOCATION_LAT).toDouble()
-        var lng: Double = getSp(Const.LOCATION_LNG).toDouble()
-        var ll = LatLng(lat, lng)
-        var builder = MapStatus.Builder()
-        //设置缩放中心点；缩放比例；
-        builder.target(ll).zoom(18.0f)
-        //给地图设置状态
-        baiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()))
-        //构建MarkerOption，用于在地图上添加Marker
-        val option = MarkerOptions()
-                .position(ll)
-                .icon(descriptor)
-        //在地图上添加Marker，并显示
-        baiduMap.addOverlay(option)
     }
 
 
