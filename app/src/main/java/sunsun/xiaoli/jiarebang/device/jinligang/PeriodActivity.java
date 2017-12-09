@@ -599,54 +599,59 @@ public class PeriodActivity extends BaseActivity implements Observer {
     }
 
     private void restoreFactorySettings() {
-        switch (type) {
-            case 1:
-                timer1.get(0).setH0(7);
-                timer1.get(0).setH1(11);
-                timer1.get(0).setM0(0);
-                timer1.get(0).setM1(0);
-                timer1.get(1).setH0(12);
-                timer1.get(1).setH1(17);
-                timer1.get(1).setM0(0);
-                timer1.get(1).setM1(0);
-                timer1.get(2).setH0(18);
-                timer1.get(2).setH1(21);
-                timer1.get(2).setM0(0);
-                timer1.get(2).setM1(0);
-                str1 = gson.toJson(timer1);
-                break;
-            case 2:
-            case 3:
-                timer1.get(0).setH0(6);
-                timer1.get(0).setH1(6);
-                timer1.get(0).setM0(0);
-                timer1.get(0).setM1(30);
-                timer1.get(1).setH0(11);
-                timer1.get(1).setH1(11);
-                timer1.get(1).setM0(0);
-                timer1.get(1).setM1(30);
-                timer1.get(2).setH0(17);
-                timer1.get(2).setH1(17);
-                timer1.get(2).setM0(0);
-                timer1.get(2).setM1(30);
-                str2 = gson.toJson(timer1);
-                str3 = gson.toJson(timer1);
-                break;
+        try {
+            switch (type) {
+                case 1:
+                    timer1.get(0).setH0(7);
+                    timer1.get(0).setH1(11);
+                    timer1.get(0).setM0(0);
+                    timer1.get(0).setM1(0);
+                    timer1.get(1).setH0(12);
+                    timer1.get(1).setH1(17);
+                    timer1.get(1).setM0(0);
+                    timer1.get(1).setM1(0);
+                    timer1.get(2).setH0(18);
+                    timer1.get(2).setH1(21);
+                    timer1.get(2).setM0(0);
+                    timer1.get(2).setM1(0);
+                    str1 = gson.toJson(timer1);
+                    break;
+                case 2:
+                case 3:
+                    timer1.get(0).setH0(6);
+                    timer1.get(0).setH1(6);
+                    timer1.get(0).setM0(0);
+                    timer1.get(0).setM1(30);
+                    timer1.get(1).setH0(11);
+                    timer1.get(1).setH1(11);
+                    timer1.get(1).setM0(0);
+                    timer1.get(1).setM1(30);
+                    timer1.get(2).setH0(17);
+                    timer1.get(2).setH1(17);
+                    timer1.get(2).setM0(0);
+                    timer1.get(2).setM1(30);
+                    str2 = gson.toJson(timer1);
+                    str3 = gson.toJson(timer1);
+                    break;
+            }
+            str1 = str1.replaceAll(" ", "");
+            str2 = str2.replaceAll(" ", "");
+            str3 = str3.replaceAll(" ", "");
+            switch (type) {
+                case 1:
+                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, "", "", "", "", 0, 0, 0, -1);
+                    break;
+                case 2:
+                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", str2, "", "", "", 0, 0, 0, -1);
+                    break;
+                case 3:
+                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", str3, "", "", 0, 0, 0, -1);
+                    break;
+            }
+        }catch (Exception e){
+            MAlert.alert("请稍等，正在更新数据中");
         }
-        str1 = str1.replaceAll(" ", "");
-        str2 = str2.replaceAll(" ", "");
-        str3 = str3.replaceAll(" ", "");
-        switch (type) {
-            case 1:
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, "", "", "", "", 0, 0, 0, -1);
-                break;
-            case 2:
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", str2, "", "", "", 0, 0, 0, -1);
-                break;
-            case 3:
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", str3, "", "", 0, 0, 0, -1);
-                break;
-        }
+
     }
 
     private void setCancelTime(int i, int i1) {
@@ -1013,8 +1018,10 @@ public class PeriodActivity extends BaseActivity implements Observer {
     }
 
     public void setNewTimer() {
-        str1 = mApp.jinLiGangdetailUI.deviceDetailModel.getL_per();
-        str2 = mApp.jinLiGangdetailUI.deviceDetailModel.getUvc_per();
-        str3 = mApp.jinLiGangdetailUI.deviceDetailModel.getSp_per();
+        if (mApp.jinLiGangdetailUI.deviceDetailModel!=null) {
+            str1 = mApp.jinLiGangdetailUI.deviceDetailModel.getL_per();
+            str2 = mApp.jinLiGangdetailUI.deviceDetailModel.getUvc_per();
+            str3 = mApp.jinLiGangdetailUI.deviceDetailModel.getSp_per();
+        }
     }
 }

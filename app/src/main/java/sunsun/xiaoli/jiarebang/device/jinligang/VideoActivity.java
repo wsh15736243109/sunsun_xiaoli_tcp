@@ -142,7 +142,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     HashMap<String, String> arrayList = new HashMap<>();
     ArrayList<String> arrayListValue = new ArrayList<>();
     private ListView listView;
-    private int[] flow;
+    private int[] flow=new int[2];
     TextView txt_video;
     private String nickname;
     boolean clickBack = false;
@@ -837,8 +837,12 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 img_liuliang.setEnabled(false);
                 img_liuliang.setBackgroundResource(R.drawable.kai);
                 long re = dbManager.updateFlowData(cameraDid, getSp(Const.UID), yesTerdayTime, "0");
-                flow[1] = 0;
-                totalFlow = 0;
+                try {
+                    flow[1] = 0;
+                    totalFlow = 0;
+                }catch (Exception e){
+
+                }
                 MAlert.alert("视频累计流量已清零");
                 txt_shuiwei_status.setText("");
 //                SystemClock.sleep(2000);
