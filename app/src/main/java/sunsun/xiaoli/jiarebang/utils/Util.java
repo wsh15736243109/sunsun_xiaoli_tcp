@@ -374,5 +374,24 @@ public class Util {
         Log.v("request_params", "城市Code" + city.getNumber());
         return city.getNumber() + "";
     }
+    /**
+     * 解析市数据
+     */
+    public static String queryDistrictNo(String cityName) {
+        String table = "common_area";
+        String column = "area";
+        //查询城市ID
+        String sql = "select * from " + table + " where " + column + " = ?";
+        Cursor cursor = App.getInstance().db.rawQuery(sql, new String[]{cityName});
+        CityModel city = new CityModel();
+        while (cursor.moveToNext()) {
+            city = new CityModel(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+            break;
+        }
+        cursor.close();
 
+        SPUtils.put(App.getInstance(), null, Const.AREA_CODE, city.getNumber()+"");
+        Log.v("request_params", "地区Code" + city.getNumber());
+        return city.getNumber() + "";
+    }
 }

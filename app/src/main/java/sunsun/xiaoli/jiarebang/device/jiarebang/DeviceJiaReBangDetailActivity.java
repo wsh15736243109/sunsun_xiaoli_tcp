@@ -276,7 +276,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                     popupWindow.dismiss();
                 }
                 intent = new Intent(this, FeedbackActivity.class);
-                intent.putExtra("device_type", 3);
+                intent.putExtra("device_type", 2);
                 startActivity(intent);
                 break;
             case R.id.camera_cancel:

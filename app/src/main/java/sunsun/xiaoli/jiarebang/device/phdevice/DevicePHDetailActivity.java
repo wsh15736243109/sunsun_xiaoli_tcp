@@ -456,6 +456,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     @Override
     public void fankui() {
         Intent intent = new Intent(this, FeedbackActivity.class);
+        intent.putExtra("device_type",4);
         startActivity(intent);
     }
 

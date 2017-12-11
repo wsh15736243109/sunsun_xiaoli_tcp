@@ -194,6 +194,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                     popupShuiBeng.dismiss();
                 }
                 intent = new Intent(this, FeedbackActivity.class);
+                intent.putExtra("device_type", 7);
                 startActivity(intent);
                 break;
             case R.id.img_yichangbaojing:

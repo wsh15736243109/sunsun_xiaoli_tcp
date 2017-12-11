@@ -301,7 +301,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                     popupWindow.dismiss();
                 }
                 intent = new Intent(this, FeedbackActivity.class);
-                intent.putExtra("device_type", 3);
+                intent.putExtra("device_type", 6);
                 startActivity(intent);
                 break;
             case R.id.camera_cancel:

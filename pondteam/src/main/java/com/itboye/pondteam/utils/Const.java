@@ -58,6 +58,7 @@ public class Const {
     public static final String WX_LOGIN = "wx_login";
     public static final String ADDRESS_DELEETE = "address_delete";
     public static final String YOUHUIQUAN_CHANGE = "charge_change";
+    public static final String AREA_CODE = "area_code";
 
     public static String CITY_CODE = "330100";
     public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";

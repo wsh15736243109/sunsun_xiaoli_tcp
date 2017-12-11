@@ -51,18 +51,19 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.RedBagAcitivty;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.Const.CITY_CODE;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitleBarStyle2;
+import static sunsun.xiaoli.jiarebang.utils.Util.queryDistrictNo;
 
 
 /**
@@ -285,7 +286,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
             if (getSp(Const.LNG).equals("") || getSp(Const.LAT).equals("")) {
                 return;
             }
-            setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+            setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)), "");
         } else {
             selectAddress = getSp(Const.SELECT_ADDRESS);
             if (!selectAddress.equals("")) {
@@ -293,10 +294,10 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 selectAddressBean = new Gson().fromJson(selectAddress, AddressBean.class);
                 if (selectAddressBean != null) {
                     //获取到默认地址
-                    setCityName(selectAddressBean.getCityid(), selectAddressBean.getCity(), Double.parseDouble(selectAddressBean.getLat()), Double.parseDouble(selectAddressBean.getLng()));
+                    setCityName(selectAddressBean.getCityid(), selectAddressBean.getCity(), Double.parseDouble(selectAddressBean.getLat()), Double.parseDouble(selectAddressBean.getLng()), "");
                 } else {
                     //没获取到默认地址
-                    setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                    setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)), "");
                 }
             } else {
                 //用戶沒有選擇地址就獲取默認地址
@@ -309,13 +310,19 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
 
     boolean hasRe = false;
 
-    public void setCityName(String cityId, final String cityName, double lat, double lng) {
+    public void setCityName(String cityId, final String cityName, double lat, double lng, String area) {
         if (hasRe == false) {
             getStore(cityId, cityName, lat, lng);
-            lingShouPresenter.getVerticalArtical(CITY_CODE, lat + "", lng + "");//获取垂直滚动文章
+            getVerticalArt(area, lat, lng);
             hasRe = true;
         }
 
+    }
+
+    private void getVerticalArt(String area, double lat, double lng) {
+        String areaNo = queryDistrictNo(area);
+        SPUtils.put(getActivity(), null, Const.AREA_CODE, areaNo + "");
+        lingShouPresenter.getVerticalArtical(areaNo, lat + "", lng + "");//获取垂直滚动文章
     }
 
     private void getStore(String cityId, final String cityName, double lat, double lng) {
@@ -536,7 +543,7 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                             ImageView img_homead = (ImageView) articalView.findViewById(R.id.img_homead);
                             TextView txt_homead_name = (TextView) articalView.findViewById(R.id.txt_homead_name);
                             TextView txt_homead_content = (TextView) articalView.findViewById(R.id.txt_homead_content);
-                            GlidHelper.glidLoad(img_homead, Const.imgurl + listEntity.getImg());
+                            XGlideLoader.displayImageCircularForUser(getActivity(), Const.imgurl + listEntity.getImg(), img_homead);
                             txt_homead_name.setText(listEntity.getTitle());
                             txt_homead_content.setText(listEntity.getDetail());
                             vf_home.addView(articalView);
@@ -561,30 +568,31 @@ public class HomeFragment extends LingShouBaseFragment implements TranslucentScr
                 if (addressBeanArrayList != null) {
                     if (addressBeanArrayList.size() > 0) {
                         //获取到默认地址
-                        setCityName(addressBeanArrayList.get(0).getCityid(), addressBeanArrayList.get(0).getCity(), Double.parseDouble(addressBeanArrayList.get(0).getLat()), Double.parseDouble(addressBeanArrayList.get(0).getLng()));
+                        setCityName(addressBeanArrayList.get(0).getCityid(), addressBeanArrayList.get(0).getCity(), Double.parseDouble(addressBeanArrayList.get(0).getLat()), Double.parseDouble(addressBeanArrayList.get(0).getLng()), "");
                     } else {
                         //没获取到默认地址
-                        setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                        setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)), "");
                     }
                 } else {
                     //没获取到默认地址
-                    setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                    setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)), "");
                 }
             } else if (entity.getEventType() == LingShouPresenter.getDefaultAddress_fail) {
                 //没获取到默认地址
                 MAlert.alert(entity.getData());
-                setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)));
+                setCityName("", getSp(Const.CITY), Double.parseDouble(getSp(Const.LNG)), Double.parseDouble(getSp(Const.LAT)), "");
             }
         }
     }
 
     @Override
-    public void getLatAndLng(final String cityName, final double lat, final double lng) {
+    public void getLatAndLng(final String cityName, final double lat, final double lng, final String area) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                setCityName("", cityName, lat, lng);
+                setCityName("", cityName, lat, lng, area);
             }
         });
+
     }
 }

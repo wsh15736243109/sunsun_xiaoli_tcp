@@ -46,39 +46,47 @@ public class FeedbackActivity extends BaseActivity implements TextWatcher, Obser
         userPresenter = new UserPresenter(this);
         int deviceType = getIntent().getIntExtra("device_type", 0);
         device_type.setText( getString(R.string.wentifankui));
-//        switch (deviceType) {
-//            case 0:
-//                break;
-//            case 1:
-//                deviceTypeName = "S01";
+        switch (deviceType) {
+            case 0:
+                break;
+            case 1:
+                //过滤桶
+                deviceTypeName = "S01";
 //                device_type.setText(getString(R.string.chitangguolv) + getString(R.string.wentifankui));
-//                break;
-//            case 2:
-//                deviceTypeName = "S03";
+                break;
+            case 2:
+                //加热棒
+                deviceTypeName = "S02";
 //                device_type.setText(getString(R.string.sensenshuizu) + getString(R.string.wentifankui));
-//                break;
-//            case 3:
-//                break;
-//            case 4:
-//                deviceTypeName = "S05";
+                break;
+            case 3:
+                //806
+                deviceTypeName = "S03";
+                break;
+            case 4:
+                //ph
+                deviceTypeName = "S04";
 //                device_type.setText(getString(R.string.bianpinshuibeng) + getString(R.string.wentifankui));
-//                break;
-//            case 5:
-//                //加热棒
-//                deviceTypeName = "S02";
+                break;
+            case 5:
+                //水泵
+                deviceTypeName = "S05";
 //                device_type.setText(getString(R.string.jiarebang) + getString(R.string.wentifankui));
-//                break;
-//            case 6:
-//                deviceTypeName = "S03";
+                break;
+            case 6:
+                //led灯
+                deviceTypeName = "S06";
 //                device_type.setText(getString(R.string.bianpinshuibeng) + getString(R.string.wentifankui));
-//                break;
-//            case 7:
+                break;
+            case 7:
+                //气泵
+                deviceTypeName = "chiniaowificamera";
 //                device_type.setText(getString(R.string.yuancheng_ph) + getString(R.string.wentifankui));
-//                break;
-//            case 8:
+                break;
+            case 8:
 //                device_type.setText(getString(R.string.yuancheng_ph) + getString(R.string.wentifankui));
-//                break;
-//        }
+                break;
+        }
 
         fankuiback = (ImageView) findViewById(R.id.fankuiback);
         CheckBox = (android.widget.CheckBox) findViewById(R.id.checkbox);
