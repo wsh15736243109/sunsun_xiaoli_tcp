@@ -103,8 +103,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'true')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 101
-            versionName '1.0.1'
+            versionCode 103
+            versionName '1.0.3'
         }
         pondTeam {
             signingConfig signingConfigs.sunsun_pondteam_debug
