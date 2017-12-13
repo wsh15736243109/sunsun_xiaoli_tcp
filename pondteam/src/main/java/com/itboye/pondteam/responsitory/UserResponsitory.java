@@ -35,7 +35,7 @@ public class UserResponsitory extends BaseNetRepository implements
         IUserInfoInterface<PersonDataBean> {
 
 
-    private  ByJsonRequest.Builder byjsonRequest;
+    private ByJsonRequest.Builder byjsonRequest;
     private String getMostNewWaterPumpDevice = "By_SunsunWaterPump_queryLatest";
     private String cameraUnBind = "By_SunsunSlaveDevice_unbind";//从设备解除绑定
     String api = "103";//接口版本号
@@ -133,7 +133,7 @@ public class UserResponsitory extends BaseNetRepository implements
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
-        byjsonRequest=new ByJsonRequest.Builder();
+        byjsonRequest = new ByJsonRequest.Builder();
         byjsonRequest.setBaseWrapUrl(Const.xiaoli_wrapUrl);
     }
 
@@ -174,6 +174,7 @@ public class UserResponsitory extends BaseNetRepository implements
         if (!uvOff.equals("")) {
             map.put("uv_off", uvOff);
         }
+
         if (!uvWH.equals("")) {
             map.put("uv_wh", uvWH);
         }
@@ -605,8 +606,6 @@ public class UserResponsitory extends BaseNetRepository implements
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();
     }
-
-
 
 
     @Override
@@ -1524,7 +1523,7 @@ public class UserResponsitory extends BaseNetRepository implements
             map.put("mode", mode);
         }
         if (state != -1) {
-            map.put("state", state);
+            map.put("state", state + "");
         }
         if (gear != -1) {
             map.put("gear", gear);

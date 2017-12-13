@@ -63,13 +63,13 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
         String appv = String.valueOf(VersionUtil.getVersionCode());
         public Builder<T> setBaseWrapUrl(String wrapUrl){
             String autoCode = SPUtils.get(MyApplication.getInstance(), null, Const.S_ID, "") + "";
-            this.url="http://" + wrapUrl + "/index.php" + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode + "&lang=" + Const.language;;
+            this.url="http://" + wrapUrl + "/index.php" + "?alg=md5_v2&client_id=" + Const.CLIENT_ID + "&s_id=" + autoCode + "&lang=" + Const.language;
             return this;
         }
 
         public Builder() {
-            map = new HashMap<String, Object>();
-            userParam = new HashMap<String, Object>();
+            map = new HashMap<>();
+            userParam = new HashMap<>();
             // 公共参数
             map.put(Const.APP_VERSION, VersionUtil.getVersionCode());
             map.put(Const.APP_TYPE, "android");
@@ -178,11 +178,11 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
         public Builder<T> desEncode() {
 
             String param = new ParamDeal().dataEncrypt(userParam);
-            String sign = signInfo(param);
+//            String sign = signInfo(param);
             this.addParams(map).param(Const.TYPE, typekey)
                     .param(Const.API_VER, apiVer)
-                    .param(Const.DATA, param)
-                    .param(Const.SIGN, sign);
+                    .param(Const.DATA, param);
+//                    .param(Const.SIGN, sign);
 //
             Gson gson = new GsonBuilder()
                     .setFieldNamingPolicy(
@@ -198,8 +198,6 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
             Log.d("request_params", "请求参数" + jsonStr);
             this.desContent = DESUtil.encode(jsonStr,
                     Const.CLIENT_SECERET);
-
-
             return this;
         }
 
@@ -270,14 +268,14 @@ public class ByJsonRequest<E> extends XJsonRequest<E> {
 
         }
 
-        private String signInfo(String userInf) {
-
-            ParamDeal operate = new ParamDeal();
-            String sign = operate.getMD5Sign(time, typekey, userInf,
-                    Const.CLIENT_SECERET, notify_id);
-            System.out.println("msg5" + sign);
-            return sign;
-        }
+//        private String signInfo(String userInf) {
+//
+//            ParamDeal operate = new ParamDeal();
+//            String sign = operate.getMD5Sign(time, typekey, userInf,
+//                    Const.CLIENT_SECERET, notify_id);
+//            System.out.println("msg5" + sign);
+//            return sign;
+//        }
 
     }
 

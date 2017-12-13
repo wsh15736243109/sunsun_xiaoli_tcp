@@ -247,7 +247,8 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 if (detailModelTcp == null) {
                     return;
                 }
-                userPresenter.deviceSet_qibeng(did, -1, -1, detailModelTcp.getState() == 0 ? 1 : 0, -1, -1, -1, -1, -1);
+                showProgressDialog(getString(R.string.requesting), true);
+                userPresenter.deviceSet_qibeng(did, -1, -1, (state & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1) ? 0 : 1, -1, -1, -1, -1, -1);
         }
 
     }
@@ -351,6 +352,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
 
     @Override
     public void update(Observable o, Object data) {
+        try {
+            closeProgressDialog();
+        }catch (Exception e){
+
+        }
         ResultEntity entity = handlerError(data);
         ptr.refreshComplete();
         if (entity != null) {

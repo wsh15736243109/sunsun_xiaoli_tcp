@@ -14,6 +14,11 @@ public class ResultEntity {
 
     private String eventTag;//tag是标签，某一类事件， 比如 错误事件
 
+    /**
+     * 1111:需要重新登录
+     * 0：正常
+     * else不需要处理，弹出提示
+     */
     private int code;
 
     private String msg;
