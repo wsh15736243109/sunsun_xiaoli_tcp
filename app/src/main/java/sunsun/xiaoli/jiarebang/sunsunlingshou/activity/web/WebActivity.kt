@@ -3,10 +3,7 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import android.webkit.JavascriptInterface
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import com.itboye.pondteam.base.BaseActivity
 import com.itboye.pondteam.utils.Const
 import com.itboye.pondteam.utils.EmptyUtil.getSp
@@ -38,16 +35,21 @@ class WebActivity : BaseActivity() {
         webView.addJavascriptInterface(JSInterface(), "android")
         webSettings = webView.settings
         //设置支持JavaScript
+        webSettings?.loadWithOverviewMode = true
         webSettings?.javaScriptEnabled = true
         //设置不调用浏览器，使用本WebView
         webView.setWebViewClient(object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
+                super.onPageFinished(view, url)
                 if (intent.getStringExtra("title") == "ConfigInfo") {
                     webView.loadUrl("javascript:getVersionCode('" + VersionUtil.getVersionCode() + ":" + getSp(Const.UID) + "')")
 //                    webView.reload()
                 }
-//                super.onPageFinished(view, url)
+            }
 
+            override fun onReceivedError(view: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+//                MAlert.alert("当前无网络连接")
+                super.onReceivedError(view, request, error)
             }
         })
         img_back.setOnClickListener(WebActivity@ this)

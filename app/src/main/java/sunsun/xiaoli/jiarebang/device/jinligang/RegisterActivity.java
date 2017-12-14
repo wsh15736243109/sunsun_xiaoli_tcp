@@ -1,6 +1,7 @@
 package sunsun.xiaoli.jiarebang.device.jinligang;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.presenter.UserPresenter;
+import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.TimeCount;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
@@ -22,6 +24,7 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.custom.ClearEditText;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.utils.AreaCodeSelectHelper;
 import sunsun.xiaoli.jiarebang.utils.IAreaCodeSelect;
 
@@ -38,7 +41,7 @@ public class RegisterActivity extends BaseActivity implements Observer, IAreaCod
     ClearEditText cleYzm;//地址信息
     ClearEditText clearPhone;//联系电话
     private TextView btnOk, btnCancel, txt_getYzm;
-    TextView txt_title;
+    TextView txt_title, txt_right;
     UserPresenter userPresenter;
     TimeCount timeCount;
     ImageView img_back;
@@ -55,6 +58,9 @@ public class RegisterActivity extends BaseActivity implements Observer, IAreaCod
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         txt_title.setText(getString(R.string.register));
+        txt_right.setText(getString(R.string.velocity));
+        txt_right.setTextSize(18);
+        txt_right.setVisibility(View.VISIBLE);
         userPresenter = new UserPresenter(this);
         timeCount = new TimeCount(60000, 1000, txt_getYzm);// 构造CountDownTimer对象
     }
@@ -96,7 +102,13 @@ public class RegisterActivity extends BaseActivity implements Observer, IAreaCod
                 userPresenter.sendVerificationCode(country, username, "1", 0);
                 break;
             case R.id.btn_country:
-                new AreaCodeSelectHelper().showAreaCode(this, R.layout.item_choose_code,btn_country,this);
+                new AreaCodeSelectHelper().showAreaCode(this, R.layout.item_choose_code, btn_country, this);
+                break;
+            case R.id.txt_right:
+                Intent intentWeb = new Intent(this, WebActivity.class);
+                intentWeb.putExtra("title", getString(R.string.velocity));
+                intentWeb.putExtra("url", "http://" + Const.xiaoli_wrapUrl + "/web.php/net/index.html");
+                startActivity(intentWeb);
                 break;
         }
 
@@ -129,6 +141,6 @@ public class RegisterActivity extends BaseActivity implements Observer, IAreaCod
 
     @Override
     public void selectFinish(@NotNull String code) {
-        country=code;
+        country = code;
     }
 }

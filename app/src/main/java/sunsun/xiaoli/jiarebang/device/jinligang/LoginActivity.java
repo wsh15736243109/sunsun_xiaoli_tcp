@@ -11,6 +11,7 @@ import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.SPUtils;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
+import com.itboye.pondteam.utils.udp.VersionUtil;
 import com.itboye.pondteam.volley.ResultEntity;
 
 import org.jetbrains.annotations.NotNull;
@@ -44,6 +45,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
     TextView bottom_icon;
     String country = "+86";
     IAreaCodeSelect iAreaCodeSelect;
+    TextView txt_version;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +55,13 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
         if (appType.toLowerCase().contains("pondteam".toLowerCase())) {
             title_login.setText("PondLinkByPondteam");
             bottom_icon.setVisibility(View.VISIBLE);
-            btn_country.setVisibility(View.GONE);
+            btn_country.setVisibility(View.INVISIBLE);
             editextUsetName.setHint(getString(R.string.email));
         } else {
             title_login.setText(getString(R.string.login_sunsun));
             btn_country.setVisibility(View.VISIBLE);
             editextUsetName.setHint(getString(R.string.user_name));
-            bottom_icon.setVisibility(View.GONE);
+            bottom_icon.setVisibility(View.INVISIBLE);
         }
         if (getPackageName().contains("pondlink")){
             title_login.setText("PondLinkByPondteam");
@@ -71,8 +73,9 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
             title_login.setText(getString(R.string.login_yihu));
             btn_country.setVisibility(View.VISIBLE);
             editextUsetName.setHint(getString(R.string.user_name));
-            bottom_icon.setVisibility(View.GONE);
+            bottom_icon.setVisibility(View.INVISIBLE);
         }
+        txt_version.setText(getString(R.string.current_version)+VersionUtil.getVersionName());
     }
 
 

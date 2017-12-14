@@ -326,7 +326,6 @@
     <string name="breakline">断线</string>
 
 
-
     <string name="home">首页</string>
     <string name="insurance">订单</string>
     <string name="freight_price">咨询购买</string>
@@ -595,7 +594,7 @@
     <string name="qibeng_status">%1$d档，%2$s，%3$s。</string>
     <string name="qibeng_stop">停止中</string>
     <string name="qibeng_running">运行中</string>
-    <string name="changezidongatfirst" >请先将模式调整为自动模式</string>
+    <string name="changezidongatfirst">请先将模式调整为自动模式</string>
     <string name="hasbeanuserelectricity">已启用电池供电</string>
     <string name="configuration_other">一键配置</string>
     <string name="LAN_other">添加局域网设备</string>
@@ -622,6 +621,7 @@
     <string name="get_order_info_error">未获取订单信息，请刷新后重试</string>
     <string name="get_order_info_success">获取订单信息成功,正在处理。。。</string>
     <string name="timeout_reason"><Data><![CDATA[<font color="red">搜索设备超时</font>
+    <br />
     <br />原因可能如下：
     <br />1、当前配置的设备与您选择要添加的设备类型不一致,请选择正确的设备类型进行配置添加<a>点击</a>
     <br />2、设备可能已经添加过了,您只需要前往设备列表页面删除重新配置添加即可<a>点击</a>
@@ -631,6 +631,9 @@
     <string name="i_know">我知道了</string>
     <string name="bindphone">绑定手机</string>
     <string name="device_type_empty">设备类型为空</string>
+    <string name="goto_lan">查看局域网设备</string>
+    <string name="goto_device_list">查看设备列表</string>
+    <string name="velocity">测速</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

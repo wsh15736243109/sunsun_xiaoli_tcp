@@ -14,6 +14,7 @@
         android:layout_height="wrap_content" />
 
     <LinearLayout
+        android:id="@+id/li_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -141,4 +142,15 @@
                 android:textColor="@color/white" />
         </RelativeLayout>
     </LinearLayout>
+    <TextView
+        android:id="@+id/txt_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/DIMEN_20DP"
+        android:layout_above="@+id/bottom_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:text="" />
+
+
 </RelativeLayout>

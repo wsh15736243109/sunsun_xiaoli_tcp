@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -440,9 +441,23 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
 
 
     private void showReason(){
-        AlertDialog.Builder alert=new AlertDialog.Builder(this);
+        AlertDialog.Builder alert=new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         alert.setMessage(Html.fromHtml(getString(R.string.timeout_reason)));
-        alert.setPositiveButton(getString(R.string.i_know),null);
+        alert.setPositiveButton(getString(R.string.goto_lan),new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent=new Intent(ActivityStepThree.this,AddDeviceActivity.class);
+                startActivity(intent);
+            }
+        });
+        alert.setNegativeButton(getString(R.string.goto_device_list), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent=new Intent(ActivityStepThree.this,DeviceActivity.class);
+                startActivity(intent);
+            }
+        });
+        alert.setNeutralButton(getString(R.string.cancel), null);
         alert.show();
     }
 

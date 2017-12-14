@@ -25,8 +25,6 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.android.volley.Cache;
-import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
@@ -102,7 +100,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
     UserPresenter userPresenter;
     public ArrayList<DeviceListBean> arrayList = new ArrayList<>();
     public int position;
-    TextView txt_exist;
+    TextView txt_exist,txt_ceshu;
     private ProgressDialog loadingDialog;
     public DeviceListBean mSelectDeviceInfo;
     DBManager dbManager;
@@ -465,10 +463,15 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         AlertDialog.Builder alert = null;
         switch (v.getId()) {
             case R.id.txt_title:
-                Cache cache=MyApplication.getQueue().getCache();
                 Intent intentWeb = new Intent(this, WebActivity.class);
                 intentWeb.putExtra("title", "ConfigInfo");
                 intentWeb.putExtra("url", "file:///android_asset/html/config_detail.html");
+                startActivity(intentWeb);
+                break;
+            case R.id.txt_ceshu:
+                intentWeb = new Intent(this, WebActivity.class);
+                intentWeb.putExtra("title", getString(R.string.velocity));
+                intentWeb.putExtra("url", "http://" + Const.xiaoli_wrapUrl + "/web.php/net/index.html");
                 startActivity(intentWeb);
                 break;
             case R.id.img_right:
