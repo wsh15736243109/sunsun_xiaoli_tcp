@@ -461,10 +461,9 @@
     <string name="chuqiliang_choose">出气量选择</string>
     <string name="workmode_choose">工作模式选择</string>
     <string name="qibeng_leiji_time">此气泵已累计使用%1$.2f小时</string>
-    <string name="qibengbattery_chongdian_time"><Data><![CDATA[电池累计工作时间:<font color="#45B380">%1$dh</font>]]></Data></string>
     <string name="batteryinformation">电池信息</string>
-    <string name="workstatustips">工作状态提示</string>
-    <string name="qibengbatter_leijichongdiancount"><Data><![CDATA[电池累计充电已达<font color="#45B380">%1$d</font>次]]></Data></string>
+    <string name="workstatustips">工作状态推送</string>
+    <string name="qibengbatter_leijichongdiancount"><Data><![CDATA[电池累计充电时间：<font color="#45B380">%1$d</font> 小时]]></Data></string>
     <string name="qibengbattery_shouming">电池使用寿命:%1$d</string>
     <string name="qibengbattery_tingjiwarn">停机警告设置</string>
     <string name="status">当前状态:</string>
@@ -634,8 +633,10 @@
     <string name="goto_lan">查看局域网设备</string>
     <string name="goto_device_list">查看设备列表</string>
     <string name="velocity">测速</string>
+    <string name="mode_yingji_and_jianxie">应急间歇模式</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>
     <item name="tag_fourth" type="id"></item>
+    <item name="imageloader_uri" type="id"/>
 </resources>

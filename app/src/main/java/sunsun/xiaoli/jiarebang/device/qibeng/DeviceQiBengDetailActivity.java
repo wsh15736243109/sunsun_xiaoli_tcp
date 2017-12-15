@@ -47,7 +47,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
 
     //    ShuiBengButtomImageView shuibeng_wiget;
     ImageView shuibeng_wiget;
-    ImageView img_yichangbaojing;
+    //    ImageView img_yichangbaojing;
     ImageView img_right, img_back;
     private PopupShuiBeng popupShuiBeng;
 
@@ -61,7 +61,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     public boolean isConnect;
     TextView device_status;
     PtrFrameLayout ptr;
-    private boolean isYiChangBaoJing;
+    //    private boolean isYiChangBaoJing;
     TextView txt_current_status_value;
     private int state;
     @IsNeedClick
@@ -84,6 +84,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         setContentView(R.layout.activity_device_qi_beng_detail);
         mApp = (App) getApplication();
         mApp.deviceQiBengUI = this;
+        shuibeng_wiget.setTag(R.id.imageloader_uri,"1");
         BasePtr.setRefreshOnlyStyle(ptr);
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -197,18 +198,18 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 intent.putExtra("device_type", 7);
                 startActivity(intent);
                 break;
-            case R.id.img_yichangbaojing:
-                if (detailModelTcp == null) {
-                    return;
-                }
-                pushCfg = detailModelTcp.getPush_cfg();
-                if (isConnect) {
-//                    userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
-                    userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, pushCfg ^ (int) Math.pow(2, 1));
-                } else {
-                    MAlert.alert(getString(R.string.disconnect));
-                }
-                break;
+//            case R.id.img_yichangbaojing:
+//                if (detailModelTcp == null) {
+//                    return;
+//                }
+//                pushCfg = detailModelTcp.getPush_cfg();
+//                if (isConnect) {
+////                    userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
+//                    userPresenter.deviceSet_qibeng(did, -1, -1, -1, -1, -1, -1, -1, pushCfg ^ (int) Math.pow(2, 1));
+//                } else {
+//                    MAlert.alert(getString(R.string.disconnect));
+//                }
+//                break;
             case R.id.img_workstatustips:
                 if (detailModelTcp == null) {
                     return;
@@ -237,10 +238,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 if (detailModelTcp == null) {
                     return;
                 }
-                String[] woekMode = new String[3];
+                String[] woekMode = new String[4];
                 woekMode[0] = getString(R.string.mode_normal);
                 woekMode[1] = getString(R.string.mode_jianxie);
                 woekMode[2] = getString(R.string.mode_yingji);
+                woekMode[3] = getString(R.string.mode_yingji_and_jianxie);
                 showAlert(txt_workmode, "", woekMode, Integer.parseInt(detailModelTcp.getMode()));
                 break;
             case R.id.shuibeng_wiget:
@@ -354,7 +356,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     public void update(Observable o, Object data) {
         try {
             closeProgressDialog();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         ResultEntity entity = handlerError(data);
@@ -401,17 +403,6 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         seconds = 0;
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
-//        try {
-//            JSONObject json = new JSONObject(deviceDetailModel.getExtra());
-//            if (json.has("push_cfg")) {
-//                isYiChangBaoJing = json.getInt("push_cfg") == 1;
-//            }
-//            if (json.has("fcd")) {
-//                seconds = json.getInt("fcd");
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 //        img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
         //运行状态
         if (detailModelTcp != null) {
@@ -427,6 +418,9 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 case 2:
                     txt_workmode.setText(getString(R.string.mode_yingji));
                     break;
+                case 3:
+                    txt_workmode.setText(getString(R.string.mode_yingji_and_jianxie));
+                    break;
             }
             int gear = detailModelTcp.getGear();
             if ((state & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
@@ -436,12 +430,17 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                     txt_current_status_value.setText(String.format(getString(R.string.qibeng_status), gear + 1, txt_workmode.getText(), getString(R.string.qibeng_running)));
                 }
                 txt_status.setText(Html.fromHtml("<b>" + getString(R.string.stop) + "</b>"));
-
-                Glide.with(getApplicationContext()).load(R.drawable.weishi_running).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                //设置tag防止gif加载途中重复加载
+                if (!shuibeng_wiget.getTag(R.id.imageloader_uri).toString().equals("0")) {
+                    Glide.with(getApplicationContext()).load(R.drawable.weishi_running).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    shuibeng_wiget.setTag(R.id.imageloader_uri, "0");
+                }
             } else {
                 txt_status.setText(Html.fromHtml("<b>" + getString(R.string.qidong) + "</b>"));
                 txt_current_status_value.setText(String.format(getString(R.string.qibeng_status), gear + 1, txt_workmode.getText(), getString(R.string.qibeng_stop)));
                 Glide.with(getApplicationContext()).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+//                Glide.with(getApplicationContext()).load(R.drawable.weishi_running).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
             }
             txt_chuqiliangchoose.setText(String.format(getString(R.string.dang), gear + 1));
             txt_leijitime.setText(String.format(getString(R.string.leiji_time), detailModelTcp.getWh()));
@@ -451,12 +450,12 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
             } else {
                 img_workstatustips.setBackgroundResource(R.drawable.guan);
             }
-            if ((push_cfg & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
-                isYiChangBaoJing = true;
-            } else {
-                isYiChangBaoJing = false;
-            }
-            img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
+//            if ((push_cfg & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
+//                isYiChangBaoJing = true;
+//            } else {
+//                isYiChangBaoJing = false;
+//            }
+//            img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
             if (mApp.deviceQiBengBatteryUI != null) {
                 mApp.deviceQiBengBatteryUI.setData();
             }

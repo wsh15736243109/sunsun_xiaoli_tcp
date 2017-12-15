@@ -467,10 +467,9 @@
     <string name="chuqiliang_choose">Air output selection</string>
     <string name="workmode_choose">Work mode selection</string>
     <string name="qibeng_leiji_time">The air pump has been used for %1$.2f hours</string>
-    <string name="qibengbattery_chongdian_time">The accumulative working time of the battery:<font color='#00ff00'>%1$dh</font></string>
     <string name="batteryinformation">battery information</string>
-    <string name="workstatustips">Work status prompt</string>
-    <string name="qibengbatter_leijichongdiancount">The accumulative charge of the battery has reached %1$d</string>
+    <string name="workstatustips">Work status push</string>
+    <string name="qibengbatter_leijichongdiancount">Accumulative charge time of the battery: %1$d hour(s)</string>
     <string name="qibengbattery_shouming">Battery life:%1$d</string>
     <string name="qibengbattery_tingjiwarn">Stop warning Settings</string>
     <string name="status">Current status:</string>
@@ -631,4 +630,5 @@
     <string name="goto_lan">Go to the LAN list</string>
     <string name="goto_device_list">Go to the list of equipment</string>
     <string name="velocity">velocity</string>
+    <string name="mode_yingji_and_jianxie">emergencyBurst</string>
 </resources>

@@ -252,6 +252,7 @@
                     android:layout_height="@dimen/DIMEN_1DP"
                     android:background="@color/gray_divider"></View>
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/DIMEN_1DP"

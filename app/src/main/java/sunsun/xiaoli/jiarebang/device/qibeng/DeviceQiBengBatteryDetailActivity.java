@@ -58,7 +58,7 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
     RelativeLayout re_liuliang_choose;
     RelativeLayout re_gif;
     @IsNeedClick
-    TextView txt_leijitime, qibengbattery_leijicount, current_electricity;
+    TextView  qibengbattery_leijicount, current_electricity;
     int seconds = 0;
     RelativeLayout re_battery, re_chuqiliang_choose, re_workmode;
     MyBattery battery_wiget;
@@ -178,8 +178,8 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
         }
         if (mApp.deviceQiBengUI.detailModelTcp != null) {
             int batt = mApp.deviceQiBengUI.detailModelTcp.getBatt();
-            txt_leijitime.setText(Html.fromHtml(String.format(getString(R.string.qibengbattery_chongdian_time), mApp.deviceQiBengUI.detailModelTcp.getWh())));
-            qibengbattery_leijicount.setText(Html.fromHtml(String.format(getString(R.string.qibengbatter_leijichongdiancount), mApp.deviceQiBengUI.detailModelTcp.getCh_cnt())));
+//            txt_leijitime.setText(Html.fromHtml(String.format(getString(R.string.qibengbattery_chongdian_time), mApp.deviceQiBengUI.detailModelTcp.getWh())));
+            qibengbattery_leijicount.setText(Html.fromHtml(String.format(getString(R.string.qibengbatter_leijichongdiancount), mApp.deviceQiBengUI.detailModelTcp.getWh())));
             battery_wiget.setBatteryValue(batt);
             battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryCHARGING, batt);
             current_electricity.setText(String.format(getString(R.string.current_electricity), batt));

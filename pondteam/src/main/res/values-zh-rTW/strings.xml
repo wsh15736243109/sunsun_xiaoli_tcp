@@ -462,9 +462,8 @@
     <string name="workmode_choose">工作模式選擇</string>
     <string name="qibeng_leiji_time">次氣泵已纍計使用%1$.2f小時</string>
     <string name="batteryinformation">電池信息</string>
-    <string name="workstatustips">工作狀態提示</string>
-    <string name="qibengbattery_chongdian_time">電池纍計工作時間:<font color='#00ff00'>%1$dh</font></string>
-    <string name="qibengbatter_leijichongdiancount">電池纍計充電已達%1$d次</string>
+    <string name="workstatustips">工作狀態推送</string>
+    <string name="qibengbatter_leijichongdiancount">電池纍計充電時間：%1$d 小时</string>
     <string name="qibengbattery_shouming">電池使用壽命:%1$d</string>
     <string name="qibengbattery_tingjiwarn">停機警告設置</string>
 
@@ -628,4 +627,5 @@
     <string name="goto_lan">查看局域網中設備</string>
     <string name="goto_device_list">查看我的設備列表</string>
     <string name="velocity">測速</string>
+    <string name="mode_yingji_and_jianxie">應急間歇模式</string>
 </resources>
