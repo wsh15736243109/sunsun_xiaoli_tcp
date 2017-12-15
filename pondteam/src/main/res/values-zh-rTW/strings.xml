@@ -460,7 +460,7 @@
     <string name="device_zhinengqibeng">智能交直流兩用氣泵</string>
     <string name="chuqiliang_choose">出氣量選擇</string>
     <string name="workmode_choose">工作模式選擇</string>
-    <string name="qibeng_leiji_time">次氣泵已纍計使用%1$.2f小時</string>
+    <string name="qibeng_leiji_time">次氣泵已纍計使用%1$d小時</string>
     <string name="batteryinformation">電池信息</string>
     <string name="workstatustips">工作狀態推送</string>
     <string name="qibengbatter_leijichongdiancount">電池纍計充電時間：%1$d 小时</string>

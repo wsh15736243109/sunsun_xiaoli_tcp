@@ -466,7 +466,7 @@
     <string name="hasOrderReturned">Returned</string>
     <string name="chuqiliang_choose">Air output selection</string>
     <string name="workmode_choose">Work mode selection</string>
-    <string name="qibeng_leiji_time">The air pump has been used for %1$.2f hours</string>
+    <string name="qibeng_leiji_time">The air pump has been used for %1$d hours</string>
     <string name="batteryinformation">battery information</string>
     <string name="workstatustips">Work status push</string>
     <string name="qibengbatter_leijichongdiancount">Accumulative charge time of the battery: %1$d hour(s)</string>

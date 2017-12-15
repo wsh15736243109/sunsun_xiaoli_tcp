@@ -443,7 +443,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
             }
             txt_chuqiliangchoose.setText(String.format(getString(R.string.dang), gear + 1));
-            txt_leijitime.setText(String.format(getString(R.string.leiji_time), detailModelTcp.getWh()));
+            txt_leijitime.setText(String.format(getString(R.string.qibeng_leiji_time), detailModelTcp.getWh()));
             int push_cfg = detailModelTcp.getPush_cfg();
             if ((push_cfg & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
                 img_workstatustips.setBackgroundResource(R.drawable.kai);
