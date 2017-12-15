@@ -321,8 +321,8 @@
     <string name="ph_low">pH低位报警设定</string>
     <string name="ph_history">历史pH走势表</string>
     <string name="wendu">温度设置</string>
-    <string name="lowest">当前已经是最低档位</string>
-    <string name="highest">当前已经是最高档位</string>
+    <string name="lowest">当前已经是最低挡位</string>
+    <string name="highest">当前已经是最高挡位</string>
     <string name="breakline">断线</string>
 
 
@@ -402,8 +402,8 @@
     <string name="mode_ismanual">当前模式已经为手动</string>
     <string name="current_temperture">当前温度</string>
     <string name="tem_setting">温度设定</string>
-    <string name="status_stop">%1$d档, 停止中。</string>
-    <string name="status_running">%1$d档, 运行中。</string>
+    <string name="status_stop">%1$d挡, 停止中。</string>
+    <string name="status_running">%1$d挡, 运行中。</string>
     <string name="status_running_error">异常状态，请予以排除。</string>
     <string name="stop">停止</string>
     <string name="running">运行</string>
@@ -447,7 +447,7 @@
     <string name="device_error">设备异常</string>
     <string name="device_will">设备将在%1$s后启动</string>
     <string name="leiji_time">此水泵已累计使用%1$d小时</string>
-    <string name="dang">%1$d档</string>
+    <string name="dang">%1$d挡</string>
     <string name="mode_shoudong_open">手动模式-开</string>
     <string name="mode_shoudong_close">手动模式-关</string>
     <string name="mode_isshoudong_close">当前已经是手动模式-关</string>
@@ -590,7 +590,7 @@
     <string name="tiaoguang_zisegongjian">紫色空间</string>
     <string name="current_electricity">当前电量:%1$d%%</string>
     <string name="qidong">启动</string>
-    <string name="qibeng_status">%1$d档，%2$s，%3$s。</string>
+    <string name="qibeng_status">%1$d挡，%2$s，%3$s。</string>
     <string name="qibeng_stop">停止中</string>
     <string name="qibeng_running">运行中</string>
     <string name="changezidongatfirst">请先将模式调整为自动模式</string>

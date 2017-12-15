@@ -403,8 +403,8 @@
     <string name="mode_ismanual"></string>
     <string name="current_temperture">當前溫度</string>
     <string name="tem_setting">溫度設定</string>
-    <string name="status_stop">%1$d檔, 停止中。</string>
-    <string name="status_running">%1$d檔, 運行中。</string>
+    <string name="status_stop">%1$d擋, 停止中。</string>
+    <string name="status_running">%1$d擋, 運行中。</string>
     <string name="status_running_error">異常狀態，請予以排除。</string>
     <string name="stop">停止</string>
     <string name="running">運行</string>
