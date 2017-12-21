@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -132,7 +133,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private boolean isLan;
     float height, width;
     LinearLayout li;
-    TextView add;
     private boolean b;
     public StreamView mStreamView;		/* 视频刷新控件 */
     private CHD_Client mClient;		 /* 客户端类 */
@@ -157,9 +157,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     TextView txt_shajundeng;
     private String currentTime;
     private TcpUtil mTcpUtil;
-
     private VideoHelper mVideoHelper;
-
+    ProgressBar video_progress;
+    TextView add;
 //    private void clientCallBackListener() {
 //
 //        mClient.setClientCallBack(new ClientCallBack() {
@@ -246,18 +246,21 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                video_progress.setVisibility(View.GONE);
                 if (b) {
                     setTextValue(txt_wangsu, mClient.getVideoFrameBps());
-//            txt_isOpen.setVisibility(View.GONE);
                     mVideoLayout.setBackgroundColor(Color.parseColor("#ffffffff"));
+                    mVideoLayout.setVisibility(View.VISIBLE);
                     txt_wangsu.setVisibility(View.VISIBLE);
                     img_camera.setVisibility(View.VISIBLE);
+                    add.setVisibility(View.GONE);
                     img_quanping.setVisibility(View.VISIBLE);
                 } else {
                     mVideoLayout.removeAllViews();
-//            txt_isOpen.setVisibility(View.VISIBLE);
                     mVideoLayout.setBackgroundColor(Color.parseColor("#000000"));
                     txt_wangsu.setVisibility(View.GONE);
+                    add.setVisibility(View.VISIBLE);
+                    mVideoLayout.setVisibility(View.GONE);
                     img_camera.setVisibility(View.GONE);
                     img_quanping.setVisibility(View.GONE);
                 }
@@ -678,12 +681,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 }
                 isLan = !isLan;
                 break;
-            case R.id.add:
-//                intent = new Intent(this, ActivityStepFirst.class);
-//                intent.putExtra("aq_did", did);
-//                intent.putExtra("device_type", "摄像头");
-//                startActivity(intent);
-                break;
             case R.id.img_camera:
                 imagePath = getFileSavePath() + getTimesString() + ".jpg";
                 mClient.snapShot(imagePath);
@@ -878,7 +875,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         txt_wangsu.setVisibility(hasAddSheXiangtou ? View.VISIBLE : View.GONE);
         img_camera.setVisibility(hasAddSheXiangtou ? View.VISIBLE : View.GONE);//截屏按钮
         img_quanping.setVisibility(hasAddSheXiangtou ? View.VISIBLE : View.GONE);//全屏按钮
-        add.setVisibility(hasAddSheXiangtou ? View.GONE : View.VISIBLE);//添加摄像头按钮
         mVideoLayout.setVisibility(hasAddSheXiangtou ? View.VISIBLE : View.GONE);//视频所在画布按钮
     }
 
@@ -999,15 +995,19 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                             if (!chirdDid.equals("")) {
                                 mVideoHelper.connectDevice(chirdDid, pass);
                             } else {
+                                setCameraOpen(false);
                                 txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
                             }
                         } else {
+                            setCameraOpen(false);
                             txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
                         }
                     } else {
+                        setCameraOpen(false);
                         txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
                     }
                 } else {
+                    setCameraOpen(false);
                     txt_shipin_status.setText(getString(R.string.current_status) + getString(R.string.video_disconnect));
                 }
             } else if (entity.getEventType() == UserPresenter.cameraQuery_fail) {
@@ -1417,7 +1417,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
     @Override
     public void disConnectCallBack() {
-
         setCameraOpen(false);
         runOnUiThread(new Runnable() {
             @Override
@@ -1436,10 +1435,14 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     public void videoConnectStatus(int result) {
         setTextValue(txt_shipin_status, mVideoHelper.getVideoStatus(result));
         if (result == 0) {
+            setCameraOpen(true);
         } else {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+//                    setCameraOpen(false);
+                    video_progress.setVisibility(View.GONE);
+                    add.setVisibility(View.VISIBLE);
                     String msg = getString(R.string.video) + txt_shipin_status.getText().toString();
                     mVideoHelper.showVideoMessage(JinLiGangDetailActivity.this, msg + "," + getString(R.string.makesure_retry));
                 }
@@ -1458,6 +1461,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
     @Override
     public void videoConnectInit() {
+        add.setVisibility(View.GONE);
+        video_progress.setVisibility(View.VISIBLE);
         setTextValue(txt_shipin_status, getString(R.string.video_connecting));
     }
 }

@@ -122,7 +122,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         //本地搜索摄像头监听
 //        locanScanListener();
         mSnifferSmartLinker.setOnSmartLinkListener(this);
-        if (!type.contains("摄像头")) {
+        if (deviceType != DeviceType.DEVICE_CAMERA) {
             loadingDialog = new ProgressDialog(this);
             loadingDialog.setMessage(getString(R.string.peizhiing));
             loadingDialog.setCanceledOnTouchOutside(false);
@@ -153,7 +153,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
             int num = chdSmartConf.openSmartConfig(wifiName, wifiPass, "0");
             if (num == 0) {
                 try {
-                    autoDismissDialog = new AutoDismissDialog(this, getString(R.string.tips), getString(R.string.peizhiing), getString(R.string.cancel), getString(R.string.ok), 30000, this);
+                    autoDismissDialog = new AutoDismissDialog(this, getString(R.string.tips), getString(R.string.camera) + getString(R.string.peizhiing), getString(R.string.cancel), getString(R.string.ok), 30000, this);
                     autoDismissDialog.setCanceledOnTouchOutside(false);
                     autoDismissDialog.setOnKeyListener(this);
                     autoDismissDialog.show();
@@ -189,7 +189,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     isBusy = false;
                     smartConfigType = SmartConfigType.SEARCHING;
                     setZhuangTai(smartConfigType);
-                    if (!type.contains("摄像头")) {
+                    if (deviceType != DeviceType.DEVICE_CAMERA) {
                         loadingDialog = new ProgressDialog(this);
                         loadingDialog.setTitle(getString(R.string.tips));
                         loadingDialog.setCanceledOnTouchOutside(false);
@@ -424,36 +424,36 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            Log.v(Const.TAG_SUNSUN,time+"");
-            if (time>=30000) {
-                configSuccess=false;
-                time=0;
+            Log.v(Const.TAG_SUNSUN, time + "");
+            if (time >= 30000) {
+                configSuccess = false;
+                time = 0;
                 loadingDialog.dismiss();
                 showReason();
                 smartConfigType = SmartConfigType.RESEARCH;
                 setZhuangTai(smartConfigType);
                 handler.removeCallbacks(runnable);
-            }else {
+            } else {
                 handler.postDelayed(runnable, 1000);
             }
         }
     };
 
 
-    private void showReason(){
-        AlertDialog.Builder alert=new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
+    private void showReason() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         alert.setMessage(Html.fromHtml(getString(R.string.timeout_reason)));
-        alert.setPositiveButton(getString(R.string.goto_lan),new DialogInterface.OnClickListener() {
+        alert.setPositiveButton(getString(R.string.goto_lan), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent=new Intent(ActivityStepThree.this,AddDeviceActivity.class);
+                Intent intent = new Intent(ActivityStepThree.this, AddDeviceActivity.class);
                 startActivity(intent);
             }
         });
         alert.setNegativeButton(getString(R.string.goto_device_list), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent=new Intent(ActivityStepThree.this,DeviceActivity.class);
+                Intent intent = new Intent(ActivityStepThree.this, DeviceActivity.class);
                 startActivity(intent);
             }
         });
@@ -525,7 +525,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         mApp.isStartSearch = false;
         try {
             handler.removeCallbacks(runnable);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -654,7 +654,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         }
         try {
             handler.removeCallbacks(runnable);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         Log.d("stepThree", "配置完成");

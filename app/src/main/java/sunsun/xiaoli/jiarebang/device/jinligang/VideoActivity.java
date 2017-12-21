@@ -391,7 +391,6 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                     txt_wangsu.setVisibility(View.VISIBLE);
                     img_camera.setVisibility(View.VISIBLE);
                     img_quanping.setVisibility(View.VISIBLE);
-                    img_quanping.setBackgroundResource(R.drawable.quanping);
                     txt_shuiwei_status.setVisibility(View.VISIBLE);
                     mVideoLayout.setVisibility(View.VISIBLE);
                     txt_fenbianlv_value.setVisibility(View.VISIBLE);

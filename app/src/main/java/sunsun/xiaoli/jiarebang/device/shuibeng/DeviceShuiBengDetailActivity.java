@@ -16,8 +16,6 @@ import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.base.IsNeedClick;
 import com.itboye.pondteam.bean.DeviceDetailModel;
@@ -41,6 +39,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
 import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.PopupShuiBeng;
@@ -84,6 +83,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         mApp = (App) getApplication();
         mApp.deviceShuiBengUI = this;
         BasePtr.setRefreshOnlyStyle(ptr);
+        shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
@@ -464,25 +464,31 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                     strState = String.format(getString(R.string.status_stop), detailModelTcp.getGear() + 1);
 //                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
                     txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                    Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_stop);
+                    shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
                     break;
                 case 1:
                     //运行
                     strState = String.format(getString(R.string.status_running), detailModelTcp.getGear() + 1);
                     txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
-                    Glide.with(this).load(R.drawable.weishi_running).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    if (!shuibeng_wiget.getTag(R.id.imageloader_uri).toString().equals("0")) {
+                        GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_running);
+                        shuibeng_wiget.setTag(R.id.imageloader_uri, "0");
+                    }
                     break;
                 case 2:
                     //故障
                     strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
                     txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
-                    Glide.with(this).load(R.drawable.weishi_error_noch).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_error_noch);
+                    shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
                     break;
                 case 3:
                     strState = String.format(getString(R.string.device_will), caculcateSeconds(detailModelTcp.getFcd()));
 //                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
                     txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                    Glide.with(this).load(R.drawable.weishi_stop).diskCacheStrategy(DiskCacheStrategy.SOURCE).into(shuibeng_wiget);
+                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_stop);
+                    shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
                     break;
             }
             txt_current_status_value.setText(strState);

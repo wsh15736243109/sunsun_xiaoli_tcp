@@ -1,7 +1,7 @@
 <resources>
     <!--<string name="app_name">PondTeam</string>-->
     <string name="app_xiaoli_name">小鯉智能</string>
-    <string name="app_lingshou_name">森森新零售</string>
+    <string name="app_lingshou_name">水族之家</string>
     <string name="app_pondteam_name">PondTeam</string>
     <string name="app_pondlink_name">PondLink</string>
     <string name="app_yihu_name">宜虎</string>
@@ -628,4 +628,5 @@
     <string name="goto_device_list">查看我的設備列表</string>
     <string name="velocity">測速</string>
     <string name="mode_yingji_and_jianxie">應急間歇模式</string>
+    <string name="camera">攝像頭</string>
 </resources>

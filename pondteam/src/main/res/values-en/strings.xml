@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_xiaoli_name">Smart Xiaoli Sunsun</string>
-    <string name="app_lingshou_name">Sunsun lingshou</string>
+    <string name="app_lingshou_name">Home Of Aquarium</string>
     <string name="app_pondteam_name">PondTeam</string>
     <string name="app_pondlink_name">PondLink</string>
     <string name="app_yihu_name">Yi hu</string>
@@ -631,4 +631,5 @@
     <string name="goto_device_list">Go to the list of equipment</string>
     <string name="velocity">velocity</string>
     <string name="mode_yingji_and_jianxie">emergencyBurst</string>
+    <string name="camera">Camera </string>
 </resources>
