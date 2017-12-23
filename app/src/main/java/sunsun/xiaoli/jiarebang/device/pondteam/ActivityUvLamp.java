@@ -68,7 +68,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 myApp.pondDeviceDetailUI.beginRequst();
-                BasePtr.setRefreshTime(myApp.pondDeviceDetailUI.deviceDetailModel.getUpdate_time());
+//                BasePtr.setRefreshTime(myApp.pondDeviceDetailUI.deviceDetailModel.getUpdate_time());
                 handlerRefresh.postDelayed(new Runnable() {
                     @Override
                     public void run() {

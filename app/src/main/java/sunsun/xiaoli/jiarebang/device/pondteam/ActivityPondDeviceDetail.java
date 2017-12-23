@@ -43,7 +43,6 @@ import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
 import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 
-import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
 import static com.itboye.pondteam.utils.ColoTextUtil.setColorfulValue;
 import static com.itboye.pondteam.utils.ColoTextUtil.setDifferentSizeForTextView;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -109,7 +108,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 if (deviceDetailModel != null) {
-                    setRefreshTime(deviceDetailModel.getUpdate_time());
+//                    setRefreshTime(deviceDetailModel.getUpdate_time());
                     setLoadingIsVisible(true);
                 } else {
                     ptr.refreshComplete();

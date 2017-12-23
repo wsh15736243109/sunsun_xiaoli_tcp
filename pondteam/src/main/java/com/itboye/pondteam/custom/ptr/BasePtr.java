@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.itboye.pondteam.R;
 import com.itboye.pondteam.app.MyApplication;
-import com.itboye.pondteam.volley.TimesUtils;
 
 import in.srain.cube.views.ptr.PtrClassicDefaultFooter;
 import in.srain.cube.views.ptr.PtrClassicDefaultHeader;
@@ -94,7 +93,7 @@ public class BasePtr {
     }
 
     public static void setRefreshTime(String time){
-        txt_refresh_time.setText("上次设备更新时间"+TimesUtils.getStringToDateThree(time));
+//        txt_refresh_time.setText("上次设备更新时间"+TimesUtils.getStringToDateThree(time));
     }
     public static void setRefreshText(String text){
         txt_refresh_time.setText(text);

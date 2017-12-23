@@ -74,7 +74,6 @@ import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
-import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
 import static com.itboye.pondteam.utils.Const.imagePath;
 import static com.itboye.pondteam.utils.Const.patten;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -160,82 +159,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private VideoHelper mVideoHelper;
     ProgressBar video_progress;
     TextView add;
-//    private void clientCallBackListener() {
-//
-//        mClient.setClientCallBack(new ClientCallBack() {
-//
-//            public void paramChangeCallBack(int changeType) {
-//            }
-//
-//            public void disConnectCallBack() {
-//                //视频连接状态
-//                txt_shipin_status.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        //视频连接状态
-//                        txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-//                    }
-//                });
-//
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        setCameraOpen(mClient.isConnect());
-//                    }
-//                });
-//            }
-//
-//            public void snapBitmapCallBack(Bitmap bitmap) {
-//                MAlert.alert(getString(R.string.caturesuccess) + imagePath);
-//            }
-//
-//            public void recordTimeCountCallBack(String times) {
-//            }
-//
-//            public void recordStopBitmapCallBack(Bitmap bitmap) {
-//            }
-//
-//            public void videoStreamBitmapCallBack(final Bitmap bitmap) {
-//                //视频连接状态
-//                txt_shipin_status.post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (bitmap != null) {
-//                            setCameraOpen(true);
-//                            txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-//                        } else {
-//                            //视频连接状态
-//                            setCameraOpen(false);
-//                            txt_shipin_status.setText(getString(R.string.current_status) + (mClient.isConnect() ? getString(R.string.video_connect) : getString(R.string.video_disconnect)));
-//                        }
-//                    }
-//                });
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (mClient.isConnect()) {
-//                            txt_wangsu.setText(mClient.getVideoFrameBps());
-//                        } else {
-////                            setCameraOpen(false);
-//                        }
-//                    }
-//                });
-//                mStreamView.showBitmap(bitmap);
-//            }
-//
-//            public void videoStreamDataCallBack(int format, int width, int height, int datalen, byte[] data) {
-//            }
-//
-//            public void serialDataCallBack(int datalen, byte[] data) {
-//                Log.v("test", "RecvSerialDataLen:" + datalen);
-//            }
-//
-//            public void audioDataCallBack(int datalen, byte[] data) {
-//            }
-//        });
-//        mVideoHelper.connectDevice(chirdDid, pass);
-//
-//    }
 
     /**
      * 设摄像头状态
@@ -272,7 +195,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         @Override
         public void onRefreshBegin(PtrFrameLayout frame) {
             if (deviceDetailModel != null) {
-                setRefreshTime(deviceDetailModel.getUpdate_time());
+//                setRefreshTime(deviceDetailModel.getUpdate_time());
                 setLoadingIsVisible(true);
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             }
@@ -1267,60 +1190,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             shuiwei_status = false;
             img_shuiweibaojing.setBackgroundResource(R.drawable.guan);
         }
-
-//        ///////////AQ-806 AQ-500
-//        String dev = detailModelTcp.getEx_dev();
-//        if (dev.equalsIgnoreCase("AQ500")) {
-//            //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
-//            int push = detailModelTcp.getPush_cfg();
-//            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
-//                push = push ^ (int) Math.pow(2, 4);
-//            }
-//            if ((push & (int) Math.pow(2, 8)) == (int) Math.pow(2, 8)) {
-//                push = push ^ (int) Math.pow(2, 8);
-//            }
-//            if (hasSyncTime == false) {
-//                /**
-//                 * currentTime:同时同步设备时间
-//                 */
-//                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
-//                hasSyncTime = true;
-//            } else {
-//                //仅仅同步设备时间
-//                if (false == isSetTime) {
-//                    userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
-//                    isSetTime = true;
-//                }
-//
-//            }
-//
-//        } else if (dev.equalsIgnoreCase("AQ700")) {
-//            int push = detailModelTcp.getPush_cfg();
-//            //仅强制关闭水位报警提示
-//            if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
-//                push = push ^ (int) Math.pow(2, 4);
-//            }
-//            if (hasSyncTime == false) {
-//                /**
-//                 * currentTime:同时同步设备时间
-//                 */
-//                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
-//                hasSyncTime = true;
-//            } else {
-//                //仅仅同步设备时间
-//                if (false == isSetTime) {
-//                    userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
-//                    isSetTime = true;
-//                }
-//
-//            }
-//        } else {
-//            if (false == isSetTime) {
-//                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
-//                isSetTime = true;
-//            }
-//        }
-
 
         //设备锁定状态
         //0：未锁机，可局域网查找

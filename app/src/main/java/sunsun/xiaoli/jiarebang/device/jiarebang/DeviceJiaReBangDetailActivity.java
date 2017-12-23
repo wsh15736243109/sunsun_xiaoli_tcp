@@ -48,7 +48,6 @@ import sunsun.xiaoli.jiarebang.utils.RequestUtil;
 import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 
-import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.NumberUtils.getAppointNumber;
 import static sunsun.xiaoli.jiarebang.utils.ColoTextUtil.setColorfulValue;
@@ -108,7 +107,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 if (myApp.deviceJiaReBangUI.deviceDetailModel != null) {
-                    setRefreshTime(myApp.deviceJiaReBangUI.deviceDetailModel.getUpdate_time());
+//                    setRefreshTime(myApp.deviceJiaReBangUI.deviceDetailModel.getUpdate_time());
                 }
                 setLoadingIsVisible(true);
                 userPresenter.getDeviceDetailInfo(did, myApp.mDeviceUi.uid);

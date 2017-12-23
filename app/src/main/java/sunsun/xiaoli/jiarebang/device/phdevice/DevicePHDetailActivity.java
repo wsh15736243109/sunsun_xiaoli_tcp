@@ -46,7 +46,6 @@ import sunsun.xiaoli.jiarebang.utils.RequestUtil;
 import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 
 import static android.content.DialogInterface.BUTTON_POSITIVE;
-import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.ClickListenerInterface, Observer {
@@ -87,7 +86,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 if (deviceDetailModel != null) {
-                    setRefreshTime(deviceDetailModel.getUpdate_time());
+//                    setRefreshTime(deviceDetailModel.getUpdate_time());
                     setLoadingIsVisible(true);
                     userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
                 }

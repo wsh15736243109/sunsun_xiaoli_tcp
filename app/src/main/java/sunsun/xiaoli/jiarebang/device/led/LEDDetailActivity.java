@@ -44,7 +44,6 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.RatioRelativeLayout;
 import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 
-import static com.itboye.pondteam.custom.ptr.BasePtr.setRefreshTime;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.ScreenUtil.getDimension;
 
@@ -134,7 +133,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
         @Override
         public void onRefreshBegin(PtrFrameLayout frame) {
             if (detailModel != null) {
-                setRefreshTime(detailModel.getUpdate_time());
+//                setRefreshTime(detailModel.getUpdate_time());
                 setLoadingIsVisible(true);
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else {
