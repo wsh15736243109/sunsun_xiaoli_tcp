@@ -203,7 +203,6 @@ public class TcpUtil {
             Socket socket = mWeakSocket.get();
             if (null != socket) {
                 try {
-                    System.out.println("开始读取");
                     InputStream is = socket.getInputStream();
                     byte[] buffer = new byte[1024 * 4];
                     int length = 0;
@@ -212,12 +211,7 @@ public class TcpUtil {
                         if (length > 0) {
                             String data = new String(Arrays.copyOf(buffer,
                                     length)).trim();
-                            System.out.println(TcpUtil.this.msg + "TCP 接收数据 data【" + data);
                             //收到服务器过来的消息，就通过Broadcast发送出去
-                            if (data.equals("ok")) {//处理心跳回复
-//                                Intent intent=new Intent(HEART_BEAT_ACTION);
-//                                mLocalBroadcastManager.sendBroadcast(intent);
-                            } else {
                                 //其他消息回复
                                 try {
                                     JSONObject jsonObject = new JSONObject(data);
@@ -236,8 +230,6 @@ public class TcpUtil {
                                                 Type type = new TypeToken<DeviceDetailModel>() {
                                                 }.getType();
                                                 String dData = jsonObject.getString("d");
-
-                                                System.out.println(TcpUtil.this.msg + "TCP 接收数据 data2【" + dData);
                                                 DeviceDetailModel detailModel = gson.fromJson(dData, type);
                                                 message.obj = detailModel;
                                                 handler.sendMessage(message);
@@ -251,15 +243,9 @@ public class TcpUtil {
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
-                                    System.out.println(TcpUtil.this.msg + "TCP 接收数据 解析错误" + e.getMessage());
                                 }
-
-//                                Intent intent=new Intent(MESSAGE_ACTION);
-//                                intent.putExtra("message", data);
-//                                mLocalBroadcastManager.sendBroadcast(intent);
                             }
                         }
-                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

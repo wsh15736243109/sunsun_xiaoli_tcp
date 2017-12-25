@@ -1191,5 +1191,121 @@ public class DeviceDetailModel implements Serializable {
         public void setM1(int m1) {
             this.m1 = m1;
         }
+
+        @Override
+        public String toString() {
+            return "TimePeriod{" +
+                    "h0=" + h0 +
+                    ", m0=" + m0 +
+                    ", h1=" + h1 +
+                    ", m1=" + m1 +
+                    ", en=" + en +
+                    ", w=" + w +
+                    ", b=" + b +
+                    ", g=" + g +
+                    ", r=" + r +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "DeviceDetailModel{" +
+                "online_time=" + online_time +
+                ", oa_per='" + oa_per + '\'' +
+                ", cl_cfg='" + cl_cfg + '\'' +
+                ", uv_off='" + uv_off + '\'' +
+                ", last_login_time='" + last_login_time + '\'' +
+                ", cl_week='" + cl_week + '\'' +
+                ", update_time='" + update_time + '\'' +
+                ", tcp_client_id='" + tcp_client_id + '\'' +
+                ", uv_cfg='" + uv_cfg + '\'' +
+                ", last_login_ip='" + last_login_ip + '\'' +
+                ", is_disconnect='" + is_disconnect + '\'' +
+                ", cl_en='" + cl_en + '\'' +
+                ", uv_on='" + uv_on + '\'' +
+                ", id='" + id + '\'' +
+                ", ver='" + ver + '\'' +
+                ", create_time='" + create_time + '\'' +
+                ", cl_dur=" + cl_dur +
+                ", ctrl_pwd='" + ctrl_pwd + '\'' +
+                ", cl_state='" + cl_state + '\'' +
+                ", cl_sche='" + cl_sche + '\'' +
+                ", cl_tm='" + cl_tm + '\'' +
+                ", device_state='" + device_state + '\'' +
+                ", hb='" + hb + '\'' +
+                ", out_state_a='" + out_state_a + '\'' +
+                ", out_state_b='" + out_state_b + '\'' +
+                ", pwd='" + pwd + '\'' +
+                ", did='" + did + '\'' +
+                ", device_nickname='" + device_nickname + '\'' +
+                ", nickname_a='" + nickname_a + '\'' +
+                ", nickname_b='" + nickname_b + '\'' +
+                ", pwr=" + pwr +
+                ", cfg='" + cfg + '\'' +
+                ", t_set='" + t_set + '\'' +
+                ", oa_on_tm='" + oa_on_tm + '\'' +
+                ", per='" + per + '\'' +
+                ", w=" + w +
+                ", g=" + g +
+                ", r=" + r +
+                ", b=" + b +
+                ", uv_state=" + uv_state +
+                ", oa_per_name='" + oa_per_name + '\'' +
+                ", ob_per_name='" + ob_per_name + '\'' +
+                ", device_type='" + device_type + '\'' +
+                ", ws_on_tm=" + ws_on_tm +
+                ", ws_off_tm=" + ws_off_tm +
+                ", temp_max=" + temp_max +
+                ", temp_min=" + temp_min +
+                ", temp_alert=" + temp_alert +
+                ", is_state_notify=" + is_state_notify +
+                ", sw=" + sw +
+                ", fcd=" + fcd +
+                ", oa_off_tm='" + oa_off_tm + '\'' +
+                ", ob_per='" + ob_per + '\'' +
+                ", t=" + t +
+                ", ph=" + ph +
+                ", out_ctrl=" + out_ctrl +
+                ", t_max=" + t_max +
+                ", fault=" + fault +
+                ", th=" + th +
+                ", tl=" + tl +
+                ", p_p='" + p_p + '\'' +
+                ", uvc_p='" + uvc_p + '\'' +
+                ", sp_p='" + sp_p + '\'' +
+                ", l_p='" + l_p + '\'' +
+                ", l_per='" + l_per + '\'' +
+                ", uvc_per='" + uvc_per + '\'' +
+                ", sp_per='" + sp_per + '\'' +
+                ", uv_wh=" + uv_wh +
+                ", l_wh=" + l_wh +
+                ", p_wh=" + p_wh +
+                ", push_cfg=" + push_cfg +
+                ", phh=" + phh +
+                ", phl=" + phl +
+                ", d_cyc=" + d_cyc +
+                ", last_ph_upd=" + last_ph_upd +
+                ", first_ph_upd=" + first_ph_upd +
+                ", ph_cmd=" + ph_cmd +
+                ", ph_sche=" + ph_sche +
+                ", ph_dly=" + ph_dly +
+                ", dev_lock=" + dev_lock +
+                ", extra='" + extra + '\'' +
+                ", ch_cnt=" + ch_cnt +
+                ", b_life=" + b_life +
+                ", rct=" + rct +
+                ", wh=" + wh +
+                ", batt=" + batt +
+                ", upd_state=" + upd_state +
+                ", ex_dev='" + ex_dev + '\'' +
+                ", mode='" + mode + '\'' +
+                ", tm_l='" + tm_l + '\'' +
+                ", type='" + type + '\'' +
+                ", state=" + state +
+                ", gear=" + gear +
+                ", iCyc=" + iCyc +
+                ", spd=" + spd +
+                '}';
     }
 }

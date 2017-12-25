@@ -100,7 +100,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
     UserPresenter userPresenter;
     public ArrayList<DeviceListBean> arrayList = new ArrayList<>();
     public int position;
-    TextView txt_exist,txt_ceshu;
+    TextView txt_exist, txt_ceshu;
     private ProgressDialog loadingDialog;
     public DeviceListBean mSelectDeviceInfo;
     DBManager dbManager;
@@ -124,6 +124,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         setContentView(R.layout.activity_device);
         mApp = (App) getApplication();
         mApp.mDeviceUi = this;
+        txt_ceshu.setVisibility(View.VISIBLE);
         footerView = LayoutInflater.from(this).inflate(R.layout.device_list_footer, null);
         nodata = (RelativeLayout) footerView.findViewById(R.id.nodata);
         btn_addnew = (Button) footerView.findViewById(R.id.btn_addnew);
@@ -394,31 +395,31 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
             if (!BuildConfig.APP_TYPE.equals("pondTeam")) {
                 if (arrayList.get(i).getDid().startsWith("S01")) {
                     //过滤桶
-                    map.put("ItemIcon", R.drawable.device_chitangguolv);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_chitangguolv : R.drawable.off_pondteam);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S02")) {
                     //加热棒
-                    map.put("ItemIcon", R.drawable.device_jiarebang);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_jiarebang : R.drawable.off_jiarebang);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03")) {
                     //806
-                    map.put("ItemIcon", R.drawable.device_aq);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_aq : R.drawable.off_aq806);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-1")) {
                     //500
-                    map.put("ItemIcon", R.drawable.device_500);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_500 : R.drawable.off_aq500);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-2")) {
                     //700
-                    map.put("ItemIcon", R.drawable.device_700);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_700 : R.drawable.off_aq700);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S04")) {
-                    map.put("ItemIcon", R.drawable.device_ph);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_ph : R.drawable.off_ph);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S05")) {
-                    map.put("ItemIcon", R.drawable.device_shuibeng);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_shuibeng : R.drawable.off_shuibeng);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S06")) {
-                    map.put("ItemIcon", R.drawable.device_shuizudeng);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_shuizudeng : R.drawable.off_led);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S07")) {
-                    map.put("ItemIcon", R.drawable.device_jiaozhiliubeng);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_jiaozhiliubeng : R.drawable.off_cp1000);
                 } else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
                     map.put("ItemIcon", R.drawable.device_shexiangtou);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S08")) {
-                    map.put("ItemIcon", R.drawable.device_weishiqi);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_weishiqi : R.drawable.off_weishiqi);
                 } else {
                     map.put("ItemIcon", R.drawable.ic_aplacher);
                 }

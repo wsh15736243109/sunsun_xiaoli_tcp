@@ -279,18 +279,18 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             super.handleMessage(msg);
             switch (msg.arg1) {
                 case -1:
-                    System.out.println("TCP 接收数据 -1" + msg.obj);
+                    System.out.println("TCP 接收数据 -1 【" + msg.obj + "】");
                     break;
                 case 101:
                     if (detailModelTcp != null) {
                         setData();
                     }
-                    System.out.println("TCP 接收数据 101" + msg.obj);
+                    System.out.println("TCP 接收数据 101 【" + msg.obj + "】");
                     break;
                 case 102:
                     detailModelTcp = (DeviceDetailModel) msg.obj;
                     setData();
-                    System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
+                    System.out.println("TCP 接收数据 102 【" + detailModelTcp.toString() + "】");
                     break;
             }
         }

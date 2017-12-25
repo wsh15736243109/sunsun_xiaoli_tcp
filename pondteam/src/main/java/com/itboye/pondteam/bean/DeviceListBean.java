@@ -30,6 +30,7 @@ public class DeviceListBean implements Serializable{
      * "uid": "0",
      * "slave_pwd": "sRZrJQ20",
      * "slave_name": "wifi  chiniao"
+     * "is_disconnect": "0"
      */
 //    -------------摄像头绑定列表
     private String master_did;
@@ -40,6 +41,15 @@ public class DeviceListBean implements Serializable{
     private String slave_pwd;
     private String slave_name;
     private String extra;
+    private int is_disconnect;
+
+    public int getIs_disconnect() {
+        return is_disconnect;
+    }
+
+    public void setIs_disconnect(int is_disconnect) {
+        this.is_disconnect = is_disconnect;
+    }
 
     public String getExtra() {
         return extra;
