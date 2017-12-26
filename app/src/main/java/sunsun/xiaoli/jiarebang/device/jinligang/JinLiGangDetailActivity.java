@@ -71,7 +71,6 @@ import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.device.camera.CameraDeviceListActivity;
 import sunsun.xiaoli.jiarebang.utils.MessageSend;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
-import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
@@ -156,7 +155,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     @IsNeedClick
     TextView txt_shajundeng;
     private String currentTime;
-    private TcpUtil mTcpUtil;
+//    private TcpUtil mTcpUtil;
     private VideoHelper mVideoHelper;
     ProgressBar video_progress;
     TextView add;
@@ -270,9 +269,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         setLoadingIsVisible(true);
         new Thread(runnable).start();
         getDeviceList();
-        MessageSend.getInstanca().buildData(handData, did, getSp(Const.UID), "101").connecSocket().sendProtocol();
-        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
-        mTcpUtil.start();
+        MessageSend.getInstance().buildData(handData, did, getSp(Const.UID), "101").connecSocket().sendProtocol();
+//        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
+//        mTcpUtil.start();
     }
 
 
@@ -363,13 +362,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         }
         keepScreenOn(this, false);
         app.jinLiGangdetailUI = null;
-        try {
-            if (mTcpUtil != null) {
-                mTcpUtil.releaseTcp();
-            }
-        } catch (Exception e) {
-
-        }
         super.onDestroy();
     }
 

@@ -2,7 +2,6 @@ package sunsun.xiaoli.jiarebang.utils;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -21,8 +20,7 @@ import java.net.SocketException;
 import java.util.Arrays;
 
 public class MessageSend {
-    private static MessageSend instanca;
-    private final String TAG = "NFC";
+    private static MessageSend instance;
     private Socket socket;
     private boolean flag = true;
     private String baseStr = "{\"t\": \"%1$s\",\"did\": \"%2$s\",\"token\": \"123456\",\"uid\": \"%3$s\"}";
@@ -32,20 +30,21 @@ public class MessageSend {
     public static final String HOST = "101.37.37.167";
     public static final int PORT = 8300;
 
-    public synchronized static MessageSend getInstanca() {
-        if (instanca == null) {
-            instanca = new MessageSend();
+    public synchronized static MessageSend getInstance() {
+        if (instance == null) {
+            instance = new MessageSend();
         }
-        return instanca;
+        return instance;
     }
 
     public MessageSend connecSocket() {
-        if (socket != null)
-            return this;
+//        if (socket != null)
+//            return this;
         SendThread sThread = new SendThread(HOST, PORT);
         sThread.start();
         return this;
     }
+
     public MessageSend buildData(Handler handler, String... msg) {
         this.msg = String.format(baseStr, msg[2], msg[0], msg[1]);
         this.handler = handler;
@@ -54,12 +53,18 @@ public class MessageSend {
 
     public void sendProtocol() {
         if (socket != null) {
-            try {
-                OutputStream os = socket.getOutputStream();
-                os.write(this.msg.getBytes("UTF-8"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        OutputStream os = socket.getOutputStream();
+                        os.write(msg.getBytes("UTF-8"));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.start();
+
         }
 
     }
@@ -81,7 +86,6 @@ public class MessageSend {
                 flag = false;
                 socket.close();
                 socket = null;
-                Log.d(TAG, "断开服务器连接");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -90,12 +94,12 @@ public class MessageSend {
 
     class SendThread extends Thread {
         String ip;
-        int potr;
+        int port;
 
         public SendThread(String ip, int port) {
             // TODO Auto-generated constructor stub
             this.ip = ip;
-            this.potr = port;
+            this.port = port;
         }
 
         @Override
@@ -104,19 +108,20 @@ public class MessageSend {
             super.run();
             socket = new Socket();
             try {
-                byte buffer[] = new byte[258];
-                socket.connect(new InetSocketAddress(ip, potr), 5000);
-                Log.d(TAG, "连上服务器：" + ip + ",端口：" + potr);
+                byte buffer[] = new byte[1024 * 4];
+                socket.connect(new InetSocketAddress(ip, port), 5000);
                 flag = true;
-                while (flag) {
-                    InputStream isInputStream = socket.getInputStream();
-                    int lenth = isInputStream.read(buffer);
-                    if (lenth <= 0) {
-                        socket.close();
-                        return;
-                    }
+                InputStream isInputStream = socket.getInputStream();
+                int length = 0;
+                while (flag && (length = isInputStream.read(buffer)) != -1) {
+                    System.out.println("Ip Address：" + ip + ",Port：" + port + ",send msg" + msg);
+//                    int length = isInputStream.read(buffer);
+//                    if (length <= 0) {
+//                        socket.close();
+//                        return;
+//                    }
                     String data = new String(Arrays.copyOf(buffer,
-                            lenth)).trim();
+                            length)).trim();
                     try {
                         JSONObject jsonObject = new JSONObject(data);
                         Gson gson = new Gson();
@@ -158,28 +163,4 @@ public class MessageSend {
             }
         }
     }
-
-    public final String byte2hex(byte b[]) {
-        if (b == null) {
-            throw new IllegalArgumentException("Argument b ( byte array ) is null! ");
-        }
-
-        String hs = "";
-        String stmp = "";
-        int len = 0;
-        for (int n = 0; n < b.length; n++) {
-            stmp = Integer.toHexString(b[n] & 0xff);
-            if (n == 2)
-                len = Integer.parseInt(stmp, 16) + 4;
-            if (stmp.length() == 1) {
-                hs = hs + "0" + stmp;
-            } else {
-                hs = hs + stmp;
-            }
-            if (len > 0 && len == n + 1)
-                break;
-        }
-        return hs.toUpperCase();
-    }
-
 }
