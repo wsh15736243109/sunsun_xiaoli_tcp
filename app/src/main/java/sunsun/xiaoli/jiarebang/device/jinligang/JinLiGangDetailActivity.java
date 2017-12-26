@@ -69,6 +69,7 @@ import sunsun.xiaoli.jiarebang.device.ActivityTemperature;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.device.camera.CameraDeviceListActivity;
+import sunsun.xiaoli.jiarebang.utils.MessageSend;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
 import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
@@ -250,6 +251,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
             } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ806")) {
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+            } else {
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
             }
             setData();
         }
@@ -267,7 +270,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         setLoadingIsVisible(true);
         new Thread(runnable).start();
         getDeviceList();
-
+        MessageSend.getInstanca().buildData(handData, did, getSp(Const.UID), "101").connecSocket().sendProtocol();
         mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
         mTcpUtil.start();
     }
@@ -288,6 +291,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     System.out.println("TCP 接收数据 101 【" + msg.obj + "】");
                     break;
                 case 102:
+                    try {
+                        closeProgressDialog();
+                    } catch (Exception e) {
+
+                    }
                     detailModelTcp = (DeviceDetailModel) msg.obj;
                     setData();
                     System.out.println("TCP 接收数据 102 【" + detailModelTcp.toString() + "】");
@@ -875,13 +883,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     @Override
     public void update(Observable o, Object data) {
         setLoadingIsVisible(false);
-        try {
-            ptr.refreshComplete();
-            closeProgressDialog();
-        } catch (Exception e) {
-
-        }
-
+        ptr.refreshComplete();
         ResultEntity entity = handlerError(data);
         if (entity != null) {
             if (entity.getCode() != 0) {
@@ -896,7 +898,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 MAlert.alert(entity.getData());
                 finish();
             } else if (entity.getEventType() == UserPresenter.deviceSet_806success) {
-                MAlert.alert(entity.getData());
+//                MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deviceSet_806fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
@@ -965,11 +967,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         //温度
-        txt_wendu.setText(detailModelTcp.getT() / 10 + "℃");
+        txt_wendu.setText(detailModelTcp.getT() == 0 ? deviceDetailModel.getT()/10 + "℃" : detailModelTcp.getT() / 10 + "℃");
         //标题
         setDeviceName(deviceDetailModel.getDevice_nickname());
         //PH
-        txt_ph.setText("pH " + String.format("%.1f", detailModelTcp.getPh() / 100));
+        txt_ph.setText("pH " + String.format("%.1f", detailModelTcp.getPh() !=0?detailModelTcp.getPh()/100:deviceDetailModel.getPh()  / 100));
         /**
          * 灯光照明功率
          */

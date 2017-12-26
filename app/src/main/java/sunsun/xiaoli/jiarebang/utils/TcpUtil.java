@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 public class TcpUtil {
 
-    private static final long HEART_BEAT_RATE = 3 * 100;
+    private static final long HEART_BEAT_RATE = 6 * 10000;
 
     public static final String HOST = "101.37.37.167";
     public static final int PORT = 8300;
@@ -65,12 +65,9 @@ public class TcpUtil {
         this.msg = String.format(baseStr, msg[2], msg[0], msg[1]);
 //        "{\"t\": \""+msg[3]+"\",\"did\": \""+msg[0]+"\",\"token\": \"123456\",\"uid\": \""+msg[1]+"\"}";
         this.handler = handler;
-
     }
 
     public void start() {
-
-//        initSocket();
         new InitSocketThread().start();
     }
 
@@ -88,15 +85,20 @@ public class TcpUtil {
             mSocket = new WeakReference<Socket>(so);
             mReadThread = new ReadThread(so);
             mReadThread.start();
-            mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);//初始化成功后，就准备发送心跳包
+//            mHandler.sendEmptyMessage(1);
+            mHandler.postDelayed(heartBeatRunnable, 1);//初始化成功后，就准备发送心跳包
         } catch (UnknownHostException e) {
+            System.out.println("TCP 接收数据 error--UnknownHostException" + e.getLocalizedMessage());
+//            releaseLastSocket(mSocket);
             e.printStackTrace();
         } catch (IOException e) {
+            System.out.println("TCP 接收数据 error--IOException" + e.getLocalizedMessage());
+//            releaseLastSocket(mSocket);
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("TCP 接收数据 error" + e.getMessage());
+            System.out.println("TCP 接收数据 error--Exception" + e.getLocalizedMessage());
 //            mReadThread.interrupt();
-            mReadThread.release();
+//            releaseLastSocket(mSocket);
         }
     }
 
@@ -105,16 +107,15 @@ public class TcpUtil {
 
         @Override
         public void run() {
-            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
-                boolean isSuccess = sendMsg(TcpUtil.this.msg);//就发送一个\r\n过去 如果发送失败，就重新初始化一个socket
-                if (!isSuccess) {
-                    mHandler.removeCallbacks(heartBeatRunnable);
-                    mReadThread.release();
-                    releaseLastSocket(mSocket);
-                    initSocket();
-                }
+//            if (System.currentTimeMillis() - sendTime >= HEART_BEAT_RATE) {
+            boolean isSuccess = sendMsg(TcpUtil.this.msg);
+//                if (!isSuccess) {
+//                    mHandler.removeCallbacks(heartBeatRunnable);
+//                    releaseLastSocket(mSocket);
+//                    initSocket();
+//                }
 
-            }
+//            }
             mHandler.postDelayed(heartBeatRunnable, HEART_BEAT_RATE);
 //            (this, HEART_BEAT_RATE);
         }
@@ -148,8 +149,9 @@ public class TcpUtil {
                             os.flush();
                         } catch (IOException e) {
                             e.printStackTrace();
-                            System.out.println("TCP 接收数据  数据发送失败");
+                            System.out.println("TCP 接收数据  数据发送失败" + e.getLocalizedMessage());
                             //Sockect数据发送失败，则重新初始化Socket建立连接
+//                            releaseLastSocket(mSocket);
                             initSocket();
                         }
                     }
@@ -176,6 +178,7 @@ public class TcpUtil {
                 }
                 sk = null;
                 mSocket = null;
+                mReadThread = null;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -203,6 +206,8 @@ public class TcpUtil {
             Socket socket = mWeakSocket.get();
             if (null != socket) {
                 try {
+
+                    System.out.println("tcp send" + msg);
                     InputStream is = socket.getInputStream();
                     byte[] buffer = new byte[1024 * 4];
                     int length = 0;
@@ -212,40 +217,40 @@ public class TcpUtil {
                             String data = new String(Arrays.copyOf(buffer,
                                     length)).trim();
                             //收到服务器过来的消息，就通过Broadcast发送出去
-                                //其他消息回复
-                                try {
-                                    JSONObject jsonObject = new JSONObject(data);
-                                    Gson gson = new Gson();
-                                    int tCode = -1;
-                                    Message message = new Message();
+                            //其他消息回复
+                            try {
+                                JSONObject jsonObject = new JSONObject(data);
+                                Gson gson = new Gson();
+                                int tCode = -1;
+                                Message message = new Message();
+                                message.arg1 = tCode;
+                                if (jsonObject.has("t")) {
+                                    tCode = jsonObject.getInt("t");
                                     message.arg1 = tCode;
-                                    if (jsonObject.has("t")) {
-                                        tCode = jsonObject.getInt("t");
-                                        message.arg1 = tCode;
-                                        switch (tCode) {
-                                            case 101:
-                                                message.obj = data;
-                                                break;
-                                            case 102:
-                                                Type type = new TypeToken<DeviceDetailModel>() {
-                                                }.getType();
-                                                String dData = jsonObject.getString("d");
-                                                DeviceDetailModel detailModel = gson.fromJson(dData, type);
-                                                message.obj = detailModel;
-                                                handler.sendMessage(message);
-                                                break;
-                                        }
-                                    } else {
-                                        message.obj = data;
-                                        message.arg2=-1;
-                                        handler.sendMessage(message);
+                                    switch (tCode) {
+                                        case 101:
+                                            message.obj = data;
+                                            break;
+                                        case 102:
+                                            Type type = new TypeToken<DeviceDetailModel>() {
+                                            }.getType();
+                                            String dData = jsonObject.getString("d");
+                                            DeviceDetailModel detailModel = gson.fromJson(dData, type);
+                                            message.obj = detailModel;
+                                            handler.sendMessage(message);
+                                            break;
                                     }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                } else {
+                                    message.obj = data;
+                                    message.arg2 = -1;
+                                    handler.sendMessage(message);
                                 }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         }
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
