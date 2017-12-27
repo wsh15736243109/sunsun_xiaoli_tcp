@@ -87,8 +87,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'false')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 131
-            versionName '1.3.1'
+            versionCode 132
+            versionName '1.3.2'
         }
         yihu {
             signingConfig signingConfigs.sunsun_yihu_debug
@@ -103,8 +103,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'true')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 103
-            versionName '1.0.3'
+            versionCode 104
+            versionName '1.0.4'
         }
         pondTeam {
             signingConfig signingConfigs.sunsun_pondteam_debug
@@ -161,9 +161,9 @@ android {
         }
 
         debug {
-            signingConfig signingConfigs.sunsun_xiaoli_debug
+//            signingConfig signingConfigs.sunsun_xiaoli_debug
 //            signingConfig signingConfigs.sunsun_lingshou_debug
-//            signingConfig signingConfigs.sunsun_yihu_debug
+            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug
 //            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou",ENVIRONMENT: "lingshou",app_icon   : "@drawable/device_002",UMENG_APPKEY:"58cb6076677baa0aa300014f",UMENG_MESSAGE_SECRET:"af2c2bd3297da0dfd34bb23f14db362b"]

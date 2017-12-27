@@ -69,8 +69,8 @@ import sunsun.xiaoli.jiarebang.device.ActivityTemperature;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.device.camera.CameraDeviceListActivity;
-import sunsun.xiaoli.jiarebang.utils.MessageSend;
 import sunsun.xiaoli.jiarebang.utils.RequestUtil;
+import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
@@ -155,10 +155,13 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     @IsNeedClick
     TextView txt_shajundeng;
     private String currentTime;
-//    private TcpUtil mTcpUtil;
+    private TcpUtil mTcpUtil;
     private VideoHelper mVideoHelper;
     ProgressBar video_progress;
     TextView add;
+    @IsNeedClick
+    ImageView img_dengguang, img_shajundeng, img_chonglangbeng;
+    RelativeLayout re_shuiweibaojing;
 
     /**
      * 设摄像头状态
@@ -201,6 +204,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             }
         }
     };
+
+    //照明灯-zhaoping_se
+    //杀菌灯(杀菌冲浪)-shajun_se
+    //冲浪泵-chonglang_se
+//    boolean zhaoming_se, shajun_se, chonglang_se;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,9 +277,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         setLoadingIsVisible(true);
         new Thread(runnable).start();
         getDeviceList();
-        MessageSend.getInstance().buildData(handData, did, getSp(Const.UID), "101").connecSocket().sendProtocol();
-//        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
-//        mTcpUtil.start();
+//        MessageSend.getInstance().buildData(handData, did, getSp(Const.UID), "101").connecSocket();
+        mTcpUtil = new TcpUtil(handData, did, getSp(Const.UID), "101");
+        mTcpUtil.start();
     }
 
 
@@ -357,6 +365,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         }
         try {
             mVideoHelper.closeVideo();
+            mTcpUtil.releaseTcp();
+            //关闭tcp
+//            MessageSend.getInstance().closeSocket();
         } catch (Exception e) {
 
         }
@@ -558,6 +569,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
                 showProgressDialog(getString(R.string.posting), true);
                 userPresenter.deviceSet_806(did, "", "", "", "", zhangmingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+//                zhaoming_se = true;
                 break;
             case R.id.re_shajundeng:
                 if (detailModelTcp == null) {
@@ -645,50 +657,51 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
     private void setSelect() {
         if (zhangmingdeng_status) {
-            ((ImageView) findViewById(R.id.img_dengguang)).setBackgroundResource(R.drawable.light_select);
+            img_dengguang.setBackgroundResource(R.drawable.light_select);
         } else {
-            ((ImageView) findViewById(R.id.img_dengguang)).setBackgroundResource(R.drawable.light_unselect);
+            img_dengguang.setBackgroundResource(R.drawable.light_unselect);
         }
+        img_dengguang.setTag(zhangmingdeng_status);
         if (deviceDetailModel.getEx_dev() != null) {
             if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
                 if (shajundeng_status) {
-                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_select2);
+                    img_shajundeng.setBackgroundResource(R.drawable.aq500_select2);
                 } else {
-                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_unselect2);
+                    img_shajundeng.setBackgroundResource(R.drawable.aq500_unselect2);
                 }
-
                 txt_shajundeng.setText(getString(R.string.shaju_chonglang));
-                findViewById(R.id.re_shuiweibaojing).setVisibility(View.GONE);
+                re_shuiweibaojing.setVisibility(View.GONE);
                 re_chonglangbeng.setVisibility(View.GONE);
             } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
-                findViewById(R.id.re_shuiweibaojing).setVisibility(View.GONE);
+                re_shuiweibaojing.setVisibility(View.GONE);
                 if (shajundeng_status) {
-                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_select2);
+                    img_shajundeng.setBackgroundResource(R.drawable.aq500_select2);
                 } else {
-                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.aq500_unselect2);
+                    img_shajundeng.setBackgroundResource(R.drawable.aq500_unselect2);
                 }
                 if (chonglangbeng_status) {
-                    ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_select);
+                    img_chonglangbeng.setBackgroundResource(R.drawable.chonglangbeng_select);
                 } else {
-                    ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_unselect);
+                    img_chonglangbeng.setBackgroundResource(R.drawable.chonglangbeng_unselect);
                 }
-
             } else {
                 findViewById(R.id.re_chonglangbeng).setVisibility(View.VISIBLE);
                 if (shajundeng_status) {
-                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.uv_select);
+                    img_shajundeng.setBackgroundResource(R.drawable.uv_select);
                 } else {
-                    ((ImageView) findViewById(R.id.img_shajundeng)).setBackgroundResource(R.drawable.uv_unselect);
+                    img_shajundeng.setBackgroundResource(R.drawable.uv_unselect);
                 }
                 if (chonglangbeng_status) {
-                    ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_select);
+                    img_chonglangbeng.setBackgroundResource(R.drawable.chonglangbeng_select);
                 } else {
-                    ((ImageView) findViewById(R.id.img_chonglangbeng)).setBackgroundResource(R.drawable.chonglangbeng_unselect);
+                    img_chonglangbeng.setBackgroundResource(R.drawable.chonglangbeng_unselect);
                 }
+
             }
 
         }
-
+        img_shajundeng.setTag(shajundeng_status);
+        img_chonglangbeng.setTag(chonglangbeng_status);
     }
 
     public void showAlertDialog(String title, View view, final int type, final EditText edit) {
@@ -959,11 +972,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         //温度
-        txt_wendu.setText(detailModelTcp.getT() == 0 ? deviceDetailModel.getT()/10 + "℃" : detailModelTcp.getT() / 10 + "℃");
+        txt_wendu.setText(detailModelTcp.getT() == 0 ? deviceDetailModel.getT() / 10 + "℃" : detailModelTcp.getT() / 10 + "℃");
         //标题
         setDeviceName(deviceDetailModel.getDevice_nickname());
         //PH
-        txt_ph.setText("pH " + String.format("%.1f", detailModelTcp.getPh() !=0?detailModelTcp.getPh()/100:deviceDetailModel.getPh()  / 100));
+        txt_ph.setText("pH " + String.format("%.1f", detailModelTcp.getPh() != 0 ? detailModelTcp.getPh() / 100 : deviceDetailModel.getPh() / 100));
         /**
          * 灯光照明功率
          */

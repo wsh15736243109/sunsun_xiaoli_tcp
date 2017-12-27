@@ -110,16 +110,17 @@ public class MessageSend {
             try {
                 byte buffer[] = new byte[1024 * 4];
                 socket.connect(new InetSocketAddress(ip, port), 5000);
+                sendProtocol();
                 flag = true;
                 InputStream isInputStream = socket.getInputStream();
-                int length = 0;
-                while (flag && (length = isInputStream.read(buffer)) != -1) {
+//                int length = isInputStream.read(buffer);
+                while (flag) {
                     System.out.println("Ip Address：" + ip + ",Port：" + port + ",send msg" + msg);
-//                    int length = isInputStream.read(buffer);
-//                    if (length <= 0) {
+                    int length = isInputStream.read(buffer);
+                    if (length <= 0) {
 //                        socket.close();
-//                        return;
-//                    }
+                        continue;
+                    }
                     String data = new String(Arrays.copyOf(buffer,
                             length)).trim();
                     try {
@@ -151,7 +152,9 @@ public class MessageSend {
                         }
 
                     } catch (JSONException e) {
+                        System.out.println("TCP 接收数据 解析错误" + e.getLocalizedMessage());
                         e.printStackTrace();
+                        continue;
                     }
                 }
             } catch (SocketException e) {
