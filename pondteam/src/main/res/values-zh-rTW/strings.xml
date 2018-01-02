@@ -629,4 +629,5 @@
     <string name="velocity">測速</string>
     <string name="mode_yingji_and_jianxie">應急間歇模式</string>
     <string name="camera">攝像頭</string>
+    <string name="oper_success">操作成功</string>
 </resources>

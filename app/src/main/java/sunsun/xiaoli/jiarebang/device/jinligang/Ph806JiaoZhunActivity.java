@@ -72,7 +72,7 @@ public class Ph806JiaoZhunActivity extends BaseActivity implements Observer {
             delayTime--;
             mydialog.txt_seconds.setText("剩余" + (delayTime) + "秒");
             if (delayTime == 7) {
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, (int) (jiaozhunValue * 100));
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, (int) (jiaozhunValue * 100),"");
             }
             if (delayTime <= 0) {
                 mydialog.setJiaoZhunStatus(SmartConfigType.JIAOZHUN_FINISH);
@@ -91,7 +91,7 @@ public class Ph806JiaoZhunActivity extends BaseActivity implements Observer {
                 break;
             case R.id.btn_fuwei:
                 //出厂复位
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, 1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, 1,"");
                 break;
             case R.id.btn_beginjiaozhun:
                 if (jiaozhunValue == -1) {

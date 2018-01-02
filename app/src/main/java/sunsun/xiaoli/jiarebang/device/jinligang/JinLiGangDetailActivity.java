@@ -77,7 +77,6 @@ import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 import static com.itboye.pondteam.utils.Const.imagePath;
 import static com.itboye.pondteam.utils.Const.patten;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
-import static com.itboye.pondteam.utils.NumberUtils.getAppointNumber;
 import static com.itboye.pondteam.utils.ScreenUtil.keepScreenOn;
 import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getFileSavePath;
 import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getTimesString;
@@ -121,7 +120,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     App app;
     TextView txt_moshistatus;
     String id;
-    boolean zhangmingdeng_status, shajundeng_status, chonglangbeng_status, mode_status;
+    boolean zhaomingdeng_status, shajundeng_status, chonglangbeng_status, mode_status;
     TextView txt_shuiwei_status, txt_shebeisuoding_status, txt_suanjiandu_status_setting;
     private boolean dev_lockStatus;
     private boolean shuiwei_status;
@@ -162,6 +161,22 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     @IsNeedClick
     ImageView img_dengguang, img_shajundeng, img_chonglangbeng;
     RelativeLayout re_shuiweibaojing;
+
+
+    //手动
+    private String mode_shoudong_success = "mode_shoudong_success";
+    //自动
+    private String mode_zidong_success = "mode_zi_success";
+    //杀菌灯
+    private String shajundeng_success = "shajundeng_success";
+    //灯光照明
+    private String dengguangzhaoming_success = "dengguangzhaoming_success";
+    //冲浪泵
+    private String chonglangbeng_success = "chonglangbeng_success";
+    //水位报警
+    private String shuiwei_success = "shuiwei_success";
+    //设备锁定
+    private String lock_success = "lock_success";
 
     /**
      * 设摄像头状态
@@ -245,7 +260,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 /**
                  * currentTime:同时同步设备时间
                  */
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1, "");
             } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
                 int push = deviceDetailModel.getPush_cfg();
                 //仅强制关闭水位报警提示
@@ -255,12 +270,16 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 /**
                  * currentTime:同时同步设备时间
                  */
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1, "");
             } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ806")) {
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, "");
             } else {
-                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, "");
             }
+
+            //三个操作按钮
+            getThreeStatus();
+            setThreeButtomStatus();
             setData();
         }
         ptr.setPtrHandler(ptrHandler);
@@ -282,6 +301,127 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         mTcpUtil.start();
     }
 
+    public void getThreeStatus() {
+        //模式状态
+        mode_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
+        /**
+         * out_ctr
+         * Bit0：灯光继电器状态
+         *   0：关闭，1：打开
+         *Bit1：冲浪水泵继电器状态
+         **  0：关闭，1：打开
+         *Bit4：杀菌灯继电器状态
+         *   0：关闭，1：打开
+         *Bit7：手动和自动模式状态
+         *   0：手动模式，1：自动模式
+         */
+        zhaomingdeng_status = (((deviceDetailModel.getOut_ctrl()) & (int) Math.pow(2, 0)) == Math.pow(2, 0));
+        shajundeng_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 4)) == Math.pow(2, 4));
+        chonglangbeng_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 1)) == Math.pow(2, 1));
+        if ((deviceDetailModel.getPush_cfg() & 16) == 16) {
+            shuiwei_status = true;
+        } else {
+            shuiwei_status = false;
+        }
+        //设备锁定状态
+        //0：未锁机，可局域网查找
+        //1：锁机，局域网隐藏
+        dev_lockStatus = deviceDetailModel.getDev_lock() == 1;
+    }
+
+    private void setThreeButtomStatus() {
+//        mode_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
+        int fault = deviceDetailModel.getFault();
+        /**
+         *  Bit1 - 0：水温状态
+         00：正常，01：过低，10：过高
+
+         Bit2：杀菌灯故障状态
+         0：正常，1：故障
+
+         Bit3：冲浪水泵故障状态
+         0：正常，1：故障
+
+         Bit4：照明灯故障状态
+         0：正常，1：故障
+         Bit5：备用电源（循环水泵）故障状态
+         0：正常，1：故障
+         Bit6：水位状态
+         0：正常，1：过低
+         Bit9 - 8：PH状态
+         00：正常，01：过低，10：过高
+         */
+        boolean guzhang_dengguang, guzhang_shajundeng, guzhang_chonglangbeng;
+        //杀菌灯状态
+        if ((fault & (int) Math.pow(2, 2)) == Math.pow(2, 2)) {
+            guzhang_shajundeng = true;
+        } else {
+            guzhang_shajundeng = false;
+        }
+        //灯光照明
+        if ((fault & (int) Math.pow(2, 4)) == Math.pow(2, 4)) {
+            guzhang_dengguang = true;
+        } else {
+            guzhang_dengguang = false;
+        }
+        //冲浪水泵
+        if ((fault & (int) Math.pow(2, 3)) == Math.pow(2, 3)) {
+            guzhang_chonglangbeng = true;
+        } else {
+            guzhang_chonglangbeng = false;
+        }
+        if (guzhang_dengguang) {
+            txt_dengguanggonglv.setText(getString(R.string.guzhang));
+        } else {
+            if (zhaomingdeng_status) {
+//                if (Integer.parseInt(deviceDetailModel.getL_p()) <= 0) {
+//                    txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getL_p() + "W"));
+//                } else {
+//                    txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getL_p() + "W"));
+//                }
+                txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.open)));
+            } else {
+                txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.alClose)));
+            }
+        }
+        if (guzhang_shajundeng) {
+            txt_txt_shajundeng_status.setText(getString(R.string.guzhang));
+        } else {
+            if (shajundeng_status) {
+//                if (Integer.parseInt(deviceDetailModel.getUvc_p()) <= 0) {
+//                    txt_txt_shajundeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getUvc_p() + "W"));
+//                } else {
+//                    txt_txt_shajundeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getUvc_p() + "W"));
+//                }
+                txt_txt_shajundeng_status.setText(getString(R.string.open));
+            } else {
+                txt_txt_shajundeng_status.setText(getString(R.string.alClose));
+            }
+        }
+        if (guzhang_chonglangbeng) {
+            txt_txt_chonglangbeng_status.setText(getString(R.string.guzhang));
+        } else {
+            if (chonglangbeng_status) {
+//                if (Integer.parseInt(deviceDetailModel.getSp_p()) <= 0) {
+//                    txt_txt_chonglangbeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getSp_p() + "W"));
+//                } else {
+//                    txt_txt_chonglangbeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getSp_p() + "W"));
+//                }
+                txt_txt_chonglangbeng_status.setText(getString(R.string.open));
+            } else {
+                txt_txt_chonglangbeng_status.setText(getString(R.string.alClose));
+            }
+        }
+        setSelect();
+        if (shuiwei_status) {
+            img_shuiweibaojing.setBackgroundResource(R.drawable.kai);
+        } else {
+            img_shuiweibaojing.setBackgroundResource(R.drawable.guan);
+        }
+        setIsOpen(mode_status);
+        img_shebeisuoding.setBackgroundResource(dev_lockStatus ? R.drawable.kai : R.drawable.guan);
+    }
+
 
     Handler handData = new Handler() {
         @Override
@@ -298,11 +438,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     System.out.println("TCP 接收数据 101 【" + msg.obj + "】");
                     break;
                 case 102:
-                    try {
-                        closeProgressDialog();
-                    } catch (Exception e) {
-
-                    }
                     detailModelTcp = (DeviceDetailModel) msg.obj;
                     setData();
                     System.out.println("TCP 接收数据 102 【" + detailModelTcp.toString() + "】");
@@ -327,7 +462,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Log.v("request_params", Const.getOnlinStateIntervalTime + "间隔时间");
-            userPresenter.getDeviceOnLineState(did, getSp(Const.UID));
+            userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             String wangsu = mClient == null ? "0" : mClient.getVideoFrameBps();
             try {
                 if (wangsu.toLowerCase().endsWith("Kb/s".toLowerCase())) {
@@ -340,7 +475,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             } catch (Exception e) {
 
             }
-            handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
+            handler.postDelayed(runnable, 6000);
         }
     };
 
@@ -443,7 +578,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.mode_ismanual));
                 } else {
                     showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                    userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_shoudong_success);
                 }
                 break;
             case R.id.re_shuiph:
@@ -468,7 +603,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.mode_isauto));
                 } else {
                     showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                    userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_zidong_success);
                 }
                 break;
             case R.id.re_shuiwenzoushi:
@@ -552,7 +687,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     return;
                 }
                 showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, chonglangbeng_success);
                 break;
             case R.id.re_dengguangzhaoming:
                 if (detailModelTcp == null) {
@@ -568,7 +703,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 }
 
                 showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", "", zhangmingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", "", zhaomingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1, dengguangzhaoming_success);
 //                zhaoming_se = true;
                 break;
             case R.id.re_shajundeng:
@@ -584,7 +719,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     return;
                 }
                 showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, shajundeng_success);
                 break;
             case R.id.img_shuiweibaojing:
                 if (!isConnect) {
@@ -594,7 +729,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 //                pushStrs[4] = (shuiwei_status ? '0' : '1');
                 //水位报警
                 showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1, shuiwei_success);
                 break;
             case R.id.img_shebeisuoding:
                 if (detailModelTcp == null) {
@@ -606,7 +741,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 }
                 showProgressDialog(getString(R.string.posting), true);
                 //设备锁定
-                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", "", dev_lockStatus ? "0" : "1", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", "", dev_lockStatus ? "0" : "1", -1, -1, -1, -1, lock_success);
                 break;
             case R.id.img_quanping:
                 if (isLan == false) {
@@ -656,12 +791,12 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     }
 
     private void setSelect() {
-        if (zhangmingdeng_status) {
+        if (zhaomingdeng_status) {
             img_dengguang.setBackgroundResource(R.drawable.light_select);
         } else {
             img_dengguang.setBackgroundResource(R.drawable.light_unselect);
         }
-        img_dengguang.setTag(zhangmingdeng_status);
+        img_dengguang.setTag(zhaomingdeng_status);
         if (deviceDetailModel.getEx_dev() != null) {
             if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
                 if (shajundeng_status) {
@@ -860,35 +995,22 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         }
     }
 
-    /**
-     * 计算网速的方法
-     */
-//    private void caculateWifiSudu() {
-//        try {
-//            txt_wangsu.setVisibility(View.VISIBLE);
-//            handlerWifi = new Handler() {
-//                @Override
-//                public void handleMessage(Message msg) {
-//                    if (msg.what == 1) {
-//                        txt_wangsu.setText(msg.obj + "kb/s");
-//                    }
-//                    super.handleMessage(msg);
-//                }
-//            };
-//            trafficBean = new TrafficBean(this, handlerWifi, 12580);
-//            trafficBean.startCalculateNetSpeed();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
     public void threadStart() {
         RequestUtil.threadStart(handler, runnable);
     }
+
+    long responseDataTime, requestTime;
 
     @Override
     public void update(Observable o, Object data) {
         setLoadingIsVisible(false);
         ptr.refreshComplete();
+        try {
+
+            closeProgressDialog();
+        } catch (Exception e) {
+
+        }
         ResultEntity entity = handlerError(data);
         if (entity != null) {
             if (entity.getCode() != 0) {
@@ -898,7 +1020,61 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             }
             if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
                 deviceDetailModel = (DeviceDetailModel) entity.getData();
-                setData();
+                responseDataTime = System.currentTimeMillis();
+                long diff = responseDataTime - requestTime;
+                Log.v("response", "get Data time" + diff);
+                mode_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
+                getThreeStatus();
+                if (diff < 5000) {
+                    Log.v("response", "get Data time:" + diff+"_dont need update");
+                }else {
+                    Log.v("response", "get Data time:" + diff+"_is updating");
+                    setIsOpen(mode_status);
+                    setThreeButtomStatus();
+                    setData();
+                }
+            } else if (entity.getEventType() == mode_shoudong_success) {
+                requestTime = System.currentTimeMillis();
+                if (Boolean.parseBoolean("" + img_open.getTag())) {
+                    setIsOpen(true);
+                } else {
+                    setIsOpen(false);
+                }
+                img_open.setTag(!Boolean.parseBoolean((String) img_open.getTag()));
+                MAlert.alert(getString(R.string.oper_success));
+            } else if (entity.getEventType() == mode_zidong_success) {
+                requestTime = System.currentTimeMillis();
+                if (Boolean.parseBoolean(img_close.getTag() + "")) {
+                    setIsOpen(false);
+                } else {
+                    setIsOpen(true);
+                }
+                MAlert.alert(getString(R.string.oper_success));
+            } else if (entity.getEventType() == shajundeng_success) {
+                requestTime = System.currentTimeMillis();
+                shajundeng_status = !shajundeng_status;
+                setThreeButtomStatus();
+                MAlert.alert(getString(R.string.oper_success));
+            } else if (entity.getEventType() == chonglangbeng_success) {
+                requestTime = System.currentTimeMillis();
+                chonglangbeng_status = !chonglangbeng_status;
+                setThreeButtomStatus();
+                MAlert.alert(getString(R.string.oper_success));
+            } else if (entity.getEventType() == dengguangzhaoming_success) {
+                requestTime = System.currentTimeMillis();
+                zhaomingdeng_status = !zhaomingdeng_status;
+                setThreeButtomStatus();
+                MAlert.alert(getString(R.string.oper_success));
+            } else if (entity.getEventType() == shuiwei_success) {
+                requestTime = System.currentTimeMillis();
+                shuiwei_status = !shuiwei_status;
+                setThreeButtomStatus();
+                MAlert.alert(getString(R.string.oper_success));
+            } else if (entity.getEventType() == lock_success) {
+                requestTime = System.currentTimeMillis();
+                dev_lockStatus = !dev_lockStatus;
+                setThreeButtomStatus();
+                MAlert.alert(getString(R.string.oper_success));
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
                 finish();
@@ -977,108 +1153,104 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
         setDeviceName(deviceDetailModel.getDevice_nickname());
         //PH
         txt_ph.setText("pH " + String.format("%.1f", detailModelTcp.getPh() != 0 ? detailModelTcp.getPh() / 100 : deviceDetailModel.getPh() / 100));
-        /**
-         * 灯光照明功率
-         */
-        txt_dengguanggonglv.setText(detailModelTcp.getL_p() + "W");
-        /**
-         * out_ctr
-         * Bit0：灯光继电器状态
-         *   0：关闭，1：打开
-         *Bit1：冲浪水泵继电器状态
-         **  0：关闭，1：打开
-         *Bit4：杀菌灯继电器状态
-         *   0：关闭，1：打开
-         *Bit7：手动和自动模式状态
-         *   0：手动模式，1：自动模式
-         */
-        zhangmingdeng_status = (((detailModelTcp.getOut_ctrl()) & (int) Math.pow(2, 0)) == Math.pow(2, 0));
-        shajundeng_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 4)) == Math.pow(2, 4));
-        chonglangbeng_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 1)) == Math.pow(2, 1));
-        mode_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
+//        /**
+//         * out_ctr
+//         * Bit0：灯光继电器状态
+//         *   0：关闭，1：打开
+//         *Bit1：冲浪水泵继电器状态
+//         **  0：关闭，1：打开
+//         *Bit4：杀菌灯继电器状态
+//         *   0：关闭，1：打开
+//         *Bit7：手动和自动模式状态
+//         *   0：手动模式，1：自动模式
+//         */
+//        zhaomingdeng_status = (((detailModelTcp.getOut_ctrl()) & (int) Math.pow(2, 0)) == Math.pow(2, 0));
+//        shajundeng_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 4)) == Math.pow(2, 4));
+//        chonglangbeng_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 1)) == Math.pow(2, 1));
+////        mode_status = ((detailModelTcp.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
         int fault = detailModelTcp.getFault();
-        /**
-         *  Bit1 - 0：水温状态
-         00：正常，01：过低，10：过高
-
-         Bit2：杀菌灯故障状态
-         0：正常，1：故障
-
-         Bit3：冲浪水泵故障状态
-         0：正常，1：故障
-
-         Bit4：照明灯故障状态
-         0：正常，1：故障
-         Bit5：备用电源（循环水泵）故障状态
-         0：正常，1：故障
-         Bit6：水位状态
-         0：正常，1：过低
-         Bit9 - 8：PH状态
-         00：正常，01：过低，10：过高
-         */
-        boolean guzhang_dengguang, guzhang_shajundeng, guzhang_chonglangbeng;
-        //杀菌灯状态
-        if ((fault & (int) Math.pow(2, 2)) == Math.pow(2, 2)) {
-            guzhang_shajundeng = true;
-        } else {
-            guzhang_shajundeng = false;
-        }
-        //灯光照明
-        if ((fault & (int) Math.pow(2, 4)) == Math.pow(2, 4)) {
-            guzhang_dengguang = true;
-        } else {
-            guzhang_dengguang = false;
-        }
-        //冲浪水泵
-        if ((fault & (int) Math.pow(2, 3)) == Math.pow(2, 3)) {
-            guzhang_chonglangbeng = true;
-        } else {
-            guzhang_chonglangbeng = false;
-        }
-        if (guzhang_dengguang) {
-            txt_dengguanggonglv.setText(getString(R.string.guzhang));
-        } else {
-            if (zhangmingdeng_status) {
-//                if (Integer.parseInt(deviceDetailModel.getL_p()) <= 0) {
-//                    txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getL_p() + "W"));
-//                } else {
-//                    txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getL_p() + "W"));
-//                }
-                txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.open)));
-            } else {
-                txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.alClose)));
-            }
-        }
-        if (guzhang_shajundeng) {
-            txt_txt_shajundeng_status.setText(getString(R.string.guzhang));
-        } else {
-            if (shajundeng_status) {
-//                if (Integer.parseInt(deviceDetailModel.getUvc_p()) <= 0) {
-//                    txt_txt_shajundeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getUvc_p() + "W"));
-//                } else {
-//                    txt_txt_shajundeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getUvc_p() + "W"));
-//                }
-                txt_txt_shajundeng_status.setText(getString(R.string.open));
-            } else {
-                txt_txt_shajundeng_status.setText(getString(R.string.alClose));
-            }
-        }
-        if (guzhang_chonglangbeng) {
-            txt_txt_chonglangbeng_status.setText(getString(R.string.guzhang));
-        } else {
-            if (chonglangbeng_status) {
-//                if (Integer.parseInt(deviceDetailModel.getSp_p()) <= 0) {
-//                    txt_txt_chonglangbeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getSp_p() + "W"));
-//                } else {
-//                    txt_txt_chonglangbeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getSp_p() + "W"));
-//                }
-                txt_txt_chonglangbeng_status.setText(getString(R.string.open));
-            } else {
-                txt_txt_chonglangbeng_status.setText(getString(R.string.alClose));
-            }
-        }
-        setSelect();
-        setIsOpen(mode_status);
+//        /**
+//         *  Bit1 - 0：水温状态
+//         00：正常，01：过低，10：过高
+//
+//         Bit2：杀菌灯故障状态
+//         0：正常，1：故障
+//
+//         Bit3：冲浪水泵故障状态
+//         0：正常，1：故障
+//
+//         Bit4：照明灯故障状态
+//         0：正常，1：故障
+//         Bit5：备用电源（循环水泵）故障状态
+//         0：正常，1：故障
+//         Bit6：水位状态
+//         0：正常，1：过低
+//         Bit9 - 8：PH状态
+//         00：正常，01：过低，10：过高
+//         */
+//        boolean guzhang_dengguang, guzhang_shajundeng, guzhang_chonglangbeng;
+//        //杀菌灯状态
+//        if ((fault & (int) Math.pow(2, 2)) == Math.pow(2, 2)) {
+//            guzhang_shajundeng = true;
+//        } else {
+//            guzhang_shajundeng = false;
+//        }
+//        //灯光照明
+//        if ((fault & (int) Math.pow(2, 4)) == Math.pow(2, 4)) {
+//            guzhang_dengguang = true;
+//        } else {
+//            guzhang_dengguang = false;
+//        }
+//        //冲浪水泵
+//        if ((fault & (int) Math.pow(2, 3)) == Math.pow(2, 3)) {
+//            guzhang_chonglangbeng = true;
+//        } else {
+//            guzhang_chonglangbeng = false;
+//        }
+//        if (guzhang_dengguang) {
+//            txt_dengguanggonglv.setText(getString(R.string.guzhang));
+//        } else {
+//            if (zhaomingdeng_status) {
+////                if (Integer.parseInt(deviceDetailModel.getL_p()) <= 0) {
+////                    txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getL_p() + "W"));
+////                } else {
+////                    txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getL_p() + "W"));
+////                }
+//                txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.open)));
+//            } else {
+//                txt_dengguanggonglv.setText(Html.fromHtml(getString(R.string.alClose)));
+//            }
+//        }
+//        if (guzhang_shajundeng) {
+//            txt_txt_shajundeng_status.setText(getString(R.string.guzhang));
+//        } else {
+//            if (shajundeng_status) {
+////                if (Integer.parseInt(deviceDetailModel.getUvc_p()) <= 0) {
+////                    txt_txt_shajundeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getUvc_p() + "W"));
+////                } else {
+////                    txt_txt_shajundeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getUvc_p() + "W"));
+////                }
+//                txt_txt_shajundeng_status.setText(getString(R.string.open));
+//            } else {
+//                txt_txt_shajundeng_status.setText(getString(R.string.alClose));
+//            }
+//        }
+//        if (guzhang_chonglangbeng) {
+//            txt_txt_chonglangbeng_status.setText(getString(R.string.guzhang));
+//        } else {
+//            if (chonglangbeng_status) {
+////                if (Integer.parseInt(deviceDetailModel.getSp_p()) <= 0) {
+////                    txt_txt_chonglangbeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getSp_p() + "W"));
+////                } else {
+////                    txt_txt_chonglangbeng_status.setText(Html.fromHtml(getString(R.string.gonglv) + deviceDetailModel.getSp_p() + "W"));
+////                }
+//                txt_txt_chonglangbeng_status.setText(getString(R.string.open));
+//            } else {
+//                txt_txt_chonglangbeng_status.setText(getString(R.string.alClose));
+//            }
+//        }
+//        setSelect();
+//        setIsOpen(mode_status);
 ////////////////////////////////////////////////////////根据fault字段判断的正常异常/////////////////////////////////
 //        if ((fault & (int) Math.pow(2, 0)) == 0 && (fault & (int) Math.pow(2, 1)) == 0) {
 //            shuiwen_status_value = 0;//正常状态
@@ -1183,26 +1355,24 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 //        } else {
 //            txt_shuiwei_status.setText(getString(R.string.current_status) + (isConnect ? getString(R.string.normal) : getText(R.string.video_disconnect)));
 //        }
-        if ((fault & (int) Math.pow(2, 6)) == Math.pow(2, 6)) {
-            txt_shuiwei_status.setText(getString(R.string.current_status) + getString(R.string.guodi));
-        } else {
-            txt_shuiwei_status.setText(getString(R.string.current_status) + getString(R.string.normal));
-        }
-        String pushCfg = getAppointNumber(Integer.toBinaryString(detailModelTcp.getPush_cfg()), 9);
-        pushStrs = pushCfg.toCharArray();
-        if ((detailModelTcp.getPush_cfg() & 16) == 16) {
-            shuiwei_status = true;
-            img_shuiweibaojing.setBackgroundResource(R.drawable.kai);
-        } else {
-            shuiwei_status = false;
-            img_shuiweibaojing.setBackgroundResource(R.drawable.guan);
-        }
+//        if ((fault & (int) Math.pow(2, 6)) == Math.pow(2, 6)) {
+//            txt_shuiwei_status.setText(getString(R.string.current_status) + getString(R.string.guodi));
+//        } else {
+//            txt_shuiwei_status.setText(getString(R.string.current_status) + getString(R.string.normal));
+//        }
+//        if ((detailModelTcp.getPush_cfg() & 16) == 16) {
+//            shuiwei_status = true;
+//            img_shuiweibaojing.setBackgroundResource(R.drawable.kai);
+//        } else {
+//            shuiwei_status = false;
+//            img_shuiweibaojing.setBackgroundResource(R.drawable.guan);
+//        }
 
-        //设备锁定状态
-        //0：未锁机，可局域网查找
-        //1：锁机，局域网隐藏
-        dev_lockStatus = detailModelTcp.getDev_lock() == 1;
-        img_shebeisuoding.setBackgroundResource(dev_lockStatus ? R.drawable.kai : R.drawable.guan);
+//        //设备锁定状态
+//        //0：未锁机，可局域网查找
+//        //1：锁机，局域网隐藏
+//        dev_lockStatus = detailModelTcp.getDev_lock() == 1;
+//        img_shebeisuoding.setBackgroundResource(dev_lockStatus ? R.drawable.kai : R.drawable.guan);
         //设置固件更新UI
         if (app.updateActivityUI != null) {
             if (app.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度

@@ -632,4 +632,5 @@
     <string name="velocity">velocity</string>
     <string name="mode_yingji_and_jianxie">emergencyBurst</string>
     <string name="camera">Camera </string>
+    <string name="oper_success">Successful operation!</string>
 </resources>

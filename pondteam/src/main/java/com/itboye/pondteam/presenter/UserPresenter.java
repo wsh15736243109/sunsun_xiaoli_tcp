@@ -141,10 +141,10 @@ public class UserPresenter extends BasePresenter implements
     public static String shuibengExtraUpdate_fail = "_shuibengExtraUpdate_fail";
     public static String getDeviceOnLineState_success = "_getDeviceOnLineState_success";
     public static String getDeviceOnLineState_fail = "_getDeviceOnLineState_success";
-    public static String updateMobileMsg_fail="_updateMobileMsg_fail";
-    public static String updateMobileMsg_success="_updateMobileMsg_success";
-    public static String deviceSet_qibeng_success="_deviceSet_qibeng_success";
-    public static String deviceSet_qibeng_fail="_deviceSet_qibeng_fail";
+    public static String updateMobileMsg_fail = "_updateMobileMsg_fail";
+    public static String updateMobileMsg_success = "_updateMobileMsg_success";
+    public static String deviceSet_qibeng_success = "_deviceSet_qibeng_success";
+    public static String deviceSet_qibeng_fail = "_deviceSet_qibeng_fail";
 
 
     public UserPresenter(Observer observer) {
@@ -986,7 +986,7 @@ public class UserPresenter extends BasePresenter implements
      * @param dev_lock
      */
     @Override
-    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, final int ph_cmd) {
+    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, final int ph_cmd,final String requestType) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -995,7 +995,9 @@ public class UserPresenter extends BasePresenter implements
                         result.setEventTag(Tag_Success);
                         if (ph_cmd == 1) {
                             result.setEventType(deviceSet_806FuWeisuccess);
-                        } else {
+                        } else if(!requestType.equals("")){
+                            result.setEventType(requestType);
+                        }else{
                             result.setEventType(deviceSet_806success);
                         }
                         setChanged();
@@ -1015,7 +1017,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.deviceSet_806(did, tm_1, mode, out_uvc, out_sp, out_l, tMax, th, tl, l_per, uvc_per, sp_per, push_cfg, dev_lock, uv_wh, p_wh, l_wh, ph_cmd);
+        user.deviceSet_806(did, tm_1, mode, out_uvc, out_sp, out_l, tMax, th, tl, l_per, uvc_per, sp_per, push_cfg, dev_lock, uv_wh, p_wh, l_wh, ph_cmd, requestType);
     }
 
     @Override
@@ -1386,6 +1388,6 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.deviceSet_qibeng(did,  dev_lock,  mode,  state,  gear,  wh,  ch_cnt,  b_life,  push_cfg);
+        user.deviceSet_qibeng(did, dev_lock, mode, state, gear, wh, ch_cnt, b_life, push_cfg);
     }
 }

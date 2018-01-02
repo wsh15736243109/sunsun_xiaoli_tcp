@@ -84,7 +84,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                 DeviceAq806TemperatureActivity.this, this);
         img_progress.setMaxCount(35);
         if (myApp.jinLiGangdetailUI != null) {
-            userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.did, "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+            userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.did, "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1,"");
         }
         setDeviceTitle(getString(R.string.wendu));
         setDeviceData();
@@ -209,7 +209,7 @@ public class DeviceAq806TemperatureActivity extends BaseActivity implements Obse
                     case R.id.txt_wendu_setting:
                     case R.id.re_settemperature:
                         //温度设定
-                        userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", temp * 10 + "", "", "", "", "", "", "", "", -1, -1, -1, -1);
+                        userPresenter.deviceSet_806(myApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", temp * 10 + "", "", "", "", "", "", "", "", -1, -1, -1, -1,"");
                         break;
                     case R.id.re_diwen_sheding:
                     case R.id.txt_wendu_sheding_low:

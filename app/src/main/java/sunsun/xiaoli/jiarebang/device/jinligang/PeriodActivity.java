@@ -302,25 +302,25 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         //灯光照明
                         if (mApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
                             userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "",
-                                    "", "", "", "", "", "", "", str1, str2, "", "", "", -1, -1, -1, -1);
+                                    "", "", "", "", "", "", "", str1, str2, "", "", "", -1, -1, -1, -1,"");
                         } else {
                             userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "",
-                                    "", "", "", "", "", "", "", str1, "", "", "", "", -1, -1, -1, -1);
+                                    "", "", "", "", "", "", "", str1, "", "", "", "", -1, -1, -1, -1,"");
                         }
                         break;
                     case 2:
 //                        str2 = gson.toJson(timer1);
                         //杀菌灯
                         if (mApp.jinLiGangdetailUI.deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
-                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, "", "", "", -1, -1, -1, -1);
+                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, "", "", "", -1, -1, -1, -1,"");
                         } else {
-                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", str2, "", "", "", -1, -1, -1, -1);
+                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", str2, "", "", "", -1, -1, -1, -1,"");
                         }
                         break;
                     case 3:
 //                        str3 = gson.toJson(timer1);
                         //冲浪泵
-                        userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", str3, "", "", -1, -1, -1, -1);
+                        userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", str3, "", "", -1, -1, -1, -1,"");
                         break;
                 }
             }
@@ -397,7 +397,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                     }
                 }
 //                yanChiFinish = false;
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1,"");
                 break;
             case R.id.period_switch2:
                 showIsConnectMsg();
@@ -446,7 +446,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
                     }
                 }
 //                yanChiFinish = false;
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1,"");
                 break;
             case R.id.period_switch3:
                 showIsConnectMsg();
@@ -494,14 +494,14 @@ public class PeriodActivity extends BaseActivity implements Observer {
                     }
                 }
 //                yanChiFinish = false;
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, "", "", -1, -1, -1, -1,"");
                 break;
             case R.id.btn_ok:
                 showIsConnectMsg();
                 saveConfig();
 
                 showProgressDialog(getString(R.string.requesting), true);
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, cfg + "", "", total2, total3, total1, -1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, str2, str3, cfg + "", "", total2, total3, total1, -1,"");
                 break;
             case R.id.btn_cancel:
                 showSaveDialog(2);
@@ -531,7 +531,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                    switch_yichangbaojing.setBackgroundResource(R.drawable.kai);
 //                }
                 switch_yichangbaojing.setTag(!Boolean.parseBoolean(switch_yichangbaojing.getTag() + ""));
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1,"");
                 break;
             case R.id.switch_qingling:
                 showIsConnectMsg();
@@ -559,7 +559,7 @@ public class PeriodActivity extends BaseActivity implements Observer {
 //                }
                 switch_dongtaitishi.setTag(!Boolean.parseBoolean(switch_dongtaitishi.getTag() + ""));
 //                yanChiFinish = false;
-                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1);
+                userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", cfg + "", "", -1, -1, -1, -1,"");
                 break;
         }
     }
@@ -639,13 +639,13 @@ public class PeriodActivity extends BaseActivity implements Observer {
             str3 = str3.replaceAll(" ", "");
             switch (type) {
                 case 1:
-                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, "", "", "", "", 0, 0, 0, -1);
+                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", str1, "", "", "", "", 0, 0, 0, -1,"");
                     break;
                 case 2:
-                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", str2, "", "", "", 0, 0, 0, -1);
+                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", str2, "", "", "", 0, 0, 0, -1,"");
                     break;
                 case 3:
-                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", str3, "", "", 0, 0, 0, -1);
+                    userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", str3, "", "", 0, 0, 0, -1,"");
                     break;
             }
         }catch (Exception e){
@@ -723,15 +723,15 @@ public class PeriodActivity extends BaseActivity implements Observer {
                         case 1://灯光照明累计时间清零
                             total1 = 0;
                             setWhTime(0);
-                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, total1, -1);
+                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, total1, -1,"");
                             break;
                         case 2://杀菌灯累计时间清零
                             total2 = 0;
-                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", total2, -1, -1, -1);
+                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", total2, -1, -1, -1,"");
                             break;
                         case 3://冲浪泵累计时间清零
                             total3 = 0;
-                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, total3, -1, -1);
+                            userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, total3, -1, -1,"");
                             break;
                     }
                     switch_qingling.setBackgroundResource(R.drawable.kai);

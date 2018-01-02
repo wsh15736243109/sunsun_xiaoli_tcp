@@ -1053,7 +1053,7 @@ public class UserResponsitory extends BaseNetRepository implements
      * @param dev_lock
      */
     @Override
-    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, int ph_cmd) {
+    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, int ph_cmd,String requestType) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
