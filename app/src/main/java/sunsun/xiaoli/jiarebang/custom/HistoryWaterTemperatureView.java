@@ -177,7 +177,7 @@ public class HistoryWaterTemperatureView extends View {
                 float pointX = i * (float) keduX + min_left_x;
 
                 Log.v("history_value", "topTemperature: " + topTemperature + " bottomTemperatue:" + bottomTemperatue + " array.get(i).getAvg_temp()" + array.get(i).getAvg_temp());
-                if (Float.parseFloat(array.get(i).getAvg_temp())  < topTemperature && Float.parseFloat(array.get(i).getAvg_temp())  > bottomTemperatue) {
+                if (Float.parseFloat(array.get(i).getAvg_temp()) < topTemperature && Float.parseFloat(array.get(i).getAvg_temp()) > bottomTemperatue) {
                     //画点
                     canvas.drawCircle(pointX, y, 4.0f, paintPoint_normal);
                     rectMessure = new Rect();
@@ -186,17 +186,36 @@ public class HistoryWaterTemperatureView extends View {
                     canvas.drawText(App.getInstance().getString(R.string.trend_normal), rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
                     rectMessure = new Rect();
                     paintPoint_normal.getTextBounds(value, 0, value.length(), rectMessure);
-                    canvas.drawText(value, (i + 1) * keduX - min_left_x - rectMessure.width() / 2, y + rectMessure.height() + 10, paintPoint_normal);
+                    y = y + rectMessure.height() + 10;
+                    if (y + rectMessure.height() + 10 > rect.top - 10) {
+                        y = rect.top - 10;
+                        ar.get(i).set(new PointF(pointX, y));
+                    }
+                    canvas.drawText(value, (i + 1) * keduX - min_left_x - rectMessure.width() / 2, rectMessure.height()+3 + y, paintPoint_normal);
                 } else {
-                    //画点
-                    canvas.drawCircle(pointX, y, 4.0f, paintPoint_yichang);
                     rectMessure = new Rect();
                     paint_yichang.getTextBounds(App.getInstance().getString(R.string.trend_abnormal), 0, 1, rectMessure);
                     canvas.drawRoundRect(rect, 10, 10, paint_yichang);//画圆角矩形
                     canvas.drawText(App.getInstance().getString(R.string.trend_abnormal), rect.centerX() - rectMessure.width(), rect.centerY() + rectMessure.height() / 2, text_normal_or_no);
                     rectMessure = new Rect();
                     paint_yichang.getTextBounds(value, 0, value.length(), rectMessure);
-                    canvas.drawText(value + "", (i + 1) * keduX - min_left_x - rectMessure.width() / 2, y + rectMessure.height() + 10, paint_yichang);
+//                    y = y + rectMessure.height() + 10;
+//                    if (y + rectMessure.height() + 10 > rect.top - 10) {
+//                        y = rect.top - 10;
+//                        ar.get(i).set(new PointF(pointX, y));
+//                    }
+
+                    Log.v("history_value", "y:" + y + " rect.top：" + rect.bottom);
+                    //画点
+                    if (y >= rect.top - 30) {
+                        y = rect.top - 30;
+                        ar.get(i).set(new PointF(pointX, y));
+                    } else {
+
+                    }
+                    canvas.drawCircle(pointX, y, 4.0f, paintPoint_yichang);
+
+                    canvas.drawText(value + "", (i + 1) * keduX - min_left_x - rectMessure.width() / 2, rectMessure.height()+3 + y, paint_yichang);
                 }
                 Rect rectDate = new Rect();
                 Paint paint = new Paint();

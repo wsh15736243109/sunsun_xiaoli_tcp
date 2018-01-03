@@ -1,6 +1,7 @@
 package com.itboye.pondteam.utils;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.itboye.pondteam.R;
 import com.itboye.pondteam.app.MyApplication;
@@ -252,6 +253,7 @@ public class CaculateDays {
         pre.setTime(predate);
         Calendar cal = Calendar.getInstance();
 
+        Log.v("history", day);
         Date date = getDateFormat2().parse(day);
         cal.setTime(date);
         if (cal.get(Calendar.YEAR) == (pre.get(Calendar.YEAR))) {
@@ -567,31 +569,31 @@ public class CaculateDays {
         StringBuffer stringBuffer = new StringBuffer();
         if ((binary & (int) Math.pow(2, 0)) == Math.pow(2, 0)) {
             //星期一
-            stringBuffer.append(MyApplication.getInstance().getString(Monday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(Monday) + ",");
         }
         if ((binary & (int) Math.pow(2, 1)) == Math.pow(2, 1)) {
             //星期二
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Tuesday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(R.string.Tuesday) + ",");
         }
         if ((binary & (int) Math.pow(2, 2)) == Math.pow(2, 2)) {
             //星期三
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Wednesday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(R.string.Wednesday) + ",");
         }
         if ((binary & (int) Math.pow(2, 3)) == Math.pow(2, 3)) {
             //星期四
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Thursday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(R.string.Thursday) + ",");
         }
         if ((binary & (int) Math.pow(2, 4)) == Math.pow(2, 4)) {
             //星期五
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Friday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(R.string.Friday) + ",");
         }
         if ((binary & (int) Math.pow(2, 5)) == Math.pow(2, 5)) {
             //星期六
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Saturday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(R.string.Saturday) + ",");
         }
         if ((binary & (int) Math.pow(2, 6)) == Math.pow(2, 6)) {
             //星期日
-            stringBuffer.append(MyApplication.getInstance().getString(R.string.Sunday)+",");
+            stringBuffer.append(MyApplication.getInstance().getString(R.string.Sunday) + ",");
         }
         return stringBuffer.toString();
     }
