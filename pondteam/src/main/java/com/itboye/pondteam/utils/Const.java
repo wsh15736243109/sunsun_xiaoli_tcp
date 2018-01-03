@@ -252,6 +252,10 @@ public class Const {
     public static int intervalTime = 10000;//定时刷新时间
     public static int getOnlinStateIntervalTime = 10000;//定时刷新时间
 
+
+    public static int requestTimeInternal = 1000;
+    public static int updateUITimeInternal = 5000;
+
     public static double lat = 30.32094, lng = 120.333082;
 
     public static float zoom = 12;//地图缩放级别
