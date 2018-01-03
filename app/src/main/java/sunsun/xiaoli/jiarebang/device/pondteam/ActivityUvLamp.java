@@ -489,7 +489,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
         }
     }
 
-    public long requestTime;
+    public long requestTime=System.currentTimeMillis();
 
     @Override
     public void update(Observable o, Object data) {

@@ -65,7 +65,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
     TextView savewatermode;
     private String QingXiTiShi_Success = "QingXiTiShi_Success";
     private String yichangbaojing_Success = "yichangbaojing_Success";
-    public long requestTime;
+    public long requestTime=System.currentTimeMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

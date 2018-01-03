@@ -446,6 +446,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         //设置自动清洗UI;
         if (myApp.ziDongUI != null) {
             myApp.ziDongUI.setZiDongData();
+            responseDataTime = System.currentTimeMillis();
             long diff = responseDataTime - myApp.ziDongUI.requestTime;
             if (diff < updateUITimeInternal) {
                 Log.v("response", "get Data time:" + diff + "_dont need update");
