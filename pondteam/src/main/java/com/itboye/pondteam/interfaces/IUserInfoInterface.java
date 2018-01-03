@@ -21,7 +21,7 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param uvWH 杀菌灯累计工作时间
      * @param uvCfg 杀菌灯设置
      */
-    void deviceSet(String did,String oa_name,String ob_name,String clEn,int clWeek,String clTm,String clDur,String clState,String clCfg,String uvOn,String uvOff,String uvWH,String uvCfg,String uvState,int out_state_a,int out_state_b,String oa_on_tm,String oa_off_tm,String ob_per,String oa_per,int ws_on_tm,int ws_off_tm);
+    void deviceSet(String did,String oa_name,String ob_name,String clEn,int clWeek,String clTm,String clDur,String clState,String clCfg,String uvOn,String uvOff,String uvWH,String uvCfg,String uvState,int out_state_a,int out_state_b,String oa_on_tm,String oa_off_tm,String ob_per,String oa_per,int ws_on_tm,int ws_off_tm,String requestType);
 
     /**
      * 用户登录（账户密码）

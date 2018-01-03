@@ -47,7 +47,9 @@ public class CaculateDays {
         }
         //Date d2 = new Date(System.currentTimeMillis());//你也可以获取当前时间
         long diff = d1.getTime() - d2.getTime();//这样得到的差值是微秒级别
-        long dayss = diff / (1000 * 60 * 60 * 24);
+        long mills = 1000 * 60 * 60 * 24;
+        System.out.println("mills::" + mills + "  diff::" + diff + "  str2" + str2);
+        long dayss = diff / mills;
         long hours = (diff - dayss * (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
         long minutes = (diff - dayss * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60)) / (1000 * 60) - 1;
         long seconds = (diff - dayss * (1000 * 60 * 60 * 24) - hours * (1000 * 60 * 60) - minutes * (1000 * 60)) / (1000 * 60);
@@ -57,7 +59,7 @@ public class CaculateDays {
         if (minutes < 0) {
             minutes = 0;
         }
-        System.out.println(dayss + "天" + hours + "时" + minutes + "分" + seconds + "秒");
+        System.out.println(dayss + "天" + hours + "时" + minutes + "分" + seconds + "秒" + str2);
         return dayss + "," + hours + "," + minutes;
     }
 

@@ -113,7 +113,7 @@ public class ActivityShouDong extends BaseActivity implements Observer {
             if (circleProgress.getStatus() == CustomCircleProgress.Status.Starting) {//如果是开始状态
 //                wash_status = getString(R.string.current_status) + getString(R.string.pause_washing);
                 //点击则变成关闭暂停状态
-                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "2", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1);
+                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "2", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1,"");
 //                circleProgress.setStatus(CustomCircleProgress.Status.Pause);
                 //注意，当我们暂停时，同时还要移除消息，不然的话进度不会被停止
 //                    handler.removeMessages(PROGRESS_CIRCLE_STARTING);
@@ -126,7 +126,7 @@ public class ActivityShouDong extends BaseActivity implements Observer {
 //                }
             else {
                 //将清洗时间换成总的秒数，便于线程
-                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "1", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1);
+                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "1", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1,"");
 //                wash_status = getString(R.string.current_status) + getString(R.string.washing);
                 //点击则变成开启状态
 //                circleProgress.setStatus(CustomCircleProgress.Status.Starting);
@@ -163,7 +163,7 @@ public class ActivityShouDong extends BaseActivity implements Observer {
         alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", mNewTempValue + "", "", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1);
+                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", mNewTempValue + "", "", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1,"");
             }
         });
         alert.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {

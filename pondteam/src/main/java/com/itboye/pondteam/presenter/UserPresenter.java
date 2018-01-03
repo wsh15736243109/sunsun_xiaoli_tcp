@@ -201,14 +201,18 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm) {
+    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm, final String requestType) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
                     @Override
                     public void success(ResultEntity result) {
                         result.setEventTag(Tag_Success);
-                        result.setEventType(deviceSet_success);
+                        if (!requestType.equals("")) {
+                            result.setEventType(requestType);
+                        } else {
+                            result.setEventType(deviceSet_success);
+                        }
                         UserPresenter.this.setChanged();
                         UserPresenter.this.notifyObservers(result);
                     }
@@ -222,7 +226,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.deviceSet(did, oa_name, ob_name, clEn, clWeek, clTm, clDur, clState, clCfg, uvOn, uvOff, uvWH, uvCfg, uvState, out_state_a, out_state_b, oa_on_tm, oa_off_tm, ob_per, oa_per, ws_on_tm, ws_off_tm);
+        user.deviceSet(did, oa_name, ob_name, clEn, clWeek, clTm, clDur, clState, clCfg, uvOn, uvOff, uvWH, uvCfg, uvState, out_state_a, out_state_b, oa_on_tm, oa_off_tm, ob_per, oa_per, ws_on_tm, ws_off_tm, requestType);
     }
 
 
@@ -986,7 +990,7 @@ public class UserPresenter extends BasePresenter implements
      * @param dev_lock
      */
     @Override
-    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, final int ph_cmd,final String requestType) {
+    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, final int ph_cmd, final String requestType) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
@@ -995,9 +999,9 @@ public class UserPresenter extends BasePresenter implements
                         result.setEventTag(Tag_Success);
                         if (ph_cmd == 1) {
                             result.setEventType(deviceSet_806FuWeisuccess);
-                        } else if(!requestType.equals("")){
+                        } else if (!requestType.equals("")) {
                             result.setEventType(requestType);
-                        }else{
+                        } else {
                             result.setEventType(deviceSet_806success);
                         }
                         setChanged();

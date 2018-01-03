@@ -238,14 +238,14 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
                 return;
             }
             showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1,"");
         } else if (v.getId() == R.id.icon_setting_B) {
             if (!isConnect) {
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
             showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1,"");
         } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
             intent = new Intent(this, ActivityChaZuoBDetail.class);
             intent.putExtra("title", txt_chazuoA_name.getText().toString());
@@ -474,7 +474,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         } else {
 
         }
-        userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", outA, outB, "", "", "", "", -1, -1);
+        userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", outA, outB, "", "", "", "", -1, -1,"");
     }
 
     private void setChaZuoB(DeviceDetailModel deviceDetailModel) {

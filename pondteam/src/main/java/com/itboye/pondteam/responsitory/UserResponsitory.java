@@ -138,7 +138,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm) {
+    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm,String requestType) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "101";

@@ -197,7 +197,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                         "",
                         "",
                         "",
-                        "", "", -1, -1, "", "", "", "", -1, -1);
+                        "", "", -1, -1, "", "", "", "", -1, -1, "");
                 break;
             case YiChangWarn:
                 if (isChecked) {
@@ -225,7 +225,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                         "",
                         "",
                         "",
-                        "", "", -1, -1, "", "", "", "", -1, -1);
+                        "", "", -1, -1, "", "", "", "", -1, -1, "");
                 break;
             case QingXiAlert:
                 if (isChecked) {
@@ -253,7 +253,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                         "",
                         "",
                         "",
-                        "", "", -1, -1, "", "", "", "", -1, -1);
+                        "", "", -1, -1, "", "", "", "", -1, -1, "");
                 break;
         }
     }
@@ -303,13 +303,13 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
         try {
             try {
                 closeProgressDialog();
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
             stringWeek = new StringBuffer();
             if (myApp.pondDeviceDetailUI.detailModelTcp != null) {
-                String cl_week=myApp.pondDeviceDetailUI.detailModelTcp.getCl_week()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getCl_week();
-                String cl_en=myApp.pondDeviceDetailUI.detailModelTcp.getCl_en()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getCl_en();
+                String cl_week = myApp.pondDeviceDetailUI.detailModelTcp.getCl_week() == null ? "0" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_week();
+                String cl_en = myApp.pondDeviceDetailUI.detailModelTcp.getCl_en() == null ? "0" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_en();
                 if (cl_week.equals("0")) {
                     txt_not_time.setVisibility(View.VISIBLE);
                     if (!myApp.pondDeviceDetailUI.deviceDetailModel.getIs_disconnect().equals("0")) {
@@ -376,10 +376,10 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 //            new Thread(runnable).start();
 //            txt_moshi.setVisibility(View.VISIBLE);
                 }
-                String tempTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm()==null?"00":myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm(), "HHmm", "HH:mm");
+                String tempTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm() == null ? "00" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm(), "HHmm", "HH:mm");
                 txt_shijiansheding.setText(tempTime);
                 //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
-                String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
+                String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg() == null ? "0" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
                 if (cfg.equals("0")) {
                     //数据格式 00
                     isQingXiTiShi = false;
@@ -397,7 +397,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                     isQingXiTiShi = true;
                     isYiChangBaoJing = true;
                 }
-                isdingshiqingxi =cl_en.equals("0") ? false : true;
+                isdingshiqingxi = cl_en.equals("0") ? false : true;
                 setCheck(qingxitishi, isQingXiTiShi);
                 setCheck(toggle_exception_warn, isYiChangBaoJing);
                 setCheck(toggle_dingshi, isdingshiqingxi);
@@ -470,8 +470,8 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                 } else {
                     savewatermode.setText(percent);
                 }
-            }else{
-                showProgressDialog(getString(R.string.requesting),true);
+            } else {
+                showProgressDialog(getString(R.string.requesting), true);
             }
         } catch (Exception e) {
 
@@ -688,7 +688,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                 } else {
                     //手动模式
                 }
-                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "", "", "", a_state, -1, "", "", "", "", onT, offT);
+                userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "", "", "", a_state, -1, "", "", "", "", onT, offT, "");
             }
         });
         alert.create();
@@ -736,7 +736,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
 //                }
 //                txt_moshi.setVisibility(View.GONE);
 //            }else{
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.did, null, null, "", weekBinary, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.did, null, null, "", weekBinary, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", "", -1, -1, "");
 //            }
 
         }
@@ -798,7 +798,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                         "",
                         "", "",
                         -1,
-                        -1, "", "", "", "", -1, -1);
+                        -1, "", "", "", "", -1, -1, "");
             }
         }, Integer.parseInt(times.substring(0, 2)), Integer.parseInt(times.substring(3, 4)), true, getString(R.string.settime));
         mPicker.show();

@@ -123,7 +123,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                         "",
                         src1 + "", "",
                         -1,
-                        -1, "", "", "", "", -1, -1);
+                        -1, "", "", "", "", -1, -1,"");
                 break;
             case YiChangBaoJing:
                 if (isChecked) {
@@ -153,12 +153,12 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                         "",
                         src1 + "", "",
                         -1,
-                        -1, "", "", "", "", -1, -1);
+                        -1, "", "", "", "", -1, -1,"");
                 break;
             case QingLing:
                 //累计使用时间清零
                 if (isChecked == true) {
-                    userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "0", "", "", -1, -1, "", "", "", "", -1, -1);
+                    userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "0", "", "", -1, -1, "", "", "", "", -1, -1,"");
                 }
                 break;
         }
@@ -399,7 +399,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                         valueUvState = 0;
                     }
                 }
-                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", valueUvCfg + "", valueUvState + "", -1, -1, "", "", "", "", -1, -1);
+                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", valueUvCfg + "", valueUvState + "", -1, -1, "", "", "", "", -1, -1,"");
             }
         });
         alert.create();
@@ -442,9 +442,9 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
     private void showPeriod(final boolean b, String s, TextView textView) {
         String tempValue = s.replace(":", "");
         if (b) {//设置开启时间
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", tempValue, "", "", "", "", -1, -1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", tempValue, "", "", "", "", -1, -1, "", "", "", "", -1, -1,"");
         } else {//设置关闭时间
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", tempValue, "", "", "", -1, -1, "", "", "", "", -1, -1);
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", tempValue, "", "", "", -1, -1, "", "", "", "", -1, -1,"");
         }
     }
 

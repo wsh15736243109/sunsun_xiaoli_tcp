@@ -135,9 +135,9 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                     String str2 = new Gson().toJson(arB);
                     String str3 = new Gson().toJson(arrayListInner);
                     if (chazuo_type.equals("A")) {
-                        userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, str1, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", str3, -1, -1);
+                        userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, str1, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", str3, -1, -1,"");
                     } else {
-                        userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, str2, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", str3, "", -1, -1);
+                        userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, str2, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", str3, "", -1, -1,"");
                     }
                 } catch (Exception e) {
                     MAlert.alert("eror"+e.getMessage());
@@ -351,7 +351,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                             if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_a()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
                                 value = value ^ (int) Math.pow(2, 1);
                             }
-                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", value, -1, "", "", "", "", -1, -1);
+                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", value, -1, "", "", "", "", -1, -1,"");
                         }
                     } else {
                         if (((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 0)) == Math.pow(2, 0))
@@ -365,7 +365,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                             if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
                                 value = value ^ (int) Math.pow(2, 1);
                             }
-                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, value, "", "", "", "", -1, -1);
+                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, value, "", "", "", "", -1, -1,"");
                         }
                     }
                 } else if ((Boolean) txt_shoudong_close.getTag()) {
@@ -382,7 +382,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                             if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_a()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
                                 value = value ^ (int) Math.pow(2, 1);
                             }
-                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", value, -1, "", "", "", "", -1, -1);
+                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", value, -1, "", "", "", "", -1, -1,"");
                         }
                     } else {
                         if (((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 0)) == 0)
@@ -396,7 +396,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                             if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
                                 value = value ^ (int) Math.pow(2, 1);
                             }
-                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, value, "", "", "", "", -1, -1);
+                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, value, "", "", "", "", -1, -1,"");
                         }
                     }
                 } else if ((Boolean) txt_auto.getTag()) {
@@ -405,14 +405,14 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                             MAlert.alert(getString(R.string.mode_isauto));
                         } else {
                             int value = Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_a()) ^ (int) Math.pow(2, 1);
-                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", value, -1, "", "", "", "", -1, -1);
+                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", value, -1, "", "", "", "", -1, -1,"");
                         }
                     } else {
                         if ((Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) & (int) Math.pow(2, 1)) == (int) Math.pow(2, 1)) {
                             MAlert.alert(getString(R.string.mode_isauto));
                         } else {
                             int value = Integer.parseInt(myApplication.pondDeviceDetailUI.deviceDetailModel.getOut_state_b()) ^ (int) Math.pow(2, 1);
-                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, value, "", "", "", "", -1, -1);
+                            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, value, "", "", "", "", -1, -1,"");
                         }
                     }
                 }
@@ -488,9 +488,9 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
                 }
                 String json = new Gson().toJson(arrayListInner);
                 if (chazuo_type.equals("A")) {
-                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", json, -1, -1);
+                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", json, -1, -1,"");
                 } else {
-                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1);
+                    userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1,"");
                 }
             }
         }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -541,7 +541,7 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             int weekBinary = data.getIntExtra("weekBinary", 0);
             arrayListInner.get(groupPosition).setWeek(weekBinary);
             String json = new Gson().toJson(arrayListInner);
-            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1);
+            userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1,"");
         }
     }
 
@@ -652,9 +652,9 @@ public class ActivityChaZuoBDetail extends BaseActivity implements IRecyclerview
             String json = new Gson().toJson(arrayTemp);
             hasEx = false;
             if (chazuo_type.equals("A")) {
-                userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, new Gson().toJson(arA), null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", json, -1, -1);
+                userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, new Gson().toJson(arA), null, "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", "", json, -1, -1,"");
             } else {
-                userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, new Gson().toJson(arB), "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1);
+                userPresenter.deviceSet(myApplication.pondDeviceDetailUI.did, null, new Gson().toJson(arB), "", -1, "", "", "", "", "", "", "", "", "", -1, -1, "", "", json, "", -1, -1,"");
             }
         } catch (Exception e) {
 
