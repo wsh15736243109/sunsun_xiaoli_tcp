@@ -16,7 +16,6 @@ import android.widget.TimePicker;
 import com.itboye.pondteam.R;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.base.IsNeedClick;
-import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.custom.ptr.BasePtr;
 import com.itboye.pondteam.custom.wheelview.view.WheelPicker;
 import com.itboye.pondteam.enums.SetType;
@@ -40,6 +39,7 @@ import static com.itboye.pondteam.utils.NumberUtils.parse2Number;
 import static com.itboye.pondteam.volley.TimesUtils.getNumByWeek;
 import static com.itboye.pondteam.volley.TimesUtils.localToUTC;
 import static com.itboye.pondteam.volley.TimesUtils.utc2Local;
+import static sunsun.xiaoli.jiarebang.utils.RequestUtil.caculateRequestTimeInternal;
 
 
 /**
@@ -63,6 +63,9 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
     TextView txt_not_time, days, hours, mins, secs, txt_ph;
     @IsNeedClick
     TextView savewatermode;
+    private String QingXiTiShi_Success = "QingXiTiShi_Success";
+    private String yichangbaojing_Success = "yichangbaojing_Success";
+    public long requestTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +89,8 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
         myApp = (App) getApplication();
         myApp.ziDongUI = this;
         userPresenter = new UserPresenter(this);
-
+        getStatus();
+        setStatus();
         setZiDongData();
         txt_title.setText(getString(R.string.cleabytimer));
         txt_title.setTextColor(getResources().getColor(R.color.main_green));
@@ -225,7 +229,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                         "",
                         "",
                         "",
-                        "", "", -1, -1, "", "", "", "", -1, -1, "");
+                        "", "", -1, -1, "", "", "", "", -1, -1, yichangbaojing_Success);
                 break;
             case QingXiAlert:
                 if (isChecked) {
@@ -253,7 +257,7 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                         "",
                         "",
                         "",
-                        "", "", -1, -1, "", "", "", "", -1, -1, "");
+                        "", "", -1, -1, "", "", "", "", -1, -1, QingXiTiShi_Success);
                 break;
         }
     }
@@ -378,28 +382,28 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                 }
                 String tempTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm() == null ? "00" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_tm(), "HHmm", "HH:mm");
                 txt_shijiansheding.setText(tempTime);
-                //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
-                String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg() == null ? "0" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
-                if (cfg.equals("0")) {
-                    //数据格式 00
-                    isQingXiTiShi = false;
-                    isYiChangBaoJing = false;
-                } else if (cfg.equals("1")) {
-                    //数据格式 01
-                    isQingXiTiShi = false;
-                    isYiChangBaoJing = true;
-                } else if (cfg.equals("2")) {
-                    //数据格式 10
-                    isQingXiTiShi = true;
-                    isYiChangBaoJing = false;
-                } else if (cfg.equals("3")) {
-                    //数据格式 11
-                    isQingXiTiShi = true;
-                    isYiChangBaoJing = true;
-                }
+//                //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
+//                String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg() == null ? "0" : myApp.pondDeviceDetailUI.detailModelTcp.getCl_cfg();
+//                if (cfg.equals("0")) {
+//                    //数据格式 00
+//                    isQingXiTiShi = false;
+//                    isYiChangBaoJing = false;
+//                } else if (cfg.equals("1")) {
+//                    //数据格式 01
+//                    isQingXiTiShi = false;
+//                    isYiChangBaoJing = true;
+//                } else if (cfg.equals("2")) {
+//                    //数据格式 10
+//                    isQingXiTiShi = true;
+//                    isYiChangBaoJing = false;
+//                } else if (cfg.equals("3")) {
+//                    //数据格式 11
+//                    isQingXiTiShi = true;
+//                    isYiChangBaoJing = true;
+//                }
                 isdingshiqingxi = cl_en.equals("0") ? false : true;
-                setCheck(qingxitishi, isQingXiTiShi);
-                setCheck(toggle_exception_warn, isYiChangBaoJing);
+//                setCheck(qingxitishi, isQingXiTiShi);
+//                setCheck(toggle_exception_warn, isYiChangBaoJing);
                 setCheck(toggle_dingshi, isdingshiqingxi);
                 int onT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_on_tm();
                 int offT = myApp.pondDeviceDetailUI.detailModelTcp.getWs_off_tm();
@@ -478,6 +482,34 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
         }
     }
 
+    public void getStatus() {
+        //model.getCl_cfg():两个开关合一  首位为异常报警，第二位为清洗提示
+        String cfg = myApp.pondDeviceDetailUI.deviceDetailModel.getCl_cfg() == null ? "0" : myApp.pondDeviceDetailUI.deviceDetailModel.getCl_cfg();
+        if (cfg.equals("0")) {
+            //数据格式 00
+            isQingXiTiShi = false;
+            isYiChangBaoJing = false;
+        } else if (cfg.equals("1")) {
+            //数据格式 01
+            isQingXiTiShi = false;
+            isYiChangBaoJing = true;
+        } else if (cfg.equals("2")) {
+            //数据格式 10
+            isQingXiTiShi = true;
+            isYiChangBaoJing = false;
+        } else if (cfg.equals("3")) {
+            //数据格式 11
+            isQingXiTiShi = true;
+            isYiChangBaoJing = true;
+        }
+        setStatus();
+    }
+
+    public void setStatus() {
+        setCheck(qingxitishi, isQingXiTiShi);
+        setCheck(toggle_exception_warn, isYiChangBaoJing);
+    }
+
     private void setCheck(ImageView qingxitishi, boolean isQingXiTiShi) {
         if (isQingXiTiShi) {
             qingxitishi.setBackgroundResource(R.drawable.kai);
@@ -527,16 +559,24 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            showProgressDialog(getString(R.string.posting), true);
-            setCheckOrUnCheck(SetType.QingXiAlert, !isQingXiTiShi);
+            if (!caculateRequestTimeInternal(requestTime)) {
+
+            } else {
+                showProgressDialog(getString(R.string.posting), true);
+                setCheckOrUnCheck(SetType.QingXiAlert, !isQingXiTiShi);
+            }
 
         } else if (i == R.id.toggle_exception_warn) {
             if (myApp.pondDeviceDetailUI.isConnect == false) {
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            showProgressDialog(getString(R.string.posting), true);
-            setCheckOrUnCheck(SetType.YiChangWarn, !isYiChangBaoJing);
+            if (!caculateRequestTimeInternal(requestTime)) {
+
+            } else {
+                showProgressDialog(getString(R.string.posting), true);
+                setCheckOrUnCheck(SetType.YiChangWarn, !isYiChangBaoJing);
+            }
 
         } else if (i == R.id.toggle_dingshi) {
             if (myApp.pondDeviceDetailUI.isConnect == false) {
@@ -828,11 +868,16 @@ public class ActivityZiDong extends BaseActivity implements WheelPicker.OnItemSe
             } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(entity.getData());
                 setZiDongData();
-            } else if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
-                myApp.pondDeviceDetailUI.deviceDetailModel = (DeviceDetailModel) entity.getData();
-                setZiDongData();
-            } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
-                MAlert.alert("设备更新失败:" + entity.getData());
+            }  else if (entity.getEventType() == QingXiTiShi_Success) {
+                MAlert.alert(getString(R.string.oper_success));
+                requestTime = System.currentTimeMillis();
+                isQingXiTiShi = !isQingXiTiShi;
+                setStatus();
+            } else if (entity.getEventType() == yichangbaojing_Success) {
+                MAlert.alert(getString(R.string.oper_success));
+                requestTime = System.currentTimeMillis();
+                isYiChangBaoJing = !isYiChangBaoJing;
+                setStatus();
             }
         }
     }

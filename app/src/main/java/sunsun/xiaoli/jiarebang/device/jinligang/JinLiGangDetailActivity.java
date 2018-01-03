@@ -76,10 +76,12 @@ import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
 import static com.itboye.pondteam.utils.Const.imagePath;
 import static com.itboye.pondteam.utils.Const.patten;
+import static com.itboye.pondteam.utils.Const.updateUITimeInternal;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.utils.ScreenUtil.keepScreenOn;
 import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getFileSavePath;
 import static sunsun.xiaoli.jiarebang.utils.FileOperateUtil.getTimesString;
+import static sunsun.xiaoli.jiarebang.utils.RequestUtil.caculateRequestTimeInternal;
 
 //import static sunsun.xiaoli.jiarebang.R.id.mVideoLayout;
 
@@ -177,9 +179,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private String shuiwei_success = "shuiwei_success";
     //设备锁定
     private String lock_success = "lock_success";
-
-    int requestTimeInternal = 1000;
-    int updateUITimeInternal = 5000;
 
     /**
      * 设摄像头状态
@@ -661,7 +660,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 if ((Boolean) img_open.getTag()) {
                     MAlert.alert(getString(R.string.mode_ismanual));
                 } else {
-                    if(caculateRequestTimeInternal()) {
+                     if (!caculateRequestTimeInternal(requestTime)) {
+
+                    } else  {
                         showProgressDialog(getString(R.string.posting), true);
                         userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_shoudong_success);
                     }
@@ -675,7 +676,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 if ((Boolean) img_close.getTag()) {
                     MAlert.alert(getString(R.string.mode_isauto));
                 } else {
-                    if(caculateRequestTimeInternal()) {
+                    if(caculateRequestTimeInternal(requestTime)) {
                         showProgressDialog(getString(R.string.posting), true);
                         userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_zidong_success);
                     }
@@ -693,7 +694,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if(caculateRequestTimeInternal()) {
+                if(caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, chonglangbeng_success);
                 }
@@ -711,7 +712,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     return;
                 }
 
-                if(caculateRequestTimeInternal()) {
+                if(caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", "", "", zhaomingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1, dengguangzhaoming_success);
                 }
@@ -729,7 +730,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if(caculateRequestTimeInternal()) {
+                if(caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, shajundeng_success);
                 }
@@ -741,7 +742,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 }
 //                pushStrs[4] = (shuiwei_status ? '0' : '1');
                 //水位报警
-                if(caculateRequestTimeInternal()) {
+                if(caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1, shuiwei_success);
                 }
@@ -754,7 +755,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
-                if(caculateRequestTimeInternal()) {
+                if(caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     //设备锁定
                     userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", "", dev_lockStatus ? "0" : "1", -1, -1, -1, -1, lock_success);
@@ -772,15 +773,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 imagePath = getFileSavePath() + getTimesString() + ".jpg";
                 mClient.snapShot(imagePath);
                 break;
-        }
-    }
-
-    private boolean caculateRequestTimeInternal() {
-        if (System.currentTimeMillis() - requestTime < requestTimeInternal) {
-            MAlert.alert(getString(R.string.opertation_fast));
-            return false;
-        } else {
-            return true;
         }
     }
 
@@ -1050,11 +1042,13 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 long diff = responseDataTime - requestTime;
                 Log.v("response", "get Data time" + diff);
 //                mode_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
-//                getThreeStatus();
+
                 if (diff < updateUITimeInternal) {
                     Log.v("response", "get Data time:" + diff + "_dont need update");
                 } else {
-                    Log.v("response", "get Data time:" + diff + "_is updating");
+                    Log.v("response" +
+                            "", "get Data time:" + diff + "_is updating");
+                    getThreeStatus();
                     setIsOpen(mode_status);
                     setThreeButtomStatus();
                     setData();

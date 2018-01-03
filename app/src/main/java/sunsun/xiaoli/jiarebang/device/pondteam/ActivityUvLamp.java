@@ -34,6 +34,7 @@ import static com.itboye.pondteam.utils.ColoTextUtil.setDifferentSizeForTextView
 import static com.itboye.pondteam.utils.NumberUtils.parse2Number;
 import static com.itboye.pondteam.volley.TimesUtils.localToUTC;
 import static com.itboye.pondteam.volley.TimesUtils.utc2Local;
+import static sunsun.xiaoli.jiarebang.utils.RequestUtil.caculateRequestTimeInternal;
 
 
 /**
@@ -56,6 +57,9 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
     PtrFrameLayout ptr;
     Handler handlerRefresh = new Handler();
     TextView txt_shajundeng_mode_selection;
+
+    private String weihutishi_success = "weihutishi_success";
+    private String yichangbaojing_success = "yichangbaojing_success";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,8 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
         txt_title.setText(title);
         userPresenter = new UserPresenter(this);
         isQingLing = false;
+        getStatus();
+        setStatus();
         setLampData();
     }
 
@@ -123,7 +129,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                         "",
                         src1 + "", "",
                         -1,
-                        -1, "", "", "", "", -1, -1,"");
+                        -1, "", "", "", "", -1, -1, weihutishi_success);
                 break;
             case YiChangBaoJing:
                 if (isChecked) {
@@ -153,12 +159,12 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                         "",
                         src1 + "", "",
                         -1,
-                        -1, "", "", "", "", -1, -1,"");
+                        -1, "", "", "", "", -1, -1, yichangbaojing_success);
                 break;
             case QingLing:
                 //累计使用时间清零
                 if (isChecked == true) {
-                    userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "0", "", "", -1, -1, "", "", "", "", -1, -1,"");
+                    userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", "", "0", "", "", -1, -1, "", "", "", "", -1, -1, "");
                 }
                 break;
         }
@@ -172,35 +178,62 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
             setDifferentSizeForTextView(startPo, endPo, myApp.pondDeviceDetailUI.detailModelTcp.getUv_wh() + " " + getString(R.string.hour), txt_totalhour);
 //        String tempOpenTime = myApp.pondDeviceDetailUI.deviceDetailModel.getUv_on().substring(0, 2) + ":" + myApp.pondDeviceDetailUI.deviceDetailModel.getUv_on().substring(2, 4);
 //        String tempCloseTime = myApp.pondDeviceDetailUI.deviceDetailModel.getUv_off().substring(0, 2) + ":" + myApp.pondDeviceDetailUI.deviceDetailModel.getUv_off().substring(2, 4);
-            String utcOnTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_on()==null?"00":myApp.pondDeviceDetailUI.detailModelTcp.getUv_on(), "HHmm", "HH:mm");
-            String utcOffTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_off()==null?"00":myApp.pondDeviceDetailUI.detailModelTcp.getUv_off(), "HHmm", "HH:mm");
+            String utcOnTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_on() == null ? "00" : myApp.pondDeviceDetailUI.detailModelTcp.getUv_on(), "HHmm", "HH:mm");
+            String utcOffTime = utc2Local(myApp.pondDeviceDetailUI.detailModelTcp.getUv_off() == null ? "00" : myApp.pondDeviceDetailUI.detailModelTcp.getUv_off(), "HHmm", "HH:mm");
             txt_shajundeng_close_time.setText(utcOffTime);
             txt_shajundeng_open_time.setText(utcOnTime);
 //        两个开关合一  首位为更换维护提示，第二位为异常报警
-            String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg()==null?"0":myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg();
-            if (cfg.equals("0")) {
-                //数据格式 00
-                isQingXiTiShi = false;
-                isYiChangBaoJing = false;
-            } else if (cfg.equals("1")) {
-                //数据格式 01
-                isQingXiTiShi = false;
-                isYiChangBaoJing = true;
-            } else if (cfg.equals("2")) {
-                //数据格式 10
-                isQingXiTiShi = true;
-                isYiChangBaoJing = false;
-            } else if (cfg.equals("3")) {
-                //数据格式 11
-                isQingXiTiShi = true;
-                isYiChangBaoJing = true;
-            }
-            setCheck(changeweihu, isQingXiTiShi);
-            setCheck(toggle_exception_warn, isYiChangBaoJing);
+//            String cfg = myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg() == null ? "0" : myApp.pondDeviceDetailUI.detailModelTcp.getUv_cfg();
+//            if (cfg.equals("0")) {
+//                //数据格式 00
+////                isQingXiTiShi = false;
+//                isYiChangBaoJing = false;
+//            } else if (cfg.equals("1")) {
+//                //数据格式 01
+////                isQingXiTiShi = false;
+//                isYiChangBaoJing = true;
+//            } else if (cfg.equals("2")) {
+//                //数据格式 10
+////                isQingXiTiShi = true;
+//                isYiChangBaoJing = false;
+//            } else if (cfg.equals("3")) {
+//                //数据格式 11
+////                isQingXiTiShi = true;
+//                isYiChangBaoJing = true;
+//            }
+//            setCheck(changeweihu, isQingXiTiShi);
+//            setCheck(toggle_exception_warn, isYiChangBaoJing);
             //累计使用清零
             setCheck(qingling, isQingLing);
             setMode();
         }
+    }
+
+    public void getStatus() {
+        String cfg = myApp.pondDeviceDetailUI.deviceDetailModel.getUv_cfg() == null ? "0" : myApp.pondDeviceDetailUI.deviceDetailModel.getUv_cfg();
+        if (cfg.equals("0")) {
+            //数据格式 00
+            isQingXiTiShi = false;
+            isYiChangBaoJing = false;
+        } else if (cfg.equals("1")) {
+            //数据格式 01
+            isQingXiTiShi = false;
+            isYiChangBaoJing = true;
+        } else if (cfg.equals("2")) {
+            //数据格式 10
+            isQingXiTiShi = true;
+            isYiChangBaoJing = false;
+        } else if (cfg.equals("3")) {
+            //数据格式 11
+            isQingXiTiShi = true;
+            isYiChangBaoJing = true;
+        }
+        setStatus();
+    }
+
+    public void setStatus() {
+        setCheck(changeweihu, isQingXiTiShi);
+        setCheck(toggle_exception_warn, isYiChangBaoJing);
     }
 
     private void setMode() {
@@ -286,16 +319,24 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            showProgressDialog(getString(R.string.posting), true);
-            setData(SetType.YiChangBaoJing, !isYiChangBaoJing);
+            if (!caculateRequestTimeInternal(requestTime)) {
+
+            } else {
+                showProgressDialog(getString(R.string.posting), true);
+                setData(SetType.YiChangBaoJing, !isYiChangBaoJing);
+            }
 
         } else if (i == R.id.changeweihu) {
             if (!myApp.pondDeviceDetailUI.isConnect) {
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            showProgressDialog(getString(R.string.posting), true);
-            setData(GengXinWeiHu, !isQingXiTiShi);
+            if (!caculateRequestTimeInternal(requestTime)) {
+
+            } else {
+                showProgressDialog(getString(R.string.posting), true);
+                setData(GengXinWeiHu, !isQingXiTiShi);
+            }
 
         } else if (i == R.id.re_mode_selection) {
             showModeSelctionPopupWindow();
@@ -399,7 +440,7 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                         valueUvState = 0;
                     }
                 }
-                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", valueUvCfg + "", valueUvState + "", -1, -1, "", "", "", "", -1, -1,"");
+                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", valueUvCfg + "", valueUvState + "", -1, -1, "", "", "", "", -1, -1, "");
             }
         });
         alert.create();
@@ -442,11 +483,13 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
     private void showPeriod(final boolean b, String s, TextView textView) {
         String tempValue = s.replace(":", "");
         if (b) {//设置开启时间
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", tempValue, "", "", "", "", -1, -1, "", "", "", "", -1, -1,"");
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", tempValue, "", "", "", "", -1, -1, "", "", "", "", -1, -1, "");
         } else {//设置关闭时间
-            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", tempValue, "", "", "", -1, -1, "", "", "", "", -1, -1,"");
+            userPresenter.deviceSet(myApp.pondDeviceDetailUI.deviceDetailModel.getDid(), null, null, "", -1, "", "", "", "", "", tempValue, "", "", "", -1, -1, "", "", "", "", -1, -1, "");
         }
     }
+
+    public long requestTime;
 
     @Override
     public void update(Observable o, Object data) {
@@ -465,9 +508,18 @@ public class ActivityUvLamp extends BaseActivity implements Observer {
                 MAlert.alert(resultEntity.getData());
             } else if (resultEntity.getEventType() == UserPresenter.deviceSet_fail) {
                 MAlert.alert(resultEntity.getData());
+            } else if (resultEntity.getEventType() == weihutishi_success) {
+                requestTime = System.currentTimeMillis();
+                MAlert.alert(getString(R.string.oper_success));
+                isQingXiTiShi = !isQingXiTiShi;
+                setStatus();
+            } else if (resultEntity.getEventType() == yichangbaojing_success) {
+                requestTime = System.currentTimeMillis();
+                isYiChangBaoJing = !isYiChangBaoJing;
+                setStatus();
+                MAlert.alert(getString(R.string.oper_success));
             }
         }
     }
-
 
 }

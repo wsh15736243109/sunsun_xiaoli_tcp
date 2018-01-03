@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,6 +46,7 @@ import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 
 import static com.itboye.pondteam.utils.ColoTextUtil.setColorfulValue;
 import static com.itboye.pondteam.utils.ColoTextUtil.setDifferentSizeForTextView;
+import static com.itboye.pondteam.utils.Const.updateUITimeInternal;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 import static com.itboye.pondteam.volley.TimesUtils.getCurrentWeek;
 import static com.itboye.pondteam.volley.TimesUtils.jiSuanNextTime;
@@ -88,6 +90,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     DBManager dbManager;
     public String tempTime;
     TcpUtil mTcpUtil;
+    private long responseDataTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,8 +174,8 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            userPresenter.getDeviceOnLineState(did,getSp(Const.UID));
-            handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
+            userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
+            handler.postDelayed(runnable, 5000);
         }
     };
 
@@ -238,14 +241,14 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
                 return;
             }
             showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1,"");
+            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1, "");
         } else if (v.getId() == R.id.icon_setting_B) {
             if (!isConnect) {
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
             showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1,"");
+            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1, "");
         } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
             intent = new Intent(this, ActivityChaZuoBDetail.class);
             intent.putExtra("title", txt_chazuoA_name.getText().toString());
@@ -443,10 +446,26 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         //设置自动清洗UI;
         if (myApp.ziDongUI != null) {
             myApp.ziDongUI.setZiDongData();
+            long diff = responseDataTime - myApp.ziDongUI.requestTime;
+            if (diff < updateUITimeInternal) {
+                Log.v("response", "get Data time:" + diff + "_dont need update");
+            } else {
+                myApp.ziDongUI.getStatus();
+            }
         }
         //设置UV LAMP UI;
         if (myApp.uvLampUI != null) {
+            responseDataTime = System.currentTimeMillis();
             myApp.uvLampUI.setLampData();
+            long diff = responseDataTime - myApp.uvLampUI.requestTime;
+            Log.v("response", "get Data time" + diff);
+            if (diff < updateUITimeInternal) {
+                Log.v("response", "get Data time:" + diff + "_dont need update");
+            } else {
+                Log.v("response" +
+                        "", "get Data time:" + diff + "_is updating");
+                myApp.uvLampUI.getStatus();
+            }
         }
         //设置手动清洗数据
         if (myApp.shoudongUI != null) {
@@ -474,7 +493,7 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         } else {
 
         }
-        userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", outA, outB, "", "", "", "", -1, -1,"");
+        userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", outA, outB, "", "", "", "", -1, -1, "");
     }
 
     private void setChaZuoB(DeviceDetailModel deviceDetailModel) {
