@@ -178,6 +178,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     //设备锁定
     private String lock_success = "lock_success";
 
+    int requestTimeInternal = 1000;
+    int updateUITimeInternal = 5000;
+
     /**
      * 设摄像头状态
      *
@@ -569,18 +572,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 intent.putExtra("did", did);
                 startActivity(intent);
                 break;
-            case R.id.img_open:
-                if (!isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
-                if ((Boolean) img_open.getTag()) {
-                    MAlert.alert(getString(R.string.mode_ismanual));
-                } else {
-                    showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_shoudong_success);
-                }
-                break;
             case R.id.re_shuiph:
                 if (detailModelTcp == null) {
                     MAlert.alert(getString(R.string.device_error));
@@ -592,26 +583,6 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 intent.putExtra("topValue", "8");
                 intent.putExtra("bottomValue", "5");
                 intent.putExtra("title", getString(R.string.ph_history));
-                startActivity(intent);
-                break;
-            case R.id.img_close:
-                if (!isConnect) {
-                    MAlert.alert(getString(R.string.disconnect));
-                    return;
-                }
-                if ((Boolean) img_close.getTag()) {
-                    MAlert.alert(getString(R.string.mode_isauto));
-                } else {
-                    showProgressDialog(getString(R.string.posting), true);
-                    userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_zidong_success);
-                }
-                break;
-            case R.id.re_shuiwenzoushi:
-                if (detailModelTcp == null) {
-                    return;
-                }
-                intent = new Intent(this, ActivityTemperature.class);
-                intent.putExtra("title", getString(R.string.shuizhisuanjianqushi));
                 startActivity(intent);
                 break;
             case R.id.tvUpdate:
@@ -674,6 +645,42 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     popupWindow.dismiss();
                 }
                 break;
+            case R.id.re_shuiwenzoushi:
+                if (detailModelTcp == null) {
+                    return;
+                }
+                intent = new Intent(this, ActivityTemperature.class);
+                intent.putExtra("title", getString(R.string.shuizhisuanjianqushi));
+                startActivity(intent);
+                break;
+            case R.id.img_open:
+                if (!isConnect) {
+                    MAlert.alert(getString(R.string.disconnect));
+                    return;
+                }
+                if ((Boolean) img_open.getTag()) {
+                    MAlert.alert(getString(R.string.mode_ismanual));
+                } else {
+                    if(caculateRequestTimeInternal()) {
+                        showProgressDialog(getString(R.string.posting), true);
+                        userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_shoudong_success);
+                    }
+                }
+                break;
+            case R.id.img_close:
+                if (!isConnect) {
+                    MAlert.alert(getString(R.string.disconnect));
+                    return;
+                }
+                if ((Boolean) img_close.getTag()) {
+                    MAlert.alert(getString(R.string.mode_isauto));
+                } else {
+                    if(caculateRequestTimeInternal()) {
+                        showProgressDialog(getString(R.string.posting), true);
+                        userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_zidong_success);
+                    }
+                }
+                break;
             case R.id.re_chonglangbeng:
                 if (detailModelTcp == null) {
                     return;
@@ -686,8 +693,10 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, chonglangbeng_success);
+                if(caculateRequestTimeInternal()) {
+                    showProgressDialog(getString(R.string.posting), true);
+                    userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, chonglangbeng_success);
+                }
                 break;
             case R.id.re_dengguangzhaoming:
                 if (detailModelTcp == null) {
@@ -702,8 +711,10 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     return;
                 }
 
-                showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", "", zhaomingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1, dengguangzhaoming_success);
+                if(caculateRequestTimeInternal()) {
+                    showProgressDialog(getString(R.string.posting), true);
+                    userPresenter.deviceSet_806(did, "", "", "", "", zhaomingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1, dengguangzhaoming_success);
+                }
 //                zhaoming_se = true;
                 break;
             case R.id.re_shajundeng:
@@ -718,8 +729,10 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, shajundeng_success);
+                if(caculateRequestTimeInternal()) {
+                    showProgressDialog(getString(R.string.posting), true);
+                    userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, shajundeng_success);
+                }
                 break;
             case R.id.img_shuiweibaojing:
                 if (!isConnect) {
@@ -728,8 +741,10 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 }
 //                pushStrs[4] = (shuiwei_status ? '0' : '1');
                 //水位报警
-                showProgressDialog(getString(R.string.posting), true);
-                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1, shuiwei_success);
+                if(caculateRequestTimeInternal()) {
+                    showProgressDialog(getString(R.string.posting), true);
+                    userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1, shuiwei_success);
+                }
                 break;
             case R.id.img_shebeisuoding:
                 if (detailModelTcp == null) {
@@ -739,9 +754,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
-                showProgressDialog(getString(R.string.posting), true);
-                //设备锁定
-                userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", "", dev_lockStatus ? "0" : "1", -1, -1, -1, -1, lock_success);
+                if(caculateRequestTimeInternal()) {
+                    showProgressDialog(getString(R.string.posting), true);
+                    //设备锁定
+                    userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", "", dev_lockStatus ? "0" : "1", -1, -1, -1, -1, lock_success);
+                }
                 break;
             case R.id.img_quanping:
                 if (isLan == false) {
@@ -755,6 +772,15 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 imagePath = getFileSavePath() + getTimesString() + ".jpg";
                 mClient.snapShot(imagePath);
                 break;
+        }
+    }
+
+    private boolean caculateRequestTimeInternal() {
+        if (System.currentTimeMillis() - requestTime < requestTimeInternal) {
+            MAlert.alert(getString(R.string.opertation_fast));
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -1023,12 +1049,12 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 responseDataTime = System.currentTimeMillis();
                 long diff = responseDataTime - requestTime;
                 Log.v("response", "get Data time" + diff);
-                mode_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
-                getThreeStatus();
-                if (diff < 5000) {
-                    Log.v("response", "get Data time:" + diff+"_dont need update");
-                }else {
-                    Log.v("response", "get Data time:" + diff+"_is updating");
+//                mode_status = ((deviceDetailModel.getOut_ctrl() & (int) Math.pow(2, 7)) == Math.pow(2, 7));
+//                getThreeStatus();
+                if (diff < updateUITimeInternal) {
+                    Log.v("response", "get Data time:" + diff + "_dont need update");
+                } else {
+                    Log.v("response", "get Data time:" + diff + "_is updating");
                     setIsOpen(mode_status);
                     setThreeButtomStatus();
                     setData();

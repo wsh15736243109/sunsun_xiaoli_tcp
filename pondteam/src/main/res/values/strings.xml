@@ -636,6 +636,7 @@
     <string name="mode_yingji_and_jianxie">应急间歇模式</string>
     <string name="camera">摄像头</string>
     <string name="oper_success">操作成功</string>
+    <string name="opertation_fast">操作频率过快了哦!</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

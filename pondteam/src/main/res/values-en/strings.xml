@@ -633,4 +633,5 @@
     <string name="mode_yingji_and_jianxie">emergencyBurst</string>
     <string name="camera">Camera </string>
     <string name="oper_success">Successful operation!</string>
+    <string name="opertation_fast">The operating frequency is too fast.</string>
 </resources>
