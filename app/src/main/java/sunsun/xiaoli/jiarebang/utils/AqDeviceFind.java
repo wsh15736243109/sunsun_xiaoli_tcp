@@ -216,7 +216,7 @@ public class AqDeviceFind {
 
     private void chirdDeviceSearch() {
         try {
-//            locanScanListener();
+            locanScanListener();
         } catch (Exception e) {
 
         }

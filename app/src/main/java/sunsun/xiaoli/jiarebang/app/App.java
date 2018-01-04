@@ -18,6 +18,7 @@ import android.view.WindowManager;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.baidu.mapapi.SDKInitializer;
 import com.google.gson.Gson;
 import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.utils.Const;
@@ -194,7 +195,7 @@ public class App extends MyApplication {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
         Logger.init("request_params");
-//        SDKInitializer.initialize(getApplicationContext());
+        SDKInitializer.initialize(getApplicationContext());
         //设置默认语言为英文
 //        String sta = "en";//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
 //        if (BuildConfig.APP_TYPE.toLowerCase().equals("PondTeam".toLowerCase())) {

@@ -330,7 +330,26 @@ public class TimesUtils {
         String localTime = localFormater.format(gpsUTCDate.getTime());
         return localTime;
     }
-
+    /**
+     *
+     * @param time         时间
+     * @param inTimePatten   传入时间格式
+     * @param outTimePatten 输出时间格式
+     * @return
+     */
+    public static String parseTime(String time, String inTimePatten,
+                                   String outTimePatten) {
+        SimpleDateFormat inFormater = new SimpleDateFormat(inTimePatten);
+        Date inDate = null;
+        try {
+            inDate = inFormater.parse(time);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat outFormater = new SimpleDateFormat(outTimePatten);
+        String outTime = outFormater.format(inDate.getTime());
+        return outTime;
+    }
     // 取得本地时间：
     private static Calendar cal = Calendar.getInstance();
     // 取得时间偏移量：
@@ -406,11 +425,11 @@ public class TimesUtils {
         int position = 0;
         for (int i = 0; i < weekList.size(); i++) {
             if (currentWeek.contains(weekList.get(i).getWeek())) {
-                if (isChaoGuo) {
-                    position = i + 1;
-                } else {
+//                if (isChaoGuo) {
+//                    position = i + 1;
+//                } else {
                     position = i;
-                }
+//                }
                 break;
             }
 
@@ -435,9 +454,16 @@ public class TimesUtils {
             nextTime = weekList.get(position + 1).getDate();
         }
         System.out.println("最近的星期"+"<"+nextTime+">"+ weekList.get(position + 1).getWeek() + ":" + nextTime + "isChaGuo" + isChaoGuo);
-        String times=nextTime+utc2Local(hour, "HHmm", "HHmm");
-        System.out.println("最近的星期<转换后>"+times);
-        return times;
+//        String times=nextTime+utc2Local(hour, "HHmm", "HHmm");
+//        String times=utc2Local(nextTime+hour, "yyyyMMddHHmm", "yyyy-MM-dd HH:mm");
+        String time="";
+        try {
+            time=parseTime(nextTime+utc2Local(simpleHourMinute.format(simpleHourMinute.parse(hour)),"HHmm","HHmm"),"yyyyMMddHHmm","yyyy-MM-dd HH:mm");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println("最近的星期<转换后>"+time);
+        return time;
     }
 
 
