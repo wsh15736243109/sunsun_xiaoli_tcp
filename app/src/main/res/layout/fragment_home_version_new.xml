@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/refresh_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView
+        android:id="@+id/pullzoom_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView
+                android:id="@+id/home_carouseview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ratio="1.5" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_yuyue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawableTop="@drawable/home_yuyueanzhaung"
+                    android:singleLine="true"
+                    android:text="@string/appointment_install" />
+
+                <Button
+                    android:id="@+id/btn_qingli"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawableTop="@drawable/home_yugang_clean"
+                    android:singleLine="true"
+                    android:text="@string/yugang_clean" />
+
+                <Button
+                    android:id="@+id/btn_goumai"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawableTop="@drawable/home_huotibuy"
+                    android:singleLine="true"
+                    android:text="@string/huotigoumai" />
+
+                <Button
+                    android:id="@+id/btn_zaojingzhuangshi"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawableTop="@drawable/home_zaojingzhuangshi"
+                    android:singleLine="true"
+                    android:text="@string/zaojingzhuangshi" />
+
+            </LinearLayout>
+
+            <sunsun.xiaoli.jiarebang.custom.RatioImageView
+                android:id="@+id/home_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:background="@drawable/home_nocharge"
+                app:ratio="4.2"></sunsun.xiaoli.jiarebang.custom.RatioImageView>
+
+            <ViewFlipper
+                android:id="@+id/vf_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:autoStart="true"
+                android:background="#fff"
+                android:flipInterval="2500"
+                android:inAnimation="@anim/anim_marquee_in"
+                android:outAnimation="@anim/anim_marquee_out"
+                android:paddingLeft="@dimen/DIMEN_10DP">
+
+            </ViewFlipper>
+
+            <RelativeLayout
+                android:id="@+id/one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:id="@+id/li_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/DIMEN_0DP"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/area_left"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+                            <TextView
+                                android:id="@+id/txt_left"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/DIMEN_20DP"
+                                android:layout_marginTop="@dimen/DIMEN_20DP"
+                                android:layout_centerInParent="true"
+                                android:drawablePadding="@dimen/margin_5"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/DIMEN_12DP" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/area_right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/DIMEN_20DP"
+                            android:layout_weight="1">
+
+                            <TextView
+                                android:id="@+id/txt_right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                                android:layout_marginTop="@dimen/DIMEN_20DP"
+                                android:layout_centerInParent="true"
+                                android:drawablePadding="@dimen/margin_5"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/DIMEN_12DP" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginTop="@dimen/DIMEN_10DP"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/DIMEN_0DP"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:id="@+id/bottom_area_left"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+                            <TextView
+                                android:id="@+id/txt_bottom_left"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                                android:layout_marginTop="@dimen/DIMEN_20DP"
+                                android:layout_centerInParent="true"
+                                android:drawablePadding="@dimen/margin_5"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/DIMEN_12DP" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/bottom_area_right"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/DIMEN_20DP"
+                            android:layout_weight="1">
+                            <TextView
+                                android:id="@+id/txt_bottom_right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/DIMEN_20DP"
+                                android:layout_marginTop="@dimen/DIMEN_20DP"
+                                android:layout_centerInParent="true"
+                                android:drawablePadding="@dimen/margin_5"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/DIMEN_12DP" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/li_top"
+                    android:layout_marginLeft="@dimen/DIMEN_20DP"
+                    android:layout_marginRight="@dimen/DIMEN_20DP"
+                    android:layout_marginTop="@dimen/DIMEN_10DP">
+
+                    <FrameLayout
+                        android:id="@+id/tab_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"></FrameLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/area_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/DIMEN_20DP"
+                    android:background="@drawable/circle_green">
+
+                    <TextView
+                        android:id="@+id/txt_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:drawablePadding="@dimen/margin_5"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/DIMEN_12DP" />
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+        </LinearLayout>
+    </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView>
+
+    <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar>
+
+    <!--<RelativeLayout-->
+    <!--android:layout_width="@dimen/DIMEN_200DP"-->
+    <!--android:layout_height="@dimen/DIMEN_200DP"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:background="@drawable/sty">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/testImg"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scaleType="centerCrop" />-->
+    <!--</RelativeLayout>-->
+</RelativeLayout>

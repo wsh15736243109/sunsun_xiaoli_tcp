@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="toastbg">@color/colorAccent</color>
     <color name="item_public_msg_content">#ffffff</color>
-    <color name="main_green">#45B380</color>
+    <color name="main_green">#8fdf90</color>
     <color name="white">#ffffff</color>
     <color name="gray">#f3f3f3</color>
     <color name="gray_divider">#e6e6e6</color>
@@ -42,11 +42,11 @@
     <color name="yunkacolor">#c8ff59a5</color>
     <color name="txt_color">#231714</color>
     <color name="colorSecondaryText">#727272</color>
-    <color name="main_yellow">#F5805C</color>
+    <color name="main_yellow">@color/main_green</color>
     <color name="gray_EEEE">#EEEEEE</color>
     <color name="daifukuan">#B45C5C</color>
     <color name="page_backgroup">#f2f2f2</color>
     <color name="goods_detail_title_color">#1a1a1a</color>
     <color name="gray_color1">#333333</color>
-    <color name="main_lingshou_orange">#F5805C</color>
+    <color name="main_lingshou_orange">@color/main_green</color>
 </resources>

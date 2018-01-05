@@ -87,6 +87,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.MakeSureOrderActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragmentVersionNew;
 import sunsun.xiaoli.jiarebang.utils.AqDeviceFind;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.AqSmartConfig;
 
@@ -181,6 +182,7 @@ public class App extends MyApplication {
 
     public String token;
     public HomeFragment homeFragment;
+    public HomeFragmentVersionNew homeFragmentVersionNew;
     public boolean isStartSearch;
     public String name[] = null;
     public SQLiteDatabase db;// 数据库

@@ -22,11 +22,8 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginedState;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouLoginActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.shopcart.ShopCartChildFragment;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.ConsultationAndBuyFragment;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragment;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.HomeFragmentVersionNew;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.MeFragment;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.fragment.OrderFragment;
 
 import static com.itboye.pondteam.utils.Const.RELOGIN;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -36,21 +33,22 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     public static int WIDTH = 0;
     RelativeLayout index_layout, order_layout, consultation_layout, shopcart_layout, me_layout;
     private FragmentManager fragmentManager;
-    HomeFragment homeFragment = null;
-    OrderFragment orderFragment = null;
-    ConsultationAndBuyFragment consultationAndBuyFragment = null;
-    ShopCartChildFragment shopCartFragment = null;
+//    HomeFragment homeFragment = null;
+    HomeFragmentVersionNew homeFragment = null;
+//    OrderFragment orderFragment = null;
+//    ConsultationAndBuyFragment consultationAndBuyFragment = null;
+//    ShopCartChildFragment shopCartFragment = null;
     MeFragment meFragment = null;
 
-    TextView[] txt_value = new TextView[5];
-    ImageView[] img_value = new ImageView[5];
+    TextView[] txt_value = new TextView[2];
+    ImageView[] img_value = new ImageView[2];
     @IsNeedClick
     TextView index_text, order_text, zixun_buy, shopcart_text, me_text;
     @IsNeedClick
     ImageView index_image, order_image, zixun_image, shopcart_image, me_image;
 
-    int[] selectResource = new int[5];
-    int[] unSelectResource = new int[5];
+    int[] selectResource = new int[2];
+    int[] unSelectResource = new int[2];
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -79,26 +77,14 @@ public class LingShouMainActivity extends LingShouBaseActivity {
         }
         fragmentManager = getSupportFragmentManager();
         txt_value[0] = index_text;
-        txt_value[1] = order_text;
-        txt_value[2] = zixun_buy;
-        txt_value[3] = shopcart_text;
-        txt_value[4] = me_text;
+        txt_value[1] = me_text;
         img_value[0] = index_image;
-        img_value[1] = order_image;
-        img_value[2] = zixun_image;
-        img_value[3] = shopcart_image;
-        img_value[4] = me_image;
+        img_value[1] = me_image;
 
-        selectResource[0] = R.drawable.home_select;
-        selectResource[1] = R.drawable.order_select;
-        selectResource[2] = R.drawable.main_zixunbuy;
-        selectResource[3] = R.drawable.shopcart_select;
-        selectResource[4] = R.drawable.me_select;
+        selectResource[0] = R.drawable.shouye_select;
+        selectResource[1] = R.drawable.wode_select;
         unSelectResource[0] = R.drawable.home_unselect;
-        unSelectResource[1] = R.drawable.order_unselect;
-        unSelectResource[2] = R.drawable.main_zixunbuy;
-        unSelectResource[3] = R.drawable.shopcart_unselect;
-        unSelectResource[4] = R.drawable.me_unselect;
+        unSelectResource[1] = R.drawable.me_unselect;
         // 第一次启动时选中第0个tab
         setTabSelection(0);
 
@@ -128,17 +114,8 @@ public class LingShouMainActivity extends LingShouBaseActivity {
             case R.id.index_layout:
                 setTabSelection(0);
                 break;
-            case R.id.order_layout:
-                setTabSelection(1);
-                break;
-            case R.id.consultation_layout:
-                setTabSelection(2);
-                break;
-            case R.id.shopcart_layout:
-                setTabSelection(3);
-                break;
             case R.id.me_layout:
-                setTabSelection(4);
+                setTabSelection(1);
                 break;
         }
     }
@@ -156,9 +133,9 @@ public class LingShouMainActivity extends LingShouBaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (shopCartFragment != null) {
-            shopCartFragment.onActivityResult(requestCode, resultCode, data);
-        }
+//        if (shopCartFragment != null) {
+//            shopCartFragment.onActivityResult(requestCode, resultCode, data);
+//        }
         if (homeFragment != null) {
             homeFragment.onActivityResult(requestCode, resultCode, data);
         }
@@ -191,44 +168,44 @@ public class LingShouMainActivity extends LingShouBaseActivity {
             case 0://首页
                 if (homeFragment == null) {
                     //如果HomeFragment为空，则创建一个添加到界面
-                    homeFragment = new HomeFragment();
+                    homeFragment = new HomeFragmentVersionNew();
                     transaction.add(R.id.content, homeFragment);
                 } else {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(homeFragment);
                 }
                 break;
+//            case 1://
+//                if (orderFragment == null) {
+//                    //如果HomeFragment为空，则创建一个添加到界面
+//                    orderFragment = new OrderFragment();
+//                    transaction.add(R.id.content, orderFragment);
+//                } else {
+//                    // 如果HomeFragment不为空，则直接将它显示出来
+//                    transaction.show(orderFragment);
+//                }
+//                break;
+//            case 2://
+//                if (consultationAndBuyFragment == null) {
+//                    //如果HomeFragment为空，则创建一个添加到界面
+//                    consultationAndBuyFragment = new ConsultationAndBuyFragment();
+//                    transaction.add(R.id.content, consultationAndBuyFragment);
+//                } else {
+//                    // 如果HomeFragment不为空，则直接将它显示出来
+//                    transaction.show(consultationAndBuyFragment);
+//                }
+//                break;
+//            case 3://
+//                if (shopCartFragment == null) {
+//                    //如果HomeFragment为空，则创建一个添加到界面
+//                    shopCartFragment = new ShopCartChildFragment(1);
+//                    transaction.add(R.id.content, shopCartFragment);
+//                } else {
+//                    // 如果HomeFragment不为空，则直接将它显示出来
+//                    transaction.show(shopCartFragment);
+//                }
+//                break;
             case 1://
-                if (orderFragment == null) {
-                    //如果HomeFragment为空，则创建一个添加到界面
-                    orderFragment = new OrderFragment();
-                    transaction.add(R.id.content, orderFragment);
-                } else {
-                    // 如果HomeFragment不为空，则直接将它显示出来
-                    transaction.show(orderFragment);
-                }
-                break;
-            case 2://
-                if (consultationAndBuyFragment == null) {
-                    //如果HomeFragment为空，则创建一个添加到界面
-                    consultationAndBuyFragment = new ConsultationAndBuyFragment();
-                    transaction.add(R.id.content, consultationAndBuyFragment);
-                } else {
-                    // 如果HomeFragment不为空，则直接将它显示出来
-                    transaction.show(consultationAndBuyFragment);
-                }
-                break;
-            case 3://
-                if (shopCartFragment == null) {
-                    //如果HomeFragment为空，则创建一个添加到界面
-                    shopCartFragment = new ShopCartChildFragment(1);
-                    transaction.add(R.id.content, shopCartFragment);
-                } else {
-                    // 如果HomeFragment不为空，则直接将它显示出来
-                    transaction.show(shopCartFragment);
-                }
-                break;
-            case 4://
                 if (meFragment == null) {
                     //如果HomeFragment为空，则创建一个添加到界面
                     meFragment = new MeFragment();
@@ -251,15 +228,15 @@ public class LingShouMainActivity extends LingShouBaseActivity {
         if (homeFragment != null) {
             transaction.hide(homeFragment);
         }
-        if (orderFragment != null) {
-            transaction.hide(orderFragment);
-        }
-        if (consultationAndBuyFragment != null) {
-            transaction.hide(consultationAndBuyFragment);
-        }
-        if (shopCartFragment != null) {
-            transaction.hide(shopCartFragment);
-        }
+//        if (orderFragment != null) {
+//            transaction.hide(orderFragment);
+//        }
+//        if (consultationAndBuyFragment != null) {
+//            transaction.hide(consultationAndBuyFragment);
+//        }
+//        if (shopCartFragment != null) {
+//            transaction.hide(shopCartFragment);
+//        }
         if (meFragment != null) {
             transaction.hide(meFragment);
         }

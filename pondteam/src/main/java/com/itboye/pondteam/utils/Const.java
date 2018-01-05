@@ -59,6 +59,7 @@ public class Const {
     public static final String ADDRESS_DELEETE = "address_delete";
     public static final String YOUHUIQUAN_CHANGE = "charge_change";
     public static final String AREA_CODE = "area_code";
+    public static final String TAOBAO_TEST_URL = "taobao://shop.m.taobao.com/shop/shop_index.htm?shop_id=131259851&spm=a230r.7195193.1997079397.8.Pp3ZMM&point=%7B%22from%22%3A%22h5%22%2C%22url%22%3A%22http%3A%2F%2Fshop131259851.m.taobao.com%2F%22%2C%22h5_uid%22%3A%22aJHIDrhLh0cCAYYbRtrrS3Ut%22%2C%22uaPoint%22%3A%22Mozilla%2F5.0%2520(Linux%3B%2520Android%25205.0.1%3B%2520SM-N9109W%2520Build%2FLRX22C%3B%2520wv)%2520AppleWebKit%2F537.36%2520(KHTML%2C%2520like%2520Gecko)%2520Version%2F4.0%2520Chrome%2F43.0.2357.121%2520Mobile%2520Safari%2F537.36%2520Rong%2F2.0%22%7D";
 
     public static String CITY_CODE = "330100";
     public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
