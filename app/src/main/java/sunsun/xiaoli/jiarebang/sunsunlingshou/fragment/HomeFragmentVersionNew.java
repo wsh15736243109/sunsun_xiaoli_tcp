@@ -45,10 +45,7 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.ArticleActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.GoodsClassifyActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.AppointmentInstallStepOneActivity;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.RedBagAcitivty;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.LingShouSwitchLoginOrRegisterActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
@@ -361,17 +358,19 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                startActivity(new Intent(getActivity(), AppointmentInstallStepOneActivity.class).putExtra("type", 5));
+                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+//                startActivity(new Intent(getActivity(), AppointmentInstallStepOneActivity.class).putExtra("type", 5));
                 break;
             case R.id.btn_qingli:
                 if (getSp(Const.UID).equals("")) {
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
-                intent.putExtra("type", 3);
-                intent.putExtra("title", "鱼缸清理");
-                startActivity(intent);
+                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+//                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
+//                intent.putExtra("type", 3);
+//                intent.putExtra("title", "鱼缸清理");
+//                startActivity(intent);
                 break;
             case R.id.ed_actionbar_search:
                 startActivity(new Intent(getActivity(), GoodsClassifyActivity.class));
@@ -381,20 +380,23 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
-                intent.putExtra("title", "活体购买");
-                intent.putExtra("type", 2);
-                startActivity(intent);
+//                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
+//                intent.putExtra("title", "活体购买");
+//                intent.putExtra("type", 2);
+//                startActivity(intent);
+                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
                 break;
             case R.id.btn_zaojingzhuangshi:
                 if (getSp(Const.UID).equals("")) {
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
-                intent.putExtra("title", "造景装饰");
-                intent.putExtra("type", 4);
-                startActivity(intent);
+
+                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+//                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
+//                intent.putExtra("title", "造景装饰");
+//                intent.putExtra("type", 4);
+//                startActivity(intent);
                 break;
             case R.id.home_img:
                 if (getSp(Const.UID).equals("")) {
@@ -521,14 +523,16 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
     public void onItemClick(int position) {
         //
         if (t.equals("商品")) {
-            startActivity(new Intent(getActivity(), GoodDetailActivity.class).putExtra("id", goodsList.getList().get(position).getId()).putExtra("store_id", goodsList.getList().get(position).getStore_id()));
+            GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+//            startActivity(new Intent(getActivity(), GoodDetailActivity.class).putExtra("id", goodsList.getList().get(position).getId()).putExtra("store_id", goodsList.getList().get(position).getStore_id()));
         } else if (t.equals("硬件")) {
 
         } else {
-            Intent intent = new Intent(getActivity(), GoodsClassifyActivity.class);
-            intent.putExtra("model", bean.getList().get(position));
-            intent.putExtra("store_id", bean.getList().get(position).getId());
-            startActivity(intent);
+            GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+//            Intent intent = new Intent(getActivity(), GoodsClassifyActivity.class);
+//            intent.putExtra("model", bean.getList().get(position));
+//            intent.putExtra("store_id", bean.getList().get(position).getId());
+//            startActivity(intent);
         }
 
     }

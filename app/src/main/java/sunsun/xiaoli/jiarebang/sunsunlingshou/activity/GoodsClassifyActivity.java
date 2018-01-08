@@ -14,6 +14,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseActivity;
+import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -26,12 +27,12 @@ import sunsun.xiaoli.jiarebang.beans.ClassifyBean;
 import sunsun.xiaoli.jiarebang.beans.GoodsListBean;
 import sunsun.xiaoli.jiarebang.beans.StoreListBean;
 import sunsun.xiaoli.jiarebang.presenter.LingShouPresenter;
-import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.GoodDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.MyListViewAdapter1;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.MyListViewAdapter2;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
+import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
 
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitlebarStyle1;
 
@@ -109,7 +110,8 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
         list_item_2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(GoodsClassifyActivity.this, GoodDetailActivity.class).putExtra("id", goodsList.getList().get(position).getId()).putExtra("store_id", goodsList.getList().get(position).getStore_id()));
+                GotoTaoBaoUtil.startActivity(GoodsClassifyActivity.this, Const.TAOBAO_TEST_URL);
+//                startActivity(new Intent(GoodsClassifyActivity.this, GoodDetailActivity.class).putExtra("id", goodsList.getList().get(position).getId()).putExtra("store_id", goodsList.getList().get(position).getStore_id()));
             }
         });
         lingShouPresenter = new LingShouPresenter(this);
