@@ -258,17 +258,17 @@ public class MyTabFragment extends LingShouBaseFragment implements Observer, Ada
                 alert.dismiss();
                 break;
             case R.id.haoping:
-                zuijin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_white));
-                haoping.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_blue));
-                zuijin.setTextColor(getResources().getColor(R.color.blue500));
+                zuijin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_green_bg_white));
+                haoping.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_oval_border_green_bg_green));
+                zuijin.setTextColor(getResources().getColor(R.color.main_green));
                 haoping.setTextColor(getResources().getColor(R.color.white));
                 bygr = 1;
                 getNearStore();
                 break;
             case R.id.zuijin:
-                zuijin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_blue));
-                haoping.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_blue_bg_white));
-                haoping.setTextColor(getResources().getColor(R.color.blue500));
+                zuijin.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_oval_border_green_bg_green));
+                haoping.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_border_green_bg_white));
+                haoping.setTextColor(getResources().getColor(R.color.main_green));
                 zuijin.setTextColor(getResources().getColor(R.color.white));
                 bygr = 0;
                 getNearStore();

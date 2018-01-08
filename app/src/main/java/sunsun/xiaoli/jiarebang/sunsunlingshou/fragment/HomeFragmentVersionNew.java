@@ -214,7 +214,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
         initTitleBarStyle2(getActivity(), actionBar, "", pullzoom_scrollview, this, null);
         //开启渐变
         actionBar.setNeedTranslucent(true, false);
-        actionBar.setSearchBarVisible(true);
+        actionBar.setSearchBarVisible(false);
         setSelectArea("硬件");
         //注册地址改变广播
         registerBroadcast();

@@ -46,7 +46,7 @@
                     android:id="@+id/haoping"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/DIMEN_25DP"
-                    android:background="@drawable/btn_border_blue_bg_blue"
+                    android:background="@drawable/btn_oval_border_green_bg_green"
                     android:text="好评优先"
                     android:textColor="@color/white" />
 
@@ -56,9 +56,9 @@
                     android:layout_height="@dimen/DIMEN_25DP"
                     android:layout_marginLeft="@dimen/DIMEN_10DP"
                     android:layout_toRightOf="@+id/haoping"
-                    android:background="@drawable/btn_border_blue_bg_white"
+                    android:background="@drawable/btn_border_green_bg_white"
                     android:text="离我最近"
-                    android:textColor="@color/blue500" />
+                    android:textColor="@color/main_green" />
             </RelativeLayout>
         </RelativeLayout>
 

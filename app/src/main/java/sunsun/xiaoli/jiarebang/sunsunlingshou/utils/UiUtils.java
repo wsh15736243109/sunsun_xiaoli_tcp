@@ -31,7 +31,7 @@ public class UiUtils {
 
     public static void initTitleBarStyle2(Activity activity, TranslucentActionBar actionBar, String title, TranslucentScrollView pullzoom_scrollview, TranslucentScrollView.TranslucentChangedListener translucentChangedListener, View pull_zoom){
         //初始actionBar
-        actionBar.setData(title, R.drawable.img_dingwei, "定位中", R.drawable.img_read, "", null);
+        actionBar.setData(title, R.drawable.img_dingwei, "定位中", 0, "", null);
         //开启渐变
         actionBar.setNeedTranslucent();
         //设置状态栏高度
