@@ -27,6 +27,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name=".app.App"
         android:allowBackup="true"
@@ -104,8 +105,8 @@
         <activity android:name=".sunsunlingshou.activity.GoodsClassifyActivity" />
         <activity
             android:name=".sunsunlingshou.LingShouMainActivity"
-            android:hardwareAccelerated="true"
             android:configChanges="keyboardHidden|orientation"
+            android:hardwareAccelerated="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".sunsunlingshou.activity.SettingActivity" />
@@ -233,7 +234,8 @@
         </provider>
 
         <activity android:name=".sunsunlingshou.activity.web.WebActivity" />
-        <activity android:name=".sunsunlingshou.activity.me.BindPhoneActivity"></activity>
+        <activity android:name=".sunsunlingshou.activity.me.BindPhoneActivity" />
+        <activity android:name=".device.shuibeng.ZaoLangActivity"></activity>
     </application>
 
 </manifest>

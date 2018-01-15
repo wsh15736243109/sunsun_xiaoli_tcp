@@ -631,4 +631,9 @@
     <string name="camera">攝像頭</string>
     <string name="oper_success">操作成功</string>
     <string name="opertation_fast">操作頻率過快了哦</string>
+    <string name="zaolang_choose">造浪模式</string>
+    <string name="zaolang_open">打開</string>
+    <string name="zaolang_close">關閉</string>
+    <string name="zaolang_switch">造浪開關</string>
+    <string name="zaolang_zhouqi">造浪周期</string>
 </resources>

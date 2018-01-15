@@ -170,7 +170,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/DIMEN_1DP"
                     android:background="@color/gray_divider"></View>
+                <RelativeLayout
+                    android:id="@+id/re_zaolang_choose"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/DIMEN_1DP"
+                    android:visibility="gone"
+                    android:background="#EEEEEE"
+                    android:padding="@dimen/DIMEN_5DP">
 
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/tv_zaolang_zhouqi_gear"
+                        android:drawableLeft="@drawable/shuibeng_liuliang"
+                        android:gravity="center|left"
+                        android:text="@string/zaolang_choose"
+                        android:textSize="@dimen/DIMEN_18DP" />
+
+                    <TextView
+                        android:id="@+id/tv_zaolang_zhouqi_gear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/DIMEN_10DP"
+                        android:text="关闭"
+                        android:textColor="@color/main_green"
+                        android:textSize="@dimen/DIMEN_18DP" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/DIMEN_1DP"
+                    android:background="@color/gray_divider"></View>
                 <RelativeLayout
                     android:id="@+id/re_weishi_time"
                     android:layout_width="match_parent"

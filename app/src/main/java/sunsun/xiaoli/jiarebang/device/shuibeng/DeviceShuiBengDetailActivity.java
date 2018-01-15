@@ -75,6 +75,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     TextView txt_status, txt_leijitime;
     int seconds = 0;
     private TcpUtil tcp;
+    RelativeLayout re_zaolang_choose;
+    @IsNeedClick
+    TextView txt_zaolang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +98,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         did = getIntent().getStringExtra("did");
         userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1);
         img_right.setBackgroundResource(R.drawable.menu);
+        re_zaolang_choose.setVisibility(!deviceDetailModel.getDevice_type().equals("S05-4") ? View.VISIBLE : View.GONE);
         new Thread(runnable).start();
         tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
         tcp.start();
@@ -279,13 +283,16 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                         break;
                 }
                 break;
+            case R.id.re_zaolang_choose:
+                startActivity(new Intent(this,ZaoLangActivity.class).putExtra("title",getString(R.string.zaolang_choose)));
+                break;
         }
 
     }
 
     private void showAlert(final TextView txt_liuliangchoose, String title, String[] msg) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
-        alert.setTitle(title);
+//        alert.setTitle(title);
         final NumberPicker numberPicker = new NumberPicker(this);
         numberPicker.setDisplayedValues(msg);
         numberPicker.setMinValue(0);

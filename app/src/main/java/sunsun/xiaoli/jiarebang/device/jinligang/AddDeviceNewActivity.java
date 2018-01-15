@@ -33,7 +33,6 @@ import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 
 /**
- * 日期：2015-04-30 1. 添加版本识别功能，支持AQ107、AQ209和AQ805设备 日期：2015-05-05 1. 添加手动添加设备功能
  */
 @SuppressLint("NewApi")
 public class AddDeviceNewActivity extends BaseActivity implements

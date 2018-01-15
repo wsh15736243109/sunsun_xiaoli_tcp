@@ -634,4 +634,9 @@
     <string name="camera">Camera </string>
     <string name="oper_success">Successful operation!</string>
     <string name="opertation_fast">The operating frequency is too fast.</string>
+    <string name="zaolang_choose">Wave model</string>
+    <string name="zaolang_open">Open</string>
+    <string name="zaolang_close">Close</string>
+    <string name="zaolang_switch">造浪开关</string>
+    <string name="zaolang_zhouqi">造浪周期</string>
 </resources>
