@@ -37,6 +37,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
+import sunsun.xiaoli.jiarebang.custom.LoweRelaLayout;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.GlidHelper;
@@ -78,6 +79,8 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     RelativeLayout re_zaolang_choose;
     @IsNeedClick
     TextView txt_zaolang;
+    @IsNeedClick
+    LoweRelaLayout lore_shuibeng_head;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +101,13 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         did = getIntent().getStringExtra("did");
         userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, "");
         img_right.setBackgroundResource(R.drawable.menu);
-        re_zaolang_choose.setVisibility(!deviceDetailModel.getDevice_type().equals("S05-4") ? View.VISIBLE : View.GONE);
+        if (deviceDetailModel.getDevice_type().equals("S05-4")) {
+            re_zaolang_choose.setVisibility(View.VISIBLE);
+            lore_shuibeng_head.setBackgroundResource(R.drawable.beijingtu);
+        } else {
+            lore_shuibeng_head.setBackgroundResource(R.drawable.weishi_bg);
+            re_zaolang_choose.setVisibility(View.GONE);
+        }
         new Thread(runnable).start();
         tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
         tcp.start();
@@ -411,7 +420,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
 //                    } else {
 //                        Log.v("response", "get Data time:" + diff + " need update");
                     setZaoLangStatus(deviceDetailModel.getWe());
-                        setData();
+                    setData();
 //                    }
                 }
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {

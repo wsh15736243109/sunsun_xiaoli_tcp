@@ -56,6 +56,7 @@
                 </RelativeLayout>
 
                 <sunsun.xiaoli.jiarebang.custom.LoweRelaLayout
+                    android:id="@+id/lore_shuibeng_head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/DIMEN_50DP"
@@ -175,7 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/DIMEN_1DP"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:background="#EEEEEE"
                     android:padding="@dimen/DIMEN_5DP">
 
@@ -185,7 +186,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toLeftOf="@+id/tv_zaolang_zhouqi_gear"
-                        android:drawableLeft="@drawable/shuibeng_liuliang"
+                        android:drawableLeft="@drawable/icon_zaolangmoshi_new_new"
                         android:gravity="center|left"
                         android:text="@string/zaolang_choose"
                         android:textSize="@dimen/DIMEN_18DP" />

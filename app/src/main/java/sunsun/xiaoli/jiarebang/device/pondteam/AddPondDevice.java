@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
     private String did;
     private String uid;
     DeviceType deviceType;
-
+    TextView tv_tips;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +52,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
         txt_title.setText(getString(R.string.add_device));
         myApp = (App) getApplication();
         myApp.addPondDeviceUI = this;
+        tv_tips.setText(Html.fromHtml(getString(R.string.tips_adddevice)));
         deviceType = DeviceType.DEVICE_GUOLVTONG;
         userPresenter = new UserPresenter(this);
     }

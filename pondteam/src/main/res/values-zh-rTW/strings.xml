@@ -154,7 +154,7 @@
     <string name="tips_detail">添加設備,此時妳需要將設備放置於良好的WIFI環境下,讓妳的設備能夠準確的識別WIFI系統</string>
     <string name="device_add">設備添加</string>
     <string name="device_register">設備註冊中...</string>
-    <string name="tips_adddevice">接通電源30秒後，長按設備匹配鍵3秒，待設備指示燈為綠色慢閃狀態，設計輸入設備ID，點擊匹配按鈕，匹配成功後，指示燈為長亮狀態。</string>
+    <string name="tips_adddevice"><Data><![CDATA[接通電源，長按匹配鍵5秒<br/>鬆手至綠色指示燈快閃狀態]]></Data></string>
     <string name="disconnect">設備連接已斷開</string>
     <string name="getDetail_fail">獲取設備信息失敗</string>
     <string name="deviceid_error">當前設備有誤，不能進行下壹步</string>

@@ -137,8 +137,8 @@ android {
             minSdkVersion 16
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionName '1.0.2'
-            versionCode 102
+            versionName '1.0.3'
+            versionCode 103
 
         }
     }

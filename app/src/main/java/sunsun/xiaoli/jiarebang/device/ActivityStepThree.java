@@ -249,7 +249,9 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 btn_next.setEnabled(false);
                 setZhuangTai(smartConfigType);
                 ActivityInputWifiAndPass.getInstance().finish();
-                ActivityStepFirst.getInstance().finish();
+                if (ActivityStepFirst.getInstance() != null) {
+                    ActivityStepFirst.getInstance().finish();
+                }
                 if (type.contains("chiniao_wifi_camera")) {
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("pwd", searchDeviceInfo.getPwd());
@@ -272,6 +274,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                             break;
                         default:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(), type), type, extra);
+                            break;
                     }
                 }
                 break;
@@ -334,7 +337,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
             } else if (entity.getEventType() == UserPresenter.adddevice_success) {
                 mApp.mDeviceUi.getDeviceList();//设备劣列表页面应该重新获取数据
                 ///////---------------------------------如果是从806过来的，需要绑定摄像头到806上
-                if (!aq_did.equals("")) {
+                if (!"".equals(aq_did) && null != aq_did) {
                     //判断是否已经在绑定之列
                     boolean bindYes = hasBindAq(searchDeviceInfo.getDid());
                     if (!bindYes) {
@@ -344,8 +347,16 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     }
                 } else {
                     MAlert.alert(entity.getData());
-                    mApp.addDeviceFirst.finish();//关闭第一步页面
-                    mApp.addDeviceUI.finish();//关闭添加设备类型页面
+                    if (mApp.addDeviceFirst != null) {
+                        mApp.addDeviceFirst.finish();//关闭第一步页面
+                    }
+                    if (mApp.addDeviceUI != null) {
+                        mApp.addDeviceUI.finish();//关闭添加设备类型页面
+                    }
+                    if (mApp.addPondDeviceUI != null) {
+                        mApp.addPondDeviceUI.finish();//关闭添加设备类型页面
+                    }
+
                     if (mApp.addDeviceInputWifi != null) {
                         mApp.addDeviceInputWifi.finish();//关闭输入ssid页面
                         mApp.addDeviceInputWifi = null;

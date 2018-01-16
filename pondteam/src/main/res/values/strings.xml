@@ -153,7 +153,7 @@
     <string name="tips_detail">添加设备,此时你需要将设备放置于良好的WIFI环境下,让你的设备能够准确的识别WIFI系统</string>
     <string name="device_add">设备添加</string>
     <string name="device_register">设备注册中...</string>
-    <string name="tips_adddevice">接通电源30秒后，长按设备匹配键3秒，待设备指示灯为绿色慢闪状态，设计输入设备ID，点击匹配按钮，匹配成功后，指示灯为长亮状态。</string>
+    <string name="tips_adddevice"><Data><![CDATA[接通电源，长按设备匹配键5秒<br/>松手至绿色指示灯快闪状态]]></Data></string>
     <string name="disconnect">设备连接已断开</string>
     <string name="getDetail_fail">获取设备信息失败</string>
     <string name="deviceid_error">当前设备有误，不能进行下一步</string>

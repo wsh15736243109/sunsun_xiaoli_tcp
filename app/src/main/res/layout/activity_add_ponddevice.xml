@@ -22,6 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/DIMEN_20DP"
+                android:visibility="gone"
                 android:background="@drawable/add_img1"
                 app:ratio="2">
 
@@ -55,15 +56,17 @@
             <sunsun.xiaoli.jiarebang.custom.RatioImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/DIMEN_20DP"
                 android:background="@drawable/pondteam_smartconfig"
-                app:ratio="2" />
+                app:ratio="2.2" />
 
             <TextView
+                android:id="@+id/tv_tips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/DIMEN_20DP"
                 android:layout_marginRight="@dimen/DIMEN_20DP"
+                android:layout_margin="@dimen/DIMEN_20DP"
+                android:textSize="@dimen/DIMEN_18DP"
                 android:text="@string/tips_adddevice" />
 
             <RelativeLayout
