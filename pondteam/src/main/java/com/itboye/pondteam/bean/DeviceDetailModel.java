@@ -143,6 +143,33 @@ public class DeviceDetailModel implements Serializable {
     private String oa_per_name;
     private String ob_per_name;
     private String device_type;
+    private int we;
+    private int wg;
+    private int wc;
+
+    public int getWe() {
+        return we;
+    }
+
+    public void setWe(int we) {
+        this.we = we;
+    }
+
+    public int getWg() {
+        return wg;
+    }
+
+    public void setWg(int wg) {
+        this.wg = wg;
+    }
+
+    public int getWc() {
+        return wc;
+    }
+
+    public void setWc(int wc) {
+        this.wc = wc;
+    }
 
     public String getDevice_type() {
         return device_type;

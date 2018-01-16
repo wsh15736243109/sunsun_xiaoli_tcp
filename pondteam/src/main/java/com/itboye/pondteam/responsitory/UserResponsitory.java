@@ -138,7 +138,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm,String requestType) {
+    public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm, String requestType) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "101";
@@ -1053,7 +1053,7 @@ public class UserResponsitory extends BaseNetRepository implements
      * @param dev_lock
      */
     @Override
-    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, int ph_cmd,String requestType) {
+    public void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, int ph_cmd, String requestType) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
@@ -1168,7 +1168,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd) {
+    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd, int wh, int wg, int we, int wc,String requestType) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
@@ -1191,6 +1191,19 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (fcd != -1) {
             map.put("fcd", fcd);
+        }
+
+        if (wh != -1) {
+            map.put("wh", wh);
+        }
+        if (wg != -1) {
+            map.put("wg", wg);
+        }
+        if (we != -1) {
+            map.put("we", we);
+        }
+        if (wc != -1) {
+            map.put("wc", wc);
         }
         map.put("debug", "0");
         byjsonRequest

@@ -198,7 +198,7 @@
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/DIMEN_10DP"
-                        android:text="关闭"
+                        android:text=""
                         android:textColor="@color/main_green"
                         android:textSize="@dimen/DIMEN_18DP" />
                 </RelativeLayout>

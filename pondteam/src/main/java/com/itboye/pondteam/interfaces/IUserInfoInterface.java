@@ -342,8 +342,12 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param i_cyc
      * @param gear
      * @param cfg
+     * @param wh 在线时间(单位：小时)
+     * @param wg 设置造浪档位(0 - 9：最小到最大档位)
+     * @param we 设置造浪状态(适用于CDP-WIFI水泵 0：正常循环模式1：造浪模式)
+     * @param wc 设置造浪周期(0 - 9：最小到最大档位)
      */
-    void deviceSet_shuiBeng(String did,int devLock,int i_cyc,int gear,int cfg,int state,int fcd);
+    void deviceSet_shuiBeng(String did,int devLock,int i_cyc,int gear,int cfg,int state,int fcd,int wh,int wg,int we,int wc,String requestType);
 
     /**
      * 主设备did

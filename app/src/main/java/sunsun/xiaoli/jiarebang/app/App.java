@@ -80,6 +80,7 @@ import sunsun.xiaoli.jiarebang.device.pondteam.AddPondDevice;
 import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengBatteryDetailActivity;
 import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity;
+import sunsun.xiaoli.jiarebang.device.shuibeng.ZaoLangActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.OrderDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
@@ -139,6 +140,8 @@ public class App extends MyApplication {
     public ActivityShouDong shoudongUI;
     public ActivityChaZuoBDetail chazuoBDetail;
     public EditDeviceActivity mEditDeviceUi;
+
+    public ZaoLangActivity zaolangUI;
     ////////////森森零售相关Activity
     public LingShouSwitchLoginOrRegisterActivity lingShouSwitchRL;
     public YuGangCleanOrHuoTiBuyStepOneActivity yuGangCleanOrHuoTiBuyStepOneActivityUI;

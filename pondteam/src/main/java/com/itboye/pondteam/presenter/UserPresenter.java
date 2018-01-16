@@ -1050,14 +1050,18 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd) {
+    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd, int wh, int wg, int we, int wc, final String requestType) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
 
                     @Override
                     public void success(ResultEntity result) {
                         result.setEventTag(Tag_Success);
-                        result.setEventType(deviceSet_shuiBengsuccess);
+                        if (requestType.equals("")) {
+                            result.setEventType(deviceSet_shuiBengsuccess);
+                        } else {
+                            result.setEventType(requestType);
+                        }
                         setChanged();
                         notifyObservers(result);
                     }
@@ -1071,7 +1075,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.deviceSet_shuiBeng(did, devLock, i_cyc, gear, cfg, state, fcd);
+        user.deviceSet_shuiBeng(did, devLock, i_cyc, gear, cfg, state, fcd, wh, wg, we, wc, requestType);
     }
 
     @Override

@@ -454,7 +454,7 @@
     <string name="device_error">Equipment exception</string>
     <string name="device_will">The device will start after %1$s minutes</string>
     <string name="leiji_time">The pump has been used for %1$d hours</string>
-    <string name="dang">%1$d</string>
+    <string name="dang">%1$dgear(s)</string>
     <string name="mode_shoudong_open">manual mode open</string>
     <string name="mode_shoudong_close">manual mode close</string>
     <string name="mode_isshoudong_close">It\'s already manual mode close</string>

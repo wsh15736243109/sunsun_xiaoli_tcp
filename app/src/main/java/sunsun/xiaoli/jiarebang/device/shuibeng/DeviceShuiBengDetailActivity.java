@@ -96,7 +96,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         deviceDetailModel = (DeviceDetailModel) getIntent().getSerializableExtra("detailModel");
         userPresenter = new UserPresenter(this);
         did = getIntent().getStringExtra("did");
-        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1);
+        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, "");
         img_right.setBackgroundResource(R.drawable.menu);
         re_zaolang_choose.setVisibility(!deviceDetailModel.getDevice_type().equals("S05-4") ? View.VISIBLE : View.GONE);
         new Thread(runnable).start();
@@ -226,7 +226,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 if (mApp.deviceShuiBengUI.isConnect && deviceDetailModel != null) {
                     if (currentGear < 4) {
                         currentGear++;
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, currentGear, -1, -1, -1);
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, currentGear, -1, -1, -1, -1, -1, -1, -1, "");
                     } else {
                         MAlert.alert(getString(R.string.highest));
                     }
@@ -265,11 +265,11 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                     case 0:
                         //当前处于停机状态
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds);
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds, -1, -1, -1, -1, "");
                         break;
                     case 1:
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 2);//设置为喂食状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds);//
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 2, seconds, -1, -1, -1, -1, "");//
                         break;
                     case 2:
                         //设备有误不能进行操作
@@ -279,12 +279,12 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                         break;
                     case 3:
 //                        userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), "", seconds, 1);//设置为运行状态
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 1, -1);
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, 1, -1, -1, -1, -1, -1, "");
                         break;
                 }
                 break;
             case R.id.re_zaolang_choose:
-                startActivity(new Intent(this,ZaoLangActivity.class).putExtra("title",getString(R.string.zaolang_choose)));
+                startActivity(new Intent(this, ZaoLangActivity.class).putExtra("title", getString(R.string.zaolang_choose)));
                 break;
         }
 
@@ -304,7 +304,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 switch (txt_liuliangchoose.getId()) {
                     case R.id.txt_liuliangchoose:
                         //设置档位
-                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue(), -1, -1, -1);
+                        userPresenter.deviceSet_shuiBeng(did, -1, -1, numberPicker.getValue(), -1, -1, -1, -1, -1, -1, -1, "");
                         break;
                     case R.id.txt_weishitime:
                         //设置喂食
@@ -402,9 +402,17 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 return;
             }
             if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
+                responseDataTime = System.currentTimeMillis();
                 deviceDetailModel = (DeviceDetailModel) entity.getData();
                 if (deviceDetailModel != null) {
-                    setData();
+                    long diff = responseDataTime - requestTime;
+//                    if (diff < updateUITimeInternal) {
+//                        Log.v("response", "get Data time:" + diff + "_dont need update");
+//                    } else {
+//                        Log.v("response", "get Data time:" + diff + " need update");
+                    setZaoLangStatus(deviceDetailModel.getWe());
+                        setData();
+//                    }
                 }
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
@@ -500,6 +508,10 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             }
             txt_current_status_value.setText(strState);
             txt_liuliangchoose.setText(String.format(getString(R.string.dang), detailModelTcp.getGear() + 1));
+//            if (mApp.zaolangUI != null) {
+////                mApp.zaolangUI.setZaoLangData();
+//            }
+
             if (mApp.updateActivityUI != null) {
                 if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
                     mApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
@@ -509,6 +521,19 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
 
         txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
         txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh()));
+    }
+
+    TextView tv_zaolang_zhouqi_gear;
+
+    long responseDataTime = 0;
+    long requestTime = 0;
+
+    public void setZaoLangStatus(int we) {
+        if (we == 1) {
+            tv_zaolang_zhouqi_gear.setText(getString(R.string.zaolang_open));
+        } else {
+            tv_zaolang_zhouqi_gear.setText(getString(R.string.zaolang_close));
+        }
     }
 
     private String caculcateSeconds(int fcd) {
