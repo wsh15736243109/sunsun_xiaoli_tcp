@@ -642,6 +642,7 @@
     <string name="zaolang_close">关闭</string>
     <string name="zaolang_switch">造浪开关</string>
     <string name="zaolang_zhouqi">造浪周期</string>
+    <string name="did_length_too_short">did长度太短</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

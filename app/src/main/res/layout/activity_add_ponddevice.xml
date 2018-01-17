@@ -21,15 +21,15 @@
             <sunsun.xiaoli.jiarebang.custom.RatioImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/DIMEN_20DP"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:background="@drawable/add_img1"
                 app:ratio="2">
 
             </sunsun.xiaoli.jiarebang.custom.RatioImageView>
 
             <RelativeLayout
-                android:visibility="gone"
+                android:visibility="visible"
+                android:layout_margin="@dimen/DIMEN_10DP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -49,7 +49,7 @@
                     android:layout_marginLeft="@dimen/DIMEN_5DP"
                     android:layout_marginRight="@dimen/DIMEN_20DP"
                     android:layout_toRightOf="@+id/txt_device_id"
-                    android:background="@drawable/bg_white"
+                    android:background="@drawable/bg_white_corners_0"
                     android:padding="@dimen/DIMEN_6DP" />
             </RelativeLayout>
 

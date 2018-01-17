@@ -637,6 +637,7 @@
     <string name="zaolang_choose">Wave model</string>
     <string name="zaolang_open">Open</string>
     <string name="zaolang_close">Close</string>
-    <string name="zaolang_switch">造浪开关</string>
-    <string name="zaolang_zhouqi">造浪周期</string>
+    <string name="zaolang_switch">Surf switch</string>
+    <string name="zaolang_zhouqi">Wave cycle</string>
+    <string name="did_length_too_short">The length of did is too short</string>
 </resources>

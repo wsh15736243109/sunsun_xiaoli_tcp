@@ -14,7 +14,10 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.BaseActivity;
+import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.presenter.UserPresenter;
+import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.SPUtils;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
@@ -27,6 +30,9 @@ import sunsun.xiaoli.jiarebang.device.ActivityInputWifiAndPass;
 import sunsun.xiaoli.jiarebang.device.AddDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.ManualAddDeviceActivity;
 import sunsun.xiaoli.jiarebang.utils.DeviceType;
+
+import static android.text.TextUtils.isEmpty;
+import static com.itboye.pondteam.utils.EmptyUtil.getCustomText;
 
 
 /**
@@ -61,29 +67,35 @@ public class AddPondDevice extends BaseActivity implements Observer {
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btn_match) {
-//            did = getCustomText(ed_device_id);
-//            boolean has = false;
-//            for (DeviceListBean deviceListBean : myApp.mDeviceUi.arrayList) {
-//                if (did.equals(deviceListBean.getDid())) {
-//                    has = true;
-//                    break;
-//                } else {
-//                    has = false;
-//                }
-//            }
-//            if (has) {
-//                MAlert.alert(getString(R.string.has));
-//                return;
-//            }
-//            uid = SPUtils.get(this, null, Const.UID, "") + "";
-//
-//            if (isEmpty(did)) {
-//                MAlert.alert(getString(R.string.deviceid_empty));
-//                return;
-//            }
+            did = getCustomText(ed_device_id);
+            boolean has = false;
+            for (DeviceListBean deviceListBean : myApp.mDeviceUi.arrayList) {
+                if (did.equals(deviceListBean.getDid())) {
+                    has = true;
+                    break;
+                } else {
+                    has = false;
+                }
+            }
+            if (has) {
+                MAlert.alert(getString(R.string.has));
+                return;
+            }
+            uid = SPUtils.get(this, null, Const.UID, "") + "";
+
+            if (isEmpty(did)) {
+                MAlert.alert(getString(R.string.deviceid_empty));
+                return;
+            }
+            if (!did.startsWith("S01")) {
+                MAlert.alert(getString(R.string.no_support_device));
+                return;
+            }
+            if (did.length()<=10) {
+                MAlert.alert(getString(R.string.did_length_too_short));
+                return;
+            }
             showPopwindow(6);
-
-
         } else if (i == R.id.btn_cancel) {
             finish();
 //                String did = getCustomText(ed_device_id);
