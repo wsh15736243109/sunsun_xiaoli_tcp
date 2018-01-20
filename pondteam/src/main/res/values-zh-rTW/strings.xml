@@ -594,7 +594,7 @@
     <string name="qibeng_status">%1$d擋，%2$s，%3$s。</string>
     <string name="qibeng_stop">停止中</string>
     <string name="qibeng_running">運行中</string>
-    <string name="changezidongatfirst" >請先將模式調整為自動模式</string>
+    <string name="changezidongatfirst">請先將模式調整為自動模式</string>
     <string name="hasbeanuserelectricity">已啓用電池供電</string>
     <string name="configuration_other">一鍵配置</string>
     <string name="LAN_other">添加局域網設備</string>
@@ -636,5 +636,14 @@
     <string name="zaolang_close">關閉</string>
     <string name="zaolang_switch">造浪開關</string>
     <string name="zaolang_zhouqi">造浪周期</string>
-    <string name="did_length_too_short">did长度太短</string>
+    <string name="did_length_too_short">did長度太短</string>
+    <string name="volley_error_timeout">請求超時，請檢查網絡後重試</string>
+    <string name="volley_error_noconnect">當前無網絡連接</string>
+    <string name="volley_error_authfailure">HTTP身份驗證异常</string>
+    <string name="volley_error_networkerror">Socket關閉，服務器宕機，DNS錯誤</string>
+    <string name="volley_error_parseerror">資料類型异常錯誤</string>
+    <string name="volley_error_servererror">服務器發生錯誤</string>
+    <string name="volley_error_server">服務器開小差了</string>
+    <string name="server_error">服務器返回錯誤!</string>
+    <string name="server_error_unknow">發生未知錯誤!</string>
 </resources>

@@ -640,4 +640,13 @@
     <string name="zaolang_switch">Surf switch</string>
     <string name="zaolang_zhouqi">Wave cycle</string>
     <string name="did_length_too_short">The length of did is too short</string>
+    <string name="volley_error_timeout">Request timeout, please check the network retry</string>
+    <string name="volley_error_noconnect">No network connections are currently available</string>
+    <string name="volley_error_authfailure">HTTP authentication exception</string>
+    <string name="volley_error_networkerror">Socket closed, server downtime, DNS error</string>
+    <string name="volley_error_parseerror">Data type exception error</string>
+    <string name="volley_error_servererror">Server error</string>
+    <string name="volley_error_server">The server runs down</string>
+    <string name="server_error">Server return error!</string>
+    <string name="server_error_unknow">An unknown error!</string>
 </resources>
