@@ -90,7 +90,6 @@ public class AqDeviceFind {
 
         @Override
         public void run() {
-            System.out.println(">>>发现设备1");
 //            while (true) {
 //                try {
 //                    try {
@@ -133,6 +132,7 @@ public class AqDeviceFind {
                 DatagramPacket dpr = null;
                 // 创建UDP
                     if (App.getInstance().isStartSearch) {
+                        System.out.println(">>>发现设备1");
                         try {
 //                    String ipFront = gwip.substring(0,gwip.lastIndexOf(".")+1);
 //                    for (int i = 0; i <= 255; i++) {

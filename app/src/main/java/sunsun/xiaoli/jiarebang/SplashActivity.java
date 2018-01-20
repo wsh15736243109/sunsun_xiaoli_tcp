@@ -133,7 +133,7 @@ public class SplashActivity extends LingShouBaseActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        String appType = BuildConfig.APP_TYPE;
+        String appType = getPackageName();
         if (isFirstInstall && appType.toLowerCase().contains("pondteam".toLowerCase())) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             alert.setTitle(getString(com.itboye.pondteam.R.string.wenxin));
