@@ -646,4 +646,6 @@
     <string name="volley_error_server">服務器開小差了</string>
     <string name="server_error">服務器返回錯誤!</string>
     <string name="server_error_unknow">發生未知錯誤!</string>
+    <string name="slide_to_delete">側滑刪除時間</string>
+    <string name="pondteam_support">反饋</string>
 </resources>

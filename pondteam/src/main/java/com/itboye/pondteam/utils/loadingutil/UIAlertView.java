@@ -26,6 +26,7 @@ public class UIAlertView extends Dialog {
     private String message;
     private String cancel;
     private ClickListenerInterface clickListenerInterface;
+    private TextView tvFeedback;
 
     public UIAlertView(Context context, String title, String message,
                        String cancel) {
@@ -51,10 +52,10 @@ public class UIAlertView extends Dialog {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inite();
+        init();
     }
 
-    public void inite() {
+    public void init() {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.ui_alert_view, null);
         setContentView(view);
@@ -62,7 +63,7 @@ public class UIAlertView extends Dialog {
         TextView tvLeft = (TextView) view.findViewById(R.id.tvBtnLeft);
         TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         TextView tvgengxingujian=(TextView) view.findViewById(R.id.tvgengxingujian);
-        TextView tvFeedback=(TextView) view.findViewById(R.id.tvFeedback);
+        tvFeedback=(TextView) view.findViewById(R.id.tvFeedback);
         //赋值标题文字
         tvTitle.setText(title);
         tvMessage.setText(message);
@@ -98,5 +99,9 @@ public class UIAlertView extends Dialog {
                 clickListenerInterface.feedBack();
             }
         }
+    }
+
+    public void setTextFeedBack(){
+        tvFeedback.setText(this.context.getResources().getString(R.string.pondteam_support));
     }
 }

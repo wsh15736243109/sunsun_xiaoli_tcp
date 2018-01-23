@@ -113,7 +113,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         wifiName = getIntent().getStringExtra("wifi_name");
         wifiPass = getIntent().getStringExtra("wifi_pass");
 //        did = getIntent().getStringExtra("did");
-        txt_title.setText(getString(R.string.add_device));
+        txt_title.setText(getString(R.string.add_new_device));
         txt_search.setText(getString(R.string.searching) + "");
 
         userPresenter = new UserPresenter(this);

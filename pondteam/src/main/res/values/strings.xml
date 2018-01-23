@@ -652,6 +652,8 @@
     <string name="volley_error_server">服务器开小差了</string>
     <string name="server_error">服务器返回错误!</string>
     <string name="server_error_unknow">发生未知错误!</string>
+    <string name="slide_to_delete">侧滑删除时间</string>
+    <string name="pondteam_support">反馈</string>
     <item name="tag_first" type="id"></item>
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>

@@ -54,11 +54,12 @@ public class SwipWeiShiadapter extends BaseSwipeMenuExpandableListAdapter {
             reUseable = false;
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
+        holder.txt_weishi.setText(activity.getString(R.string.periodname) + "(" + activity.getString(R.string.slide_to_delete) + ")");
         holder.img_add_weishi.setVisibility(View.GONE);
         holder.txt_weishi_name.setVisibility(View.VISIBLE);
         try {
             holder.txt_weishi_name.setText(arrayList.get(groupPosition).getNick_name());
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         holder.txt_weishi_name.setTag(groupPosition);
@@ -99,9 +100,10 @@ public class SwipWeiShiadapter extends BaseSwipeMenuExpandableListAdapter {
         return new ContentViewWrapper(convertView, reUseable);
     }
 
+
     @Override
     public int getGroupCount() {
-        return arrayList.size();
+        return  arrayList.size() ;
     }
 
     @Override
@@ -143,11 +145,13 @@ public class SwipWeiShiadapter extends BaseSwipeMenuExpandableListAdapter {
         TextView txt_weishi_name, txt_zhouqi_time, txt_open_time, txt_close_time;
         ImageView img_add_weishi;
         RelativeLayout re_weishi_closetime, re_weishi_opentime, re_weishi_zhouqi;
+        public TextView txt_weishi;
 
         public ViewHolder(View view) {
             // iv_icon = (ImageView) view.findViewById(R.id.iv_icon);
             txt_weishi_name = (TextView) view.findViewById(R.id.txt_weishi_name);
             img_add_weishi = (ImageView) view.findViewById(R.id.img_add_weishi);
+            txt_weishi = (TextView) view.findViewById(R.id.txt_weishi);
             view.setTag(this);
         }
 

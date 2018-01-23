@@ -153,8 +153,8 @@
     <string name="make_sure_qingling">Make sure I zero it ?</string>
     <string name="readytoclean">Ready to clean</string>
     <string name="configuration_pond">Select network(2.4G)</string>
-    <string name="LAN_pond">Add previous devices</string>
-    <string name="manually_pond">Device setting</string>
+    <string name="LAN_pond">Add Wifi connected Device</string>
+    <string name="manually_pond">Add remote device</string>
     <string name="search_success">search device success</string>
     <string name="current_wifiname">current wi-fi</string>
     <string name="current_wifipass">Wi-Fi password</string>
@@ -234,7 +234,7 @@
     <string name="validate_fail">Validate_fail</string>
     <string name="smartconfiging"></string>
     <string name="dingshimoshi">Timer Mode</string>
-    <string name="add_new_device">add new device</string>
+    <string name="add_new_device">Add new device</string>
     <string name="dengguangzhaomingleiji">The lighting has been used for</string>
     <string name="chonglangbengleiji">The surfing pump has been used for</string>
     <string name="jiarebang">heating rod</string>
@@ -455,8 +455,8 @@
     <string name="device_will">The device will start after %1$s minutes</string>
     <string name="leiji_time">The pump has been used for %1$d hours</string>
     <string name="dang">%1$dgear(s)</string>
-    <string name="mode_shoudong_open">manual mode open</string>
-    <string name="mode_shoudong_close">manual mode close</string>
+    <string name="mode_shoudong_open">manual mode on</string>
+    <string name="mode_shoudong_close">manual mode off</string>
     <string name="mode_isshoudong_close">It\'s already manual mode close</string>
     <string name="mode_isshoudong_open">It\'s already manual mode open</string>
     <string name="savewatermode">Save water mode</string>
@@ -640,7 +640,7 @@
     <string name="zaolang_switch">Surf switch</string>
     <string name="zaolang_zhouqi">Wave cycle</string>
     <string name="did_length_too_short">The length of did is too short</string>
-    <string name="volley_error_timeout">Request timeout, please check the network retry</string>
+    <string name="volley_error_timeout">Network timeout, please try again. If problem continue, please check your Wifi network and restart the APP</string>
     <string name="volley_error_noconnect">No network connections are currently available</string>
     <string name="volley_error_authfailure">HTTP authentication exception</string>
     <string name="volley_error_networkerror">Socket closed, server downtime, DNS error</string>
@@ -649,4 +649,6 @@
     <string name="volley_error_server">The server runs down</string>
     <string name="server_error">Server return error!</string>
     <string name="server_error_unknow">An unknown error!</string>
+    <string name="slide_to_delete">Slide left to delete time</string>
+    <string name="pondteam_support">Support</string>
 </resources>

@@ -120,8 +120,8 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         });
         img_right.setImageResource(R.drawable.menu);
         Glide.with(this).load(R.drawable.loading).asGif().into(loading);
-        chazuo_A_power.setOnLongClickListener(this);
-        chazuo_B_power.setOnLongClickListener(this);
+//        chazuo_A_power.setOnLongClickListener(this);
+//        chazuo_B_power.setOnLongClickListener(this);
         chazuo_A_total_power.setOnLongClickListener(this);
         chazuo_B_total_power.setOnLongClickListener(this);
         re_chazuo_1.setOnLongClickListener(this);
@@ -190,11 +190,13 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
     private void onShowDlog() {
         if (dialog == null) {
             dialog = new UIAlertView(this, getString(R.string.update_device), getString(R.string.delete_device), getString(R.string.cancel));
+
             dialog.setClicklistener(this);
         }
         if (!dialog.isShowing()) {
             dialog.show();
         }
+        dialog.setTextFeedBack();
     }
 
 
@@ -217,48 +219,50 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
         Intent intent = null;
         if (v.getId() == R.id.img_back) {
             finish();
-        } else if (v.getId() == R.id.re_uvlamp || v.getId() == R.id.txt_uv_open_time || v.getId() == R.id.txt_uv_total_time || v.getId() == R.id.icon_setting_3) {
-            intent = new Intent(this, ActivityUvLamp.class);
-            intent.putExtra("model", deviceDetailModel);
-            intent.putExtra("title", getString(R.string.UVLANMP));
-            intent.putExtra("did", did);
-            startActivity(intent);
-        } else if (v.getId() == R.id.re_shoudong || v.getId() == R.id.txt_shoudong_clean_time || v.getId() == R.id.icon_setting_2) {
-            intent = new Intent(this, ActivityShouDong.class);
-            intent.putExtra("model", deviceDetailModel);
-            intent.putExtra("title", getString(R.string.shoudong));
-            startActivity(intent);
-        } else if (v.getId() == R.id.re_dingshi || v.getId() == R.id.txt_dingshi_status || v.getId() == R.id.txt_last_cleantime || v.getId() == R.id.txt_next_cleantime || v.getId() == R.id.icon_setting_1) {
-            intent = new Intent(this, ActivityZiDong.class);
-            intent.putExtra("model", deviceDetailModel);
-            intent.putExtra("title", getString(R.string.zidongqingxi));
-            startActivity(intent);
-        } else if (v.getId() == R.id.img_right) {
-            onShowDlog();
-        } else if (v.getId() == R.id.icon_setting_A) {
+        } else {
             if (!isConnect) {
                 MAlert.alert(getString(R.string.disconnect));
                 return;
             }
-            showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1, "");
-        } else if (v.getId() == R.id.icon_setting_B) {
-            if (!isConnect) {
-                MAlert.alert(getString(R.string.disconnect));
+            if (detailModelTcp == null) {
+                MAlert.alert(getString(R.string.get_deviceInfoing));
                 return;
             }
-            showProgressDialog(getString(R.string.posting), true);
-            userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1, "");
-        } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
-            intent = new Intent(this, ActivityChaZuoBDetail.class);
-            intent.putExtra("title", txt_chazuoA_name.getText().toString());
-            intent.putExtra("chazuo_type", "A");
-            startActivity(intent);
-        } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
-            intent = new Intent(this, ActivityChaZuoBDetail.class);
-            intent.putExtra("title", txt_chazuoB_name.getText().toString());
-            intent.putExtra("chazuo_type", "B");
-            startActivity(intent);
+            if (v.getId() == R.id.re_uvlamp || v.getId() == R.id.txt_uv_open_time || v.getId() == R.id.txt_uv_total_time || v.getId() == R.id.icon_setting_3) {
+                intent = new Intent(this, ActivityUvLamp.class);
+                intent.putExtra("model", deviceDetailModel);
+                intent.putExtra("title", getString(R.string.UVLANMP));
+                intent.putExtra("did", did);
+                startActivity(intent);
+            } else if (v.getId() == R.id.re_shoudong || v.getId() == R.id.txt_shoudong_clean_time || v.getId() == R.id.icon_setting_2) {
+                intent = new Intent(this, ActivityShouDong.class);
+                intent.putExtra("model", deviceDetailModel);
+                intent.putExtra("title", getString(R.string.shoudong));
+                startActivity(intent);
+            } else if (v.getId() == R.id.re_dingshi || v.getId() == R.id.txt_dingshi_status || v.getId() == R.id.txt_last_cleantime || v.getId() == R.id.txt_next_cleantime || v.getId() == R.id.icon_setting_1) {
+                intent = new Intent(this, ActivityZiDong.class);
+                intent.putExtra("model", deviceDetailModel);
+                intent.putExtra("title", getString(R.string.zidongqingxi));
+                startActivity(intent);
+            } else if (v.getId() == R.id.img_right) {
+                onShowDlog();
+            } else if (v.getId() == R.id.icon_setting_A) {
+                showProgressDialog(getString(R.string.posting), true);
+                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", socketA ? 0 : 1, -1, "", "", "", "", -1, -1, "");
+            } else if (v.getId() == R.id.icon_setting_B) {
+                showProgressDialog(getString(R.string.posting), true);
+                userPresenter.deviceSet(did, null, null, "", -1, "", "", "", "", "", "", "", "", "", -1, socketB ? 0 : 1, "", "", "", "", -1, -1, "");
+            } else if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
+                intent = new Intent(this, ActivityChaZuoBDetail.class);
+                intent.putExtra("title", txt_chazuoA_name.getText().toString());
+                intent.putExtra("chazuo_type", "A");
+                startActivity(intent);
+            } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
+                intent = new Intent(this, ActivityChaZuoBDetail.class);
+                intent.putExtra("title", txt_chazuoB_name.getText().toString());
+                intent.putExtra("chazuo_type", "B");
+                startActivity(intent);
+            }
         }
     }
 
@@ -607,11 +611,11 @@ public class ActivityPondDeviceDetail extends BaseActivity implements UIAlertVie
 
     @Override
     public boolean onLongClick(View v) {
-        if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
-            doUpdateDevice(getString(R.string.update_chazuoA));
-        } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
-            doUpdateDevice(getString(R.string.update_chazuoB));
-        }
-        return true;
+//        if (v.getId() == R.id.chazuo_A_power || v.getId() == R.id.chazuo_A_total_power || v.getId() == R.id.icon_setting_A || v.getId() == R.id.re_chazuo_1) {
+//            doUpdateDevice(getString(R.string.update_chazuoA));
+//        } else if (v.getId() == R.id.chazuo_B_power || v.getId() == R.id.chazuo_B_total_power || v.getId() == R.id.icon_setting_B || v.getId() == R.id.re_chazuo_2) {
+//            doUpdateDevice(getString(R.string.update_chazuoB));
+//        }
+        return false;
     }
 }
