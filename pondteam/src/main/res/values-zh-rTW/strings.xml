@@ -648,4 +648,14 @@
     <string name="server_error_unknow">發生未知錯誤!</string>
     <string name="slide_to_delete">側滑刪除時間</string>
     <string name="pondteam_support">反饋</string>
+    <string name="aquarium_device">小鲤</string>
+    <string name="aquarium_shopping">购物</string>
+    <string name="aquarium_store">门店</string>
+    <string name="aquarium_product">产品</string>
+    <string name="aquarium_me">我的</string>
+    <string name="aquarium_my_message">我的资料</string>
+    <string name="aquarium_password_change">密码修改</string>
+    <string name="aquarium_notifymessage">消息通知</string>
+    <string name="aquarium_forum">水族论坛</string>
+    <string name="aquarium_about_xiaoli">关于小鲤</string>
 </resources>

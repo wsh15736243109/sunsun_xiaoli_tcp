@@ -1,0 +1,193 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+    <include layout="@layout/incude_titlebar"></include>
+    <!-- 添加地图控件 -->
+    <RelativeLayout
+        android:id="@+id/lineMap"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical" >
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapsView"
+            android:layout_width="fill_parent"
+            android:layout_height="250dp"
+            android:clickable="true" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/xScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp" >
+
+                <TextView
+                    android:id="@+id/tvdizhi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="地址:"
+                    android:textColor="@color/gray_BBB" />
+
+                <TextView
+                    android:id="@+id/addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tvdizhi"
+                    android:singleLine="true"
+                    android:text="无"
+                    android:textColor="@color/gray_BBB" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_divider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp" >
+
+                <TextView
+                    android:id="@+id/tvTitleContacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="联系人："
+                    android:textColor="@color/gray_BBB" />
+
+                <TextView
+                    android:id="@+id/tvContacts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tvTitleContacts"
+                    android:singleLine="true"
+                    android:text="无"
+                    android:textColor="@color/gray_BBB" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_divider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp" >
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="电   话："
+                    android:textColor="@color/gray_BBB" />
+
+                <TextView
+                    android:id="@+id/tvPhones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tvPhone"
+                    android:singleLine="true"
+                    android:text="无"
+                    android:textColor="@color/gray_BBB" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_divider" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp" >
+
+                <TextView
+                    android:id="@+id/tvTitleMobilePhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="手    机:"
+                    android:textColor="@color/gray_BBB" />
+
+                <TextView
+                    android:id="@+id/tvMobilePhones"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tvTitleMobilePhone"
+                    android:singleLine="true"
+                    android:text="无"
+                    android:textColor="@color/gray_BBB" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_divider" />
+
+            <RelativeLayout
+                android:id="@+id/relyoutDaoHang"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" >
+
+                <TextView
+                    android:id="@+id/tvTitleNavigation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:text="导航："
+                    android:textColor="@color/gray_BBB" />
+
+                <TextView
+                    android:id="@+id/tvNavigation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/tvTitleNavigation"
+                    android:singleLine="true"
+                    android:text="详细导航"
+                    android:textColor="@color/main_blue" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_divider" />
+
+            <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView
+                android:id="@+id/storeLunBo"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@color/white" />
+        </LinearLayout>
+        <!-- </ScrollView> -->
+    </ScrollView>
+</LinearLayout>

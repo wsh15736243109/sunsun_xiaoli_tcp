@@ -22,6 +22,7 @@ import sunsun.xiaoli.jiarebang.device.jinligang.LoginActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginedState;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
+import sunsun.xiaoli.jiarebang.shuizuzhijia.AquariumHomeMainActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.LingShouMainActivity;
 import sunsun.xiaoli.jiarebang.utils.SpContants;
 
@@ -112,13 +113,17 @@ public class SplashActivity extends LingShouBaseActivity {
                     LoginController.setLoginState(new LoginedState());
                     if (SpContants.APP_TYPE.equals("森森新零售")) {
                         startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
-                    } else {
+                    } else if(SpContants.APP_TYPE.equals("水族之家")){
+                        startActivity(new Intent(getApplicationContext(), AquariumHomeMainActivity.class));
+                    }else {
                         startActivity(new Intent(getApplicationContext(), DeviceActivity.class));
                     }
                 } else {
                     LoginController.setLoginState(new UnLoginState());
                     if (SpContants.APP_TYPE.equals("森森新零售")) {
                         startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
+                    }else if(SpContants.APP_TYPE.equals("水族之家")){
+                        startActivity(new Intent(getApplicationContext(), AquariumHomeMainActivity.class));
                     } else {
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     }

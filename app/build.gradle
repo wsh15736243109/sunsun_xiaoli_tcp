@@ -58,6 +58,24 @@ android {
     }
 
     productFlavors {
+
+        shuizuzhijia_version_2 {
+            signingConfig signingConfigs.sunsun_lingshou_debug
+            manifestPlaceholders = [PACKAGE: "com.itboye.lingshou", str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "59fffc78f43e487e9000026a", UMENG_MESSAGE_SECRET: "a11d73ec66d4323df2b8c8d8ddcf5399", APP_ID: "wx3aa59deb67aa6823"]
+            applicationId "com.itboye.lingshou"
+            resValue "string", "app_name", "@string/app_lingshou_name"
+            resValue "bool", "isrRank", 'true'
+//            dimension "sunsunlingshou"
+            buildConfigField("String", "WX_APP_ID", '"wx3aa59deb67aa6823"')
+            buildConfigField("String", "UMENG_ALIAS", '"sunsun_lingshou"')
+            buildConfigField("String", "APP_TYPE", '"水族之家"')
+            buildConfigField("boolean", "IS_CHINESE", 'true')
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 101
+            versionName '1.0.1'
+        }
+
         sunsunlingshou {
             signingConfig signingConfigs.sunsun_lingshou_debug
             manifestPlaceholders = [PACKAGE: "com.itboye.lingshou", str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou", ENVIRONMENT: "lingshou", app_icon: "@drawable/lingshou_logo", UMENG_APPKEY: "59fffc78f43e487e9000026a", UMENG_MESSAGE_SECRET: "a11d73ec66d4323df2b8c8d8ddcf5399", APP_ID: "wx3aa59deb67aa6823"]
@@ -162,9 +180,9 @@ android {
 
         debug {
 //            signingConfig signingConfigs.sunsun_xiaoli_debug
-//            signingConfig signingConfigs.sunsun_lingshou_debug
+            signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
-            signingConfig signingConfigs.sunsun_pondteam_debug
+//            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug
 //            manifestPlaceholders = [str: "releaseStr", package_name: "com.itboye.lingshou", UMENG_applicationId: "com.itboye.lingshou",ENVIRONMENT: "lingshou",app_icon   : "@drawable/device_002",UMENG_APPKEY:"58cb6076677baa0aa300014f",UMENG_MESSAGE_SECRET:"af2c2bd3297da0dfd34bb23f14db362b"]
 //            applicationId "com.itboye.lingshou"

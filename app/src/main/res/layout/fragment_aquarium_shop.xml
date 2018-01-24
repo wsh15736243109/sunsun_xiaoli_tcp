@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+    <!--布局一、硬件入口-->
+    <!--布局三、热门商品-->
+    <include layout="@layout/incude_titlebar"></include>
+    <LinearLayout
+        android:id="@+id/near_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView
+            android:id="@+id/shop_carouseview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/DIMEN_200DP"
+            android:background="@color/red">
+
+        </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <sunsun.xiaoli.jiarebang.custom.RatioImageView
+                android:id="@+id/img_shop_second"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/red500"
+                app:ratio="2">
+
+            </sunsun.xiaoli.jiarebang.custom.RatioImageView>
+
+            <sunsun.xiaoli.jiarebang.custom.RatioImageView
+                android:id="@+id/img_shop_third"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/main_green"
+                app:ratio="2">
+
+            </sunsun.xiaoli.jiarebang.custom.RatioImageView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/recycler_aqhardwareorhotgoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/near_store"/>
+
+</LinearLayout>

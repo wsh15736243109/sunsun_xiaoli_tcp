@@ -236,6 +236,8 @@
         <activity android:name=".sunsunlingshou.activity.web.WebActivity" />
         <activity android:name=".sunsunlingshou.activity.me.BindPhoneActivity" />
         <activity android:name=".device.shuibeng.ZaoLangActivity"></activity>
+
+        <activity android:name=".shuizuzhijia.AquariumHomeMainActivity"></activity>
     </application>
 
 </manifest>

@@ -47,4 +47,6 @@
     <color name="gray_color1">#333333</color>
     <color name="main_black">#9B9B9B</color>
     <color name="pink">#CDA0C7</color>
+    <color name="main_blue">#008cd6</color>
+    <color name="edit_background">#E7E7E9</color>
 </resources>
