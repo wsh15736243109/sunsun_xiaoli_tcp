@@ -51,7 +51,7 @@
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout
-        android:id="@+id/mylocationrelaMessge"
+        android:id="@+id/re_my_message"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/view1"
@@ -89,7 +89,7 @@
         android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/mylocationrelaMessge"
+        android:layout_below="@id/re_my_message"
             android:background="@color/gray_EEEE" />
 
     <RelativeLayout
@@ -135,7 +135,7 @@
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout
-        android:id="@+id/mywordsrela"
+        android:id="@+id/re_notifymessage"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/view5"
@@ -173,11 +173,11 @@
         android:id="@+id/view6"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/mywordsrela"
+        android:layout_below="@id/re__notifymessage"
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout
-        android:id="@+id/personsettingrela"
+        android:id="@+id/re_forum"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@id/view6"
@@ -214,7 +214,7 @@
         android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/mywordsrela"
+        android:layout_below="@id/re__notifymessage"
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout

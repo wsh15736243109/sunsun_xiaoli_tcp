@@ -123,7 +123,7 @@ public class SplashActivity extends LingShouBaseActivity {
                     if (SpContants.APP_TYPE.equals("森森新零售")) {
                         startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
                     }else if(SpContants.APP_TYPE.equals("水族之家")){
-                        startActivity(new Intent(getApplicationContext(), AquariumHomeMainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     } else {
                         startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     }

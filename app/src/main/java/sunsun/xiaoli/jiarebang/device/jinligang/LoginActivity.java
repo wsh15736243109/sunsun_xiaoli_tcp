@@ -26,8 +26,10 @@ import sunsun.xiaoli.jiarebang.device.DeviceActivity;
 import sunsun.xiaoli.jiarebang.device.pondteam.PondTeamRegisterActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginedState;
+import sunsun.xiaoli.jiarebang.shuizuzhijia.AquariumHomeMainActivity;
 import sunsun.xiaoli.jiarebang.utils.AreaCodeSelectHelper;
 import sunsun.xiaoli.jiarebang.utils.IAreaCodeSelect;
+import sunsun.xiaoli.jiarebang.utils.SpContants;
 
 
 /**
@@ -133,8 +135,13 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                 if (personDataBean != null) {
                     setMyData(personDataBean);
                     MAlert.alert(getString(R.string.login_success));
-                    Intent intent = new Intent(this, DeviceActivity.class);
-                    startActivity(intent);
+                    if (SpContants.APP_TYPE.equals("水族之家")) {
+                        Intent intent = new Intent(this, AquariumHomeMainActivity.class);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(this, DeviceActivity.class);
+                        startActivity(intent);
+                    }
                     finish();
                 }
             } else if (resultEntity.getEventType() == UserPresenter.login_fail) {
