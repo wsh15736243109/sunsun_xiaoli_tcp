@@ -47,14 +47,12 @@
         android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/realypoutTop"
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout
         android:id="@+id/re_my_message"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/view1"
         android:background="@color/white">
 
         <ImageView
@@ -89,14 +87,12 @@
         android:id="@+id/view4"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/re_my_message"
             android:background="@color/gray_EEEE" />
 
     <RelativeLayout
         android:id="@+id/re_password_change"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/view4"
         android:background="@color/white">
 
         <ImageView
@@ -131,14 +127,12 @@
         android:id="@+id/view5"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/re_password_change"
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout
         android:id="@+id/re_notifymessage"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/view5"
         android:background="@color/white">
 
         <ImageView
@@ -173,14 +167,12 @@
         android:id="@+id/view6"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/re__notifymessage"
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout
         android:id="@+id/re_forum"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@id/view6"
         android:background="@color/white">
 
         <ImageView
@@ -214,7 +206,6 @@
         android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_below="@id/re__notifymessage"
         android:background="@color/gray_EEEE" />
 
     <RelativeLayout

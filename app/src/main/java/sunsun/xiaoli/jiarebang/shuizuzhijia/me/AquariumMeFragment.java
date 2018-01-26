@@ -14,7 +14,7 @@ import sunsun.xiaoli.jiarebang.device.jinligang.ForgetPasswordActivity;
  */
 
 public class AquariumMeFragment extends LingShouBaseFragment {
-    RelativeLayout re_my_message, re_password_change, re__notifymessage, re_forum, re_about_xiaoli;
+    RelativeLayout re_my_message, re_password_change, re_notifymessage, re_forum, re_about_xiaoli;
 
     @Override
     protected int getLayoutId() {
@@ -34,7 +34,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
             case R.id.re_password_change:
                 startActivity(new Intent(getActivity(),ForgetPasswordActivity.class));
                 break;
-            case R.id.re__notifymessage:
+            case R.id.re_notifymessage:
                 break;
             case R.id.re_forum:
                 break;
