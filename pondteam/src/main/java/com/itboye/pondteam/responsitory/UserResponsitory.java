@@ -9,6 +9,7 @@ import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.bean.PersonDataBean;
 import com.itboye.pondteam.bean.PondTeamMostNewModel;
+import com.itboye.pondteam.bean.ProductBean;
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.interfaces.IUserInfoInterface;
@@ -130,6 +131,11 @@ public class UserResponsitory extends BaseNetRepository implements
     private String getDeviceWeishiQi = "By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
     private String updateMobileMsg = "By_SunsunUserDevice_update";//更改设备信息
     private String deviceSet_qibeng = "By_SunsunCp1000_devicesCtrl";//CP1000設置接口
+
+
+    //---------------------------------------------------------森森2.0版本 接口-----------------------------
+    private String BY_ProductCenter_cate = "BY_ProductCenter_cate";//产品
+    private String BY_ProductCenter_post = "BY_ProductCenter_post";//产品/视频列表
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1168,7 +1174,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd, int wh, int wg, int we, int wc,String requestType) {
+    public void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd, int wh, int wg, int we, int wc, String requestType) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
@@ -1557,6 +1563,41 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(deviceSet_qibeng, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void queryProductIndex(int parent) {
+        Type type = new TypeToken<ArrayList<ProductBean.HomeListBean>>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("parent", parent);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_ProductCenter_cate, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ArrayList<ProductBean.HomeListBean>>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void queryProductPost(int cate_id, int is_video, int page, int size) {
+        Type type = new TypeToken<ProductBean>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("cate_id", cate_id);
+        map.put("is_video", is_video);
+        map.put("page", page);
+        map.put("size", size);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_ProductCenter_post, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ProductBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

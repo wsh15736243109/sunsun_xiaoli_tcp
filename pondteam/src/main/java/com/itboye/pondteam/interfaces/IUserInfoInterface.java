@@ -447,4 +447,18 @@ public interface IUserInfoInterface<PersonDataBean> {
     void updateMobileMsg(String sp, String device_id, String lang, String timezone);
 
     void deviceSet_qibeng(String did, int dev_lock, int mode, int state, int gear, int wh, int ch_cnt, int b_life, int push_cfg);
+
+    /**
+     * 产品首页 分类
+     * @param parent
+     */
+    void queryProductIndex(int parent);
+
+    /**
+     * @param cate_id   分类id
+     * @param is_video  1=>视频,0(default)=>文章
+     * @param page
+     * @param size
+     */
+    void queryProductPost(int cate_id,int is_video,int page,int size);
 }

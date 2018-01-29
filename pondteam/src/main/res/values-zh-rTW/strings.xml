@@ -658,4 +658,7 @@
     <string name="aquarium_notifymessage">消息通知</string>
     <string name="aquarium_forum">水族论坛</string>
     <string name="aquarium_about_xiaoli">关于小鲤</string>
+    <string name="produceter_message">产品信息</string>
+    <string name="produceter_video">视频浏览</string>
+    <string name="produceter_rengong">人工客服</string>
 </resources>

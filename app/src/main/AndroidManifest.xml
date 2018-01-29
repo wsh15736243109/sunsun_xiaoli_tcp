@@ -237,7 +237,12 @@
         <activity android:name=".sunsunlingshou.activity.me.BindPhoneActivity" />
         <activity android:name=".device.shuibeng.ZaoLangActivity"></activity>
 
+        <!--森森2.0相关UI-->
         <activity android:name=".shuizuzhijia.AquariumHomeMainActivity"></activity>
+        <activity android:name=".shuizuzhijia.product.ProducenterChildActivity"></activity>
+        <activity
+            android:name=".shuizuzhijia.product.ProductCenter_message_video_kefu_Activity"
+            android:windowSoftInputMode="adjustPan"></activity>
     </application>
 
 </manifest>

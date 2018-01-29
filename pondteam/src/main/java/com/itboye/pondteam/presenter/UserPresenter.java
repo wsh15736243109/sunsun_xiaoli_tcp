@@ -145,6 +145,10 @@ public class UserPresenter extends BasePresenter implements
     public static String updateMobileMsg_success = "_updateMobileMsg_success";
     public static String deviceSet_qibeng_success = "_deviceSet_qibeng_success";
     public static String deviceSet_qibeng_fail = "_deviceSet_qibeng_fail";
+    public static String queryProductIndex_success = "_queryProductIndex_success";
+    public static String queryProductIndex_fail = "_queryProductIndex_fail";
+    public static String queryProductPost_success="_queryProductPost_success";
+    public static String queryProductPost_fail="_queryProductPost_fail";
 
 
     public UserPresenter(Observer observer) {
@@ -1397,5 +1401,53 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.deviceSet_qibeng(did, dev_lock, mode, state, gear, wh, ch_cnt, b_life, push_cfg);
+    }
+
+    @Override
+    public void queryProductIndex(int parent) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(queryProductIndex_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(queryProductIndex_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.queryProductIndex(parent);
+    }
+
+    @Override
+    public void queryProductPost(int cate_id, int is_video, int page, int size) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(queryProductPost_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(queryProductPost_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.queryProductPost(cate_id, is_video, page, size);
     }
 }

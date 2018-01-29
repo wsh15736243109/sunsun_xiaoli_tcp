@@ -49,4 +49,6 @@
     <color name="goods_detail_title_color">#1a1a1a</color>
     <color name="gray_color1">#333333</color>
     <color name="main_lingshou_orange">@color/main_green</color>
+    <color name="backgroundColor">#f5f5f5</color>
+    <color name="gray_6c7bb">#6C7B8B</color>
 </resources>
