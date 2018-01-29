@@ -136,6 +136,7 @@ public class UserResponsitory extends BaseNetRepository implements
     //---------------------------------------------------------森森2.0版本 接口-----------------------------
     private String BY_ProductCenter_cate = "BY_ProductCenter_cate";//产品
     private String BY_ProductCenter_post = "BY_ProductCenter_post";//产品/视频列表
+    private String BY_ProductCenter_search = "BY_ProductCenter_search";//搜索
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1598,6 +1599,22 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_ProductCenter_post, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ProductBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void productSearch(String name) {
+        Type type = new TypeToken<ArrayList<ProductBean.HomeListBean>>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", name);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_ProductCenter_search, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ArrayList<ProductBean.HomeListBean>>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

@@ -672,4 +672,9 @@
     <item name="tag_third" type="id"></item>
     <item name="tag_fourth" type="id"></item>
     <item name="imageloader_uri" type="id"/>
+
+
+    <string name="keyword">输入产品型号或关键字</string>
+
+    <string name="guanjian">输入查询的关键字</string>
 </resources>

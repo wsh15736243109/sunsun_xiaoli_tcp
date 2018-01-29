@@ -243,6 +243,7 @@
         <activity
             android:name=".shuizuzhijia.product.ProductCenter_message_video_kefu_Activity"
             android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".shuizuzhijia.product.ProductcenterSearchActivity"></activity>
     </application>
 
 </manifest>

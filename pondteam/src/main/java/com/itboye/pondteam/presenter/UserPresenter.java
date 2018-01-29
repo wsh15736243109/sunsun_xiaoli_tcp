@@ -147,8 +147,10 @@ public class UserPresenter extends BasePresenter implements
     public static String deviceSet_qibeng_fail = "_deviceSet_qibeng_fail";
     public static String queryProductIndex_success = "_queryProductIndex_success";
     public static String queryProductIndex_fail = "_queryProductIndex_fail";
-    public static String queryProductPost_success="_queryProductPost_success";
-    public static String queryProductPost_fail="_queryProductPost_fail";
+    public static String queryProductPost_success = "_queryProductPost_success";
+    public static String queryProductPost_fail = "_queryProductPost_fail";
+    public static String productSearch_success = "_productSearch_success";
+    public static String productSearch_fail = "_productSearch_success";
 
 
     public UserPresenter(Observer observer) {
@@ -1449,5 +1451,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.queryProductPost(cate_id, is_video, page, size);
+    }
+
+    @Override
+    public void productSearch(String name) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(productSearch_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(productSearch_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.productSearch(name);
     }
 }

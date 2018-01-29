@@ -3,6 +3,7 @@ package sunsun.xiaoli.jiarebang.shuizuzhijia.product;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
@@ -28,7 +29,7 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
     GridView listviewxl;
     UserPresenter userPresenter;
     private ArrayList<ProductBean.HomeListBean> homeListBeanArrayList;
-
+    EditText edit_inputcity;
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_product;
@@ -52,7 +53,13 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.edit_inputcity:
+                Intent intent = new Intent(getActivity(),
+                        ProductcenterSearchActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 
     @Override

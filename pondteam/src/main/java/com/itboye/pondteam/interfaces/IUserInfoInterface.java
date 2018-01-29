@@ -461,4 +461,10 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param size
      */
     void queryProductPost(int cate_id,int is_video,int page,int size);
+
+    /**
+     * 搜索
+     * @param name
+     */
+    void productSearch(String name);
 }
