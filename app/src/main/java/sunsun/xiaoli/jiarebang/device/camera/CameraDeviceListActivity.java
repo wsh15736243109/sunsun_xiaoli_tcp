@@ -343,7 +343,7 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
         switch (v.getId()) {
             case R.id.img_right:
             case R.id.btn_addnew:
-                showPopwindow(7);
+                showPopwindow(8);
                 break;
             case R.id.img_back:
                 finish();
@@ -378,13 +378,8 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 popWindow.dismiss();
                 Intent intent = new Intent(CameraDeviceListActivity.this, ActivityStepFirst.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("device_type", "摄像头");
                 intent.putExtra("device", DeviceType.DEVICE_CAMERA);
-                intent.putExtra("position", position);
                 startActivity(intent);
-//						Intent mainIntent = new Intent(AddDeviceNewActivity.this,
-//								MDeviceActivity.class);
-//						startActivity(mainIntent);
             }
         });
         open_camera.setOnClickListener(new View.OnClickListener() {
@@ -397,7 +392,6 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 Intent intent = new Intent(CameraDeviceListActivity.this,
                         AddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", position);
                 intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
             }
@@ -412,12 +406,8 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
                 Intent intent = new Intent(CameraDeviceListActivity.this,
                         ManualAddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", position);
                 intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
-//				Intent mainIntent = new Intent(AddDeviceNewActivity.this,
-//						ManualAddDeviceActivity.class);
-//				startActivity(mainIntent);
             }
         });
         camera_cancel_tv.setOnClickListener(new View.OnClickListener() {
@@ -441,7 +431,6 @@ public class CameraDeviceListActivity extends BaseActivity implements Observer, 
         ResultEntity entity = handlerError(data);
         try {
             swipe_layout.setRefreshing(false);
-//            ptr.refreshComplete();
             closeProgressDialog();
         } catch (Exception e) {
 

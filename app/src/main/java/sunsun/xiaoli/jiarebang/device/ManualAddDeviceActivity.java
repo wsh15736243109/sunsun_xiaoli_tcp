@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.presenter.UserPresenter;
@@ -47,7 +48,6 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
     private String did;
     private String nickName;
     private String psw;
-    int position;
     ImageView img_back;
     DeviceType deviceType;
 
@@ -60,7 +60,6 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
         manual_add_device_textView1.setText(R.string.shoudong_title2);
         mContext = this;
         deviceType = (DeviceType) getIntent().getSerializableExtra("device");
-        position = getIntent().getIntExtra("position", 0);
         aq_did = getIntent().getStringExtra("aq_did");
         mThis = this;
         userPresenter = new UserPresenter(this);
@@ -106,70 +105,76 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
 //                        return;
 //                    }
 //                } else {
-                switch (position) {
-                    case 0:
+                switch (deviceType) {
+                    case DEVICE_AQ806:
                         if (!did.startsWith("S03")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng806)));
                             return;
                         }
                         break;
-                    case 1:
+                    case DEVICE_AQ500:
                         if (!did.startsWith("S035")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng228)));
                             return;
                         }
                         break;
-                    case 2:
+                    case DEVICE_AQ700:
                         if (!did.startsWith("S037")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng228)));
                             return;
                         }
                         break;
-                    case 3:
-                        if (!did.startsWith("S02")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 4:
-                        if (!did.startsWith("S04")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 5:
-                        if (!did.startsWith("S05")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 6:
-                        if (!did.startsWith("S01")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 7:
-                        if (!did.startsWith("SCHD")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 8:
-                        if (!did.startsWith("S06")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 9:
-                        if (!did.startsWith("S07")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
-                            return;
-                        }
-                        break;
-                    case 10:
+                    case DEVICE_AQ118:
                         if (!did.startsWith("S08")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().name[position]));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng228)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_JIAREBANG:
+                        if (!did.startsWith("S02")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhinengjiarebang)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_PH:
+                        if (!did.startsWith("S04")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_yuancheng_ph)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_SHUIBENG:
+                        if (!did.startsWith("S05")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhinengbianpinshuibeng)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_GUOLVTONG:
+                        if (!did.startsWith("S01")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_chitangguolv)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_CAMERA:
+                        if (!did.startsWith("SCHD")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou_yihu) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_SHUIZUDENG:
+                        if (!did.startsWith("S06")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_shuizudeng)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_QIBENG:
+                        if (!did.startsWith("S07")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhinengqibeng)));
+                            return;
+                        }
+                        break;
+                    case DEVICE_WEISHIQI:
+                        if (!did.startsWith("S08")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_weishiqing)));
                             return;
                         }
                         break;

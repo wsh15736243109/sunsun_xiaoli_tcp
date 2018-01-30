@@ -54,6 +54,16 @@ public class ProductBean {
 		private String post_title;
 		private String main_img;
 
+		public int getLevel() {
+			return level;
+		}
+
+		public void setLevel(int level) {
+			this.level = level;
+		}
+
+		private int level;
+
 		public long getPost_date() {
 			return post_date;
 		}

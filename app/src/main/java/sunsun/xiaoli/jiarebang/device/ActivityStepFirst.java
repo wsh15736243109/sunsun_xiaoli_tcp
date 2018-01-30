@@ -8,8 +8,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.base.BaseActivity;
 
+import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
@@ -25,8 +27,7 @@ public class ActivityStepFirst extends BaseActivity {
     ImageView img_back, img_right;
     Button btn_next;
     RatioImageView img;
-    String type = "";
-    int position;
+    //    String type = "";
     App app;
     TextView txt_description;
 
@@ -50,34 +51,58 @@ public class ActivityStepFirst extends BaseActivity {
         instance = this;
         app = (App) getApplication();
         app.addDeviceFirst = this;
-        deviceType= (DeviceType) getIntent().getSerializableExtra("device");
+        deviceType = (DeviceType) getIntent().getSerializableExtra("device");
         aq_did = getIntent().getStringExtra("aq_did");
-        txt_title.setText( getString(R.string.add) + getIntent().getStringExtra("device_type"));
-        type = getIntent().getStringExtra("device_type");
-        position = getIntent().getIntExtra("position", 0);
-        if (type != null) {
-            if (deviceType == DeviceType.DEVICE_CAMERA) {
-                img.setBackgroundResource(R.drawable.smart_shexiangtou);
-                txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_shexiangtou)));
-            } else if (deviceType == DeviceType.DEVICE_AQ806) {
+        switch (deviceType) {
+            case DEVICE_AQ806:
                 img.setBackgroundResource(R.drawable.aq);
-            } else if (deviceType == DeviceType.DEVICE_AQ500) {
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng806));
+                break;
+            case DEVICE_AQ500:
                 img.setBackgroundResource(R.drawable.smart_500);
-            } else if (deviceType == DeviceType.DEVICE_PH) {
-                img.setBackgroundResource(R.drawable.smart_ph);
-                txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_smart_ph)));
-            } else if (deviceType == DeviceType.DEVICE_JIAREBANG) {
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng228));
+                break;
+            case DEVICE_AQ700:
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng700));
+                break;
+            case DEVICE_AQ118:
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng118));
+                break;
+            case DEVICE_JIAREBANG:
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_jiarebang)));
                 img.setBackgroundResource(R.drawable.add_jiarebangnew);
-            } else if (deviceType == DeviceType.DEVICE_GUOLVTONG) {
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhinengjiarebang));
+                break;
+            case DEVICE_PH:
+                img.setBackgroundResource(R.drawable.smart_ph);
+                txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_smart_ph)));
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_yuancheng_ph));
+                break;
+            case DEVICE_SHUIBENG:
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhinengbianpinshuibeng));
+                break;
+            case DEVICE_GUOLVTONG:
                 img.setBackgroundResource(R.drawable.pondteam_smartconfig);
-            } else if (deviceType == DeviceType.DEVICE_SHUIZUDENG) {
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_chitangguolv));
+                break;
+            case DEVICE_CAMERA:
+                img.setBackgroundResource(R.drawable.smart_shexiangtou);
+                txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_shexiangtou)));
+                txt_title.setText(getString(R.string.add) + (BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou)));
+                break;
+            case DEVICE_SHUIZUDENG:
                 img.setBackgroundResource(R.drawable.smart_light);
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_smart_light)));
-            } else if (deviceType == DeviceType.DEVICE_WEISHIQI) {
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_shuizudeng));
+                break;
+            case DEVICE_QIBENG:
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng));
+                break;
+            case DEVICE_WEISHIQI:
                 img.setBackgroundResource(R.drawable.smart_weishiqi);
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_weishiqi)));
-            }
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_weishiqing));
+                break;
         }
     }
 
@@ -90,8 +115,6 @@ public class ActivityStepFirst extends BaseActivity {
                 break;
             case R.id.btn_next:
                 intent = new Intent(this, ActivityInputWifiAndPass.class);
-                intent.putExtra("device_type", type);
-                intent.putExtra("position", position);
                 intent.putExtra("aq_did", aq_did == null ? "" : aq_did);
                 intent.putExtra("device", deviceType);
                 startActivity(intent);

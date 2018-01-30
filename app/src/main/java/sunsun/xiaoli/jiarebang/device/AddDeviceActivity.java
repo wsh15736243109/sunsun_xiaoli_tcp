@@ -56,7 +56,6 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
     ImageView img_back;
     DBManager dbManager;
     String aq_did;
-    int position;
     TextView txt_title_2;
     DeviceType deviceType;
 
@@ -68,7 +67,6 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
         mApp.mAddDeviceUi = this;
         mContext = this;
         aq_did = getIntent().getStringExtra("aq_did");
-        position = getIntent().getIntExtra("position", 0);
         deviceType = (DeviceType) getIntent().getSerializableExtra("device");
         txt_title.setText(getString(R.string.LANDEVICE));
         txt_title_2.setText(R.string.connect_device);
@@ -146,7 +144,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
 //                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), type.equalsIgnoreCase("S06-1") ? "ADT-C" : "ADT-H", mSelectDeviceInfo.getType(), extra);
 //                                            break;
                                         default:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid(),type), mSelectDeviceInfo.getType(), extra);
+                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid(), type), mSelectDeviceInfo.getType(), extra);
                                             break;
                                     }
                                 }
@@ -190,58 +188,63 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
         for (int i = 0; i < mApp.mLanDeviceList.size(); i++) {
             boolean hasAdd = false;
             SearchDeviceInfo deviceInfo = mApp.mLanDeviceList.get(i);
-            switch (position) {
-                case 0:
+            switch (deviceType) {
+                case DEVICE_AQ806:
                     if (!deviceInfo.getType().equalsIgnoreCase("S03")) {
                         continue;
                     }
                     break;
-                case 1:
+                case DEVICE_AQ500:
                     if (!deviceInfo.getType().equalsIgnoreCase("S03-1")) {
                         continue;
                     }
                     break;
-                case 2:
+                case DEVICE_AQ700:
                     if (!deviceInfo.getType().equalsIgnoreCase("S03-2")) {
                         continue;
                     }
                     break;
-                case 3:
+                case DEVICE_AQ118:
+                    if (!deviceInfo.getType().equalsIgnoreCase("S08")) {
+                        continue;
+                    }
+                    break;
+                case DEVICE_JIAREBANG:
                     if (!deviceInfo.getDid().startsWith("S02")) {
                         continue;
                     }
                     break;
-                case 4:
+                case DEVICE_PH:
                     if (!deviceInfo.getDid().startsWith("S04")) {
                         continue;
                     }
                     break;
-                case 5:
+                case DEVICE_SHUIBENG:
                     if (!deviceInfo.getDid().startsWith("S05")) {
                         continue;
                     }
                     break;
-                case 6:
+                case DEVICE_GUOLVTONG:
                     if (!deviceInfo.getDid().startsWith("S01")) {
                         continue;
                     }
                     break;
-                case 7:
+                case DEVICE_CAMERA:
                     if (!deviceInfo.getDid().startsWith("SCHD")) {
                         continue;
                     }
                     break;
-                case 8:
+                case DEVICE_SHUIZUDENG:
                     if (!deviceInfo.getDid().startsWith("S06")) {
                         continue;
                     }
                     break;
-                case 9:
+                case DEVICE_QIBENG:
                     if (!deviceInfo.getDid().startsWith("S07")) {
                         continue;
                     }
                     break;
-                case 10:
+                case DEVICE_WEISHIQI:
                     if (!deviceInfo.getDid().startsWith("S08")) {
                         continue;
                     }
@@ -302,7 +305,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
             } else if (deviceInfo.getType().equalsIgnoreCase("SCHD")) {
                 map.put("ItemIcon", R.drawable.device_shexiangtou);
             } else if (deviceInfo.getType().equalsIgnoreCase("S08")) {
-                map.put("ItemIcon", R.drawable.device_weishiqi);
+                map.put("ItemIcon", R.drawable.device_118);
             } else {
                 map.put("ItemIcon", R.drawable.ic_aplacher);
             }

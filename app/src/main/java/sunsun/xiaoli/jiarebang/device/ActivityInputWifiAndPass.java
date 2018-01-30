@@ -30,11 +30,9 @@ import sunsun.xiaoli.jiarebang.utils.DeviceType;
 public class ActivityInputWifiAndPass extends BaseActivity implements Observer {
     ImageView img_back;
     Button btn_search_device;
-    String type = "";
     App myApplication;
     EditText edit_wifiname, edit_wifipass;
     ToggleButton pass_hide_visible;
-    int position;
     UserPresenter userPresenter;
     String aq_did;
     public static ActivityInputWifiAndPass instance;
@@ -58,8 +56,6 @@ public class ActivityInputWifiAndPass extends BaseActivity implements Observer {
         myApplication.addDeviceInputWifi = this;
         userPresenter = new UserPresenter(this);
         aq_did = getIntent().getStringExtra("aq_did");
-        position = getIntent().getIntExtra("position", position);
-        type = getIntent().getStringExtra("device_type");
         deviceType= (DeviceType) getIntent().getSerializableExtra("device");
         wifiName = myApplication.aqSmartConfig.getCurrentWiFiSSID();
         if (wifiName == null || "".equals(wifiName)) {
@@ -80,26 +76,13 @@ public class ActivityInputWifiAndPass extends BaseActivity implements Observer {
         Intent intent = null;
         switch (v.getId()) {
             case R.id.btn_search_device:
-//                type = getIntent().getStringExtra("device_type");
-//                if (type != null) {
-//                    if (type.equals("摄像头")) {
-//                        intent = new Intent(this, VideoActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    } else if (type.equals("AQ")) {
-//                        intent = new Intent(this, ActivityStepThree.class);
-//                        startActivity(intent);
-//                    }
-//                }
                 wifi_name = edit_wifiname.getText().toString();
                 if (wifi_name.equals("")) {
                     MAlert.alert(getString(R.string.connect_wifi));
                     return;
                 }
                 intent = new Intent(this, ActivityStepThree.class);
-                intent.putExtra("position", position);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("type", type);
                 intent.putExtra("wifi_name", wifi_name);
                 intent.putExtra("wifi_pass", edit_wifipass.getText().toString());
                 intent.putExtra("device", deviceType);

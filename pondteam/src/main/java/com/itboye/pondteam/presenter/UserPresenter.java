@@ -151,6 +151,8 @@ public class UserPresenter extends BasePresenter implements
     public static String queryProductPost_fail = "_queryProductPost_fail";
     public static String productSearch_success = "_productSearch_success";
     public static String productSearch_fail = "_productSearch_success";
+    public static String getBanners_success="_getBanners_success";
+    public static String getBanners_fail="_getBanners_fail";
 
 
     public UserPresenter(Observer observer) {
@@ -1475,5 +1477,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.productSearch(name);
+    }
+
+    @Override
+    public void getBanners(int position) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(getBanners_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(getBanners_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.getBanners(position);
     }
 }

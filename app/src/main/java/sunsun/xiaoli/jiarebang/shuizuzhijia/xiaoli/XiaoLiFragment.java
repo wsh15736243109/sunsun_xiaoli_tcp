@@ -25,6 +25,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
+import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.custom.swipemenulistview.SwipeMenu;
@@ -50,6 +51,7 @@ import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.PushModel;
+import sunsun.xiaoli.jiarebang.custom.RatioImageView;
 import sunsun.xiaoli.jiarebang.custom.VpSwipeRefreshLayout;
 import sunsun.xiaoli.jiarebang.device.EditDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.jiarebang.DeviceJiaReBangDetailActivity;
@@ -68,6 +70,7 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.popwindow.SureDeleteDialog;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
@@ -114,6 +117,8 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
     private SimpleAdapter listItemsAdapter;
     private DeviceDetailModel deviceDetailModel;
 
+    View viewHeader;
+    private RatioImageView ratioImageView;
 
     public void showPushMessage() {
         mApp.showPushMessage(getActivity(), ummessage);
@@ -494,13 +499,18 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                         setDialoadDismiss(loadingDialog);
                     }
                 }, 2000);
+            } else if (entity.getEventType() == UserPresenter.getBanners_success) {
+                ArrayList<BannerBean> bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
+                XGlideLoader.displayImage(getActivity(), Const.imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), ratioImageView);
+            } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
+                MAlert.alert(entity.getData());
             }
         }
     }
 
     private void setDialoadDismiss(ProgressDialog loadingDialog) {
         try {
-                loadingDialog.dismiss();
+            loadingDialog.dismiss();
         } catch (Exception e) {
 
         }
@@ -585,6 +595,8 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         btn_addnew = (Button) footerView.findViewById(R.id.btn_addnew);
         btn_addnew.setOnClickListener(this);
         txt_add_jieshao = (TextView) footerView.findViewById(R.id.txt_add_jieshao);
+        viewHeader = View.inflate(getActivity(), R.layout.imageview, null);
+        ratioImageView = (RatioImageView) viewHeader.findViewById(R.id.img_header);
         ummessage = (PushModel) getActivity().getIntent().getSerializableExtra("ummessage");
         if (ummessage != null) {
             showPushMessage();
@@ -605,11 +617,12 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                 new int[]{R.id.textView_dev_name, R.id.textView_dev_did,
                         R.id.textView_dev_state1, R.id.textView_dev_state2,
                         R.id.imageView_dev_right_arrow, R.id.imageView_dev_logo});
-
+        mListView.addHeaderView(viewHeader);
         mListView.addFooterView(footerView);
         mListView.setAdapter(listItemsAdapter);
         img_back.setVisibility(View.GONE);
         txt_exist.setText(getString(R.string.exist_login));
+        userPresenter.getBanners(6079);
         initSwipListView();
         mContext = getActivity();
         mReadyExit = false;

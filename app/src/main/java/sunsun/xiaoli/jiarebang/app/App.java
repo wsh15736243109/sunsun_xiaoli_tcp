@@ -283,6 +283,7 @@ public class App extends MyApplication {
                 getString(R.string.device_zhineng806),
                 getString(R.string.device_zhineng228),
                 getString(R.string.device_zhineng700),
+                getString(R.string.device_zhineng118),
                 getString(R.string.device_zhinengjiarebang),
                 getString(R.string.device_yuancheng_ph),
                 getString(R.string.device_zhinengbianpinshuibeng),

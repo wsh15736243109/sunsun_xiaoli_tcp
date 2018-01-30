@@ -65,6 +65,7 @@ import sunsun.xiaoli.jiarebang.device.ActivityStepFirst;
 import sunsun.xiaoli.jiarebang.device.AddDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.FeedbackActivity;
 import sunsun.xiaoli.jiarebang.device.ManualAddDeviceActivity;
+import sunsun.xiaoli.jiarebang.utils.DeviceType;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 import sunsun.xiaoli.jiarebang.utils.wifiutil.TrafficBean;
 
@@ -142,7 +143,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
     HashMap<String, String> arrayList = new HashMap<>();
     ArrayList<String> arrayListValue = new ArrayList<>();
     private ListView listView;
-    private int[] flow=new int[2];
+    private int[] flow = new int[2];
     TextView txt_video;
     private String nickname;
     boolean clickBack = false;
@@ -749,7 +750,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 //                MAlert.alert(txt_fenbianlv_zhuangtai.getText());
                 break;
             case R.id.add:
-                showPopwindow(7);
+                showPopwindow(8);
 //                intent = new Intent(this, ActivityStepFirst.class);
 //                intent.putExtra("device_type", "摄像头");
 //                startActivity(intent);
@@ -839,7 +840,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 try {
                     flow[1] = 0;
                     totalFlow = 0;
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
                 MAlert.alert("视频累计流量已清零");
@@ -899,8 +900,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 Intent intent = new Intent(VideoActivity.this,
                         ActivityStepFirst.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("device_type", "摄像头");
-                intent.putExtra("position", position);
+                intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
                 finish();
             }
@@ -915,7 +915,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 Intent intent = new Intent(VideoActivity.this,
                         AddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", position);
+                intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
                 finish();
             }
@@ -930,7 +930,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 Intent intent = new Intent(VideoActivity.this,
                         ManualAddDeviceActivity.class);
                 intent.putExtra("aq_did", aq_did);
-                intent.putExtra("position", position);
+                intent.putExtra("device", DeviceType.DEVICE_CAMERA);
                 startActivity(intent);
                 finish();
             }

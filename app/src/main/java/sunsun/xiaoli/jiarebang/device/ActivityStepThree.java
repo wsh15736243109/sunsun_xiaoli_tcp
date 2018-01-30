@@ -24,6 +24,7 @@ import com.hiflying.smartlink.ISmartLinker;
 import com.hiflying.smartlink.OnSmartLinkListener;
 import com.hiflying.smartlink.SmartLinkedModule;
 import com.hiflying.smartlink.v7.MulticastSmartLinker;
+import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.presenter.UserPresenter;
@@ -85,7 +86,6 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
     private Handler mTimeHandler;
 
     String aq_did;
-    int position;
     DeviceType deviceType;
 
     @Override
@@ -107,8 +107,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         alert.setCancelable(true);
         smartConfigType = SmartConfigType.SEARCHING;
         setZhuangTai(smartConfigType);
-        position = getIntent().getIntExtra("position", 0);
-        type = getIntent().getStringExtra("type");
+//        type = getIntent().getStringExtra("type");
         deviceType = (DeviceType) getIntent().getSerializableExtra("device");
         wifiName = getIntent().getStringExtra("wifi_name");
         wifiPass = getIntent().getStringExtra("wifi_pass");
@@ -256,7 +255,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     HashMap<String, String> hashMap = new HashMap<>();
                     hashMap.put("pwd", searchDeviceInfo.getPwd());
                     String extra = gson.toJson(hashMap);
-                    userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().name[7], "chiniao_wifi_camera", extra);
+                    userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou_yihu) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou), "chiniao_wifi_camera", extra);
                 } else {
                     HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("first_upd", System.currentTimeMillis() + "");
@@ -267,10 +266,10 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     String extra = gson.toJson(hashMap);
                     switch (deviceType) {
                         case DEVICE_AQ500:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().name[1], "S03-1", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng118), "S03-1", extra);
                             break;
                         case DEVICE_AQ700:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().name[2], "S03-2", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);
                             break;
                         default:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(), type), type, extra);
@@ -458,6 +457,8 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(ActivityStepThree.this, AddDeviceActivity.class);
+                intent.putExtra("device", deviceType);
+                intent.putExtra("aq_did", aq_did);
                 startActivity(intent);
             }
         });
@@ -567,61 +568,66 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         }
         did = deviceInfo.getDid();
         Log.v("stepThree", "搜索中");
-        switch (position) {
-            case 0:
+        switch (deviceType) {
+            case DEVICE_AQ806:
                 if (!deviceInfo.getType().equalsIgnoreCase("S03")) {
                     return;
                 }
                 break;
-            case 1:
+            case DEVICE_AQ500:
                 if (!deviceInfo.getType().equalsIgnoreCase("S03-1")) {
                     return;
                 }
                 break;
-            case 2:
+            case DEVICE_AQ700:
                 if (!deviceInfo.getType().equalsIgnoreCase("S03-2")) {
                     return;
                 }
                 break;
-            case 3:
+            case DEVICE_AQ118:
+                if (!deviceInfo.getType().equalsIgnoreCase("S08")) {
+                    return;
+                }
+                break;
+            case DEVICE_JIAREBANG:
                 if (!deviceInfo.getType().equalsIgnoreCase("S02")) {
                     return;
                 }
                 break;
-            case 4:
+            case DEVICE_PH:
                 if (!deviceInfo.getType().equalsIgnoreCase("S04")) {
                     return;
                 }
                 break;
-            case 5:
+            case DEVICE_SHUIBENG:
                 if (!deviceInfo.getType().startsWith("S05")) {
                     return;
                 }
                 break;
-            case 6:
+            case DEVICE_GUOLVTONG:
                 if (!deviceInfo.getType().equalsIgnoreCase("S01")) {
                     return;
                 }
                 break;
-            case 7:
+            case DEVICE_CAMERA:
                 if (!did.startsWith("SCHD")) {
                     return;
                 } else {
 //                    isBusy = true;
                 }
                 break;
-            case 8:
+            case DEVICE_SHUIZUDENG:
                 if (!deviceInfo.getType().startsWith("S06")) {
                     //设备类型为S06-1,S06-2
                     return;
                 }
                 break;
-            case 9:
+            case DEVICE_QIBENG:
                 if (!deviceInfo.getType().equalsIgnoreCase("S07")) {
                     return;
                 }
                 break;
-            case 10:
+            case DEVICE_WEISHIQI:
                 if (!deviceInfo.getType().equalsIgnoreCase("S08")) {
                     return;
                 }

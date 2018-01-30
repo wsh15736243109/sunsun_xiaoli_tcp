@@ -54,6 +54,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.device_aq,
             R.drawable.device_500,
             R.drawable.device_700,
+            R.drawable.device_118,
             R.drawable.device_jiarebang,
             R.drawable.device_ph,
             R.drawable.device_shuibeng,
@@ -69,8 +70,20 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.add_device_52, R.drawable.add_device_52,
             R.drawable.add_device_52, R.drawable.add_device_52,
             R.drawable.add_device_52, R.drawable.add_device_52,
-            R.drawable.add_device_52, R.drawable.add_device_52};
+            R.drawable.add_device_52, R.drawable.add_device_52, R.drawable.add_device_52};
 
+    DeviceType deviceTypes[] = {DeviceType.DEVICE_AQ806,
+            DeviceType.DEVICE_AQ500,
+            DeviceType.DEVICE_AQ700,
+            DeviceType.DEVICE_AQ118,
+            DeviceType.DEVICE_JIAREBANG,
+            DeviceType.DEVICE_PH,
+            DeviceType.DEVICE_SHUIBENG,
+            DeviceType.DEVICE_GUOLVTONG,
+            DeviceType.DEVICE_CAMERA,
+            DeviceType.DEVICE_SHUIZUDENG,
+            DeviceType.DEVICE_QIBENG,
+            DeviceType.DEVICE_WEISHIQI};
     PopupWindow popupWindow;
     private App myApp;
     TextView txt_title;
@@ -92,43 +105,8 @@ public class AddDeviceNewActivity extends BaseActivity implements
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                // TODO Auto-generated method stub
-                switch (position) {
-                    case 0:
-                        deviceType = DeviceType.DEVICE_AQ806;
-                        break;
-                    case 1:
-                        deviceType = DeviceType.DEVICE_AQ500;
-                        break;
-                    case 2:
-                        deviceType = DeviceType.DEVICE_AQ700;
-                        break;
-                    case 3:
-                        deviceType = DeviceType.DEVICE_JIAREBANG;
-                        break;
-                    case 4:
-                        deviceType = DeviceType.DEVICE_PH;
-                        break;
-                    case 5:
-                        deviceType = DeviceType.DEVICE_SHUIBENG;
-                        break;
-                    case 6:
-                        deviceType = DeviceType.DEVICE_GUOLVTONG;
-                        break;
-                    case 7:
-                        deviceType = DeviceType.DEVICE_CAMERA;
-                        break;
-                    case 8:
-                        deviceType = DeviceType.DEVICE_SHUIZUDENG;
-                        break;
-                    case 9:
-                        deviceType = DeviceType.DEVICE_QIBENG;
-                        break;
-                    case 10:
-                        deviceType = DeviceType.DEVICE_WEISHIQI;
-                        break;
-                }
-                showPopwindow(position);
+                deviceType = deviceTypes[position];
+                showPopwindow();
 
             }
         });
@@ -140,7 +118,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
         myApp.addDeviceUI = null;
     }
 
-    private void showPopwindow(final int position) {
+    private void showPopwindow() {
         View popView = View.inflate(this, R.layout.add_menu_windss, null);
 
         TextView open_configuration = (TextView) popView
@@ -175,8 +153,6 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         ActivityStepFirst.class);
-                mainIntent.putExtra("device_type", App.getInstance().name[position]);
-                mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
             }
@@ -190,8 +166,6 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         AddDeviceActivity.class);
-                mainIntent.putExtra("device_type", App.getInstance().name[position]);
-                mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
             }
@@ -205,8 +179,6 @@ public class AddDeviceNewActivity extends BaseActivity implements
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         ManualAddDeviceActivity.class);
-                mainIntent.putExtra("device_type", App.getInstance().name[position]);
-                mainIntent.putExtra("position", position);
                 mainIntent.putExtra("device", deviceType);
                 startActivity(mainIntent);
             }
@@ -228,13 +200,13 @@ public class AddDeviceNewActivity extends BaseActivity implements
 
     @SuppressWarnings("unused")
     public void onAdapter() {
-        benas = new ArrayList<AddBenas>();
+        benas = new ArrayList<>();
         for (int i = 0; i < App.getInstance().name.length; i++) {
             AddBenas addBenas = new AddBenas();
             addBenas.setName(App.getInstance().name[i]);
             addBenas.setBitmp(add[i]);
             addBenas.setImg(url[i]);
-//            addBenas.setDeviceType(url[i]);
+            addBenas.setDeviceType(deviceTypes[i]);
             benas.add(addBenas);
         }
         adapter = new AddDeviceAdapter(benas, myApp.addDeviceUI);

@@ -1,7 +1,9 @@
 package sunsun.xiaoli.jiarebang.shuizuzhijia.product;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -17,59 +19,71 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.ProductListAdapter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
+
+import static com.itboye.pondteam.utils.Const.videoWeb;
 
 public class ProducenterShiPinFragment extends LingShouBaseFragment implements Observer {
 
 
-	private ListView xlistview;
-	private int pageNum = 1;
-	private int pageSize=10;
-	private BaseAdapter adapter;
+    private ListView xlistview;
+    private int pageNum = 1;
+    private int pageSize = 10;
+    private BaseAdapter adapter;
 //	 List<DeleteBeanProducer>dataList=new ArrayList<>();
-	 
-	 private RelativeLayout topbar;
-	 int cate_id;
-	private UserPresenter userPresenter;
-	private ProductBean homeListBeanArrayList;
 
-	@Override
-	protected int getLayoutId() {
-		return R.layout.activity_cahkan_gengduo_pinglun;
-	}
+    private RelativeLayout topbar;
+    int cate_id;
+    private UserPresenter userPresenter;
+    private ProductBean homeListBeanArrayList;
 
-	@Override
-	protected void initData() {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_cahkan_gengduo_pinglun;
+    }
 
-	}
+    @Override
+    protected void initData() {
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		cate_id = getActivity().getIntent().getIntExtra("cate_id", 0);
-		userPresenter = new UserPresenter(this);
-		userPresenter.queryProductPost(cate_id, 1, pageNum, pageSize);
+    }
 
-	}
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        cate_id = getActivity().getIntent().getIntExtra("cate_id", 0);
+        userPresenter = new UserPresenter(this);
+        userPresenter.queryProductPost(cate_id, 1, pageNum, pageSize);
+        xlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("title", homeListBeanArrayList.getList().get(position).getPost_title())
+                        .putExtra("url", videoWeb + homeListBeanArrayList.getList().get(position).getId()));
 
-	@Override
-	public void onClick(View v) {
+            }
+        });
 
-	}
+    }
 
-	@Override
-	public void update(Observable o, Object data) {
-		ResultEntity entity = handlerError(data);
-		if (entity != null) {
-			if (entity.getCode() != 0) {
-				MAlert.alert(entity.getMsg());
-			} else {
-				if (entity.getEventType() == UserPresenter.queryProductPost_success) {
-					homeListBeanArrayList = (ProductBean) entity.getData();
-					xlistview.setAdapter(new ProductListAdapter(homeListBeanArrayList));
-				} else if (entity.getEventType() == UserPresenter.queryProductPost_fail) {
-					MAlert.alert(entity.getData());
-				}
-			}
-		}
-	}
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    @Override
+    public void update(Observable o, Object data) {
+        ResultEntity entity = handlerError(data);
+        if (entity != null) {
+            if (entity.getCode() != 0) {
+                MAlert.alert(entity.getMsg());
+            } else {
+                if (entity.getEventType() == UserPresenter.queryProductPost_success) {
+                    homeListBeanArrayList = (ProductBean) entity.getData();
+                    xlistview.setAdapter(new ProductListAdapter(homeListBeanArrayList));
+                } else if (entity.getEventType() == UserPresenter.queryProductPost_fail) {
+                    MAlert.alert(entity.getData());
+                }
+            }
+        }
+    }
 }

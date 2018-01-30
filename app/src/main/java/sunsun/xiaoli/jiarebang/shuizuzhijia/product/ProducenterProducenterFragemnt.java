@@ -1,7 +1,8 @@
 package sunsun.xiaoli.jiarebang.shuizuzhijia.product;
 
-import android.os.Bundle;
+import android.content.Intent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -17,6 +18,9 @@ import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.ProductListAdapter;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
+
+import static com.itboye.pondteam.utils.Const.articalWeb;
 
 public class ProducenterProducenterFragemnt extends LingShouBaseFragment implements Observer {
 
@@ -43,13 +47,15 @@ public class ProducenterProducenterFragemnt extends LingShouBaseFragment impleme
         cate_id = getActivity().getIntent().getIntExtra("cate_id", 0);
         userPresenter = new UserPresenter(this);
         userPresenter.queryProductPost(cate_id, 0, pageNum, pageSize);
+        xlistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(new Intent(getActivity(), WebActivity.class)
+                        .putExtra("title", homeListBeanArrayList.getList().get(position).getName())
+                        .putExtra("url", articalWeb + homeListBeanArrayList.getList().get(position).getId()));
+            }
+        });
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
-
 
 
     @Override

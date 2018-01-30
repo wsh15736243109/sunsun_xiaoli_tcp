@@ -95,23 +95,15 @@ public class AddPondDevice extends BaseActivity implements Observer {
                 MAlert.alert(getString(R.string.did_length_too_short));
                 return;
             }
-            showPopwindow(6);
+            showPopwindow();
         } else if (i == R.id.btn_cancel) {
             finish();
-//                String did = getCustomText(ed_device_id);
-//                String uid = SPUtils.get(this, null, Const.UID, "") + "";
-//                if (isEmpty(did)) {
-//                    MAlert.alert(getString(R.stringWeeks.deviceid_empty));
-//                    return;
-//                }
-//                userPresenter.addDevice(uid,did,"");
-
         } else if (i == R.id.img_back) {
             finish();
         }
     }
 
-    private void showPopwindow(final int position) {
+    private void showPopwindow() {
         View popView = View.inflate(this, R.layout.add_menu_windss, null);
 
         TextView open_configuration = (TextView) popView
@@ -145,8 +137,6 @@ public class AddPondDevice extends BaseActivity implements Observer {
             public void onClick(View v) {
                 popWindow.dismiss();
                 Intent intent = new Intent(AddPondDevice.this, ActivityInputWifiAndPass.class);
-                intent.putExtra("device_type", getIntent().getStringExtra("device_type"));
-                intent.putExtra("position", position);
                 intent.putExtra("device", deviceType);
                 startActivity(intent);
             }
@@ -160,9 +150,7 @@ public class AddPondDevice extends BaseActivity implements Observer {
                 popWindow.dismiss();
                 Intent intent = new Intent(AddPondDevice.this,
                         AddDeviceActivity.class);
-                intent.putExtra("device_type", getIntent().getStringExtra("device_type"));
                 intent.putExtra("device", deviceType);
-                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
@@ -176,13 +164,8 @@ public class AddPondDevice extends BaseActivity implements Observer {
                 popWindow.dismiss();
                 Intent intent = new Intent(AddPondDevice.this,
                         ManualAddDeviceActivity.class);
-                intent.putExtra("device_type", getIntent().getStringExtra("device_type"));
                 intent.putExtra("device", deviceType);
-                intent.putExtra("position", position);
                 startActivity(intent);
-//				Intent mainIntent = new Intent(AddDeviceNewActivity.this,
-//						ManualAddDeviceActivity.class);
-//				startActivity(mainIntent);
             }
         });
         camera_cancel_tv.setOnClickListener(new View.OnClickListener() {

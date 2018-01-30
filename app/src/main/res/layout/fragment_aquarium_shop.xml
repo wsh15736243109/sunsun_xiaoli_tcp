@@ -14,14 +14,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView
-            android:id="@+id/shop_carouseview"
+        <!--<sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView-->
+            <!--android:id="@+id/shop_carouseview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/DIMEN_200DP"-->
+            <!--android:background="@color/red">-->
+
+        <!--</sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>-->
+        <sunsun.xiaoli.jiarebang.custom.RatioImageView
+            android:id="@+id/img_shop_first"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/DIMEN_200DP"
-            android:background="@color/red">
+            android:layout_height="wrap_content"
+            app:ratio="2">
 
-        </sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>
-
+        </sunsun.xiaoli.jiarebang.custom.RatioImageView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,7 +38,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/red500"
                 app:ratio="2">
 
             </sunsun.xiaoli.jiarebang.custom.RatioImageView>
@@ -42,7 +47,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/main_green"
                 app:ratio="2">
 
             </sunsun.xiaoli.jiarebang.custom.RatioImageView>

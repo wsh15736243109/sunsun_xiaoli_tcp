@@ -34,7 +34,7 @@ public class ProducenterChildActivity extends BaseActivity implements
     UserPresenter userPresenter;
     int parent;
     private ArrayList<ProductBean.HomeListBean> homeListBeanArrayList;
-
+    ImageView img_back;
     @Override
     @SuppressLint("InlinedApi")
     protected void onCreate(Bundle arg0) {

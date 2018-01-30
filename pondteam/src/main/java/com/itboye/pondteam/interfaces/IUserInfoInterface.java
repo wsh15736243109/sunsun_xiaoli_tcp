@@ -467,4 +467,9 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param name
      */
     void productSearch(String name);
+    /**
+     * 轮播图
+     * @param
+     */
+    void getBanners(int position);
 }

@@ -94,6 +94,8 @@ public class Const {
 
     //单图片查看接口
     public static final String imgurl = "http://dev.sale.sunsunxiaoli.com/index.php/picture/index?id=";
+    //单图片查看接口
+    public static final String imgSunsunUrl = "http://api.sunsunxiaoli.com/index.php/picture/index?id=";
     //注册
     public static String webRegisterUrl = "http://api.ryzcgf.com/public/web.php/registerByEmail/repairer";
     //用户协议
@@ -262,6 +264,9 @@ public class Const {
     public static float zoom = 12;//地图缩放级别
 
     public static String sendCodeType;
+
+    public static String articalWeb = "http://api.sunsunxiaoli.com/web.php/productcenter/article?id=";
+    public static String videoWeb = "http://api.sunsunxiaoli.com/web.php/productcenter/video?id=";
 
     public static void setSendCodeType(String sms) {
         sendCodeType = sms;

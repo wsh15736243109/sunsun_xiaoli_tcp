@@ -5,6 +5,7 @@ import android.telephony.TelephonyManager;
 
 import com.google.gson.reflect.TypeToken;
 import com.itboye.pondteam.app.MyApplication;
+import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.bean.PersonDataBean;
@@ -137,6 +138,7 @@ public class UserResponsitory extends BaseNetRepository implements
     private String BY_ProductCenter_cate = "BY_ProductCenter_cate";//产品
     private String BY_ProductCenter_post = "BY_ProductCenter_post";//产品/视频列表
     private String BY_ProductCenter_search = "BY_ProductCenter_search";//搜索
+    private String By_Banners_query = "By_Banners_query";//轮播
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1615,6 +1617,22 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_ProductCenter_search, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<ProductBean.HomeListBean>>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void getBanners(int position) {
+        Type type = new TypeToken<ArrayList<BannerBean>>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("position", position);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(By_Banners_query, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ArrayList<BannerBean>>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();
