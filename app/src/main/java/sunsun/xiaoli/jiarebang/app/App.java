@@ -56,6 +56,7 @@ import sunsun.xiaoli.jiarebang.device.DeviceActivity;
 import sunsun.xiaoli.jiarebang.device.EditDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.ManualAddDeviceActivity;
 import sunsun.xiaoli.jiarebang.device.VersionUpdateActivity;
+import sunsun.xiaoli.jiarebang.device.aq118.Aq118DetailActivity;
 import sunsun.xiaoli.jiarebang.device.camera.CameraDeviceListActivity;
 import sunsun.xiaoli.jiarebang.device.jiarebang.DeviceJiaReBangDetailActivity;
 import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
@@ -112,6 +113,7 @@ public class App extends MyApplication {
     public DevicePHDetailActivity devicePhUI = null;
     public DeviceShuiBengDetailActivity deviceShuiBengUI = null;
     public DeviceJiaReBangDetailActivity deviceJiaReBangUI = null;
+    public Aq118DetailActivity aq118DetailActivityUI = null;
     public VersionUpdateActivity versionUpdateActivityUI = null;
     public ActivityStepThree addDeviceThird = null;
     //    public Database mDatabase;

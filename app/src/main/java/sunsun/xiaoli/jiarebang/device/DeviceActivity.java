@@ -53,6 +53,7 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.PushModel;
 import sunsun.xiaoli.jiarebang.custom.VpSwipeRefreshLayout;
+import sunsun.xiaoli.jiarebang.device.aq118.Aq118DetailActivity;
 import sunsun.xiaoli.jiarebang.device.jiarebang.DeviceJiaReBangDetailActivity;
 import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
 import sunsun.xiaoli.jiarebang.device.jinligang.JinLiGangDetailActivity;
@@ -64,7 +65,6 @@ import sunsun.xiaoli.jiarebang.device.pondteam.ActivityPondDeviceDetail;
 import sunsun.xiaoli.jiarebang.device.pondteam.AddPondDevice;
 import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity;
-import sunsun.xiaoli.jiarebang.device.weishiqi.WeiShiQiDetailActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.popwindow.SureDeleteDialog;
@@ -196,10 +196,11 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 currentType = listItems.get(position).get("type").toString();
                 extra = listItems.get(position).get("extra").toString();
                 loadingDialog = new ProgressDialog(DeviceActivity.this);
-                if (currentDid.startsWith("S08")) {
-                    startActivity(new Intent(DeviceActivity.this, WeiShiQiDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
-                    return;
-                }
+//                if (currentDid.startsWith("S09")) {
+//                    //喂食器调跳转
+//                    startActivity(new Intent(DeviceActivity.this, WeiShiQiDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
+//                    return;
+//                }
                 if (!BuildConfig.APP_TYPE.equals("pondTeam")) {
                     if (!currentDid.toLowerCase().startsWith("SCHD".toLowerCase())) {
 //                        loadingDialog.setTitle(getString(R.string.tips));
@@ -393,7 +394,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
             map.put("type", arrayList.get(i).getDevice_type());
             map.put("ItemRightArrow", R.drawable.ic_right_arrow);
             if (!BuildConfig.APP_TYPE.equals("pondTeam")) {
-                if (arrayList.get(i).getDid().startsWith("S01")) {
+                if (arrayList.get(i).getDevice_type().startsWith("S01")) {
                     //过滤桶
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_chitangguolv : R.drawable.off_pondteam);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S02")) {
@@ -419,9 +420,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 } else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
                     map.put("ItemIcon", R.drawable.device_shexiangtou);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S08")) {
-                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_weishiqi : R.drawable.off_weishiqi);
-                } else {
-                    map.put("ItemIcon", R.drawable.ic_aplacher);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_118 : R.drawable.off_aq118);
                 }
             } else {
                 map.put("ItemIcon", R.drawable.icon);
@@ -684,8 +683,8 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                     //CP1000
                     intent = new Intent(DeviceActivity.this, DeviceQiBengDetailActivity.class);
                 } else if (deviceType.contains("S08")) {
-                    //变频水泵
-                    intent = new Intent(DeviceActivity.this, DeviceShuiBengDetailActivity.class);
+                    //AQ118
+                    intent = new Intent(DeviceActivity.this, Aq118DetailActivity.class);
                 } else if (deviceType.contains("S09")) {
                     //变频水泵
                     intent = new Intent(DeviceActivity.this, DeviceShuiBengDetailActivity.class);

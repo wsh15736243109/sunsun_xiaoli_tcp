@@ -69,7 +69,6 @@ public class Ph806JiaoZhunActivity extends BaseActivity implements Observer {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            delayTime--;
             mydialog.txt_seconds.setText("剩余" + (delayTime) + "秒");
             if (delayTime == 7) {
                 userPresenter.deviceSet_806(mApp.jinLiGangdetailUI.deviceDetailModel.getDid(), "", "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, (int) (jiaozhunValue * 100),"");
@@ -79,6 +78,7 @@ public class Ph806JiaoZhunActivity extends BaseActivity implements Observer {
                 mydialog.txt_tips.setText(isSuccess ? "电极校准成功" : "电极校准失败");
                 handler.removeCallbacks(runnable);
             }
+            delayTime--;
             handler.postDelayed(runnable, 1000);
         }
     };

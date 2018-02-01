@@ -123,13 +123,20 @@ public class UserResponsitory extends BaseNetRepository implements
 
     private String jiaReBangExtraUpdate = "By_SunsunUserDevice_updateHeatingExtra";//加热棒额外信息修改
     private String beginUpdateADT = "By_SunsunAdt_updateFirmware";
+    private String beginUpdateCp1000 = "By_SunsunCp1000_updateFirmware";
+    private String beginUpdateAQ118 = "By_SunsunAq118_updateFirmware";
     private String getMostNewADT = "By_SunsunAdt_queryLatest";
+    private String getMostNewCP1000 = "By_SunsunCp1000_queryLatest";
+    private String getMostNewAQ118 = "By_SunsunAq118_queryLatest";
+
     private String adtExtraUpdate = "By_SunsunUserDevice_updateAdtExtra";
     private String shuibengExtraUpdate = "By_SunsunUserDevice_updateWaterPumpExtra";
     private String sendEmailCode = "By_SecurityCode_sendEmail";
-    private String authDevicePwd_CP = "By_SunsunCp1000_auth";//CP1000验证接口
+    private String authDevicePwd_CP = "By_SunsunCp1000_auth";
+    private String authDevicePwd_AQ118 = "By_SunsunAq118_auth";//AQ118验证接口
     private String getDeviceCP1000Detail = "By_SunsunCp1000_deviceInfo";//获取CP1000设备信息接口
     private String getDeviceWeishiQi = "By_SunsunWeiShiQi_deviceInfo";//获取喂食器设备信息接口
+    private String getDeviceAQ118 = "By_SunsunAq118_deviceInfo";//获取AQ-118设备信息接口
     private String updateMobileMsg = "By_SunsunUserDevice_update";//更改设备信息
     private String deviceSet_qibeng = "By_SunsunCp1000_devicesCtrl";//CP1000設置接口
 
@@ -290,6 +297,10 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = getMostNewWaterPumpDevice;
         } else if (did.startsWith("S06")) {
             typeKey = getMostNewADT;
+        }else if (did.startsWith("S07")) {
+            typeKey = getMostNewCP1000;
+        }else if (did.startsWith("S08")) {
+            typeKey = getMostNewAQ118;
         }
         map.put("did", did);
         byjsonRequest
@@ -320,6 +331,10 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = beginUpdateShuiBeng;
         } else if (did.startsWith("S06")) {
             typeKey = beginUpdateADT;
+        } else if (did.startsWith("S07")) {
+            typeKey = beginUpdateCp1000;
+        }else if (did.startsWith("S08")) {
+            typeKey = beginUpdateAQ118;
         }
         map.put("did", did);
         byjsonRequest
@@ -683,7 +698,7 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = getDeviceCP1000Detail;
         }
         if (did.startsWith("S08")) {
-            typeKey = getDeviceWeishiQi;
+            typeKey = getDeviceAQ118;
         }
         byjsonRequest
                 .setTypeVerParamsAndReturnClass(typeKey, apiVer, map, type)
@@ -1024,6 +1039,9 @@ public class UserResponsitory extends BaseNetRepository implements
         } else if (deviceType.startsWith("S07")) {
             //CP1000验证
             typekey = authDevicePwd_CP;
+        }else if (deviceType.startsWith("S08")) {
+            //CP1000验证
+            typekey = authDevicePwd_AQ118;
         }
         byjsonRequest
                 .setTypeVerParamsAndReturnClass(typekey, apiVer, map, type)
@@ -1500,6 +1518,8 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (did.startsWith("S07")) {
             typeKey = getDeviceCP1000Detail;
+        } if (did.startsWith("S08")) {
+            typeKey = getDeviceAQ118;
         }
         map.put("did", did);
         map.put("uid", uid);

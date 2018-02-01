@@ -175,6 +175,7 @@
         <activity android:name=".device.pondteam.ActivityChaZuoBDetail" />
         <activity android:name=".device.pondteam.PondTeamRegisterActivity" />
         <activity android:name=".device.pondteam.WenDuPeriodActivity" />
+        <activity android:name=".device.aq118.Aq118DetailActivity"></activity>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
