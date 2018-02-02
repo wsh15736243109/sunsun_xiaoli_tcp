@@ -151,8 +151,10 @@ public class UserPresenter extends BasePresenter implements
     public static String queryProductPost_fail = "_queryProductPost_fail";
     public static String productSearch_success = "_productSearch_success";
     public static String productSearch_fail = "_productSearch_success";
-    public static String getBanners_success="_getBanners_success";
-    public static String getBanners_fail="_getBanners_fail";
+    public static String getBanners_success = "_getBanners_success";
+    public static String getBanners_fail = "_getBanners_fail";
+    public static String branchSearch_success="_branchSearch_success";
+    public static String branchSearch_fail="_branchSearch_fail";
 
 
     public UserPresenter(Observer observer) {
@@ -1501,5 +1503,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.getBanners(position);
+    }
+
+    @Override
+    public void branchSearch(String city, String area, double longValue, double lati, int page, int size) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(branchSearch_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(branchSearch_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.branchSearch(city, area, longValue, lati, page, size);
     }
 }

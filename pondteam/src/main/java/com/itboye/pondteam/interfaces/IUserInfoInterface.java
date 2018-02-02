@@ -472,4 +472,15 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param
      */
     void getBanners(int position);
+
+    /**
+     * 搜索门店
+     * @param city
+     * @param area
+     * @param longValue
+     * @param lati
+     * @param page
+     * @param size
+     */
+    void branchSearch(String city, String area, double longValue, double lati, int page, int size);
 }

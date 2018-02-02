@@ -661,5 +661,6 @@
     <string name="produceter_message">产品信息</string>
     <string name="produceter_video">视频浏览</string>
     <string name="produceter_rengong">人工客服</string>
-    <string name="device_zhineng118">智能温度控制器AQ-118</string>
+    <string name="device_zhineng118">智能溫度控制器AQ-118</string>
+    <string name="store_query">门店查询</string>
 </resources>

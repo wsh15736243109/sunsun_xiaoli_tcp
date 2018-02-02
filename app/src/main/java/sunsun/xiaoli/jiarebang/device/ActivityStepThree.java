@@ -109,7 +109,6 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         setZhuangTai(smartConfigType);
 //        type = getIntent().getStringExtra("type");
         deviceType = (DeviceType) getIntent().getSerializableExtra("device");
-        MAlert.alert(deviceType);
         wifiName = getIntent().getStringExtra("wifi_name");
         wifiPass = getIntent().getStringExtra("wifi_pass");
 //        did = getIntent().getStringExtra("did");

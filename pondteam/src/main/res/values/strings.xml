@@ -678,4 +678,5 @@
 
     <string name="guanjian">输入查询的关键字</string>
     <string name="device_zhineng118">智能温度控制器AQ-118</string>
+    <string name="store_query">门店查询</string>
 </resources>
