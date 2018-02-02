@@ -28,15 +28,20 @@ import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapView;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.db.DBManager;
+import com.itboye.pondteam.presenter.UserPresenter;
+
+import java.util.Observable;
+import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 
 /**
  * 门店
  *
  * @author liu
  */
-public class StoreFragment extends LingShouBaseFragment implements OnClickListener {
+public class StoreFragment extends LingShouBaseFragment implements OnClickListener, Observer, LocationUtil.OnLocationResult {
 
     int searchType = 0; // 搜索的类型，在显示时区分
 
@@ -117,6 +122,8 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     private LocationClient mLocClient;
     public static String addrDetail_navigation;
 
+    UserPresenter userPresenter;
+    LocationUtil locationUtil;
 
     @Override
     protected int getLayoutId() {
@@ -125,6 +132,17 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 
     @Override
     protected void initData() {
+        userPresenter=new UserPresenter(this);
+        locationUtil=new LocationUtil(getActivity(),this);
+    }
+
+    @Override
+    public void update(Observable o, Object data) {
+
+    }
+
+    @Override
+    public void getLatAndLng(String cityName, double lat, double lng, String areaName) {
 
     }
 

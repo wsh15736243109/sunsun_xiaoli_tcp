@@ -283,7 +283,7 @@ public class App extends MyApplication {
     private void initDeviceTypeName() {
         name = new String[]{
                 getString(R.string.device_zhineng806),
-                getString(R.string.device_zhineng228),
+                getString(R.string.device_zhineng500),
                 getString(R.string.device_zhineng700),
                 getString(R.string.device_zhineng118),
                 getString(R.string.device_zhinengjiarebang),

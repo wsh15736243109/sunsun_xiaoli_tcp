@@ -135,10 +135,10 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                     String extra = gson.toJson(hashMap);
                                     switch (deviceType) {
                                         case DEVICE_AQ500:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[1], "S03-1", extra);
+                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng500), "S03-1", extra);
                                             break;
                                         case DEVICE_AQ700:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[2], "S03-2", extra);
+                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);
                                             break;
 //                                        case DEVICE_SHUIZUDENG:
 //                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), type.equalsIgnoreCase("S06-1") ? "ADT-C" : "ADT-H", mSelectDeviceInfo.getType(), extra);

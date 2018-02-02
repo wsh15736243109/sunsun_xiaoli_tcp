@@ -338,7 +338,7 @@ public class Util {
         } else if (did.startsWith("S07")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng);
         } else if (did.startsWith("S08")) {
-            return MyApplication.getInstance().getResources().getString(R.string.device_zhineng700);
+            return MyApplication.getInstance().getResources().getString(R.string.device_zhineng118);
         } else if (did.startsWith("SCHD")) {
             return BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou_yihu) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengshexiangtou);
         }

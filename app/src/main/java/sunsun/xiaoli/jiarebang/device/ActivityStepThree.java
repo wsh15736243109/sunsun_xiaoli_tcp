@@ -109,6 +109,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
         setZhuangTai(smartConfigType);
 //        type = getIntent().getStringExtra("type");
         deviceType = (DeviceType) getIntent().getSerializableExtra("device");
+        MAlert.alert(deviceType);
         wifiName = getIntent().getStringExtra("wifi_name");
         wifiPass = getIntent().getStringExtra("wifi_pass");
 //        did = getIntent().getStringExtra("did");
@@ -266,7 +267,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     String extra = gson.toJson(hashMap);
                     switch (deviceType) {
                         case DEVICE_AQ500:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng118), "S03-1", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng500), "S03-1", extra);
                             break;
                         case DEVICE_AQ700:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);

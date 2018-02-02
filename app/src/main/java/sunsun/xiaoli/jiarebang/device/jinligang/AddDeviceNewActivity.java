@@ -17,6 +17,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.BaseActivity;
+import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -150,6 +151,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
 
             @Override
             public void onClick(View v) {
+                MAlert.alert(deviceType);
                 popWindow.dismiss();
                 Intent mainIntent = new Intent(AddDeviceNewActivity.this,
                         ActivityStepFirst.class);

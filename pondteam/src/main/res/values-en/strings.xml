@@ -370,7 +370,7 @@
     <string name="delete_ing">In the process of deletion, please later</string>
     <string name="device_zhineng806">Smart Monitoring AQ-806</string>
     <string name="device_zhineng700">Smart Monitoring AQ-700</string>
-    <string name="device_zhineng228">Smart Monitoring AQ-500</string>
+    <string name="device_zhineng500">Smart Monitoring AQ-500</string>
     <string name="device_zhinengjiarebang">Remote Smart heater rod</string>
     <string name="device_yuancheng_ph">Smart PH temperature detector</string>
     <string name="device_zhinengbianpinshuibeng">Smart Frequency variation pump</string>

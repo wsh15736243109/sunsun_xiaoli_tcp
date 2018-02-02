@@ -376,7 +376,7 @@
     <string name="device_chitangguolv">池塘過濾系統</string>
     <string name="device_zhinengshexiangtou">小鯉智能攝像頭</string>
     <string name="device_shuizudeng">智能水族燈</string>
-    <string name="device_zhineng228">智能監控AQ-500</string>
+    <string name="device_zhineng500">智能監控AQ-500</string>
     <string name="shiduansetting">時段設置</string>
     <string name="shuizhisuanjiansetting">水質酸堿設定</string>
     <string name="ph_806baojingkaiguan">pH報警開關</string>
@@ -661,5 +661,5 @@
     <string name="produceter_message">产品信息</string>
     <string name="produceter_video">视频浏览</string>
     <string name="produceter_rengong">人工客服</string>
-    <string name="device_zhineng118">智能监控AQ-118</string>
+    <string name="device_zhineng118">智能温度控制器AQ-118</string>
 </resources>

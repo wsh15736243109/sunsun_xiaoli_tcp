@@ -60,7 +60,7 @@ public class ActivityStepFirst extends BaseActivity {
                 break;
             case DEVICE_AQ500:
                 img.setBackgroundResource(R.drawable.smart_500);
-                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng228));
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng500));
                 break;
             case DEVICE_AQ700:
                 txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng700));

@@ -114,7 +114,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         break;
                     case DEVICE_AQ500:
                         if (!did.startsWith("S035")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng228)));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng500)));
                             return;
                         }
                         break;
