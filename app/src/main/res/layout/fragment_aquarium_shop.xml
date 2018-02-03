@@ -24,6 +24,7 @@
         <sunsun.xiaoli.jiarebang.custom.RatioImageView
             android:id="@+id/img_shop_first"
             android:layout_width="match_parent"
+            android:scaleType="fitXY"
             android:layout_height="wrap_content"
             app:ratio="2">
 
@@ -38,6 +39,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:scaleType="fitXY"
                 app:ratio="2">
 
             </sunsun.xiaoli.jiarebang.custom.RatioImageView>
@@ -46,6 +48,7 @@
                 android:id="@+id/img_shop_third"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:scaleType="fitXY"
                 android:layout_weight="1"
                 app:ratio="2">
 
@@ -54,7 +57,7 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/recycler_aqhardwareorhotgoods"
+        android:id="@+id/list_shop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/near_store"/>

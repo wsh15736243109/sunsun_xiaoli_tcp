@@ -125,7 +125,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                 if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
                                     hashMap.put("pwd", mSelectDeviceInfo.getPwd());
                                     String extra = gson.toJson(hashMap);
-                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().name[7], "chiniao_wifi_camera", extra);
+                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(),  BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou), "chiniao_wifi_camera", extra);
                                 } else {
                                     if (BuildConfig.APP_TYPE.equals("pondTeam")) {
                                         hashMap.put("notify_email", 1);

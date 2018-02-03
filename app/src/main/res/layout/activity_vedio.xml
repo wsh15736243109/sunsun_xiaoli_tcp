@@ -68,6 +68,7 @@
             android:layout_alignParentBottom="true"
             android:visibility="gone"
             android:layout_alignParentRight="true"
+            android:background="@drawable/quanping"
             android:layout_margin="@dimen/DIMEN_10DP" />
     </sunsun.xiaoli.jiarebang.custom.LoweRelaLayout>
     <LinearLayout

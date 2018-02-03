@@ -51,4 +51,7 @@
     <color name="main_lingshou_orange">@color/main_green</color>
     <color name="backgroundColor">#f5f5f5</color>
     <color name="gray_6c7bb">#6C7B8B</color>
+    <color name="f2">#f2f2f2</color>
+    <color name="e4">#e4e4e4</color>
+    <color name="persontextcolor">#666666</color>
 </resources>

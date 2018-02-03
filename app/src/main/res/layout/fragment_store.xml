@@ -42,7 +42,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:text="地址:"
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
 
                 <TextView
                     android:id="@+id/addr"
@@ -53,7 +53,7 @@
                     android:layout_toRightOf="@+id/tvdizhi"
                     android:singleLine="true"
                     android:text="无"
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
             </RelativeLayout>
 
             <View
@@ -72,7 +72,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:text="联系人："
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
 
                 <TextView
                     android:id="@+id/tvContacts"
@@ -83,7 +83,7 @@
                     android:layout_toRightOf="@+id/tvTitleContacts"
                     android:singleLine="true"
                     android:text="无"
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
             </RelativeLayout>
 
             <View
@@ -102,7 +102,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:text="电   话："
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
 
                 <TextView
                     android:id="@+id/tvPhones"
@@ -113,7 +113,7 @@
                     android:layout_toRightOf="@+id/tvPhone"
                     android:singleLine="true"
                     android:text="无"
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
             </RelativeLayout>
 
             <View
@@ -131,8 +131,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
-                    android:text="手    机:"
-                    android:textColor="@color/gray_BBB" />
+                    android:text="手    机："
+                    android:textColor="@color/gray_6c7bb" />
 
                 <TextView
                     android:id="@+id/tvMobilePhones"
@@ -143,7 +143,7 @@
                     android:layout_toRightOf="@+id/tvTitleMobilePhone"
                     android:singleLine="true"
                     android:text="无"
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
             </RelativeLayout>
 
             <View
@@ -163,7 +163,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:text="导航："
-                    android:textColor="@color/gray_BBB" />
+                    android:textColor="@color/gray_6c7bb" />
 
                 <TextView
                     android:id="@+id/tvNavigation"

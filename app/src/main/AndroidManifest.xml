@@ -245,6 +245,8 @@
             android:name=".shuizuzhijia.product.ProductCenter_message_video_kefu_Activity"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".shuizuzhijia.product.ProductcenterSearchActivity"></activity>
+        <activity android:name=".shuizuzhijia.store.Navigationactivity"></activity>
+        <activity android:name=".shuizuzhijia.me.PersonSettingActivity"></activity>
     </application>
 
 </manifest>

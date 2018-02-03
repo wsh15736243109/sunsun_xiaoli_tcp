@@ -1,7 +1,5 @@
 package sunsun.xiaoli.jiarebang.shuizuzhijia.store;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -243,6 +241,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     }
 
     private void setStoreDetail(NavigationBean.NavigationDetail navigationDetail) {
+        navi = navigationDetail;
         addr.setText(navigationDetail.getAddressDetail());
         tvContacts.setText(navigationDetail.getPersonName());
         tvPhones.setText(navigationDetail.getTelephone());
@@ -262,8 +261,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                     txt_exist.setText(cityName + areaName);
                 }
             });
-
-            area = Util.queryDistrictNo(areaName);
+//            area = Util.queryDistrictNo(areaName);
             userPresenter.branchSearch(city, area, lng, lat, page, size);
         }
     }
@@ -293,35 +291,6 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
             // TODO Auto-generated method stub
 //            System.out.println(arg0.zoom+"缩放onMapStatusChange");
         }
-    };
-
-
-    BroadcastReceiver avartBroadcast = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-//            String resultData = (String) SPUtils.get(App.ctx, null,
-//                    SPContants.SEWARPROVINCE, "");
-//            System.out.println("SEWARPROVINCE" + resultData);
-//            getCityCode(resultData);
-//            tvLocation.setText("" + resultData);
-            // mPoiSearch.searchInCity((new PoiCitySearchOption())
-            // .city(resultData).keyword("森森").pageNum(loadIndex));
-        }
-
-        ;
-    };
-
-    BroadcastReceiver avartBroadcastReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-//            String resultData = (String) SPUtils.get(App.ctx, null,
-//                    SPContants.PROVINCE, "");
-//            System.out.println("resultDataresultData" + resultData);
-//            getCityCode(resultData);
-//            tvLocation.setText("" + resultData);
-            // mPoiSearch.searchInCity((new PoiCitySearchOption())
-            // .city(resultData).keyword("森森").pageNum(loadIndex));
-        }
-
-        ;
     };
 
     @Override
@@ -420,6 +389,13 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 //                break;
             case R.id.tvNavigation:
                 //跳转导航列表
+                Intent intent1 = new Intent(getActivity(),
+                        Navigationactivity.class);
+                intent1.putExtra("areaCode", areaCode);
+                intent1.putExtra("cityCode", cityCode);
+                intent1.putExtra("searchType", searchType);
+                intent1.putExtra("navi", navi);
+                startActivity(intent1);
                 break;
             case R.id.tvContacts:
 

@@ -20,7 +20,6 @@
             android:layout_height="35dp"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="15dp"
-            android:background="@color/gray_BBB"
             android:scaleType="centerCrop" />
         <TextView
             android:id="@+id/tvname"
@@ -29,7 +28,7 @@
             android:layout_below="@+id/roundview"
             android:layout_centerHorizontal="true"
             android:layout_margin="@dimen/DIMEN_4DP"
-            android:text="宝宝的盒子"
+            android:text=""
             android:textSize="14dp" />
 
         <TextView

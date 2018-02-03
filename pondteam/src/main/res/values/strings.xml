@@ -679,4 +679,15 @@
     <string name="guanjian">输入查询的关键字</string>
     <string name="device_zhineng118">智能温度控制器AQ-118</string>
     <string name="store_query">门店查询</string>
+    <string name="shop_xianshang">森森线上购物</string>
+
+    <string name="jichuzhiliao">基础资料</string>
+    <string name="head">头像</string>
+
+    <string name="zhanhaoboingding">账号绑定</string>
+    <string name="phoneshpuji">手机</string>
+    <string name="youxiang">邮箱</string>
+    <string name="weixin">微信</string>
+    <string name="xiugaimima">修改密码</string>
+    <string name="quedingxiugai">确定修改</string>
 </resources>
