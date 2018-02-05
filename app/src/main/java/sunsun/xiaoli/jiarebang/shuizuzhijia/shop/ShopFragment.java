@@ -45,8 +45,9 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     private int page = 1;
     private String area;
     private NavigationBean navigationBean;
-    TextView txt_exist,txt_title;
+    TextView txt_exist, txt_title;
     ImageView img_back;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_aquarium_shop;
@@ -73,15 +74,28 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     }
 
 
-
-
     @Override
     public void onClick(View v) {
+        String url = "";
         switch (v.getId()) {
             case R.id.tv_shop_enter:
-                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+                url = Const.TAOBAO_TEST_URL;
+                break;
+            case R.id.img_shop_first:
+            case R.id.img_shop_second:
+            case R.id.img_shop_third:
+                url = v.getTag(R.id.tag_first) + "";
+                if (url.equals("")) {
+//                    MAlert.alert("url is null");
+                    return;
+                }
                 break;
         }
+        goToTaoBao(url);
+    }
+
+    private void goToTaoBao(String url) {
+        GotoTaoBaoUtil.startActivity(getActivity(), url);
     }
 
     @Override
@@ -94,15 +108,18 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                 if (entity.getEventType() == UserPresenter.getBanners_success) {
                     bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
                     XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), img_shop_first);
+                    img_shop_first.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
                     XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(2).getImg(), img_shop_second);
+                    img_shop_second.setTag(R.id.tag_first, bannerBeanArrayList.get(2).getUrl());
                     XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(1).getImg(), img_shop_third);
+                    img_shop_third.setTag(R.id.tag_first, bannerBeanArrayList.get(1).getUrl());
                 } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
                     MAlert.alert(entity.getData());
-                }else if (entity.getEventType() == UserPresenter.branchSearch_success) {
+                } else if (entity.getEventType() == UserPresenter.branchSearch_success) {
                     navigationBean = (NavigationBean) entity.getData();
                     if (navigationBean != null) {
                         if (navigationBean.getList().size() > 0) {
-                            list_shop.setAdapter(new ShopAdapter(this,navigationBean.getList(),R.layout.item_shop));
+                            list_shop.setAdapter(new ShopAdapter(this, navigationBean.getList(), R.layout.item_shop));
                         }
                     } else {
                         MAlert.alert("出错了");
@@ -117,7 +134,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     boolean isSearch = false;
 
     @Override
-    public void getLatAndLng(final String cityName, double lat, double lng,final String areaName) {
+    public void getLatAndLng(final String cityName, double lat, double lng, final String areaName) {
         if (!isSearch) {
             isSearch = true;
             city = Util.queryCityNo(cityName);
@@ -125,7 +142,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    txt_exist.setText(cityName+areaName);
+                    txt_exist.setText(cityName + areaName);
                 }
             });
             userPresenter.branchSearch(city, area, lng, lat, page, size);

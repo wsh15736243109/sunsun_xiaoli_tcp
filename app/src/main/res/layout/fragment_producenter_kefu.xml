@@ -85,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
-                android:background="@color/red500"
                 android:divider="#00000000"></com.itboye.pondteam.custom.MyListView>
         </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

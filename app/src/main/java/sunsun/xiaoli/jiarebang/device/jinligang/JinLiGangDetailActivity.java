@@ -179,6 +179,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
     private String shuiwei_success = "shuiwei_success";
     //设备锁定
     private String lock_success = "lock_success";
+    private String exDev;
 
     /**
      * 设摄像头状态
@@ -250,7 +251,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             window.setStatusBarColor(0xffdcdddd);
         }
         if (deviceDetailModel != null) {
-            if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+            exDev=deviceDetailModel.getEx_dev();
+            if (exDev.equalsIgnoreCase("AQ500")) {
                 //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
                 int push = deviceDetailModel.getPush_cfg();
                 if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
@@ -263,7 +265,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                  * currentTime:同时同步设备时间
                  */
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1, "");
-            } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
+            } else if (exDev.equalsIgnoreCase("AQ700")||exDev.equalsIgnoreCase("AQ600")) {
                 int push = deviceDetailModel.getPush_cfg();
                 //仅强制关闭水位报警提示
                 if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
@@ -273,7 +275,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                  * currentTime:同时同步设备时间
                  */
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1, "");
-            } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ806")) {
+            } else if (exDev.equalsIgnoreCase("AQ806")) {
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, "");
             } else {
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, "");
@@ -815,8 +817,8 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             img_dengguang.setBackgroundResource(R.drawable.light_unselect);
         }
         img_dengguang.setTag(zhaomingdeng_status);
-        if (deviceDetailModel.getEx_dev() != null) {
-            if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ500")) {
+        if (exDev != null) {
+            if (exDev.equalsIgnoreCase("AQ500")) {
                 if (shajundeng_status) {
                     img_shajundeng.setBackgroundResource(R.drawable.aq500_select2);
                 } else {
@@ -825,7 +827,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 txt_shajundeng.setText(getString(R.string.shaju_chonglang));
                 re_shuiweibaojing.setVisibility(View.GONE);
                 re_chonglangbeng.setVisibility(View.GONE);
-            } else if (deviceDetailModel.getEx_dev().equalsIgnoreCase("AQ700")) {
+            } else if (exDev.equalsIgnoreCase("AQ700") || exDev.equalsIgnoreCase("AQ600")) {
                 re_shuiweibaojing.setVisibility(View.GONE);
                 if (shajundeng_status) {
                     img_shajundeng.setBackgroundResource(R.drawable.aq500_select2);
@@ -852,6 +854,17 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
             }
 
+        }else{
+            if (shajundeng_status) {
+                img_shajundeng.setBackgroundResource(R.drawable.uv_select);
+            } else {
+                img_shajundeng.setBackgroundResource(R.drawable.uv_unselect);
+            }
+            if (chonglangbeng_status) {
+                img_chonglangbeng.setBackgroundResource(R.drawable.chonglangbeng_select);
+            } else {
+                img_chonglangbeng.setBackgroundResource(R.drawable.chonglangbeng_unselect);
+            }
         }
         img_shajundeng.setTag(shajundeng_status);
         img_chonglangbeng.setTag(chonglangbeng_status);

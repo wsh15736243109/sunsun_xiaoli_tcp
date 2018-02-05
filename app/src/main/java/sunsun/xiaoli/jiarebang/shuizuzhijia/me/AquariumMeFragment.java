@@ -11,6 +11,7 @@ import com.itboye.pondteam.utils.Const;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.device.jinligang.ForgetPasswordActivity;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
 import sunsun.xiaoli.jiarebang.utils.XGlideLoaderNew;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -24,9 +25,10 @@ public class AquariumMeFragment extends LingShouBaseFragment {
 
     ImageView roundview;
 
-    TextView tvname,txt_title,txt_exist;
+    TextView tvname, txt_title, txt_exist;
 
     ImageView img_back;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_aquarium_me;
@@ -67,6 +69,8 @@ public class AquariumMeFragment extends LingShouBaseFragment {
             case R.id.re_forum:
                 break;
             case R.id.re_about_xiaoli:
+                startActivity(new Intent(getActivity(), WebActivity.class).putExtra("title", "").putExtra("url", "http://dx.bankbaoxian.com/shortX/#/shortXZJ"));
+
                 break;
         }
     }
