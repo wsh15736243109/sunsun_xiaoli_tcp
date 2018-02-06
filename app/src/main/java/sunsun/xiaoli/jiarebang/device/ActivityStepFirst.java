@@ -96,7 +96,7 @@ public class ActivityStepFirst extends BaseActivity {
                 txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_shuizudeng));
                 break;
             case DEVICE_QIBENG:
-                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng));
+                txt_title.setText(getString(R.string.add) + (BuildConfig.APP_TYPE.equals("小绵羊智能") ?MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng):MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng)));
                 break;
             case DEVICE_WEISHIQI:
                 img.setBackgroundResource(R.drawable.smart_weishiqi);

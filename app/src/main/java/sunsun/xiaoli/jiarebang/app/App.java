@@ -292,7 +292,7 @@ public class App extends MyApplication {
                 getString(R.string.device_chitangguolv),
                 BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou),
                 getString(R.string.device_shuizudeng),
-                getString(R.string.device_zhinengqibeng),
+                BuildConfig.APP_TYPE.equals("小绵羊智能") ?MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng):MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng),
                 getString(R.string.device_weishiqing)};
     }
 

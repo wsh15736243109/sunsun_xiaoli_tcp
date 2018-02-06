@@ -30,16 +30,16 @@ class ZaoLangActivity : BaseActivity(), Observer {
 
                 } else if (entity.eventType == UserPresenter.deviceSet_shuiBengfail) {
 
-                }else if (entity.eventType == zaolang_liuliang_success) {
-                    app!!.deviceShuiBengUI.requestTime=System.currentTimeMillis()
-                    wg=tempValue
+                } else if (entity.eventType == zaolang_liuliang_success) {
+                    app!!.deviceShuiBengUI.requestTime = System.currentTimeMillis()
+                    gear = tempValue
                     setZaoLangData()
                 } else if (entity.eventType == zaolang_zhouqi_success) {
-                    app!!.deviceShuiBengUI.requestTime=System.currentTimeMillis()
-                    wc=tempValue
+                    app!!.deviceShuiBengUI.requestTime = System.currentTimeMillis()
+                    wc = tempValue
                     setZaoLangData()
-                }  else if (entity.eventType == zaolang_success) {
-                    app!!.deviceShuiBengUI.requestTime=System.currentTimeMillis()
+                } else if (entity.eventType == zaolang_success) {
+                    app!!.deviceShuiBengUI.requestTime = System.currentTimeMillis()
                     if (we == 0) {
                         we = 1
                     } else {
@@ -79,7 +79,7 @@ class ZaoLangActivity : BaseActivity(), Observer {
                 for (i in liuliang.indices) {
                     liuliang[i] = String.format(getString(R.string.dang), i + 1)
                 }
-                showAlert(tv_zaolang_zhouqi_gear, liuliang)
+                showAlert(tv_zaolang_zhouqi, liuliang)
             }
             R.id.re_zaolang_liuliang_choose -> {
                 //造浪周期
@@ -123,12 +123,12 @@ class ZaoLangActivity : BaseActivity(), Observer {
         alert.setPositiveButton(R.string.ok) { dialog, which ->
             //设置档位
             when (tv) {
-                tv_zaolang_zhouqi_gear -> {
+                tv_zaolang_zhouqi -> {
                     //设置造浪周期
                     userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, -1, -1, numberPicker.value, zaolang_zhouqi_success)
                 }
                 tv_zaolang_liuliang_gear -> {
-                    //设置造浪周期
+                    //设置造浪流量
                     userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, -1, numberPicker.value, -1, zaolang_liuliang_success)
                 }
                 else -> {
@@ -144,13 +144,13 @@ class ZaoLangActivity : BaseActivity(), Observer {
 
     private var we: Int = 0
 
-    private var wg: Int = 0
+    private var gear: Int = 0
 
     private var wc: Int = 0
 
     private var detailModel: DeviceDetailModel? = null
 
-    fun getZaoLangStatus() {
+    private fun getZaoLangStatus() {
         //造浪状态	适用于CDP-WIFI水泵
         //0：正常循环模式
         //1：造浪模式
@@ -159,27 +159,31 @@ class ZaoLangActivity : BaseActivity(), Observer {
          * 造浪档位	适用于CDP-WIFI水泵
          * 0 - 9：最小到最大档位
          */
-        wg = detailModel!!.wg
+        gear = detailModel!!.gear + 1
         /**
          * 造浪周期	适用于CDP-WIFI水泵
          * 0 - 9：最小到最大档位
          */
 
-        wc = detailModel!!.wc
+        wc = detailModel!!.wc + 1
     }
 
-    fun setZaoLangData() {
-
-
+    private fun setZaoLangData() {
         if (we == 1) {
             iv_zaolang_status?.setBackgroundResource(R.drawable.kai)
+            setVisible(View.VISIBLE)
         } else {
             iv_zaolang_status?.setBackgroundResource(R.drawable.guan)
+            setVisible(View.GONE)
         }
         app!!.deviceShuiBengUI.setZaoLangStatus(we)
 
-        tv_zaolang_liuliang_gear.text = String.format(getString(R.string.dang), wg)
+        tv_zaolang_liuliang_gear.text = String.format(getString(R.string.dang), gear)
+        tv_zaolang_zhouqi.text = String.format(getString(R.string.dang), wc)
+    }
 
-        tv_zaolang_zhouqi_gear.text = String.format(getString(R.string.dang), wc)
+    private fun setVisible(isVisible: Int) {
+        re_zaolang_zhouqi_choose!!.visibility = isVisible
+        re_zaolang_liuliang_choose!!.visibility=isVisible
     }
 }

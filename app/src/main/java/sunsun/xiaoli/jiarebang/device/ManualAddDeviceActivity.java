@@ -168,7 +168,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         break;
                     case DEVICE_QIBENG:
                         if (!did.startsWith("S07")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhinengqibeng)));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), BuildConfig.APP_TYPE.equals("小绵羊智能") ?MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng):MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng)));
                             return;
                         }
                         break;

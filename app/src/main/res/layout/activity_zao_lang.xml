@@ -61,13 +61,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/tv_zaolang_zhouqi_gear"
+            android:layout_toLeftOf="@+id/tv_zaolang_zhouqi"
             android:gravity="center|left"
             android:text="@string/zaolang_zhouqi"
             android:textSize="@dimen/DIMEN_18DP" />
 
         <TextView
-            android:id="@+id/tv_zaolang_zhouqi_gear"
+            android:id="@+id/tv_zaolang_zhouqi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -98,7 +98,7 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/tv_zaolang_liuliang_gear"
             android:gravity="center|left"
-            android:text="@string/zaolang_zhouqi"
+            android:text="@string/liuliang_choose"
             android:textSize="@dimen/DIMEN_18DP" />
 
         <TextView

@@ -179,8 +179,8 @@ android {
         }
 
         debug {
-//            signingConfig signingConfigs.sunsun_xiaoli_debug
-            signingConfig signingConfigs.sunsun_lingshou_debug
+            signingConfig signingConfigs.sunsun_xiaoli_debug
+//            signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug
