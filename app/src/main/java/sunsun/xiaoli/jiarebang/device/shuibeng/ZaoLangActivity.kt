@@ -54,7 +54,7 @@ class ZaoLangActivity : BaseActivity(), Observer {
     internal var txt_title: TextView? = null
     internal var img_back: ImageView? = null
     internal var re_zaolang_zhouqi_choose: RelativeLayout? = null
-    internal var re_zaolang_liuliang_choose: RelativeLayout? = null
+//    internal var re_zaolang_liuliang_choose: RelativeLayout? = null
     var iv_zaolang_status: ImageView? = null
     internal var userPresenter: UserPresenter? = null
     var app: App? = null
@@ -67,11 +67,11 @@ class ZaoLangActivity : BaseActivity(), Observer {
             }
             R.id.iv_zaolang_status -> {
                 //造浪状态
-                userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, if (we == 0) {
+                userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, -1, if (we == 0) {
                     1
                 } else {
                     0
-                }, -1, -1, zaolang_success)
+                }, -1, zaolang_success)
             }
             R.id.re_zaolang_zhouqi_choose -> {
                 //造浪周期
@@ -81,14 +81,14 @@ class ZaoLangActivity : BaseActivity(), Observer {
                 }
                 showAlert(tv_zaolang_zhouqi, liuliang)
             }
-            R.id.re_zaolang_liuliang_choose -> {
-                //造浪周期
-                val liuliang = arrayOfNulls<String>(9)
-                for (i in liuliang.indices) {
-                    liuliang[i] = String.format(getString(R.string.dang), i + 1)
-                }
-                showAlert(tv_zaolang_liuliang_gear, liuliang)
-            }
+//            R.id.re_zaolang_liuliang_choose -> {
+//                //造浪周期
+//                val liuliang = arrayOfNulls<String>(9)
+//                for (i in liuliang.indices) {
+//                    liuliang[i] = String.format(getString(R.string.dang), i + 1)
+//                }
+//                showAlert(tv_zaolang_liuliang_gear, liuliang)
+//            }
             else -> {
             }
         }
@@ -127,10 +127,10 @@ class ZaoLangActivity : BaseActivity(), Observer {
                     //设置造浪周期
                     userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, -1, -1, numberPicker.value, zaolang_zhouqi_success)
                 }
-                tv_zaolang_liuliang_gear -> {
-                    //设置造浪流量
-                    userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, -1, numberPicker.value, -1, zaolang_liuliang_success)
-                }
+//                tv_zaolang_liuliang_gear -> {
+////                    //设置造浪流量
+////                    userPresenter!!.deviceSet_shuiBeng(app!!.deviceShuiBengUI.deviceDetailModel!!.did, -1, -1, -1, -1, -1, -1, -1, -1, numberPicker.value, -1, zaolang_liuliang_success)
+//                }
                 else -> {
                 }
             }
@@ -184,6 +184,6 @@ class ZaoLangActivity : BaseActivity(), Observer {
 
     private fun setVisible(isVisible: Int) {
         re_zaolang_zhouqi_choose!!.visibility = isVisible
-        re_zaolang_liuliang_choose!!.visibility=isVisible
+//        re_zaolang_liuliang_choose!!.visibility = isVisible
     }
 }

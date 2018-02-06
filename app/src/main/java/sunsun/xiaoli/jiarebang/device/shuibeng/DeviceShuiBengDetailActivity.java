@@ -101,7 +101,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         did = getIntent().getStringExtra("did");
         userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, "");
         img_right.setBackgroundResource(R.drawable.menu);
-        if (!deviceDetailModel.getDevice_type().equals("S05-4")) {
+        if (deviceDetailModel.getDevice_type().equals("S05-4")) {
             re_zaolang_choose.setVisibility(View.VISIBLE);
             lore_shuibeng_head.setBackgroundResource(R.drawable.beijingtu);
         } else {
@@ -250,7 +250,13 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 if (detailModelTcp == null) {
                     return;
                 }
-                String[] liuliang = new String[5];
+                int length;
+                if (deviceDetailModel.getDevice_type().equals("S05-4")) {
+                    length = 9;
+                } else {
+                    length = 4;
+                }
+                String[] liuliang = new String[length];
                 for (int i = 0; i < liuliang.length; i++) {
                     liuliang[i] = String.format(getString(R.string.dang), i + 1);
                 }
