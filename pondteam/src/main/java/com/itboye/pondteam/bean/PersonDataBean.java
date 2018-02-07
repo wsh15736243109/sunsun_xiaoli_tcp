@@ -59,6 +59,15 @@ public class PersonDataBean {
     private String stores_id;
     private String is_stores;
     private String has_charge;
+    private String user_device_number;
+
+    public String getUser_device_number() {
+        return user_device_number;
+    }
+
+    public void setUser_device_number(String user_device_number) {
+        this.user_device_number = user_device_number;
+    }
 
     public String getHas_charge() {
         return has_charge;

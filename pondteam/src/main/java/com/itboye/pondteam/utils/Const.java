@@ -60,9 +60,9 @@ public class Const {
     public static final String YOUHUIQUAN_CHANGE = "charge_change";
     public static final String AREA_CODE = "area_code";
     public static final String TAOBAO_TEST_URL = "taobao://sensen.tmall.com/shop/view_shop.htm?spm=a220m.1000862.1000730.2.53db85dfFeR7TR&user_number_id=2090072497&rn=29c3a08e12cbced4c990c69c25037967";
-
+    public static final String TAOBAO_URL = "http://dev.sale.sunsunxiaoli.com/index.php/taobao_link/index?lng=%1s&lat=%2s&g_id=%3s";
     public static String CITY_CODE = "330100";
-    public static String xiaoli_wrapUrl = "dev.sunsunxiaoli.com";
+    public static String xiaoli_wrapUrl = "api.sunsunxiaoli.com";
     public static String lingshou_wrapUrl = "dev.sale.sunsunxiaoli.com";
     //    apisunsun.itboye.com/public => devsunsun.itboye.com=>
 //    dev.sale.sunsunxiaoli.com
@@ -188,6 +188,11 @@ public class Const {
      * 是否领取过优惠券
      */
     public static final String HAS_CHARGE = "has_charge";
+
+    /**
+     * 用户设备个数
+     */
+    public static final String USER_DEVICE_NUMBER = "user_device_number";
 
     /**
      * 用户角色信息

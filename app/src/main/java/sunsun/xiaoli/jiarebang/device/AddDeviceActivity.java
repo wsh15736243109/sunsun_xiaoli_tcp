@@ -125,7 +125,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                 if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
                                     hashMap.put("pwd", mSelectDeviceInfo.getPwd());
                                     String extra = gson.toJson(hashMap);
-                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(),  BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou), "chiniao_wifi_camera", extra);
+                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou), "chiniao_wifi_camera", extra);
                                 } else {
                                     if (BuildConfig.APP_TYPE.equals("pondTeam")) {
                                         hashMap.put("notify_email", 1);
@@ -256,17 +256,32 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
             map.put("ItemDid", "DID:" + deviceInfo.getDid());
             //主设备添加状态
             if (aq_did == null) {
-                if (mApp.mDeviceUi.arrayList.size() > 0) {
-                    for (int i1 = 0; i1 < mApp.mDeviceUi.arrayList.size(); i1++) {
-                        DeviceListBean deviceInfoInner = mApp.mDeviceUi.arrayList.get(i1);
-                        if (deviceInfoInner.getDid().equals(deviceInfo.getDid())) {
-                            hasAdd = true;
-                            break;
-                        } else {
-                            hasAdd = false;
+                if (mApp.mDeviceUi != null) {
+                    if (mApp.mDeviceUi.arrayList.size() > 0) {
+                        for (int i1 = 0; i1 < mApp.mDeviceUi.arrayList.size(); i1++) {
+                            DeviceListBean deviceInfoInner = mApp.mDeviceUi.arrayList.get(i1);
+                            if (deviceInfoInner.getDid().equals(deviceInfo.getDid())) {
+                                hasAdd = true;
+                                break;
+                            } else {
+                                hasAdd = false;
+                            }
+                        }
+                    }
+                } else if (mApp.mXiaoLiUi != null) {
+                    if (mApp.mXiaoLiUi.arrayList.size() > 0) {
+                        for (int i1 = 0; i1 < mApp.mXiaoLiUi.arrayList.size(); i1++) {
+                            DeviceListBean deviceInfoInner = mApp.mXiaoLiUi.arrayList.get(i1);
+                            if (deviceInfoInner.getDid().equals(deviceInfo.getDid())) {
+                                hasAdd = true;
+                                break;
+                            } else {
+                                hasAdd = false;
+                            }
                         }
                     }
                 }
+
             } else {
                 if (mApp.mCameraDevice.arrayList.size() > 0) {
                     for (int i1 = 0; i1 < mApp.mCameraDevice.arrayList.size(); i1++) {

@@ -101,7 +101,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         did = getIntent().getStringExtra("did");
         userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, "");
         img_right.setBackgroundResource(R.drawable.menu);
-        if (deviceDetailModel.getDevice_type().equals("S05-4")) {
+        if (!deviceDetailModel.getDevice_type().equals("S05-4")) {
             re_zaolang_choose.setVisibility(View.VISIBLE);
             lore_shuibeng_head.setBackgroundResource(R.drawable.beijingtu);
         } else {
@@ -125,7 +125,6 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 case 102:
                     detailModelTcp = (DeviceDetailModel) msg.obj;
                     setData();
-                    System.out.println("TCP 接收数据 102" + detailModelTcp.getDid());
                     break;
             }
         }
@@ -251,7 +250,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                     return;
                 }
                 int length;
-                if (deviceDetailModel.getDevice_type().equals("S05-4")) {
+                if (!deviceDetailModel.getDevice_type().equals("S05-4")) {
                     length = 9;
                 } else {
                     length = 4;
@@ -466,7 +465,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     }
 
     private void setData() {
-        txt_title.setText(mApp.mDeviceUi.mSelectDeviceInfo.getDevice_nickname());
+        txt_title.setText(deviceDetailModel.getDevice_nickname());
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         seconds = 0;
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());

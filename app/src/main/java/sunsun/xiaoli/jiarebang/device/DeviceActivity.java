@@ -523,6 +523,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
         SPUtils.put(this, null, Const.IS_LOGINED, false);
         SPUtils.put(this, null, Const.HEAD, "");
         SPUtils.put(this, null, Const.NICK, "");
+        SPUtils.put(this, null, Const.USER_DEVICE_NUMBER, "");
 //        SPUtils.put(this, null, Const.S_ID, "");
         LoginController.setLoginState(new UnLoginState());
         Intent intent = new Intent(this, LoginActivity.class);

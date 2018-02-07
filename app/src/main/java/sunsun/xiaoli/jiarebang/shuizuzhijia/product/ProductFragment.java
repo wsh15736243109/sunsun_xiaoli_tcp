@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.ProductBean;
@@ -30,6 +32,8 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
     UserPresenter userPresenter;
     private ArrayList<ProductBean.HomeListBean> homeListBeanArrayList;
     RelativeLayout re_search;
+    ImageView img_back;
+    TextView txt_title;
 
     @Override
     protected int getLayoutId() {
@@ -40,7 +44,13 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
     protected void initData() {
         userPresenter = new UserPresenter(this);
         userPresenter.queryProductIndex(0);
+        initTop();
         initItemClick();
+    }
+
+    private void initTop() {
+        txt_title.setText(getString(R.string.product_server_center));
+        img_back.setVisibility(View.GONE);
     }
 
     private void initItemClick() {

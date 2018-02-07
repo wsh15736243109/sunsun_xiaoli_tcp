@@ -266,10 +266,10 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     String extra = gson.toJson(hashMap);
                     switch (deviceType) {
                         case DEVICE_AQ500:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng500), "S03-1", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng500), type, extra);
                             break;
                         case DEVICE_AQ700:
-                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), type, extra);
                             break;
                         default:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(), type), type, extra);

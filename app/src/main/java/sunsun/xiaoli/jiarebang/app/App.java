@@ -82,6 +82,7 @@ import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengBatteryDetailActivity;
 import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.device.shuibeng.ZaoLangActivity;
+import sunsun.xiaoli.jiarebang.shuizuzhijia.xiaoli.XiaoLiFragment;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.OrderDetailActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.ChooseTimeActivity;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.home.YuGangCleanOrHuoTiBuyStepOneActivity;
@@ -110,6 +111,7 @@ public class App extends MyApplication {
     public AddDeviceActivity mAddDeviceUi;
     public ArrayList<SearchDeviceInfo> mMyDeviceList = null;
     public DeviceActivity mDeviceUi;
+    public XiaoLiFragment mXiaoLiUi;
     public DevicePHDetailActivity devicePhUI = null;
     public DeviceShuiBengDetailActivity deviceShuiBengUI = null;
     public DeviceJiaReBangDetailActivity deviceJiaReBangUI = null;

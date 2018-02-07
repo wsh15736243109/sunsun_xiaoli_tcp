@@ -70,6 +70,7 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.popwindow.SureDeleteDialog;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
+import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
 import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -364,6 +365,13 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                 alert.create();
                 alert.show();
                 break;
+            case R.id.img_header:
+                String url = v.getTag(R.id.tag_first) + "";
+                String urlType = v.getTag(R.id.tag_second) + "";
+                if (urlType.equals("6070")) {
+                    GotoTaoBaoUtil.startActivity(getActivity(), url);
+                }
+                break;
         }
     }
 
@@ -502,6 +510,9 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
             } else if (entity.getEventType() == UserPresenter.getBanners_success) {
                 ArrayList<BannerBean> bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
                 XGlideLoader.displayImage(getActivity(), Const.imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), ratioImageView);
+                ratioImageView.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
+                ratioImageView.setTag(R.id.tag_second, bannerBeanArrayList.get(0).getUrl_type());
+                ratioImageView.setOnClickListener(this);
             } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
                 MAlert.alert(entity.getData());
             }
@@ -589,6 +600,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
     @Override
     protected void initData() {
         mApp = (App) getActivity().getApplication();
+        mApp.mXiaoLiUi = this;
         txt_ceshu.setVisibility(View.VISIBLE);
         footerView = LayoutInflater.from(getActivity()).inflate(R.layout.device_list_footer, null);
         nodata = (RelativeLayout) footerView.findViewById(R.id.nodata);
@@ -656,11 +668,11 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                XiaoLiFragment.this.position = position;
-                mSelectDeviceInfo = arrayList.get(position);
-                currentDid = listItems.get(position).get("ItemDid").toString().substring(4, listItems.get(position).get("ItemDid").toString().length());
-                currentType = listItems.get(position).get("type").toString();
-                extra = listItems.get(position).get("extra").toString();
+                XiaoLiFragment.this.position = position - 1;
+                mSelectDeviceInfo = arrayList.get(position - 1);
+                currentDid = listItems.get(position - 1).get("ItemDid").toString().substring(4, listItems.get(position - 1).get("ItemDid").toString().length());
+                currentType = listItems.get(position - 1).get("type").toString();
+                extra = listItems.get(position - 1).get("extra").toString();
                 loadingDialog = new ProgressDialog(getActivity());
                 if (currentDid.startsWith("S08")) {
                     startActivity(new Intent(getActivity(), WeiShiQiDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
@@ -709,7 +721,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
             @Override
             public boolean onItemLongClick(AdapterView<?> parent,
                                            View view, final int position, long id) {
-                mSelectDeviceInfo = arrayList.get(position);
+                mSelectDeviceInfo = arrayList.get(position - 1);
                 mApp.mEditDeviceInfo = mSelectDeviceInfo;
                 Intent mainIntent = new Intent(getActivity(),
                         EditDeviceActivity.class);

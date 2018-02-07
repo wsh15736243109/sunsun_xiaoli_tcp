@@ -37,7 +37,7 @@
                     android:id="@+id/aquarium_device_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@mipmap/ic_launcher"
+                    android:background="@drawable/xiaoli_select"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -66,6 +66,7 @@
                     android:id="@+id/aquarium_shop_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:background="@drawable/shop_unselect"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -74,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/aquarium_shopping"
-                    android:textColor="@color/main_green" />
+                    android:textColor="@color/main_black" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -94,6 +95,7 @@
                     android:id="@+id/aquarium_store_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:background="@drawable/store_unselect"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -102,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/aquarium_store"
-                    android:textColor="@color/main_green" />
+                    android:textColor="@color/main_black" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -122,6 +124,7 @@
                     android:id="@+id/aquarium_product_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:background="@drawable/product_unselect"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView
@@ -130,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/aquarium_product"
-                    android:textColor="@color/main_green" />
+                    android:textColor="@color/main_black" />
             </LinearLayout>
         </RelativeLayout>
 
@@ -151,6 +154,7 @@
                     android:id="@+id/aquarium_me_image"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:background="@drawable/me_new_unselect"
                     android:layout_gravity="center_horizontal" />
 
                 <TextView

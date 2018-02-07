@@ -665,4 +665,6 @@
     <string name="store_query">门店查询</string>
     <string name="shop_xianshang">森森线上购物</string>
     <string name="device_zhinengyangqibeng">智能交直流氧氣泵</string>
+    <string name="product_server_center">产品服务中心</string>
+    <string name="device_numer">%s个智能設備</string>
 </resources>

@@ -48,6 +48,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
     String country = "+86";
     IAreaCodeSelect iAreaCodeSelect;
     TextView txt_version;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,19 +66,19 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
             editextUsetName.setHint(getString(R.string.user_name));
             bottom_icon.setVisibility(View.INVISIBLE);
         }
-        if (getPackageName().contains("pondlink")){
+        if (getPackageName().contains("pondlink")) {
             title_login.setText("PondLinkByPondteam");
             bottom_icon.setVisibility(View.VISIBLE);
             bottom_icon.setBackgroundColor(getResources().getColor(R.color.login_color));
             bottom_icon.setText("pondLink");
             bottom_icon.setTextSize(20);
-        }else if (getPackageName().contains("xiaomianyang")){
+        } else if (getPackageName().contains("xiaomianyang")) {
             title_login.setText(getString(R.string.login_yihu));
             btn_country.setVisibility(View.VISIBLE);
             editextUsetName.setHint(getString(R.string.user_name));
             bottom_icon.setVisibility(View.INVISIBLE);
         }
-        txt_version.setText(getString(R.string.current_version)+VersionUtil.getVersionName());
+        txt_version.setText(getString(R.string.current_version) + VersionUtil.getVersionName());
     }
 
 
@@ -101,7 +102,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                     MAlert.alert(getString(R.string.username_empty));
                     return;
                 }
-                showProgressDialog(getString(R.string.requesting),true);
+                showProgressDialog(getString(R.string.requesting), true);
                 userPresenter.login(country, userName, userPass, "");
 //                intent = new Intent(LoginActivity.this, AddPondDevice.class);
 //                startActivity(intent);
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                 startActivity(intent);
                 break;
             case R.id.btn_country:
-                new AreaCodeSelectHelper().showAreaCode(this, R.layout.item_choose_code,btn_country,this);
+                new AreaCodeSelectHelper().showAreaCode(this, R.layout.item_choose_code, btn_country, this);
                 break;
         }
     }
@@ -122,7 +123,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
         ResultEntity resultEntity = handlerError(data);
         try {
             closeProgressDialog();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         if (resultEntity != null) {
@@ -138,7 +139,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                     if (SpContants.APP_TYPE.equals("水族之家")) {
                         Intent intent = new Intent(this, AquariumHomeMainActivity.class);
                         startActivity(intent);
-                    }else {
+                    } else {
                         Intent intent = new Intent(this, DeviceActivity.class);
                         startActivity(intent);
                     }
@@ -158,7 +159,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                 Const.PaySecret, bean.getPaySecret());
         SPUtils.put(LoginActivity.this, null,
                 Const.RELE, "6");
-        if (bean.getIs_stores()!=null) {
+        if (bean.getIs_stores() != null) {
             SPUtils.put(LoginActivity.this, null,
                     Const.IS_STORE, bean.getIs_stores());
         }
@@ -176,6 +177,9 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                 Const.HEAD, bean.getHead());
         SPUtils.put(LoginActivity.this, null,
                 Const.NICK, bean.getNickname());
+        SPUtils.put(LoginActivity.this, null,
+                Const.USER_DEVICE_NUMBER, bean.getUser_device_number() + "");
+
 //        SPUtils.put(LoginActivity.this, null,
 //                Const.ISAUTH, bean.getRolesInfo().get(0).getIsAuth());
         SPUtils.put(LoginActivity.this, null,
@@ -185,6 +189,6 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
 
     @Override
     public void selectFinish(@NotNull String code) {
-        country=code;
+        country = code;
     }
 }

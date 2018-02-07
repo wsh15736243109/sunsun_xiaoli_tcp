@@ -20,6 +20,7 @@
             android:layout_height="35dp"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="15dp"
+            android:background="@drawable/touxiang"
             android:scaleType="centerCrop" />
         <TextView
             android:id="@+id/tvname"
@@ -61,7 +62,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/home_search" />
+            android:src="@drawable/wodeziliao" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -101,7 +102,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/home_search" />
+            android:src="@drawable/mimaxiugai" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -141,7 +142,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/home_search" />
+            android:src="@drawable/xiaoxitongzhi" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -178,10 +179,10 @@
             android:id="@+id/imageView_forum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/textView6"
             android:layout_marginLeft="15dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/home_search" />
+            android:src="@drawable/me_shuizuluntan" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -199,7 +200,8 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/imageView_forum"
             android:text="@string/aquarium_forum"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:id="@+id/textView6" />
     </RelativeLayout>
     <View
         android:id="@+id/view7"
@@ -220,7 +222,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/home_search" />
+            android:src="@drawable/guanyuxiaoli" />
 
         <ImageView
             android:layout_width="wrap_content"

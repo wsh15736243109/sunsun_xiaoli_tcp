@@ -671,7 +671,7 @@
     <item name="tag_second" type="id"></item>
     <item name="tag_third" type="id"></item>
     <item name="tag_fourth" type="id"></item>
-    <item name="imageloader_uri" type="id"/>
+    <item name="imageloader_uri" type="id" />
 
 
     <string name="keyword">输入产品型号或关键字</string>
@@ -691,4 +691,6 @@
     <string name="xiugaimima">修改密码</string>
     <string name="quedingxiugai">确定修改</string>
     <string name="device_zhinengyangqibeng">智能交直流氧气泵</string>
+    <string name="product_server_center">产品服务中心</string>
+    <string name="device_numer">%s个智能设备</string>
 </resources>

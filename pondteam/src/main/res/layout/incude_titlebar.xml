@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:drawablePadding="@dimen/margin_5"
             android:layout_marginLeft="@dimen/DIMEN_5DP"
             android:text=""
             android:padding="5dp" />

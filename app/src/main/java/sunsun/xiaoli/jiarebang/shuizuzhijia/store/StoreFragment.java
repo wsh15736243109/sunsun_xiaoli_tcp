@@ -117,7 +117,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     private void initTop() {
         txt_title.setText(getString(R.string.store_query));
         img_back.setVisibility(View.GONE);
-        txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
+        txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.jiantou_down, 0);
     }
 
     private void initMapViewEvent() {
@@ -258,7 +258,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    txt_exist.setText(cityName + areaName);
+                    txt_exist.setText(cityName);
                 }
             });
 //            area = Util.queryDistrictNo(areaName);

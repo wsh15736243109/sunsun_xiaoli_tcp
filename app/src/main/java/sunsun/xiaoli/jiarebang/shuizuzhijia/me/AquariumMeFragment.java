@@ -25,7 +25,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
 
     ImageView roundview;
 
-    TextView tvname, txt_title, txt_exist;
+    TextView tvname, txt_title, txt_exist,tvaq;
 
     ImageView img_back;
 
@@ -43,7 +43,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
     private void setMyData() {
         XGlideLoaderNew.displayImageCircularForUser(getActivity(), getSp(Const.UID), roundview);
         tvname.setText(getSp(Const.NICK));
-
+        tvaq.setText(String.format(getString(R.string.device_numer),getSp(Const.USER_DEVICE_NUMBER)));
     }
 
     private void initTop() {

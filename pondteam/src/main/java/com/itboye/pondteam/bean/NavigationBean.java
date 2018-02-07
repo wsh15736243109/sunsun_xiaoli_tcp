@@ -82,6 +82,16 @@ public class NavigationBean implements Serializable{
 		String mobile;
 		String addressDetail;
 		String branchImgs;
+		String taobao_store_url;
+
+		public String getTaobao_store_url() {
+			return taobao_store_url;
+		}
+
+		public void setTaobao_store_url(String taobao_store_url) {
+			this.taobao_store_url = taobao_store_url;
+		}
+
 		public String getId() {
 			return id;
 		}

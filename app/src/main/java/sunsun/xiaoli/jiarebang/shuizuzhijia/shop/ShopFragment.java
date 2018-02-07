@@ -62,7 +62,11 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
         list_shop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+                if (navigationBean != null) {
+                    if (navigationBean.getList() != null) {
+                        GotoTaoBaoUtil.startActivity(getActivity(), navigationBean.getList().get(position).getTaobao_store_url());
+                    }
+                }
             }
         });
     }
@@ -70,13 +74,14 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     private void initTop() {
         txt_title.setText(getString(R.string.shop_xianshang));
         img_back.setVisibility(View.GONE);
-        txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_down, 0);
+        txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.jiantou_down, 0);
     }
 
 
     @Override
     public void onClick(View v) {
         String url = "";
+        String url_type = "";
         switch (v.getId()) {
             case R.id.tv_shop_enter:
                 url = Const.TAOBAO_TEST_URL;
@@ -85,16 +90,25 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             case R.id.img_shop_second:
             case R.id.img_shop_third:
                 url = v.getTag(R.id.tag_first) + "";
+                url_type = v.getTag(R.id.tag_second) + "";
                 if (url.equals("")) {
 //                    MAlert.alert("url is null");
                     return;
                 }
                 break;
         }
-        goToTaoBao(url);
+        goToTaoBao(url, url_type);
     }
 
-    private void goToTaoBao(String url) {
+    private void goToTaoBao(String url, String url_type) {
+        if (url_type.equals("6070")) {
+            //跳转链接
+
+        } else if (url_type.equals("6071")) {
+            //商品详情
+        } else if (url_type.equals("6072")) {
+            //帖子详情
+        }
         GotoTaoBaoUtil.startActivity(getActivity(), url);
     }
 
@@ -109,10 +123,13 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
                     XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), img_shop_first);
                     img_shop_first.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
+                    img_shop_first.setTag(R.id.tag_second, bannerBeanArrayList.get(0).getUrl_type());
                     XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(2).getImg(), img_shop_second);
                     img_shop_second.setTag(R.id.tag_first, bannerBeanArrayList.get(2).getUrl());
+                    img_shop_second.setTag(R.id.tag_second, bannerBeanArrayList.get(2).getUrl_type());
                     XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(1).getImg(), img_shop_third);
                     img_shop_third.setTag(R.id.tag_first, bannerBeanArrayList.get(1).getUrl());
+                    img_shop_third.setTag(R.id.tag_second, bannerBeanArrayList.get(1).getUrl_type());
                 } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
                     MAlert.alert(entity.getData());
                 } else if (entity.getEventType() == UserPresenter.branchSearch_success) {
@@ -142,7 +159,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    txt_exist.setText(cityName + areaName);
+                    txt_exist.setText(cityName);
                 }
             });
             userPresenter.branchSearch(city, area, lng, lat, page, size);

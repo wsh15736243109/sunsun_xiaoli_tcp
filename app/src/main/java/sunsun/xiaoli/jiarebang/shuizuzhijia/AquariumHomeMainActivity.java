@@ -85,6 +85,7 @@ public class AquariumHomeMainActivity extends BaseActivity {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(xiaoLiFragment);
                 }
+                aquarium_device_image.setBackgroundResource(R.drawable.xiaoli_select);
                 aquarium_device_text.setTextColor(getResources().getColor(R.color.main_green));
                 break;
             case 1:
@@ -96,6 +97,7 @@ public class AquariumHomeMainActivity extends BaseActivity {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(shopFragment);
                 }
+                aquarium_shop_image.setBackgroundResource(R.drawable.shop_select);
                 aquarium_shop_text.setTextColor(getResources().getColor(R.color.main_green));
                 break;
             case 2:
@@ -107,6 +109,7 @@ public class AquariumHomeMainActivity extends BaseActivity {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(storeFragment);
                 }
+                aquarium_store_image.setBackgroundResource(R.drawable.store_select);
                 aquarium_store_text.setTextColor(getResources().getColor(R.color.main_green));
                 break;
             case 3:
@@ -118,6 +121,7 @@ public class AquariumHomeMainActivity extends BaseActivity {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(productFragment);
                 }
+                aquarium_product_image.setBackgroundResource(R.drawable.product_select);
                 aquarium_product_text.setTextColor(getResources().getColor(R.color.main_green));
                 break;
             case 4:
@@ -129,6 +133,7 @@ public class AquariumHomeMainActivity extends BaseActivity {
                     // 如果HomeFragment不为空，则直接将它显示出来
                     transaction.show(aquariumMeFragment);
                 }
+                aquarium_me_image.setBackgroundResource(R.drawable.me_new_select);
                 aquarium_me_text.setTextColor(getResources().getColor(R.color.main_green));
                 break;
         }
@@ -151,11 +156,16 @@ public class AquariumHomeMainActivity extends BaseActivity {
         if (aquariumMeFragment != null) {
             transaction.hide(aquariumMeFragment);
         }
-        aquarium_device_text.setTextColor(getResources().getColor(R.color.gray_A1));
-        aquarium_shop_text.setTextColor(getResources().getColor(R.color.gray_A1));
-        aquarium_store_text.setTextColor(getResources().getColor(R.color.gray_A1));
-        aquarium_product_text.setTextColor(getResources().getColor(R.color.gray_A1));
-        aquarium_me_text.setTextColor(getResources().getColor(R.color.gray_A1));
+        aquarium_device_image.setBackgroundResource(R.drawable.xiaoli_unselect);
+        aquarium_shop_image.setBackgroundResource(R.drawable.shop_unselect);
+        aquarium_store_image.setBackgroundResource(R.drawable.store_unselect);
+        aquarium_product_image.setBackgroundResource(R.drawable.product_unselect);
+        aquarium_me_image.setBackgroundResource(R.drawable.me_new_unselect);
+        aquarium_device_text.setTextColor(getResources().getColor(R.color.main_black));
+        aquarium_shop_text.setTextColor(getResources().getColor(R.color.main_black));
+        aquarium_store_text.setTextColor(getResources().getColor(R.color.main_black));
+        aquarium_product_text.setTextColor(getResources().getColor(R.color.main_black));
+        aquarium_me_text.setTextColor(getResources().getColor(R.color.main_black));
 //        if (orderFragment != null) {
 //            transaction.hide(orderFragment);
 //        }

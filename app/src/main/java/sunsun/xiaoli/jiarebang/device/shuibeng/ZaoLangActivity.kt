@@ -32,11 +32,11 @@ class ZaoLangActivity : BaseActivity(), Observer {
 
                 } else if (entity.eventType == zaolang_liuliang_success) {
                     app!!.deviceShuiBengUI.requestTime = System.currentTimeMillis()
-                    gear = tempValue
+                    gear = tempValue + 1
                     setZaoLangData()
                 } else if (entity.eventType == zaolang_zhouqi_success) {
                     app!!.deviceShuiBengUI.requestTime = System.currentTimeMillis()
-                    wc = tempValue
+                    wc = tempValue + 1
                     setZaoLangData()
                 } else if (entity.eventType == zaolang_success) {
                     app!!.deviceShuiBengUI.requestTime = System.currentTimeMillis()
@@ -54,7 +54,7 @@ class ZaoLangActivity : BaseActivity(), Observer {
     internal var txt_title: TextView? = null
     internal var img_back: ImageView? = null
     internal var re_zaolang_zhouqi_choose: RelativeLayout? = null
-//    internal var re_zaolang_liuliang_choose: RelativeLayout? = null
+    //    internal var re_zaolang_liuliang_choose: RelativeLayout? = null
     var iv_zaolang_status: ImageView? = null
     internal var userPresenter: UserPresenter? = null
     var app: App? = null
