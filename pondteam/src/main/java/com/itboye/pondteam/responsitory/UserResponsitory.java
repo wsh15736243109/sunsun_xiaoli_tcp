@@ -1667,9 +1667,15 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("city", city);
-        map.put("area", area);
-        map.put("long", longValue);
-        map.put("lati", lati);
+        if (area!=null) {
+            map.put("area", area);
+        }
+        if (longValue!=-1) {
+            map.put("long", longValue);
+        }
+        if (lati!=-1) {
+            map.put("lati", lati);
+        }
         map.put("page", page);
         map.put("size", size);
         byjsonRequest

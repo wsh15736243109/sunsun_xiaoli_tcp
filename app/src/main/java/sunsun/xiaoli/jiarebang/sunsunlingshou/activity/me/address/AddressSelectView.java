@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import java.io.File;
@@ -165,6 +166,10 @@ public class AddressSelectView extends LinearLayout implements OnWheelChangedLis
 		mViewProvince.addChangingListener(this);
 		mViewCity.addChangingListener(this);
 		mViewDistrict.addChangingListener(this);
+	}
+
+	public void setAreaVisible(boolean isVisible){
+		mViewDistrict.setVisibility(isVisible? View.VISIBLE:View.GONE);
 	}
 	
 	private void setUpData() {

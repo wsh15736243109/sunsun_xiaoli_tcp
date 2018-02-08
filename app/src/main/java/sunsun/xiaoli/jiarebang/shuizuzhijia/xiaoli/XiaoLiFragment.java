@@ -391,6 +391,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         SPUtils.put(getActivity(), null, Const.IS_LOGINED, false);
         SPUtils.put(getActivity(), null, Const.HEAD, "");
         SPUtils.put(getActivity(), null, Const.NICK, "");
+        SPUtils.put(getActivity(), null, Const.USER_DEVICE_NUMBER, "");
 //        SPUtils.put(this, null, Const.S_ID, "");
         LoginController.setLoginState(new UnLoginState());
         Intent intent = new Intent(getActivity(), LoginActivity.class);

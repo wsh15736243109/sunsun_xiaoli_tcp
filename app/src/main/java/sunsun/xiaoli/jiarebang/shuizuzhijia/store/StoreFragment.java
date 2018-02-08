@@ -43,6 +43,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressFragment;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
 
@@ -51,7 +52,7 @@ import sunsun.xiaoli.jiarebang.utils.Util;
  *
  * @author liu
  */
-public class StoreFragment extends LingShouBaseFragment implements OnClickListener, Observer, LocationUtil.OnLocationResult {
+public class StoreFragment extends LingShouBaseFragment implements OnClickListener, Observer, LocationUtil.OnLocationResult, AddressFragment.GetInforListener {
 
     int searchType = 0; // 搜索的类型，在显示时区分
 
@@ -413,6 +414,12 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                         + mobile));
                 startActivity(intent5);
                 break;
+            case R.id.txt_exist:
+                AddressFragment addressFragment = new AddressFragment(this);
+                addressFragment.setAreaVisible(false);
+                addressFragment.show(getFragmentManager(), "addressfragment");
+                break;
+
             default:
                 break;
         }
@@ -576,4 +583,9 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
         return areaCode;
     }
 
+    @Override
+    public void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo) {
+        txt_exist.setText(city);
+        userPresenter.branchSearch(cityNo, null, -1, -1, page, size);
+    }
 }

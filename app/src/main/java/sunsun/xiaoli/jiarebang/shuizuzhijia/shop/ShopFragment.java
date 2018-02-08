@@ -21,6 +21,7 @@ import java.util.Observer;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.ShopAdapter;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
+import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressFragment;
 import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
@@ -32,7 +33,7 @@ import static com.itboye.pondteam.utils.Const.imgSunsunUrl;
  * Created by Administrator on 2018/1/24.
  */
 
-public class ShopFragment extends LingShouBaseFragment implements Observer, LocationUtil.OnLocationResult {
+public class ShopFragment extends LingShouBaseFragment implements Observer, LocationUtil.OnLocationResult, AddressFragment.GetInforListener {
 
     UserPresenter userPresenter;
     private ArrayList<BannerBean> bannerBeanArrayList;
@@ -85,6 +86,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
         switch (v.getId()) {
             case R.id.tv_shop_enter:
                 url = Const.TAOBAO_TEST_URL;
+                goToTaoBao(url, url_type);
                 break;
             case R.id.img_shop_first:
             case R.id.img_shop_second:
@@ -95,9 +97,14 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
 //                    MAlert.alert("url is null");
                     return;
                 }
+                goToTaoBao(url, url_type);
+                break;
+            case R.id.txt_exist:
+                AddressFragment addressFragment = new AddressFragment(this);
+                addressFragment.setAreaVisible(false);
+                addressFragment.show(getFragmentManager(), "addressfragment");
                 break;
         }
-        goToTaoBao(url, url_type);
     }
 
     private void goToTaoBao(String url, String url_type) {
@@ -121,23 +128,24 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             } else {
                 if (entity.getEventType() == UserPresenter.getBanners_success) {
                     bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
-                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), img_shop_first);
-                    img_shop_first.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
-                    img_shop_first.setTag(R.id.tag_second, bannerBeanArrayList.get(0).getUrl_type());
-                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(2).getImg(), img_shop_second);
-                    img_shop_second.setTag(R.id.tag_first, bannerBeanArrayList.get(2).getUrl());
-                    img_shop_second.setTag(R.id.tag_second, bannerBeanArrayList.get(2).getUrl_type());
-                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(1).getImg(), img_shop_third);
-                    img_shop_third.setTag(R.id.tag_first, bannerBeanArrayList.get(1).getUrl());
-                    img_shop_third.setTag(R.id.tag_second, bannerBeanArrayList.get(1).getUrl_type());
+
+                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(2).getImg(), img_shop_first);
+                    img_shop_first.setTag(R.id.tag_first, bannerBeanArrayList.get(2).getUrl());
+                    img_shop_first.setTag(R.id.tag_second, bannerBeanArrayList.get(2).getUrl_type());
+
+                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), img_shop_third);
+                    img_shop_third.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
+                    img_shop_third.setTag(R.id.tag_second, bannerBeanArrayList.get(0).getUrl_type());
+
+                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(1).getImg(), img_shop_second);
+                    img_shop_second.setTag(R.id.tag_first, bannerBeanArrayList.get(1).getUrl());
+                    img_shop_second.setTag(R.id.tag_second, bannerBeanArrayList.get(1).getUrl_type());
                 } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
                     MAlert.alert(entity.getData());
                 } else if (entity.getEventType() == UserPresenter.branchSearch_success) {
                     navigationBean = (NavigationBean) entity.getData();
                     if (navigationBean != null) {
-                        if (navigationBean.getList().size() > 0) {
-                            list_shop.setAdapter(new ShopAdapter(this, navigationBean.getList(), R.layout.item_shop));
-                        }
+                        list_shop.setAdapter(new ShopAdapter(this, navigationBean.getList(), R.layout.item_shop));
                     } else {
                         MAlert.alert("出错了");
                     }
@@ -164,5 +172,11 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             });
             userPresenter.branchSearch(city, area, lng, lat, page, size);
         }
+    }
+
+    @Override
+    public void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo) {
+        txt_exist.setText(city);
+        userPresenter.branchSearch(cityNo, null, -1, -1, page, size);
     }
 }

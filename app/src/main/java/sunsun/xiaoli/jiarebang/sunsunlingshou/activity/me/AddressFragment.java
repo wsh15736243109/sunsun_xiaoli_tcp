@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.itboye.pondteam.base.BaseDialogFragment;
 
@@ -16,29 +17,40 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.address.AddressSelectV
 @SuppressLint("ValidFragment")
 public class AddressFragment extends BaseDialogFragment implements OnClickListener {
 
-	
-	private AddressSelectView addressSelect;
-	public interface GetInforListener
-	{
-		void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo);
-	}
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		 
-		
-		View v = inflater.inflate(R.layout.fragment_address2, container, false);
-		v.findViewById(R.id.btn_confirm).setOnClickListener(this);
-		addressSelect = (AddressSelectView) v.findViewById(R.id.addressselect);
-		return v;
-	}
-	GetInforListener listener;
-	@SuppressLint("ValidFragment")
-	public AddressFragment(GetInforListener listener){
-		this.listener=listener;
-	}
-	 
+    private AddressSelectView addressSelect;
+    private boolean isAreaVisible;
+    RelativeLayout re_address_root;
+
+    public interface GetInforListener {
+        void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+
+        View v = inflater.inflate(R.layout.fragment_address2, container, false);
+        v.findViewById(R.id.btn_confirm).setOnClickListener(this);
+        addressSelect = (AddressSelectView) v.findViewById(R.id.addressselect);
+        re_address_root= (RelativeLayout) v.findViewById(R.id.re_address_root);
+        re_address_root.setOnClickListener(this);
+        addressSelect.setAreaVisible(isAreaVisible);
+        return v;
+    }
+
+    GetInforListener listener;
+
+    @SuppressLint("ValidFragment")
+    public AddressFragment(GetInforListener listener) {
+        this.listener = listener;
+    }
+
+    public void setAreaVisible(boolean isAreaVisible) {
+        this.isAreaVisible = isAreaVisible;
+    }
+
 
 //	@Override
 //	public void onStart() {
@@ -54,17 +66,24 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
 //		getDialog().getWindow().setAttributes(layoutParams);
 //	}
 
-	@Override
-	public void onClick(View arg0) {
-		addressSelect.getAddressData();
-		String provinceNo=Integer.toString(addressSelect.getProvinceNo());
-		String cityNo=Integer.toString(addressSelect.getCityNo());
-		String districtNo=Integer.toString(addressSelect.getDistrictNo());
-		String province=addressSelect.getProvinceName();
-		String city=addressSelect.getCityName();
-		String districName= addressSelect.getDistrictName();
-		this.listener.onGetinforListener(province,city, districName, provinceNo, cityNo, districtNo);
-		//添加数据
+    @Override
+    public void onClick(View arg0) {
+        switch (arg0.getId()) {
+            case R.id.btn_confirm:
+                addressSelect.getAddressData();
+                String provinceNo = Integer.toString(addressSelect.getProvinceNo());
+                String cityNo = Integer.toString(addressSelect.getCityNo());
+                String districtNo = Integer.toString(addressSelect.getDistrictNo());
+                String province = addressSelect.getProvinceName();
+                String city = addressSelect.getCityName();
+                String districName = addressSelect.getDistrictName();
+                this.listener.onGetinforListener(province, city, districName, provinceNo, cityNo, districtNo);
+                break;
+            case R.id.re_address_root:
+                break;
+        }
+
+        //添加数据
 //		Bundle bundle=new Bundle();
 //		bundle.putString("provincename", addressSelect.getProvinceName());
 //		bundle.putString("cityname", addressSelect.getCityName());
@@ -79,8 +98,8 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
 //        fTransaction.add(fragment, "123");
 //        //提交Fragment事务
 //        fTransaction.commit();
-		this.dismiss();
+        this.dismiss();
 
-	}
+    }
 
 }
