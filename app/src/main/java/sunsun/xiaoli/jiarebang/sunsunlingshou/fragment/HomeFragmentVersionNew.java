@@ -603,7 +603,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
     }
 
     @Override
-    public void getLatAndLng(final String cityName, final double lat, final double lng, final String area) {
+    public void getLatAndLng(final String provinceName,final String cityName, final double lat, final double lng, final String area) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

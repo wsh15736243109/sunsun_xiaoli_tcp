@@ -21,6 +21,12 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
     private AddressSelectView addressSelect;
     private boolean isAreaVisible;
     RelativeLayout re_address_root;
+    private String provinceName;
+    private String cityName;
+
+    public void setCity(String cityName) {
+        this.cityName=cityName;
+    }
 
     public interface GetInforListener {
         void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo);
@@ -34,6 +40,8 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
         View v = inflater.inflate(R.layout.fragment_address2, container, false);
         v.findViewById(R.id.btn_confirm).setOnClickListener(this);
         addressSelect = (AddressSelectView) v.findViewById(R.id.addressselect);
+        addressSelect.setProvince(provinceName);
+        addressSelect.setCityName(cityName);
         re_address_root= (RelativeLayout) v.findViewById(R.id.re_address_root);
         re_address_root.setOnClickListener(this);
         addressSelect.setAreaVisible(isAreaVisible);
@@ -51,6 +59,9 @@ public class AddressFragment extends BaseDialogFragment implements OnClickListen
         this.isAreaVisible = isAreaVisible;
     }
 
+    public void setProvince(String provinceName) {
+        this.provinceName=provinceName;
+    }
 
 //	@Override
 //	public void onStart() {

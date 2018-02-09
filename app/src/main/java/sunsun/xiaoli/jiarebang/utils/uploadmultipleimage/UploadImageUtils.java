@@ -21,21 +21,23 @@ import sunsun.xiaoli.jiarebang.beans.UploadImageBean;
 
 public class UploadImageUtils {
     String uploadURl = Const.updaloadURL;
-    Map<String, String> hashMap=null;
-    public UploadImageUtils(String... param){
-        hashMap=new HashMap<>();
-        hashMap.put("uid",param[0]);
-        hashMap.put("type",param[1]);
+    Map<String, String> hashMap = null;
+
+    public UploadImageUtils(String... param) {
+        hashMap = new HashMap<>();
+        hashMap.put("uid", param[0]);
+        hashMap.put("type", param[1]);
     }
-    public void beginUpload( String filePartName, File file, final UploadResult uploadResult) {
-        uploadURl="http://dev.sale.sunsunxiaoli.com/index.php/file/upload";
+
+    public void beginUpload(String filePartName, File file, final UploadResult uploadResult) {
+        uploadURl = "http://dev.sale.sunsunxiaoli.com/index.php/file/upload";
         MultipartRequest multipartRequest = new MultipartRequest(uploadURl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                response= decode(response);
-                Log.v("reqeust", response+"成功22222"+uploadURl);
+                response = decode(response);
+                Log.v("reqeust", response + "成功22222" + uploadURl);
                 Gson gson = new Gson();
-                UploadImageBean uploadImageBean=null;
+                UploadImageBean uploadImageBean = null;
                 try {
                     uploadImageBean = gson.fromJson((response), UploadImageBean.class);
                     if (uploadImageBean != null) {
@@ -47,7 +49,7 @@ public class UploadImageUtils {
                     } else {
                         uploadResult.uploadFail(new VolleyError());
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     uploadResult.uploadFail(new VolleyError(response));
                 }
             }
@@ -59,7 +61,38 @@ public class UploadImageUtils {
         }, filePartName, file, hashMap);
         MyApplication.addRequest(multipartRequest);
     }
-
+    public void beginUpload(String uploadUrl,String filePartName, File file, final UploadResult uploadResult) {
+        uploadURl = "http://dev.sale.sunsunxiaoli.com/index.php/file/upload";
+        MultipartRequest multipartRequest = new MultipartRequest(uploadUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                response = decode(response);
+                Log.v("reqeust", response + "成功22222" + uploadURl);
+                Gson gson = new Gson();
+                UploadImageBean uploadImageBean = null;
+                try {
+                    uploadImageBean = gson.fromJson((response), UploadImageBean.class);
+                    if (uploadImageBean != null) {
+                        if (uploadImageBean.getCode() != 0) {
+                            uploadResult.uploadFail(new VolleyError(uploadImageBean.getData().toString()));
+                        } else {
+                            uploadResult.uploadSuccess(uploadImageBean);
+                        }
+                    } else {
+                        uploadResult.uploadFail(new VolleyError());
+                    }
+                } catch (Exception e) {
+                    uploadResult.uploadFail(new VolleyError(response));
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(final VolleyError error) {
+                uploadResult.uploadFail(error);
+            }
+        }, filePartName, file, hashMap);
+        MyApplication.addRequest(multipartRequest);
+    }
     public static String decode(String unicodeStr) {
         if (unicodeStr == null) {
             return null;

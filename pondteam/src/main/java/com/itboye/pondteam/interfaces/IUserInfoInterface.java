@@ -483,4 +483,12 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param size
      */
     void branchSearch(String city, String area, double longValue, double lati, int page, int size);
+
+    /**
+     * 修改个人资料
+     * @param s_id
+     * @param uid
+     * @param nickName
+     */
+    void updateMyData(String s_id, String uid, String nickName);
 }

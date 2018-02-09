@@ -336,7 +336,7 @@ public class Util {
                 return "ADT-H";
             }
         } else if (did.startsWith("S07")) {
-            return BuildConfig.APP_TYPE.equals("小绵羊智能") ?MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng):MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng);
+            return BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng);
         } else if (did.startsWith("S08")) {
             return MyApplication.getInstance().getResources().getString(R.string.device_zhineng118);
         } else if (did.startsWith("SCHD")) {
@@ -370,10 +370,11 @@ public class Util {
         }
         cursor.close();
 
-        SPUtils.put(App.getInstance(), null, Const.CITY_CODE, city.getNumber()+"");
+        SPUtils.put(App.getInstance(), null, Const.CITY_CODE, city.getNumber() + "");
         Log.v("request_params", "城市Code" + city.getNumber());
         return city.getNumber() + "";
     }
+
     /**
      * 解析市数据
      */
@@ -390,8 +391,71 @@ public class Util {
         }
         cursor.close();
 
-        SPUtils.put(App.getInstance(), null, Const.AREA_CODE, city.getNumber()+"");
+        SPUtils.put(App.getInstance(), null, Const.AREA_CODE, city.getNumber() + "");
         Log.v("request_params", "地区Code" + city.getNumber());
         return city.getNumber() + "";
+    }
+
+    /**
+     * 解析市数据
+     */
+    public static CityModel queryCity(String cityName) {
+        String table = "common_city";
+        String column1 = "city";
+        String colunm2 = "father";
+        if (cityName.equals("重庆市") || cityName.equals("北京市") || cityName.equals("天津市") || cityName.equals("上海市") || cityName.equals("重庆") || cityName.equals("北京") || cityName.equals("天津") || cityName.equals("上海")) {
+            table = "common_province";
+            column1 = "province";
+            if (cityName.endsWith("市")) {
+
+            } else {
+                cityName = cityName + "市";
+            }
+        }
+        //查询城市ID
+        String sql = "select * from " + table + " where " + column1 + " = ?";
+        Cursor cursor = App.getInstance().db.rawQuery(sql, new String[]{cityName});
+        CityModel city = new CityModel();
+        while (cursor.moveToNext()) {
+            city = new CityModel(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+            city.setId(cursor.getInt(0));
+            break;
+        }
+        cursor.close();
+        Log.v("request_params", "城市Code" + city.getNumber());
+        return city;
+    }
+
+    /**
+     * 解析省数据
+     */
+    public static CityModel queryProvince(String provinceName) {
+        String table = "common_province";
+        String column = "province";
+        String sql = "select * from " + table + " where " + column + " = ?";
+        Cursor cursor = App.getInstance().db.rawQuery(sql, new String[]{provinceName});
+        CityModel province = null;
+        while (cursor.moveToNext()) {
+            province = new CityModel(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+            province.setId(cursor.getInt(0));
+            break;
+        }
+        cursor.close();
+        return province;
+    }
+
+    public static CityModel queryProvinceNo(String provinceName) {
+        String table = "common_province";
+        String column = "province";
+        String sql = "select * from " + table + " where " + column + " = ?";
+        Cursor cursor = App.getInstance().db.rawQuery(sql, new String[]{provinceName});
+        CityModel province = null;
+        while (cursor.moveToNext()) {
+            province = new CityModel(cursor.getString(2), cursor.getInt(1), cursor.getInt(3));
+            province.setId(cursor.getInt(0));
+            break;
+        }
+        cursor.close();
+        return province;
     }
 }

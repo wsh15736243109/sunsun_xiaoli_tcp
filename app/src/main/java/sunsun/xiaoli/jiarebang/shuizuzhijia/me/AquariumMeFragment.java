@@ -37,11 +37,10 @@ public class AquariumMeFragment extends LingShouBaseFragment {
     @Override
     protected void initData() {
         initTop();
-        setMyData();
     }
 
     private void setMyData() {
-        XGlideLoaderNew.displayImageCircularForUser(getActivity(), getSp(Const.UID), roundview);
+        XGlideLoaderNew.displayImageCircular(getActivity(), getSp(Const.HEAD), roundview);
         tvname.setText(getSp(Const.NICK));
         tvaq.setText(String.format(getString(R.string.device_numer),getSp(Const.USER_DEVICE_NUMBER)));
     }
@@ -50,6 +49,12 @@ public class AquariumMeFragment extends LingShouBaseFragment {
         txt_title.setText(getString(R.string.aquarium_me));
         img_back.setVisibility(View.GONE);
         txt_exist.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setMyData();
     }
 
     @Override

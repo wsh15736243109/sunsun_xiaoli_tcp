@@ -179,5 +179,33 @@ public class UploadImageBean {
         public int getNewX() {
             return newX;
         }
+
+        @Override
+        public String toString() {
+            return "DataEntity{" +
+                    "path='" + path + '\'' +
+                    ", uid=" + uid +
+                    ", ori_name='" + ori_name + '\'' +
+                    ", savename='" + savename + '\'' +
+                    ", size=" + size +
+                    ", url='" + url + '\'' +
+                    ", imgurl='" + imgurl + '\'' +
+                    ", md5='" + md5 + '\'' +
+                    ", sha1='" + sha1 + '\'' +
+                    ", type='" + type + '\'' +
+                    ", ext='" + ext + '\'' +
+                    ", id=" + id +
+                    ", newX=" + newX +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "UploadImageBean{" +
+                "code=" + code +
+                ", notify_id=" + notify_id +
+                ", data=" + data +
+                '}';
     }
 }

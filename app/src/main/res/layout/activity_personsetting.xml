@@ -43,6 +43,7 @@
                 android:id="@+id/uploadrela"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:paddingRight="@dimen/DIMEN_10DP"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:onClick="postavater">
@@ -53,6 +54,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:text="@string/head"
+                    android:textSize="@dimen/DIMEN_16DP"
                     android:textColor="@color/persontextcolor" />
 
                 <ImageView
@@ -84,48 +86,36 @@
                 android:background="@color/white">
 
                 <TextView
+                    android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:text="@string/nick"
+                    android:textSize="@dimen/DIMEN_16DP"
                     android:textColor="@color/persontextcolor" />
 
-                <TextView
+                <EditText
                     android:id="@+id/nicktext"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_toRightOf="@+id/tv_nickname"
+                    android:gravity="right"
+                    android:background="@null"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
+                    android:text="昵称"
+                    android:textSize="@dimen/DIMEN_16DP"
                     android:textColor="@color/persontextcolor" />
 
                 <ImageView
+                    android:id="@+id/iv_nickname"
                     android:layout_width="@dimen/DIMEN_20DP"
                     android:layout_height="@dimen/DIMEN_20DP"
                     android:layout_alignParentRight="true"
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:src="@drawable/arrow_right" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="0.1px"
-                android:background="@color/e4" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="30dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="15dp"
-                    android:text="@string/zhanhaoboingding"
-                    android:textColor="@color/gray_6c7bb"
-                    android:textSize="10dp" />
             </RelativeLayout>
 
             <View
@@ -149,6 +139,7 @@
                     android:textColor="@color/persontextcolor" />
 
                 <ImageView
+                    android:visibility="gone"
                     android:id="@+id/go1"
                     android:layout_width="@dimen/DIMEN_20DP"
                     android:layout_height="@dimen/DIMEN_20DP"
@@ -162,7 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="30dp"
+                    android:layout_marginRight="@dimen/DIMEN_10DP"
                     android:clickable="false"
                     android:textColor="@color/persontextcolor" />
             </RelativeLayout>
@@ -172,89 +163,12 @@
                 android:layout_height="0.5dp"
                 android:background="@color/gray_EEEE" />
 
-            <RelativeLayout
-                android:id="@+id/emailrela"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white"
-                android:clickable="true">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/youxiang"
-                    android:textColor="@color/persontextcolor" />
-
-                <ImageView
-                    android:layout_width="@dimen/DIMEN_20DP"
-                    android:layout_height="@dimen/DIMEN_20DP"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/arrow_right" />
-
-                <TextView
-                    android:id="@+id/emailtext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="30dp"
-                    android:clickable="false"
-                    android:textColor="@color/persontextcolor" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray_EEEE" />
 
             <RelativeLayout
-                android:id="@+id/wechatrela"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@color/white">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="@string/weixin"
-                    android:textColor="@color/persontextcolor" />
-
-                <TextView
-                    android:id="@+id/wechatview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="30dp"
-                    android:layout_toLeftOf="@+id/btn"
-                    android:text="已绑定"
-                    android:textColor="@color/main_blue"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:id="@+id/btn"
-                    android:layout_width="@dimen/DIMEN_20DP"
-                    android:layout_height="@dimen/DIMEN_20DP"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/arrow_right" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="0.1px"
-                android:background="@color/e4" />
-
-            <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/relayoutUpdate"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
+                android:paddingRight="@dimen/DIMEN_10DP"
                 android:background="@color/white">
 
                 <TextView
@@ -278,6 +192,17 @@
                 android:layout_height="0.5dp"
                 android:background="@color/gray_EEEE" />
 
+            <Button
+                android:id="@+id/btn_submit"
+                android:textSize="@dimen/DIMEN_20DP"
+                android:layout_marginTop="@dimen/DIMEN_10DP"
+                android:layout_marginLeft="@dimen/DIMEN_40DP"
+                android:layout_marginRight="@dimen/DIMEN_40DP"
+                android:background="@drawable/bg_green"
+                android:textColor="@color/white"
+                android:text="@string/save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

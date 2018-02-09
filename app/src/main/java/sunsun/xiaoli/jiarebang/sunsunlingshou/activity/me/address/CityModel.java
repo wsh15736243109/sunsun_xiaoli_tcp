@@ -2,6 +2,16 @@ package sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.address;
 
 
 public class CityModel {
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String name;
 	private int number;
 	private int fatherNum;

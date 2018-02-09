@@ -183,7 +183,7 @@ public class LocationUtil {
             SPUtils.put(context, null, Const.LOCATION_LNG, location.getLongitude()+"");
             Const.lat = location.getLatitude();
             Const.lng = location.getLongitude();
-            locationResult.getLatAndLng(location.getAddress().city, location.getLatitude(), location.getLongitude(),location.getAddress().district);
+            locationResult.getLatAndLng(location.getAddress().province,location.getAddress().city, location.getLatitude(), location.getLongitude(),location.getAddress().district);
         }
 
         @Override
@@ -197,6 +197,6 @@ public class LocationUtil {
     }
 
     public interface OnLocationResult {
-        void getLatAndLng(String cityName, double lat, double lng,String areaName);
+        void getLatAndLng(String provinceName,String cityName, double lat, double lng,String areaName);
     }
 }

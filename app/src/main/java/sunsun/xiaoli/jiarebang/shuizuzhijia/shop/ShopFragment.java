@@ -41,13 +41,15 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
 
     LocationUtil locationUtil;
     ListView list_shop;
-    private String city = "";
+    private String cityNo = "";
     private int size = 3;
     private int page = 1;
     private String area;
     private NavigationBean navigationBean;
     TextView txt_exist, txt_title;
     ImageView img_back;
+    private String cityName;
+    private String provinceName;
 
     @Override
     protected int getLayoutId() {
@@ -102,7 +104,12 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             case R.id.txt_exist:
                 AddressFragment addressFragment = new AddressFragment(this);
                 addressFragment.setAreaVisible(false);
+                if (provinceName != null) {
+                    addressFragment.setProvince(this.provinceName);
+                    addressFragment.setCity(this.cityName);
+                }
                 addressFragment.show(getFragmentManager(), "addressfragment");
+
                 break;
         }
     }
@@ -159,10 +166,12 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     boolean isSearch = false;
 
     @Override
-    public void getLatAndLng(final String cityName, double lat, double lng, final String areaName) {
+    public void getLatAndLng(final String provinceName, final String cityName, double lat, double lng, final String areaName) {
         if (!isSearch) {
             isSearch = true;
-            city = Util.queryCityNo(cityName);
+            this.cityNo = Util.queryCityNo(cityName);
+            this.cityName = cityName;
+            this.provinceName = provinceName;
 //            area = Util.queryDistrictNo(areaName);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -170,12 +179,15 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     txt_exist.setText(cityName);
                 }
             });
-            userPresenter.branchSearch(city, area, lng, lat, page, size);
+            userPresenter.branchSearch(this.cityNo, area, lng, lat, page, size);
         }
     }
 
     @Override
     public void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo) {
+        this.cityNo = cityNo;
+        this.cityName = city;
+        this.provinceName = province;
         txt_exist.setText(city);
         userPresenter.branchSearch(cityNo, null, -1, -1, page, size);
     }

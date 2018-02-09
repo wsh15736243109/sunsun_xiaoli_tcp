@@ -147,7 +147,8 @@ public class UserResponsitory extends BaseNetRepository implements
     private String BY_ProductCenter_post = "BY_ProductCenter_post";//产品/视频列表
     private String BY_ProductCenter_search = "BY_ProductCenter_search";//搜索
     private String By_Banners_query = "By_Banners_query";//轮播
-    private String BY_Branch_search="BY_Branch_search";//门店查询
+    private String BY_Branch_search = "BY_Branch_search";//门店查询
+    private String By_User_update = "By_User_update";//用户个人资料修改
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -299,9 +300,9 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = getMostNewWaterPumpDevice;
         } else if (did.startsWith("S06")) {
             typeKey = getMostNewADT;
-        }else if (did.startsWith("S07")) {
+        } else if (did.startsWith("S07")) {
             typeKey = getMostNewCP1000;
-        }else if (did.startsWith("S08")) {
+        } else if (did.startsWith("S08")) {
             typeKey = getMostNewAQ118;
         }
         map.put("did", did);
@@ -335,7 +336,7 @@ public class UserResponsitory extends BaseNetRepository implements
             typeKey = beginUpdateADT;
         } else if (did.startsWith("S07")) {
             typeKey = beginUpdateCp1000;
-        }else if (did.startsWith("S08")) {
+        } else if (did.startsWith("S08")) {
             typeKey = beginUpdateAQ118;
         }
         map.put("did", did);
@@ -1041,7 +1042,7 @@ public class UserResponsitory extends BaseNetRepository implements
         } else if (deviceType.startsWith("S07")) {
             //CP1000验证
             typekey = authDevicePwd_CP;
-        }else if (deviceType.startsWith("S08")) {
+        } else if (deviceType.startsWith("S08")) {
             //CP1000验证
             typekey = authDevicePwd_AQ118;
         }
@@ -1520,7 +1521,8 @@ public class UserResponsitory extends BaseNetRepository implements
         }
         if (did.startsWith("S07")) {
             typeKey = getDeviceCP1000Detail;
-        } if (did.startsWith("S08")) {
+        }
+        if (did.startsWith("S08")) {
             typeKey = getDeviceAQ118;
         }
         map.put("did", did);
@@ -1667,13 +1669,13 @@ public class UserResponsitory extends BaseNetRepository implements
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
         map.put("city", city);
-        if (area!=null) {
+        if (area != null) {
             map.put("area", area);
         }
-        if (longValue!=-1) {
+        if (longValue != -1) {
             map.put("long", longValue);
         }
-        if (lati!=-1) {
+        if (lati != -1) {
             map.put("lati", lati);
         }
         map.put("page", page);
@@ -1682,6 +1684,26 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_Branch_search, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<NavigationBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void updateMyData(String s_id, String uid, String nickName) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("s_id", s_id);
+        map.put("uid", uid);
+        if (nickName != null) {
+            map.put("nickname", nickName);
+        }
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(By_User_update, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

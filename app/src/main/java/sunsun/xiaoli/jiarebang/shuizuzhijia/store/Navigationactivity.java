@@ -36,7 +36,6 @@ public class Navigationactivity extends BaseActivity {
     NavigationAdapter adapter;
     private ArrayList<NavigationBean.NavigationDetail> dataList = new ArrayList<>();
     String cityCode = "";
-    private String areaCode;
     private NavigationBean.NavigationDetail navi;
     TextView txt_title;
     ImageView img_back;
@@ -49,12 +48,11 @@ public class Navigationactivity extends BaseActivity {
         super.onCreate(arg0);
         setContentView(R.layout.activity_navigation);
         cityCode = getIntent().getStringExtra("cityCode");
-        areaCode = getIntent().getStringExtra("areaCode");
         navi = (NavigationBean.NavigationDetail) getIntent().getSerializableExtra("navi");
         if (navi != null) {//选中了
             dataList.add(navi);
         } else {//没有选中
-            getDetailNaigation(cityCode, areaCode);
+//            getDetailNaigation(cityCode, areaCode);
         }
 
         txt_title.setText("导航");

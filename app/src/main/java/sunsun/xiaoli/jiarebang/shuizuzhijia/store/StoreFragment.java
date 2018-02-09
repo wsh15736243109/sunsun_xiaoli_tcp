@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -61,7 +60,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     TextView tvNavigation;
     // 定位相关声明
     boolean isFirstLoc = true;// 是否首次定位
-    TextView addr, anquanyanzheng;
+    TextView addr, anquanyanzheng, tvMobilePhones, tvPhones, tvContacts;
     protected String cityCode;
     // protected String city;
     SQLiteDatabase database;
@@ -89,13 +88,15 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     LocationUtil locationUtil;
 
     int page = 1, size = 10;
-    String city;
     long longValue, lati;
     private NavigationBean navigationBean;
     private NavigationBean.NavigationDetail navi;
 
     ImageView img_back;
     TextView txt_exist, txt_title;
+    private String cityNo;
+    private String cityName;
+    private String provinceName;
 
     @Override
     protected int getLayoutId() {
@@ -252,10 +253,12 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     boolean isSearch = false;
 
     @Override
-    public void getLatAndLng(final String cityName, double lat, double lng, final String areaName) {
+    public void getLatAndLng(final String provinceName, final String cityName, double lat, double lng, final String areaName) {
         if (!isSearch) {
             isSearch = true;
-            city = Util.queryCityNo(cityName);
+            cityNo = Util.queryCityNo(cityName);
+            this.cityName = cityName;
+            this.provinceName = provinceName;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -263,7 +266,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                 }
             });
 //            area = Util.queryDistrictNo(areaName);
-            userPresenter.branchSearch(city, area, lng, lat, page, size);
+            userPresenter.branchSearch(cityNo, area, lng, lat, page, size);
         }
     }
 
@@ -328,71 +331,11 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
-//            case R.id.tvLocation:
-//                // Intent intent = new Intent(getActivity(),
-//                // CityListActivity.class);
-//                // Intent intent = new Intent(getActivity(),
-//                // LetterSortActivity.class);
-//                latLongString = (String) SPUtils.get(App.ctx, null,
-//                        SPContants.PROVINCE, "");
-//                System.out.println("resultDatasresultDatas" + latLongString);
-//                if (latLongString == null) {
-//                    Intent intent = new Intent(getActivity(),
-//                            CityListActivity.class);
-//                    intent.putExtra("resultDatas", dingei);
-//                    System.out.println("resultDatasresultDatas" + dingei);
-//
-//                    startActivityForResult(intent, 101);
-//                } else {
-//                    Intent intent = new Intent(getActivity(),
-//                            CityListActivity.class);
-//                    intent.putExtra("resultDatas", latLongString);
-//                    startActivityForResult(intent, 101);
-//                }
-//
-//                break;
-//            case R.id.realyoutcity:
-//                // Intent intent = new Intent(getActivity(),
-//                // CityListActivity.class);
-//                // Intent intent = new Intent(getActivity(),
-//                // LetterSortActivity.class);
-//                latLongString = (String) SPUtils.get(App.ctx, null,
-//                        SPContants.PROVINCE, "");
-//                if (latLongString == null) {
-//                    Intent intent = new Intent(getActivity(),
-//                            CityListActivity.class);
-//                    intent.putExtra("resultDatas", dingei);
-//                    startActivityForResult(intent, 101);
-//                } else {
-//                    Intent intent = new Intent(getActivity(),
-//                            CityListActivity.class);
-//                    intent.putExtra("resultDatas", latLongString);
-//                    startActivityForResult(intent, 101);
-//                }
-//                ;
-//                System.out.println("resultDatasresultDatas" + latLongString);
-//
-//                break;
-//            case R.id.reback:
-//                latLongString = (String) SPUtils.get(App.ctx, null,
-//                        SPContants.PROVINCE, "");
-//                if (latLongString == null) {
-//                    Intent intent = new Intent(getActivity(),
-//                            CityListActivity.class);
-//                    intent.putExtra("resultDatas", dingei);
-//                    startActivityForResult(intent, 101);
-//                } else {
-//                    Intent intent = new Intent(getActivity(),
-//                            CityListActivity.class);
-//                    intent.putExtra("resultDatas", latLongString);
-//                    startActivityForResult(intent, 101);
-//                }
-//                break;
             case R.id.tvNavigation:
                 //跳转导航列表
                 Intent intent1 = new Intent(getActivity(),
                         Navigationactivity.class);
-                intent1.putExtra("areaCode", areaCode);
+//                intent1.putExtra("areaCode", areaCode);
                 intent1.putExtra("cityCode", cityCode);
                 intent1.putExtra("searchType", searchType);
                 intent1.putExtra("navi", navi);
@@ -417,6 +360,10 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
             case R.id.txt_exist:
                 AddressFragment addressFragment = new AddressFragment(this);
                 addressFragment.setAreaVisible(false);
+                if (provinceName != null) {
+                    addressFragment.setProvince(this.provinceName);
+                    addressFragment.setCity(this.cityName);
+                }
                 addressFragment.show(getFragmentManager(), "addressfragment");
                 break;
 
@@ -425,166 +372,21 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
         }
     }
 
-    /**
-     * 打开数据库
-     *
-     * @param dbFile
-     * @return SQLiteDatabase
-     * @author sy
-     */
-    private final int BUFFER_SIZE = 400000;
-    protected String storeId;
-    protected String[] branches;
-
-    public static double lng_my;
-    public static double lat_my;
     public static double lng;
     public static double lat;
     protected String phone;
     protected String contactName;
-    protected String addrDetail;
-    private TextView tvContacts;
-    private TextView tvPhones;
-    private TextView tvMobilePhones;
     protected String mobile;
-
-    // protected float radius;
-    // private boolean searchType = false;
     BitmapDescriptor descriptor = null;
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101 && resultCode == 104) {
-            latLongString = data.getStringExtra("province");
-            cityCode = data.getStringExtra("number");
-
-            System.out.println("latLongStringlatLongString" + latLongString);
-
-//            SPUtils.put(App.ctx, null, SPContants.PROVINCE, latLongString);
-//            getStoreList(cityCode, all);
-
-            if (latLongString == null) {
-                tvLocation.setText("定位中...");
-            } else
-                tvLocation.setText(latLongString + "市");
-            searchType = 1;
-            // mPoiSearch.searchInCity((new PoiCitySearchOption())
-            // .city(latLongString).keyword("森森").pageNum(loadIndex));
-        }
-        if (requestCode == 101 && resultCode == 106) {
-            areacode = data.getStringExtra("numbers");
-            area = data.getStringExtra("provinces");
-            if (area == null) {
-                tvLocation.setText("定位中...");
-            } else {
-                tvLocation.setText(area);
-//                getArea(areacode);
-                // mPoiSearch.searchInCity((new PoiCitySearchOption())
-                // .city(area).keyword("森森").pageNum(loadIndex));
-            }
-            System.out.println("latLongStringlatLongStringareacode" + areacode);
-
-//            getStoreList(cityCode, all);
-        }
-//        getStoreList(cityCode, all);
-    }
-
-    private String getAreayCode(String city) {
-        // TODO Auto-generated method stub
-        if (database != null)
-            cursor = database.query("hat_city", new String[]{"cityID"},
-                    "city=?", new String[]{city}, null, null, null);
-        if (cursor != null)
-            while (cursor.moveToNext()) {
-                cityCode = cursor.getString(0);
-            }
-        Log.v("cityId", cityCode);
-        System.out.println("cityIdcityId" + cityCode);
-//        getStoreList(cityCode, all);
-        return cityCode;
-    }
-
-//    private void getTopBannerData(NavigationBean bean) {
-//        branches = bean.getBranchImgs().toString().split(",");
-//        storeLunBo.removeAllViews();
-//        List<ImageView> bmps = new ArrayList<ImageView>();
-//        for (String pictureBean : branches) {
-//            ImageView imageView = new ImageView(App.ctx);
-//
-//            imageView.setScaleType(ScaleType.CENTER_CROP);
-//            XImageLoader.load(NetPublicConstant.IMAGE_URL + pictureBean,
-//                    imageView);
-//            bmps.add(imageView);
-//            imageView.setTag(pictureBean);
-//
-//        }
-//        storeLunBo.setImageBitmaps(bmps);
-//    }
 
     BaiduMap baiduMap;
 
-    private String areaCode;
-
-    private String getCityCode(String city) {
-        // TODO Auto-generated method stub
-        if (database != null)
-            cursor = database.query("hat_city", new String[]{"cityID"},
-                    "city=?", new String[]{city}, null, null, null);
-        if (cursor != null)
-            while (cursor.moveToNext()) {
-                cityCode = cursor.getString(0);
-            }
-        Log.v("cityId", cityCode);
-        System.out.println("cityIdcityId" + cityCode);
-        if (city.equals("北京市")) {
-            cityCode = "110100";
-        } else if (city.equals("上海市")) {
-            cityCode = "310000";
-
-        } else if (city.equals("重庆市")) {
-            cityCode = "500000";
-
-        } else if (city.equals("天津市")) {
-            cityCode = "120000";
-
-        }
-//        getStoreList(cityCode, all);
-
-        return cityCode;
-    }
-
-    private String getPrivinceCityCodeBy(String city) {
-        // TODO Auto-generated method stub
-        if (database != null)
-            cursor = database.query("hat_province",
-                    new String[]{"provinceID"}, "province=?",
-                    new String[]{city}, null, null, null);
-        if (cursor != null)
-            while (cursor.moveToNext()) {
-                cityCode = cursor.getString(0);
-            }
-        Log.v("cityId", cityCode);
-//        getStoreList(cityCode, all);
-        return cityCode;
-    }
-
-    protected String getDistrctCode(String district) {
-        // TODO Auto-generated method stub
-        if (database != null)
-            cursor = database.query("hat_area", new String[]{"areaID"},
-                    "area=?", new String[]{district}, null, null, null);
-        if (cursor != null)
-            while (cursor.moveToNext()) {
-                areaCode = cursor.getString(0);
-            }
-        Log.v("areaCode", areaCode);
-        return areaCode;
-    }
-
     @Override
     public void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo) {
+        this.cityNo = cityNo;
+        this.cityName = city;
+        this.provinceName = province;
         txt_exist.setText(city);
         userPresenter.branchSearch(cityNo, null, -1, -1, page, size);
     }

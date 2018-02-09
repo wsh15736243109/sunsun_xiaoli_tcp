@@ -153,8 +153,10 @@ public class UserPresenter extends BasePresenter implements
     public static String productSearch_fail = "_productSearch_success";
     public static String getBanners_success = "_getBanners_success";
     public static String getBanners_fail = "_getBanners_fail";
-    public static String branchSearch_success="_branchSearch_success";
-    public static String branchSearch_fail="_branchSearch_fail";
+    public static String branchSearch_success = "_branchSearch_success";
+    public static String branchSearch_fail = "_branchSearch_fail";
+    public static String updateMyData_success = "_updateMyData_success";
+    public static String updateMyData_fail = "_updateMyData_fail";
 
 
     public UserPresenter(Observer observer) {
@@ -1527,5 +1529,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.branchSearch(city, area, longValue, lati, page, size);
+    }
+
+    @Override
+    public void updateMyData(String s_id, String uid, String nickName) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(updateMyData_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(updateMyData_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.updateMyData(s_id, uid, nickName);
     }
 }

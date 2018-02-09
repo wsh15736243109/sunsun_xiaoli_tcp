@@ -272,6 +272,7 @@ public class Const {
 
     public static String articalWeb = "http://api.sunsunxiaoli.com/web.php/productcenter/article?id=";
     public static String videoWeb = "http://api.sunsunxiaoli.com/web.php/productcenter/video?id=";
+    public static String XIAOLI_HEAD_UPLOAD_URL = "http://api.sunsunxiaoli.com/index.php/file/upload";
 
     public static void setSendCodeType(String sms) {
         sendCodeType = sms;
