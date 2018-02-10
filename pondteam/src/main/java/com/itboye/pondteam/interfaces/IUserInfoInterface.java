@@ -491,4 +491,14 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param nickName
      */
     void updateMyData(String s_id, String uid, String nickName);
+
+    /**
+     * 消息查询
+     * @param uid
+     * @param msg_type
+     * @param startTime
+     * @param pageIndex
+     * @param pageSize
+     */
+    void queryMessage(String uid, int msg_type, int startTime, int pageIndex, int pageSize);
 }

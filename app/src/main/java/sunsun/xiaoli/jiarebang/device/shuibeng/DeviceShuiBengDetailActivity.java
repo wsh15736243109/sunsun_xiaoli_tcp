@@ -47,6 +47,16 @@ import sunsun.xiaoli.jiarebang.utils.loadingutil.PopupShuiBeng;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
+/**
+ * type	1	int		设备类型描述
+ * 0：JDP-6000水泵
+ * 1：JDP-10000水泵
+ * 2：JDP-3500水泵
+ * 3：JDP-5000水泵
+ * 4：CDP-3500W水泵
+ * 5：CDP-6000W水泵
+ * 6：CDP-10000W水泵
+ */
 public class DeviceShuiBengDetailActivity extends BaseActivity implements Observer {
 
     //    ShuiBengButtomImageView shuibeng_wiget;
@@ -101,7 +111,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         did = getIntent().getStringExtra("did");
         userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, "");
         img_right.setBackgroundResource(R.drawable.menu);
-        if (!deviceDetailModel.getDevice_type().equals("S05-4")) {
+        if (deviceDetailModel.getWp_type().equals("4")||deviceDetailModel.getWp_type().equals("5")||deviceDetailModel.getWp_type().equals("6")) {
             re_zaolang_choose.setVisibility(View.VISIBLE);
             lore_shuibeng_head.setBackgroundResource(R.drawable.beijingtu);
         } else {
@@ -250,9 +260,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                     return;
                 }
                 int length;
-                if (!deviceDetailModel.getDevice_type().equals("S05-4")) {
+                if (deviceDetailModel.getWp_type().equals("4")||deviceDetailModel.getWp_type().equals("5")||deviceDetailModel.getWp_type().equals("6")) {
                     length = 9;
-                } else {
+                }else {
                     length = 4;
                 }
                 String[] liuliang = new String[length];

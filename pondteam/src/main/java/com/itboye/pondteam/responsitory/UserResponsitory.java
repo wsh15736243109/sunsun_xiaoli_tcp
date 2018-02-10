@@ -8,6 +8,7 @@ import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
+import com.itboye.pondteam.bean.MessageBean;
 import com.itboye.pondteam.bean.NavigationBean;
 import com.itboye.pondteam.bean.PersonDataBean;
 import com.itboye.pondteam.bean.PondTeamMostNewModel;
@@ -149,6 +150,7 @@ public class UserResponsitory extends BaseNetRepository implements
     private String By_Banners_query = "By_Banners_query";//轮播
     private String BY_Branch_search = "BY_Branch_search";//门店查询
     private String By_User_update = "By_User_update";//用户个人资料修改
+    private String By_Message_query = "By_Message_query";//消息查询接口
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1704,6 +1706,28 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(By_User_update, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void queryMessage(String uid, int msg_type, int startTime, int pageIndex, int pageSize) {
+        Type type = new TypeToken<MessageBean>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("msg_type", msg_type);
+        map.put("uid", uid);
+        if (startTime != -1) {
+            map.put("start_time", startTime);
+        }
+        map.put("page_index", pageIndex);
+        map.put("page_size", pageSize);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(By_Message_query, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<MessageBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

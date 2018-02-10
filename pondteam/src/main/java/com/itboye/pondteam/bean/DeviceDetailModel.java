@@ -84,6 +84,8 @@ public class DeviceDetailModel implements Serializable {
      * pwd : abcdefgh
      * did : S0100000000001
      */
+    private String wp_type;
+
     //变频水泵在线时间
     private int online_time;
 
@@ -99,6 +101,14 @@ public class DeviceDetailModel implements Serializable {
 
     public void setOnline_time(int online_time) {
         this.online_time = online_time;
+    }
+
+    public String getWp_type() {
+        return wp_type;
+    }
+
+    public void setWp_type(String wp_type) {
+        this.wp_type = wp_type;
     }
 
     private String cl_cfg;
@@ -196,7 +206,7 @@ public class DeviceDetailModel implements Serializable {
     }
 
     //节水模式开启/关闭时间
-    private int ws_on_tm,ws_off_tm;
+    private int ws_on_tm, ws_off_tm;
 
     public int getWs_on_tm() {
         return ws_on_tm;

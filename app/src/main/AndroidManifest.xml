@@ -247,6 +247,7 @@
         <activity android:name=".shuizuzhijia.product.ProductcenterSearchActivity"></activity>
         <activity android:name=".shuizuzhijia.store.Navigationactivity"></activity>
         <activity android:name=".shuizuzhijia.me.PersonSettingActivity"></activity>
+        <activity android:name=".shuizuzhijia.me.MyNotifyMessageActivity"></activity>
     </application>
 
 </manifest>

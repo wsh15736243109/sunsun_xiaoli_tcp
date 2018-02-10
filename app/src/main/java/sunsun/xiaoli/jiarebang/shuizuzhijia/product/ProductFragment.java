@@ -50,6 +50,7 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
 
     private void initTop() {
         txt_title.setText(getString(R.string.product_server_center));
+        txt_title.setTextColor(getResources().getColor(R.color.main_green));
         img_back.setVisibility(View.GONE);
     }
 

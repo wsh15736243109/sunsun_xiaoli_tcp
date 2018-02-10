@@ -53,7 +53,7 @@ public class ProductListAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			holder.content = (TextView) convertView.findViewById(R.id.content);
 			holder.time = (TextView) convertView.findViewById(R.id.time);
-			holder.luntanTime = (TextView) convertView.findViewById(R.id.luntanTime);
+			holder.luntanTime = (TextView) convertView.findViewById(R.id.tv_summary);
 
 			holder.iv1 = (ImageView) convertView.findViewById(R.id.iv1);
 

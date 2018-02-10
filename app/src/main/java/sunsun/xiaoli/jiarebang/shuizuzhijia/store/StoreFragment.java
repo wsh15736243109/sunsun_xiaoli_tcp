@@ -118,6 +118,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 
     private void initTop() {
         txt_title.setText(getString(R.string.store_query));
+        txt_title.setTextColor(getResources().getColor(R.color.main_green));
         img_back.setVisibility(View.GONE);
         txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.jiantou_down, 0);
     }

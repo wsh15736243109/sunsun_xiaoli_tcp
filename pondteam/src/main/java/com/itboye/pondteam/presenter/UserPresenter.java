@@ -158,6 +158,8 @@ public class UserPresenter extends BasePresenter implements
     public static String updateMyData_success = "_updateMyData_success";
     public static String updateMyData_fail = "_updateMyData_fail";
 
+    public static String queryMessage_success = "_queryMessage_success";
+    public static String queryMessage_fail = "_queryMessage_fail";
 
     public UserPresenter(Observer observer) {
         super(observer);
@@ -1553,5 +1555,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.updateMyData(s_id, uid, nickName);
+    }
+
+    @Override
+    public void queryMessage(String uid, int msg_type, int startTime, int pageIndex, int pageSize) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(queryMessage_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(queryMessage_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.queryMessage(uid, msg_type, startTime, pageIndex, pageSize);
     }
 }

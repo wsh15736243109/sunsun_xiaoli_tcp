@@ -50,7 +50,6 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     ImageView img_back;
     private String cityName;
     private String provinceName;
-
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_aquarium_shop;
@@ -76,6 +75,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
 
     private void initTop() {
         txt_title.setText(getString(R.string.shop_xianshang));
+        txt_title.setTextColor(getResources().getColor(R.color.main_green));
         img_back.setVisibility(View.GONE);
         txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.jiantou_down, 0);
     }

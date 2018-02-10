@@ -47,6 +47,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
 
     private void initTop() {
         txt_title.setText(getString(R.string.aquarium_me));
+        txt_title.setTextColor(getActivity().getResources().getColor(R.color.main_green));
         img_back.setVisibility(View.GONE);
         txt_exist.setVisibility(View.GONE);
     }
@@ -70,6 +71,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
                 startActivity(new Intent(getActivity(), ForgetPasswordActivity.class));
                 break;
             case R.id.re_notifymessage:
+                startActivity(new Intent(getActivity(), MyNotifyMessageActivity.class));
                 break;
             case R.id.re_forum:
                 break;

@@ -616,6 +616,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         }
         img_right.setBackgroundResource(R.drawable.menu);
         txt_title.setText(getString(R.string.myadvice));
+        txt_title.setTextColor(getResources().getColor(R.color.main_green));
         userPresenter = new UserPresenter(this);
         uid = getSp(Const.UID);
         //设置向下拉多少出现刷新
