@@ -675,4 +675,5 @@
     <string name="kefu">客  服</string>
     <string name="kefumeaage">客服消息</string>
     <string name="test_string" />
+    <string name="position_ing">定位中</string>
 </resources>

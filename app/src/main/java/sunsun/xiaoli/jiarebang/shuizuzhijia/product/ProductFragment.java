@@ -58,7 +58,7 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
         listviewxl.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(getActivity(), ProducenterChildActivity.class).putExtra("cate_id", homeListBeanArrayList.get(position).getId()));
+                startActivity(new Intent(getActivity(), ProducenterChildActivity.class).putExtra("cate_id", homeListBeanArrayList.get(position).getId()).putExtra("title",homeListBeanArrayList.get(position).getName()));
             }
         });
     }

@@ -50,6 +50,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     ImageView img_back;
     private String cityName;
     private String provinceName;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_aquarium_shop;
@@ -74,6 +75,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     }
 
     private void initTop() {
+        txt_exist.setText(getString(R.string.position_ing));
         txt_title.setText(getString(R.string.shop_xianshang));
         txt_title.setTextColor(getResources().getColor(R.color.main_green));
         img_back.setVisibility(View.GONE);
@@ -116,14 +118,13 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
 
     private void goToTaoBao(String url, String url_type) {
         if (url_type.equals("6070")) {
-            //跳转链接
-
+            //跳转链接(淘宝店铺)
+            GotoTaoBaoUtil.startActivity(getActivity(), url);
         } else if (url_type.equals("6071")) {
             //商品详情
         } else if (url_type.equals("6072")) {
             //帖子详情
         }
-        GotoTaoBaoUtil.startActivity(getActivity(), url);
     }
 
     @Override
