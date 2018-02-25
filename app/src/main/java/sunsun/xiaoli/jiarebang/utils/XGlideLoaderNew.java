@@ -24,7 +24,7 @@ public class XGlideLoaderNew {
     public static void displayImage(Context context, String path, ImageView imageView) {
 
         String imgPath=path.startsWith("http") ?path : Const.imgurl + path;
-        Glide.with(context).load(imgPath).fitCenter().error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo).into(imageView);
+        Glide.with(context).load(imgPath).fitCenter().error(R.drawable.default_img).placeholder(R.drawable.default_img).into(imageView);
         Log.v("request_params", "displayImage 图片路径"+imgPath);
     }
     /**
@@ -36,7 +36,7 @@ public class XGlideLoaderNew {
      */
     public static void displayImageForUser(Context context, String path, ImageView imageView) {
         String imgPath=path.startsWith("http") ?path : Const.imgurl + path;
-        Glide.with(context).load(imgPath).error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo).into(imageView);
+        Glide.with(context).load(imgPath).error(R.drawable.default_img).placeholder(R.drawable.default_img).into(imageView);
         Log.v("request_params", "displayImageForUser 图片路径"+imgPath);
     }
 
@@ -52,7 +52,7 @@ public class XGlideLoaderNew {
         Glide.with(context)
                 .load(imgPath)
                 .transform(new GlideCircleTransform(context))
-                .error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo)
+                .error(R.drawable.default_img).placeholder(R.drawable.default_img)
                 .into(imageView);
         Log.v("request_params", "displayImageCircular 图片路径"+imgPath);
 
@@ -69,7 +69,7 @@ public class XGlideLoaderNew {
         Glide.with(context)
                 .load(imgPath)
                 .transform(new GlideCircleTransform(context))
-                .error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo)
+                .error(R.drawable.default_img).placeholder(R.drawable.default_img)
                 .into(imageView);
         Log.v("request_params", "displayImageCircularForUser 图片路径"+imgPath);
 
@@ -80,7 +80,7 @@ public class XGlideLoaderNew {
         Glide.with(context)
                 .load(imgPath)
                 .transform(new RatioByScreenWidth(context))
-                .error(R.drawable.lingshou_logo).placeholder(R.drawable.lingshou_logo)
+                .error(R.drawable.default_img).placeholder(R.drawable.default_img)
                 .into(imageView);
         Log.v("request_params", "displayRatioImageByScreenWidth 图片路径"+imgPath);
     }

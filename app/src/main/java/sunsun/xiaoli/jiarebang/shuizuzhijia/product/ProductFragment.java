@@ -83,7 +83,7 @@ public class ProductFragment extends LingShouBaseFragment implements Observer {
             } else {
                 if (entity.getEventType() == UserPresenter.queryProductIndex_success) {
                     homeListBeanArrayList = (ArrayList<ProductBean.HomeListBean>) entity.getData();
-                    listviewxl.setAdapter(new ProductAdapter(getActivity(), homeListBeanArrayList));
+                    listviewxl.setAdapter(new ProductAdapter(getActivity(), homeListBeanArrayList,1.421f));
                 } else if (entity.getEventType() == UserPresenter.queryProductIndex_fail) {
                     MAlert.alert(entity.getData());
                 }

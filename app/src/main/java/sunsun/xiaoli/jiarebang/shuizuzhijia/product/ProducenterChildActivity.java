@@ -46,6 +46,8 @@ public class ProducenterChildActivity extends BaseActivity implements
         txt_title.setText(title);
         parent = getIntent().getIntExtra("cate_id", 0);
         userPresenter = new UserPresenter(this);
+        gridviewProducenter.setVerticalSpacing(1);
+        gridviewProducenter.setHorizontalSpacing(1);
         pullDown();
 
         initItemClick();
@@ -87,7 +89,7 @@ public class ProducenterChildActivity extends BaseActivity implements
             } else {
                 if (entity.getEventType() == UserPresenter.queryProductIndex_success) {
                     homeListBeanArrayList = (ArrayList<ProductBean.HomeListBean>) entity.getData();
-                    gridviewProducenter.setAdapter(new ProductAdapter(this, homeListBeanArrayList));
+                    gridviewProducenter.setAdapter(new ProductAdapter(this, homeListBeanArrayList,1f));
                 } else if (entity.getEventType() == UserPresenter.queryProductIndex_fail) {
                     MAlert.alert(entity.getData());
                 }

@@ -192,6 +192,10 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                                     int position, long id) {
                 DeviceActivity.this.position = position;
                 mSelectDeviceInfo = arrayList.get(position);
+                if (mSelectDeviceInfo.getIs_disconnect()!=0) {
+                    MAlert.alert(getString(R.string.connect_device_offline));
+                    return;
+                }
                 currentDid = listItems.get(position).get("ItemDid").toString().substring(4, listItems.get(position).get("ItemDid").toString().length());
                 currentType = listItems.get(position).get("type").toString();
                 extra = listItems.get(position).get("extra").toString();
