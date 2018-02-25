@@ -192,7 +192,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                                     int position, long id) {
                 DeviceActivity.this.position = position;
                 mSelectDeviceInfo = arrayList.get(position);
-                if (mSelectDeviceInfo.getIs_disconnect()!=0) {
+                if (!mSelectDeviceInfo.getDevice_type().equals("chiniao_wifi_camera") && mSelectDeviceInfo.getIs_disconnect() != 0) {
                     MAlert.alert(getString(R.string.connect_device_offline));
                     return;
                 }

@@ -672,7 +672,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                                     int position, long id) {
                 XiaoLiFragment.this.position = position - 1;
                 mSelectDeviceInfo = arrayList.get(position - 1);
-                if (mSelectDeviceInfo.getIs_disconnect()!=0) {
+                if (!mSelectDeviceInfo.getDevice_type().equals("chiniao_wifi_camera") && mSelectDeviceInfo.getIs_disconnect() != 0) {
                     MAlert.alert(getString(R.string.connect_device_offline));
                     return;
                 }
