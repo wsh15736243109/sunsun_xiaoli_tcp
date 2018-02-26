@@ -6,8 +6,12 @@ import android.telephony.TelephonyManager;
 import com.google.gson.reflect.TypeToken;
 import com.itboye.pondteam.app.MyApplication;
 import com.itboye.pondteam.bean.BannerBean;
+import com.itboye.pondteam.bean.ChatBean;
+import com.itboye.pondteam.bean.DefaultMessage;
 import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
+import com.itboye.pondteam.bean.HistoryChatBean;
+import com.itboye.pondteam.bean.KefuBeans;
 import com.itboye.pondteam.bean.MessageBean;
 import com.itboye.pondteam.bean.NavigationBean;
 import com.itboye.pondteam.bean.PersonDataBean;
@@ -151,6 +155,11 @@ public class UserResponsitory extends BaseNetRepository implements
     private String BY_Branch_search = "BY_Branch_search";//门店查询
     private String By_User_update = "By_User_update";//用户个人资料修改
     private String By_Message_query = "By_Message_query";//消息查询接口
+    private String BY_Customer_link = "BY_Customer_link";
+    private String BY_Customer_histmsg = "BY_Customer_histmsg";
+    private String BY_Customer_receivemsg = "BY_Customer_receivemsg";
+    private String BY_Customer_onserviceask = "BY_Customer_onserviceask";
+    private String BY_Customer_ask = "BY_Customer_ask";
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -1728,6 +1737,94 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(By_Message_query, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<MessageBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void getCustomerStatus(String uid) {
+        Type type = new TypeToken<KefuBeans>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_link, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<KefuBeans>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void getCustomerHistory(String uid, String servicerUid, int page_no, int page_size) {
+        Type type = new TypeToken<HistoryChatBean>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("uid", uid);
+        map.put("servicer_uid", servicerUid);
+        map.put("page_no", page_no);
+        map.put("page_size", page_size);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_histmsg, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<HistoryChatBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void sendCustomerMessage(String keFuId, int msg_type, String uid, String content, String servicerUid) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("queue_id", keFuId);
+        map.put("msg_receiver", servicerUid);
+        map.put("msg_type", msg_type);
+        map.put("msg_owner", uid);
+        map.put("msg_content", content);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_receivemsg, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void sendDefaultCustomerMessage(String content) {
+        Type type = new TypeToken<DefaultMessage>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("content", content);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_onserviceask, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<DefaultMessage>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void getCustomerAsk(String keFuId, String lastCreateTime) {
+        Type type = new TypeToken<ChatBean>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("queue_id", keFuId);
+        map.put("create_time", lastCreateTime);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_ask, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ChatBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

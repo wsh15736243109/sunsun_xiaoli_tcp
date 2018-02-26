@@ -160,6 +160,16 @@ public class UserPresenter extends BasePresenter implements
 
     public static String queryMessage_success = "_queryMessage_success";
     public static String queryMessage_fail = "_queryMessage_fail";
+    public static String getCustomerStatus_fail = "_getCustomerStatus_fail";
+    public static String getCustomerStatus_success = "_getCustomerStatus_success";
+    public static String getCustomerHistory_success = "_getCustomerHistory_success";
+    public static String getCustomerHistory_fail = "_getCustomerHistory_fail";
+    public static String sendCustomerMessage_success = "_sendCustomerMessage_success";
+    public static String sendCustomerMessage_fail = "_sendCustomerMessage_fail";
+    public static String sendDefaultCustomerMessage_success = "_sendDefaultCustomerMessage_success";
+    public static String sendDefaultCustomerMessage_fail = "_sendDefaultCustomerMessage_fail";
+    public static String getCustomerAsk_fail = "_getCustomerAsk_fail";
+    public static String getCustomerAsk_success = "_getCustomerAsk_success";
 
     public UserPresenter(Observer observer) {
         super(observer);
@@ -1579,5 +1589,125 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.queryMessage(uid, msg_type, startTime, pageIndex, pageSize);
+    }
+
+    @Override
+    public void getCustomerStatus(String uid) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(getCustomerStatus_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(getCustomerStatus_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.getCustomerStatus(uid);
+    }
+
+    @Override
+    public void getCustomerHistory(String uid, String servicerUid, int page_no, int page_size) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(getCustomerHistory_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(getCustomerHistory_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.getCustomerHistory(uid, servicerUid, page_no, page_size);
+    }
+
+    @Override
+    public void sendCustomerMessage(String keFuId, int msg_type, String uid, String content, String servicerUid) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(sendCustomerMessage_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(sendCustomerMessage_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.sendCustomerMessage(keFuId, msg_type, uid, content, servicerUid);
+    }
+
+    @Override
+    public void sendDefaultCustomerMessage(String content) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(sendDefaultCustomerMessage_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(sendDefaultCustomerMessage_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.sendDefaultCustomerMessage(content);
+    }
+
+    @Override
+    public void getCustomerAsk(String keFuId, String lastCreateTime) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(getCustomerAsk_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(getCustomerAsk_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.getCustomerAsk(keFuId, lastCreateTime);
     }
 }

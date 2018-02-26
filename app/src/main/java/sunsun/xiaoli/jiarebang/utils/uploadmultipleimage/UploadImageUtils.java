@@ -30,7 +30,7 @@ public class UploadImageUtils {
     }
 
     public void beginUpload(String filePartName, File file, final UploadResult uploadResult) {
-        uploadURl = "http://dev.sale.sunsunxiaoli.com/index.php/file/upload";
+        uploadURl = "http://api.sunsunxiaoli.com/index.php/file/upload";
         MultipartRequest multipartRequest = new MultipartRequest(uploadURl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -62,7 +62,7 @@ public class UploadImageUtils {
         MyApplication.addRequest(multipartRequest);
     }
     public void beginUpload(String uploadUrl,String filePartName, File file, final UploadResult uploadResult) {
-        uploadURl = "http://dev.sale.sunsunxiaoli.com/index.php/file/upload";
+        uploadURl = "http://api.sunsunxiaoli.com/index.php/file/upload";
         MultipartRequest multipartRequest = new MultipartRequest(uploadUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

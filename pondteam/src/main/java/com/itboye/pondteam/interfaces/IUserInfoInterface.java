@@ -501,4 +501,25 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param pageSize
      */
     void queryMessage(String uid, int msg_type, int startTime, int pageIndex, int pageSize);
+
+    /**
+     *
+     * @param uid
+     */
+    void getCustomerStatus(String uid);
+
+    /**
+     *
+     * @param uid
+     * @param servicerUid
+     * @param page_no
+     * @param page_size
+     */
+    void getCustomerHistory(String uid, String servicerUid, int page_no, int page_size);
+
+    void sendCustomerMessage(String keFuId, int msg_type, String uid, String content, String servicerUid);
+
+    void sendDefaultCustomerMessage(String content);
+
+    void getCustomerAsk(String keFuId, String lastCreateTime);
 }

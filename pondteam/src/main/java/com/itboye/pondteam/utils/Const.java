@@ -179,6 +179,11 @@ public class Const {
      * 头像
      */
     public static final String HEAD = "head";
+
+    /**
+     * 客服头像
+     */
+    public static final String KEFUHEAD = "kefu_head";
     /**
      * 真实姓名
      */

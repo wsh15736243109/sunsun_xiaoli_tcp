@@ -84,7 +84,7 @@ public class XGlideLoader {
         Glide.with(context)
                 .load(imgPath)
                 .transform(new GlideCircleTransform(context))
-                .error(R.drawable.default_img).placeholder(R.drawable.default_img)
+//                .error(R.drawable.default_img).placeholder(R.drawable.default_img)
                 .into(imageView);
         Log.v("request_params", "displayImageCircularForUser 图片路径"+imgPath);
 

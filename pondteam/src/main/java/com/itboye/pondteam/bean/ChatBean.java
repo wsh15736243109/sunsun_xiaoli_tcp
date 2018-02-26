@@ -222,5 +222,36 @@ public class ChatBean implements Serializable {
         public void setOwnerType(String ownerType) {
             this.ownerType = ownerType;
         }
+
+        @Override
+        public String toString() {
+            return "ChatItem{" +
+                    "id='" + id + '\'' +
+                    ", msgOwner='" + msgOwner + '\'' +
+                    ", create_time='" + create_time + '\'' +
+                    ", updateTime='" + updateTime + '\'' +
+                    ", readStatus='" + readStatus + '\'' +
+                    ", readTime='" + readTime + '\'' +
+                    ", queueId='" + queueId + '\'' +
+                    ", msgType='" + msgType + '\'' +
+                    ", ownerType='" + ownerType + '\'' +
+                    ", nickname='" + nickname + '\'' +
+                    ", head='" + head + '\'' +
+                    ", msgContent=" + msgContent +
+                    ", servicerStatus='" + servicerStatus + '\'' +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ChatBean{" +
+                "createTime='" + createTime + '\'' +
+                ", have='" + have + '\'' +
+                ", servicerStatus='" + servicerStatus + '\'' +
+                ", content=" + content +
+                ", counBeans=" + counBeans +
+                ", list=" + list +
+                '}';
     }
 }

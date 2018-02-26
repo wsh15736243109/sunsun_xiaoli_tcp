@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#f3f3f3"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+             android:id="@+id/face20"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f020" />
+        <ImageView
+            android:id="@+id/face21"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f001" />
+        <ImageView
+            android:id="@+id/face22"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f022" />
+        <ImageView
+            android:id="@+id/face23"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f023" />
+        <ImageView
+            android:id="@+id/face24"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f024" />
+        <ImageView
+            android:id="@+id/face25"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f025" />
+        <ImageView
+            android:id="@+id/face26"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f026" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/face27"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f027" />
+        <ImageView
+            android:id="@+id/face28"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f028" />
+        <ImageView
+            android:id="@+id/face29"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f029" />
+        <ImageView
+            android:id="@+id/face30"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f030" />
+        <ImageView
+            android:id="@+id/face31"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f031" />
+        <ImageView
+            android:id="@+id/face32"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f032" />
+        <ImageView
+            android:id="@+id/face33"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f033" />
+    </LinearLayout>
+    <LinearLayout
+        android:padding="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/face34"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f034" />
+        <ImageView
+            android:id="@+id/face35"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f035" />
+        <ImageView
+            android:id="@+id/face36"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f036" />
+        <ImageView
+            android:id="@+id/face37"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f037" />
+        <ImageView
+            android:id="@+id/face38"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f038" />
+        <ImageView
+            android:id="@+id/face39"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/f039" />
+        <ImageView
+            android:id="@+id/face_del1"
+            android:layout_weight="1.0"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_face_delete_normal" />
+    </LinearLayout>
+
+</LinearLayout>
