@@ -63,7 +63,8 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
     private final int REQUEST_CODE_PICK_IMAGE = 200;
     private String keFuId = null;
     String lastCreateTime;
-//    ArrayList<ChatBean.ChatItem> arrayList = new ArrayList<ChatBean.ChatItem>();
+
+    ArrayList<ChatBean.ChatItem> arrayList = new ArrayList<ChatBean.ChatItem>();
     private int pageNo = 1;
     private SwipeRefreshLayout mSwipeLayout;
     int count = 0;
