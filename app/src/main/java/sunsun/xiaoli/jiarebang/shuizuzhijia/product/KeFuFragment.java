@@ -13,6 +13,7 @@ import android.text.Html;
 import android.text.Html.ImageGetter;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +106,7 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
     private int msg_type = 1;
     private KefuBeans kefuStatus;
     private String content;
+    private String lastDataId = "0";
 
 
     //    ArrayList<ChatBean.ChatItem> arrayListT = new ArrayList<ChatBean.ChatItem>();
@@ -387,9 +389,11 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
 
                 } else if (entity.getEventType() == UserPresenter.sendCustomerMessage_success) {
                     ChatBean.ChatItem item = new ChatBean.ChatItem();
-                    item.setMsgContent(new SpannedString(content));
+                    item.setMsgContent(msg_type == 1 ? et_input.getText() : new SpannedString(content));
                     item.setMsgType(msg_type + "");
                     item.setOwnerType("1");
+                    Log.v("request_params", "sendCustomerMessage_success_lastDataId" + lastDataId);
+                    item.setId((Integer.parseInt(lastDataId) + 1) + "");
                     item.setCreateTime(System.currentTimeMillis() / 1000.
                             + "");
                     lastCreateTime = System.currentTimeMillis() / 1000.
@@ -433,15 +437,26 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
 
                 } else if (entity.getEventType() == UserPresenter.getCustomerHistory_success) {
 //                    arrayList.clear();
-                    if (isRefresh) {
-                        arrayList.clear();
-                        arrayList = ((HistoryChatBean) entity.getData()).getList();
-                        adapter = new CustomAdapter(getActivity(), arrayList, getActivity());
-                        lv.setAdapter(adapter);
-                    } else {
-                        arrayList.addAll(0, ((HistoryChatBean) entity.getData()).getList());
-                        adapter.notifyDataSetChanged();
+//                    if (!isRefresh) {
+//                        arrayList.clear();
+//                        arrayList = ((HistoryChatBean) entity.getData()).getList();
+//                        adapter = new CustomAdapter(getActivity(), arrayList, getActivity());
+//                        lv.setAdapter(adapter);
+//                    } else {
+                    ArrayList<ChatBean.ChatItem> arrayListTemp = new ArrayList<>();
+                    arrayListTemp = ((HistoryChatBean) entity.getData()).getList();
+                    if (arrayListTemp.size() > 0) {
+
+                        Log.v("request_params", "getCustomerHistory_success_lastDataId::" + lastDataId + "arrayListTemp:" + arrayListTemp.get(arrayListTemp.size() - 1).getId());
+                        if (lastDataId.equals(arrayListTemp.get(arrayListTemp.size() - 1).getId())) {
+
+                        } else {
+                            arrayList.addAll(0, arrayListTemp);
+                        }
+                        lastDataId = arrayListTemp.get(arrayListTemp.size() - 1).getId();
+                        Log.v("request_params", "getCustomerHistory_success_lastDataId2222:" + lastDataId);
                     }
+                    adapter.notifyDataSetChanged();
                     id_swipe_ly.setRefreshing(false);
                 } else if (entity.getEventType() == UserPresenter.getCustomerHistory_fail) {
                     MAlert.alert(entity.getData());
