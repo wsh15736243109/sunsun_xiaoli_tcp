@@ -104,8 +104,10 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
     private FaceInputView faceInputView;
     private int msg_type = 1;
     private KefuBeans kefuStatus;
+    private String content;
 
 
+    //    ArrayList<ChatBean.ChatItem> arrayListT = new ArrayList<ChatBean.ChatItem>();
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_producenter_kefu;
@@ -156,7 +158,7 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
         @Override
         public void run() {
             getMessage();
-            // getHistory();
+            getHistory();
             handler.sendEmptyMessage(1);
         }
     };
@@ -355,13 +357,17 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
     // 只发送文字
     public void sendMessage(String content, int msg_type) {
         this.msg_type = msg_type;
+        this.content = content;
         userPresenter.sendCustomerMessage(keFuId, msg_type, uid, content, servicerUid);
     }
+
+    boolean isRefresh = true;
 
     @Override
     public void onRefresh() {
         // TODO Auto-generated method stub
         page_no++;
+        isRefresh = false;
         getHistory();
     }
 
@@ -372,45 +378,27 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
         if (entity != null) {
             if (entity.getCode() != 0) {
                 id_swipe_ly.setRefreshing(false);
-                MAlert.alert(entity.getData());
             } else {
-                if (entity.getEventType() == UserPresenter.getCustomerHistory_success) {
-                    MAlert.alert(entity.getData());
-                    ArrayList<ChatBean.ChatItem> chatItems = ((HistoryChatBean) entity.getData()).getList();
-                    if (chatItems != null) {
-                        arrayList.addAll(chatItems);
-                        adapter.notifyDataSetChanged();
-                        lv.setSelection(lv.getBottom());
-
-//                        lv.setSelection(6);
-//                        arrayList.addAll(chatItems);
-//                        adapter.notifyDataSetChanged();
-//                        lv.setSelection(lv.getBottom());
-                    }
-                    id_swipe_ly.setRefreshing(false);
-                } else if (entity.getEventType() == UserPresenter.getCustomerHistory_fail) {
-                    MAlert.alert(entity.getData());
-                    id_swipe_ly.setRefreshing(false);
-                } else if (entity.getEventType() == UserPresenter.getCustomerStatus_success) {
+                if (entity.getEventType() == UserPresenter.getCustomerStatus_success) {
                     kefuStatus = (KefuBeans) entity.getData();
                     setKeFuStatus(kefuStatus);
                 } else if (entity.getEventType() == UserPresenter.getCustomerStatus_fail) {
                     MAlert.alert(entity.getData());
 
                 } else if (entity.getEventType() == UserPresenter.sendCustomerMessage_success) {
-//                    ChatBean.ChatItem item = new ChatBean.ChatItem();
-//                    item.setMsgContent(et_input.getText());
-//                    item.setMsgType(msg_type + "");
-//                    item.setOwnerType("1");
-//                    item.setCreateTime(System.currentTimeMillis() / 1000.
-//                            + "");
-//                    lastCreateTime = System.currentTimeMillis() / 1000.
-//                            + "";
-//                    arrayList.add(item);
-//                    adapter.notifyDataSetChanged();
-//                    lv.setSelection(lv.getBottom());
+                    ChatBean.ChatItem item = new ChatBean.ChatItem();
+                    item.setMsgContent(new SpannedString(content));
+                    item.setMsgType(msg_type + "");
+                    item.setOwnerType("1");
+                    item.setCreateTime(System.currentTimeMillis() / 1000.
+                            + "");
+                    lastCreateTime = System.currentTimeMillis() / 1000.
+                            + "";
+                    arrayList.add(item);
+                    adapter.notifyDataSetChanged();
+                    lv.setSelection(lv.getBottom());
 //                    page_no = 1;
-                    getHistory();
+//                    getHistory();
                     et_input.setText("");
                     MAlert.alert(entity.getData());
                 } else if (entity.getEventType() == UserPresenter.sendCustomerMessage_fail) {
@@ -423,26 +411,45 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
                     MAlert.alert(entity.getData());
 
                 } else if (entity.getEventType() == UserPresenter.getCustomerAsk_success) {
-                    MAlert.alert(entity.getData());
+//                    MAlert.alert(entity.getData());
                     ChatBean chatBean = (ChatBean) entity.getData();
                     if (chatBean.getServicerStatus().equals("2")) {
                         MAlert.alert("客服已经断开连接");
                         keFuId = null;
                     } else {
                         if (chatBean.getHave().equals("1")) {
-                            arrayList.addAll(chatBean.getList());
-                            lastCreateTime = chatBean.getCreateTime();
-                            adapter.notifyDataSetChanged();
-                            lv.setSelection(lv.getBottom());
+//                            arrayList.addAll(chatBean.getList());
+//                            lastCreateTime = chatBean.getCreateTime();
+//                            adapter.notifyDataSetChanged();
+//                            lv.setSelection(lv.getBottom());
                         }
                     }
                 } else if (entity.getEventType() == UserPresenter.getCustomerAsk_fail) {
+
+                } else if (entity.getEventType() == UserPresenter.exitCommunion_success) {
                     MAlert.alert(entity.getData());
 
+                } else if (entity.getEventType() == UserPresenter.exitCommunion_fail) {
+
+                } else if (entity.getEventType() == UserPresenter.getCustomerHistory_success) {
+//                    arrayList.clear();
+                    if (isRefresh) {
+                        arrayList.clear();
+                        arrayList = ((HistoryChatBean) entity.getData()).getList();
+                        adapter = new CustomAdapter(getActivity(), arrayList, getActivity());
+                        lv.setAdapter(adapter);
+                    } else {
+                        arrayList.addAll(0, ((HistoryChatBean) entity.getData()).getList());
+                        adapter.notifyDataSetChanged();
+                    }
+                    id_swipe_ly.setRefreshing(false);
+                } else if (entity.getEventType() == UserPresenter.getCustomerHistory_fail) {
+                    MAlert.alert(entity.getData());
+                    id_swipe_ly.setRefreshing(false);
                 }
             }
         }
-
+        isRefresh = false;
     }
 
     private void setDefualtMessage(DefaultMessage defaultMessage) {
@@ -471,7 +478,8 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
 
     // /聊天退出
     private void destroyQueue() {
-
+        handler.removeCallbacks(runnable);
+        userPresenter.exitcommunion(uid, keFuId, (lastCreateTime) + "");
     }
 
     private void setKeFuStatus(KefuBeans kefuStatus) {

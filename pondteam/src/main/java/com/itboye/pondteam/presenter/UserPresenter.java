@@ -170,6 +170,8 @@ public class UserPresenter extends BasePresenter implements
     public static String sendDefaultCustomerMessage_fail = "_sendDefaultCustomerMessage_fail";
     public static String getCustomerAsk_fail = "_getCustomerAsk_fail";
     public static String getCustomerAsk_success = "_getCustomerAsk_success";
+    public static String exitCommunion_fail = "_exitcommunion_fail";
+    public static String exitCommunion_success = "_exitcommunion_success";
 
     public UserPresenter(Observer observer) {
         super(observer);
@@ -1709,5 +1711,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.getCustomerAsk(keFuId, lastCreateTime);
+    }
+
+    @Override
+    public void exitcommunion(String uid, String keFuId, String create_time) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(exitCommunion_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(exitCommunion_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.exitcommunion(uid, keFuId, create_time);
     }
 }

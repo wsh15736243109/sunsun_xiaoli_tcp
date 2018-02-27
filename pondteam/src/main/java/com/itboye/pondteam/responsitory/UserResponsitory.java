@@ -42,6 +42,11 @@ import static com.itboye.pondteam.utils.MyTimeUtil.getTimeZone;
 public class UserResponsitory extends BaseNetRepository implements
         IUserInfoInterface<PersonDataBean> {
 
+    public UserResponsitory(ICompleteListener iCompleteListener) {
+        super(iCompleteListener);
+        byjsonRequest = new ByJsonRequest.Builder();
+        byjsonRequest.setBaseWrapUrl(Const.xiaoli_wrapUrl);
+    }
 
     private ByJsonRequest.Builder byjsonRequest;
     private String getMostNewWaterPumpDevice = "By_SunsunWaterPump_queryLatest";
@@ -161,11 +166,7 @@ public class UserResponsitory extends BaseNetRepository implements
     private String BY_Customer_onserviceask = "BY_Customer_onserviceask";
     private String BY_Customer_ask = "BY_Customer_ask";
 
-    public UserResponsitory(ICompleteListener iCompleteListener) {
-        super(iCompleteListener);
-        byjsonRequest = new ByJsonRequest.Builder();
-        byjsonRequest.setBaseWrapUrl(Const.xiaoli_wrapUrl);
-    }
+
 
     @Override
     public void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm, String requestType) {
@@ -1825,6 +1826,24 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_Customer_ask, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ChatBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void exitcommunion(String uid, String keFuId,String create_time) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("queue_id", keFuId);
+        map.put("uid", uid);
+        map.put("create_time", create_time);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_ask, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

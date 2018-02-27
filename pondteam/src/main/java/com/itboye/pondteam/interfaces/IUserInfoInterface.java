@@ -9,19 +9,20 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 设备设置
-     * @param did 设备did
-     * @param clEn 定时清洗使能
-     * @param clWeek 周清洗设置
-     * @param clTm 清洗时间点设置
-     * @param clDur 清洗时长设置
+     *
+     * @param did     设备did
+     * @param clEn    定时清洗使能
+     * @param clWeek  周清洗设置
+     * @param clTm    清洗时间点设置
+     * @param clDur   清洗时长设置
      * @param clState 清洗状态
-     * @param clCfg 清洗设置
-     * @param uvOn 杀菌灯开启时间
-     * @param uvOff 杀菌灯关闭时间
-     * @param uvWH 杀菌灯累计工作时间
-     * @param uvCfg 杀菌灯设置
+     * @param clCfg   清洗设置
+     * @param uvOn    杀菌灯开启时间
+     * @param uvOff   杀菌灯关闭时间
+     * @param uvWH    杀菌灯累计工作时间
+     * @param uvCfg   杀菌灯设置
      */
-    void deviceSet(String did,String oa_name,String ob_name,String clEn,int clWeek,String clTm,String clDur,String clState,String clCfg,String uvOn,String uvOff,String uvWH,String uvCfg,String uvState,int out_state_a,int out_state_b,String oa_on_tm,String oa_off_tm,String ob_per,String oa_per,int ws_on_tm,int ws_off_tm,String requestType);
+    void deviceSet(String did, String oa_name, String ob_name, String clEn, int clWeek, String clTm, String clDur, String clState, String clCfg, String uvOn, String uvOff, String uvWH, String uvCfg, String uvState, int out_state_a, int out_state_b, String oa_on_tm, String oa_off_tm, String ob_per, String oa_per, int ws_on_tm, int ws_off_tm, String requestType);
 
     /**
      * 用户登录（账户密码）
@@ -29,7 +30,7 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param username
      * @param pwd
      */
-    void login(String country,String username, String pwd,String appType);
+    void login(String country, String username, String pwd, String appType);
 
     /**
      * 用户注册
@@ -40,23 +41,28 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param code
      * @param from
      */
-    void registerByEmail(String nickname, String contact, String address, String email, String from,String code);
+    void registerByEmail(String nickname, String contact, String address, String email, String from, String code);
+
     /**
      * 修改密码（手机号+验证码）
-     * @param country   国家[必须]
-     * @param code      验证码[必须](itboye是万能验证码，测试其它请调用验证码接口获取)
-     * @param mobile    手机号
-     * @param password  新密码[必须]（6-32位）
+     *
+     * @param country  国家[必须]
+     * @param code     验证码[必须](itboye是万能验证码，测试其它请调用验证码接口获取)
+     * @param mobile   手机号
+     * @param password 新密码[必须]（6-32位）
      */
     void updatePass(String country, String code, String mobile, String password);
 
     /**
      * 获取设备的状态 如：设备信息不存在等
+     *
      * @param did
      */
     void getDeviceStatus(String did);
+
     /**
      * 开始更新过滤桶
+     *
      * @param did
      */
     void beginUpdatePondTeam(String did);
@@ -68,7 +74,7 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param mobile
      * @param code_type
      */
-    void sendVerificationCode(String country, String mobile, String code_type,int appType);
+    void sendVerificationCode(String country, String mobile, String code_type, int appType);
 
     /**
      * 验证验证码
@@ -198,14 +204,14 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param did
      * @param device_nickname
      */
-    void addDevice(String uid, String did, String device_nickname,String device_type,String extra);
+    void addDevice(String uid, String did, String device_nickname, String device_type, String extra);
 
     /**
      * 用户删除设备
      *
      * @param id
      */
-    void deleteDevice(String id,String uid);
+    void deleteDevice(String id, String uid);
 
     /**
      * 用户更改设备名字
@@ -313,15 +319,18 @@ public interface IUserInfoInterface<PersonDataBean> {
      *                 0：关闭，1：开启
      * @param dev_lock
      */
-    void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh,int ph_cmd,String requestType);
+    void deviceSet_806(String did, String tm_1, String mode, String out_uvc, String out_sp, String out_l, String tMax, String th, String tl, String l_per, String uvc_per, String sp_per, String push_cfg, String dev_lock, int uv_wh, int p_wh, int l_wh, int ph_cmd, String requestType);
+
     /**
      * 获取当前设备的最新版本
+     *
      * @param did
      */
     void getMostNewDevice(String did);
 
     /**
      * Aph300设备设置接口
+     *
      * @param did
      * @param th
      * @param tl
@@ -333,55 +342,61 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param ph_dly
      * @param ph_cmd
      */
-    void deviceSet_300Ph(String did,double th,double tl,double phh,double phl,int push_cfg,int dev_lock,int d_cyc,int ph_dly,int ph_cmd);
+    void deviceSet_300Ph(String did, double th, double tl, double phh, double phl, int push_cfg, int dev_lock, int d_cyc, int ph_dly, int ph_cmd);
 
     /**
      * 变频水泵设置接口
+     *
      * @param did
      * @param devLock
      * @param i_cyc
      * @param gear
      * @param cfg
-     * @param wh 在线时间(单位：小时)
-     * @param wg 设置造浪档位(0 - 9：最小到最大档位)
-     * @param we 设置造浪状态(适用于CDP-WIFI水泵 0：正常循环模式1：造浪模式)
-     * @param wc 设置造浪周期(0 - 9：最小到最大档位)
+     * @param wh      在线时间(单位：小时)
+     * @param wg      设置造浪档位(0 - 9：最小到最大档位)
+     * @param we      设置造浪状态(适用于CDP-WIFI水泵 0：正常循环模式1：造浪模式)
+     * @param wc      设置造浪周期(0 - 9：最小到最大档位)
      */
-    void deviceSet_shuiBeng(String did,int devLock,int i_cyc,int gear,int cfg,int state,int fcd,int wh,int wg,int we,int wc,String requestType);
+    void deviceSet_shuiBeng(String did, int devLock, int i_cyc, int gear, int cfg, int state, int fcd, int wh, int wg, int we, int wc, String requestType);
 
     /**
      * 主设备did
+     *
      * @param did
      */
     void cameraQuery(String did);
 
     /**
      * 从设备绑定接口
+     *
      * @param master_did
      * @param slave_did
      * @param slave_device_type
      * @param slave_name
      * @param slave_pwd
      */
-    void cameraBind(String master_did,String slave_did,String slave_device_type,String slave_name,String slave_pwd);
+    void cameraBind(String master_did, String slave_did, String slave_device_type, String slave_name, String slave_pwd);
 
     /**
      * 解除从设备
+     *
      * @param master_did
      * @param slave_did
      */
-    void cameraUnBind(String master_did,String slave_did);
+    void cameraUnBind(String master_did, String slave_did);
 
     /**
      * 修改校准时间
+     *
      * @param id
      * @param firstTime
      * @param lastTime
      */
-    void updateJiaoZhunTime(String id,int push_cfg,int temp_low,int temp_high,int ph_low,int ph_high,long firstTime,long lastTime);
+    void updateJiaoZhunTime(String id, int push_cfg, int temp_low, int temp_high, int ph_low, int ph_high, long firstTime, long lastTime);
 
     /**
      * 806中的ph设置
+     *
      * @param id
      * @param ph_on
      * @param ph_h
@@ -394,13 +409,15 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 用户加热棒额外信息修改
+     *
      * @param id
      * @param abnormal
      */
-    void jiaReBangExtraUpdate(String id,int abnormal);
+    void jiaReBangExtraUpdate(String id, int abnormal);
 
     /**
      * adt设备额外信息修改
+     *
      * @param id
      * @param s
      */
@@ -408,23 +425,26 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * adt设备信息修改
+     *
      * @param did
      * @param mode
      * @param push_cfg
      * @param dev_lock
      * @param str
      */
-    void deviceSet_led(String did, int mode , int push_cfg, int dev_lock, String str,int w,int b,int g,int r,int sw);
+    void deviceSet_led(String did, int mode, int push_cfg, int dev_lock, String str, int w, int b, int g, int r, int sw);
 
     /**
      * 变频水泵额外信息修改
+     *
      * @param id
      * @param push_cfg
      */
-    void shuibengExtraUpdate(String id, String push_cfg,int fcd,int state);
+    void shuibengExtraUpdate(String id, String push_cfg, int fcd, int state);
 
     /**
      * 发送邮箱验证码
+     *
      * @param customText
      * @param code_type
      * @param send_type
@@ -433,12 +453,14 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 仅获取设备在线状态
+     *
      * @param did
      */
-    void getDeviceOnLineState(String did,String uid);
+    void getDeviceOnLineState(String did, String uid);
 
     /**
      * 更新设备信息
+     *
      * @param sp
      * @param device_id
      * @param lang
@@ -450,31 +472,36 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 产品首页 分类
+     *
      * @param parent
      */
     void queryProductIndex(int parent);
 
     /**
-     * @param cate_id   分类id
-     * @param is_video  1=>视频,0(default)=>文章
+     * @param cate_id  分类id
+     * @param is_video 1=>视频,0(default)=>文章
      * @param page
      * @param size
      */
-    void queryProductPost(int cate_id,int is_video,int page,int size);
+    void queryProductPost(int cate_id, int is_video, int page, int size);
 
     /**
      * 搜索
+     *
      * @param name
      */
     void productSearch(String name);
+
     /**
      * 轮播图
+     *
      * @param
      */
     void getBanners(int position);
 
     /**
      * 搜索门店
+     *
      * @param city
      * @param area
      * @param longValue
@@ -486,6 +513,7 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 修改个人资料
+     *
      * @param s_id
      * @param uid
      * @param nickName
@@ -494,6 +522,7 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 消息查询
+     *
      * @param uid
      * @param msg_type
      * @param startTime
@@ -503,13 +532,11 @@ public interface IUserInfoInterface<PersonDataBean> {
     void queryMessage(String uid, int msg_type, int startTime, int pageIndex, int pageSize);
 
     /**
-     *
      * @param uid
      */
     void getCustomerStatus(String uid);
 
     /**
-     *
      * @param uid
      * @param servicerUid
      * @param page_no
@@ -522,4 +549,9 @@ public interface IUserInfoInterface<PersonDataBean> {
     void sendDefaultCustomerMessage(String content);
 
     void getCustomerAsk(String keFuId, String lastCreateTime);
+
+    /**
+     * 退出聊天
+     */
+    void exitcommunion(String uid, String keFuId,String create_time);
 }
