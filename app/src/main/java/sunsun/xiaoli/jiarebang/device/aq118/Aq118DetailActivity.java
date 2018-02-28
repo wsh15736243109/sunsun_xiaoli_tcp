@@ -107,7 +107,7 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
 //                    setRefreshTime(myApp.deviceJiaReBangUI.deviceDetailModel.getUpdate_time());
                 }
                 setLoadingIsVisible(true);
-                userPresenter.getDeviceDetailInfo(did, myApp.mDeviceUi.uid);
+                userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             }
         });
         deviceType = "S08";
@@ -522,19 +522,31 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                myApp.mDeviceUi.getDeviceList();
+                if (myApp.mDeviceUi==null) {
+                    myApp.mXiaoLiUi.getDeviceList();
+                }else {
+                    myApp.mDeviceUi.getDeviceList();
+                }
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
                 MAlert.alert(entity.getData());
-                myApp.mDeviceUi.getDeviceList();
+                if (myApp.mDeviceUi==null) {
+                    myApp.mXiaoLiUi.getDeviceList();
+                }else {
+                    myApp.mDeviceUi.getDeviceList();
+                }
                 finish();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                myApp.mDeviceUi.getDeviceList();
+                if (myApp.mDeviceUi==null) {
+                    myApp.mXiaoLiUi.getDeviceList();
+                }else {
+                    myApp.mDeviceUi.getDeviceList();
+                }
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_fail) {
                 MAlert.alert(entity.getData());

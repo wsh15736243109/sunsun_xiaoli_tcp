@@ -84,7 +84,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
     int cnt = 0;
     App mApp;
     boolean mReadyExit;
-    SwipeMenuListView mListView;
+    public SwipeMenuListView mListView;
     Context mContext;
     private ProgressDialog mProgressDialog;
     ImageView img_back;

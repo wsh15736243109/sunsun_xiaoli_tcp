@@ -51,14 +51,14 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
     TextView device_status;
     PtrFrameLayout ptr;
     private boolean isYiChangBaoJing;
-//    TextView txt_current_status_value;
+    //    TextView txt_current_status_value;
     private int state;
     @IsNeedClick
     TextView txt_liuliangchoose, txt_weishitime;
     RelativeLayout re_liuliang_choose;
     RelativeLayout re_gif;
     @IsNeedClick
-    TextView  qibengbattery_leijicount, current_electricity;
+    TextView qibengbattery_leijicount, current_electricity;
     int seconds = 0;
     RelativeLayout re_battery, re_chuqiliang_choose, re_workmode;
     MyBattery battery_wiget;
@@ -140,7 +140,11 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -151,7 +155,11 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
@@ -206,10 +214,10 @@ public class DeviceQiBengBatteryDetailActivity extends BaseActivity implements O
                     ) {
                 //已充满，待机中
 //                txt_current_status_value.setTextColor(getResources().getColor(R.color.red500));
-                battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryPowerSupply,batt);
-            }else{
+                battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryPowerSupply, batt);
+            } else {
 //                txt_current_status_value.setTextColor(getResources().getColor(R.color.main_green));
-                battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryCHARGING,batt);
+                battery_wiget.setBatteryStatus(MyBattery.BatteryStatus.BatteryCHARGING, batt);
             }
 
 

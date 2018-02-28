@@ -554,4 +554,12 @@ public interface IUserInfoInterface<PersonDataBean> {
      * 退出聊天
      */
     void exitcommunion(String uid, String keFuId,String create_time);
+
+    /**
+     * 查询我的客服消息
+     * @param uid
+     * @param pageNo
+     * @param pageSize
+     */
+    void queryMyKeFuMessage(String uid, int pageNo, int pageSize);
 }

@@ -231,8 +231,11 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
                 handler.removeCallbacks(runnable);
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_success) {
-                MAlert.alert(entity.getData() + "");
-                mApp.mDeviceUi.getDeviceList();
+                MAlert.alert(entity.getData() + ""); if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_fail) {
                 MAlert.alert(entity.getData() + "");
             }

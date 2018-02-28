@@ -54,7 +54,13 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_806_phdetail);
         mApp = (App) getApplication();
-        id = mApp.mDeviceUi.mSelectDeviceInfo.getId();
+        if (mApp.mDeviceUi==null) {
+            id = mApp.mXiaoLiUi.mSelectDeviceInfo.getId();
+
+
+        }else {
+            id = mApp.mDeviceUi.mSelectDeviceInfo.getId();
+        }
         userPresenter = new UserPresenter(this);
         mApp.deviceAq806PhActivity = this;
         mApp.jinLiGangdetailUI.beginRequest();

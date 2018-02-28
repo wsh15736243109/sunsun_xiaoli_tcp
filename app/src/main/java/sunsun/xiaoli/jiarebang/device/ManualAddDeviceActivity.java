@@ -191,11 +191,22 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         return;
                     }
                 } else {
-                    if (mApp.mDeviceUi.arrayList != null) {
-                        for (DeviceListBean deviceListBean : mApp.mDeviceUi.arrayList) {
-                            if (deviceListBean.getDid().contains(did)) {
-                                hasAdd = true;
-                                break;
+                    if (mApp.mDeviceUi==null) {
+                        if (mApp.mXiaoLiUi.arrayList != null) {
+                            for (DeviceListBean deviceListBean : mApp.mXiaoLiUi.arrayList) {
+                                if (deviceListBean.getDid().contains(did)) {
+                                    hasAdd = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }else {
+                        if (mApp.mDeviceUi.arrayList != null) {
+                            for (DeviceListBean deviceListBean : mApp.mDeviceUi.arrayList) {
+                                if (deviceListBean.getDid().contains(did)) {
+                                    hasAdd = true;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -252,7 +263,11 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.adddevice_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi==null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                }else{
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 if (aq_did != null && !"".equals(aq_did)) {
                     //绑定从设备
                     //判断是否已经在绑定之列
@@ -264,16 +279,23 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         if (mApp.addDeviceUI != null) {
                             mApp.addDeviceUI.finish();
                         }
+                        if (mApp.mDeviceUi==null) {
 
-                        mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                            mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
+                        }else {
+                            mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                        }
                         //结束当前activity
                         finish();
                     }
                 } else {
                     //结束上一个activity
                     mApp.addDeviceUI.finish();
-
-                    mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                    if (mApp.mDeviceUi==null) {
+                        mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
+                    }else {
+                        mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                    }
                     //结束当前activity
                     finish();
                 }

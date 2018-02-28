@@ -24,6 +24,7 @@
     </LinearLayout>
 
     <com.itboye.pondteam.custom.swipemenulistview.SwipeMenuListView
+        android:visibility="gone"
         android:id="@+id/xlistview"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"

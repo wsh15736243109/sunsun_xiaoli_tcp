@@ -22,20 +22,18 @@ import sunsun.xiaoli.jiarebang.shuizuzhijia.me.messageFragment.WoDeZhuTiFragment
 public class MyNotifyMessageActivity extends BaseActivity implements
         OnClickListener {
 
-    LinearLayout layoutMycollTiezixitong;
-    LinearLayout layoutTieZiHuiFukefu;
-    LinearLayout layoutTieluntan;
-    LinearLayout content_layoutMycoll;
 
     TextView txt_title;
 
     // 头部标签切换的Fragment
-    private Fragment XiTongFragmet, payFragment, sendFragment, currentFragment;
-    Button btnTiezitongzhi, btnTieziHuifukefu, btnTieziluntan;
+    private Fragment systemMessageFragment, lunTanFragmet, keFuFragment, currentFragment;
 
+    Button btn_system_message, btn_luntan, btn_kefu;
+    LinearLayout li_system_message, li_luntan, li_kefu;
     private View viewright, viewLeift, viewLeiftl;
 
     ImageView img_back;
+    private FragmentTransaction transaction;
 
     @Override
     @SuppressLint("InlinedApi")
@@ -43,7 +41,7 @@ public class MyNotifyMessageActivity extends BaseActivity implements
         // TODO Auto-generated method stub
         super.onCreate(arg0);
         setContentView(R.layout.activity_mymessage);
-        initTab();
+        clickTabSystemMessage();
         txt_title.setText("我的消息");
         txt_title.setTextColor(getResources().getColor(R.color.main_green));
     }
@@ -52,23 +50,17 @@ public class MyNotifyMessageActivity extends BaseActivity implements
     public void onClick(View v) {
         // TODO Auto-generated method stub
         switch (v.getId()) {
-            case R.id.layoutMycollTiezixitong:
-                clickTab1Layout();
+            case R.id.li_system_message:
+            case R.id.btn_system_message:
+                clickTabSystemMessage();
                 break;
-            case R.id.layoutTieZiHuiFukefu:
-                clickTab2Layout();
+            case R.id.li_kefu:
+            case R.id.btn_kefu:
+                clickTabKefuLayout();
                 break;
-            case R.id.btnTiezitongzhi:
-                clickTab1Layout();
-                break;
-            case R.id.btnTieziHuifukefu:
-                clickTab2Layout();
-                break;
-            case R.id.layoutTieluntan:
-                clickTab3Layout();
-                break;
-            case R.id.btnTieziluntan:
-                clickTab3Layout();
+            case R.id.li_luntan:
+            case R.id.btn_luntan:
+                clickTabLuntanLayout();
                 break;
             case R.id.img_back:
                 finish();
@@ -82,71 +74,70 @@ public class MyNotifyMessageActivity extends BaseActivity implements
      * 初始化头部标签
      */
     @SuppressWarnings("deprecation")
-    private void initTab() {
-        if (XiTongFragmet == null) {
-            XiTongFragmet = new MessageXiTongFragmet();
+    private void clickTabSystemMessage() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(transaction);
+        if (systemMessageFragment == null) {
+            systemMessageFragment = new MessageXiTongFragmet();
+            transaction.add(R.id.content, systemMessageFragment);
+        } else {
+            transaction.show(systemMessageFragment);
         }
-
-        if (!XiTongFragmet.isAdded()) {
-            // 提交事务
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.content_layoutMycoll, XiTongFragmet).commit();
-
-            // 记录当前Fragment
-            currentFragment = XiTongFragmet;
-            // 设置图片文本的变化
-            btnTiezitongzhi.setTextColor(getResources().getColor(
-                    R.color.main_green));
-            btnTieziHuifukefu.setTextColor(getResources()
-                    .getColor(R.color.gray_6c7bb));
-            btnTieziluntan.setTextColor(getResources().getColor(R.color.gray_6c7bb));
-            viewLeiftl.setBackgroundColor(getResources().getColor(
-                    R.color.backgroundColor));
-
-            viewright.setBackgroundColor(getResources().getColor(
-                    R.color.main_green));// (R.color.home_blue);
-            viewLeift.setBackgroundColor(getResources().getColor(
-                    R.color.backgroundColor));
-
-        }
-    }
-
-    private void clickTab1Layout() {
-        if (XiTongFragmet == null) {
-            XiTongFragmet = new WoDeZhuTiFragment();
-        }
-        addOrShowFragment(getSupportFragmentManager().beginTransaction(),
-                XiTongFragmet);
-
-        // 设置底部tab变化
-        btnTiezitongzhi
-                .setTextColor(getResources().getColor(R.color.main_green));
-        btnTieziHuifukefu.setTextColor(getResources().getColor(R.color.gray_6c7bb));
-        btnTieziluntan.setTextColor(getResources().getColor(R.color.gray_6c7bb));
+        // 设置图片文本的变化
+        btn_system_message.setTextColor(getResources().getColor(
+                R.color.main_green));
+        btn_luntan.setTextColor(getResources()
+                .getColor(R.color.gray_6c7bb));
+        btn_kefu.setTextColor(getResources().getColor(R.color.gray_6c7bb));
         viewLeiftl.setBackgroundColor(getResources().getColor(
                 R.color.backgroundColor));
 
-        viewright
-                .setBackgroundColor(getResources().getColor(R.color.main_green));// (R.color.home_blue);
+        viewright.setBackgroundColor(getResources().getColor(
+                R.color.main_green));// (R.color.home_blue);
         viewLeift.setBackgroundColor(getResources().getColor(
                 R.color.backgroundColor));
+        transaction.commit();
+    }
+
+    private void clickTabLuntanLayout() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(transaction);
+        if (lunTanFragmet == null) {
+            lunTanFragmet = new WoDeZhuTiFragment();
+            transaction.add(R.id.content, lunTanFragmet);
+        } else {
+            transaction.show(lunTanFragmet);
+        }
+        btn_luntan
+                .setTextColor(getResources().getColor(R.color.main_green));
+        btn_system_message.setTextColor(getResources().getColor(R.color.gray_6c7bb));
+        btn_kefu.setTextColor(getResources().getColor(R.color.gray_6c7bb));
+        viewLeiftl.setBackgroundColor(getResources().getColor(
+                R.color.main_green));
+
+        viewright
+                .setBackgroundColor(getResources().getColor(R.color.backgroundColor));// (R.color.home_blue);
+        viewLeift.setBackgroundColor(getResources().getColor(
+                R.color.backgroundColor));
+        transaction.commit();
     }
 
     /**
-     * 点击第二个tab
      */
-    private void clickTab2Layout() {
-        if (payFragment == null) {
-            payFragment = new KeFuMeFragment();
+    private void clickTabKefuLayout() {
+        transaction = getSupportFragmentManager().beginTransaction();
+        hideFragment(transaction);
+        if (keFuFragment == null) {
+            keFuFragment = new KeFuMeFragment();
+            transaction.add(R.id.content, keFuFragment);
+        } else {
+            transaction.show(keFuFragment);
         }
-        addOrShowFragment(getSupportFragmentManager().beginTransaction(),
-                payFragment);
-
-        btnTieziHuifukefu.setTextColor(getResources().getColor(
+        btn_kefu.setTextColor(getResources().getColor(
                 R.color.main_green));
-        btnTiezitongzhi.setTextColor(getResources().getColor(R.color.gray_6c7bb));
+        btn_system_message.setTextColor(getResources().getColor(R.color.gray_6c7bb));
 
-        btnTieziluntan.setTextColor(getResources().getColor(R.color.gray_6c7bb));
+        btn_luntan.setTextColor(getResources().getColor(R.color.gray_6c7bb));
         viewLeiftl.setBackgroundColor(getResources().getColor(
                 R.color.backgroundColor));
 
@@ -154,50 +145,20 @@ public class MyNotifyMessageActivity extends BaseActivity implements
                 R.color.backgroundColor));// (R.color.home_blue);
         viewLeift
                 .setBackgroundColor(getResources().getColor(R.color.main_green));
+        transaction.commit();
     }
-
-    /**
-     * 点击第二个tab
-     */
-    private void clickTab3Layout() {
-        if (sendFragment == null) {
-            sendFragment = new KeFuMeFragment();
+    private void hideFragment(FragmentTransaction transaction) {
+        if (systemMessageFragment != null) {
+            transaction.hide(systemMessageFragment);
         }
-        addOrShowFragment(getSupportFragmentManager().beginTransaction(),
-                sendFragment);
+        if (lunTanFragmet != null) {
 
-        btnTieziHuifukefu.setTextColor(getResources().getColor(R.color.gray_6c7bb));
-        btnTiezitongzhi.setTextColor(getResources().getColor(R.color.gray_6c7bb));
-        viewright.setBackgroundColor(getResources().getColor(
-                R.color.backgroundColor));// (R.color.home_blue);
-        viewLeift.setBackgroundColor(getResources().getColor(
-                R.color.backgroundColor));
-
-        btnTieziluntan.setTextColor(getResources().getColor(R.color.main_green));
-        viewLeiftl.setBackgroundColor(getResources()
-                .getColor(R.color.main_green));
-
-    }
-
-    /**
-     * 添加或者显示碎片
-     *
-     * @param transaction
-     * @param fragment
-     */
-    private void addOrShowFragment(FragmentTransaction transaction,
-                                   Fragment fragment) {
-        if (currentFragment == fragment)
-            return;
-
-        if (!fragment.isAdded()) { // 如果当前fragment未被添加，则添加到Fragment管理器中
-            transaction.hide(currentFragment)
-                    .add(R.id.content_layoutMycoll, fragment).commit();
-        } else {
-            transaction.hide(currentFragment).show(fragment).commit();
+            transaction.hide(lunTanFragmet);
         }
+        if (keFuFragment != null) {
+            transaction.hide(keFuFragment);
 
-        currentFragment = fragment;
+        }
     }
 
 }

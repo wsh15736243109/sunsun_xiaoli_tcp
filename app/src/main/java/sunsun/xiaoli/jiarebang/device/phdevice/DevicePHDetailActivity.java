@@ -455,7 +455,7 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
     @Override
     public void fankui() {
         Intent intent = new Intent(this, FeedbackActivity.class);
-        intent.putExtra("device_type",4);
+        intent.putExtra("device_type", 4);
         startActivity(intent);
     }
 
@@ -501,13 +501,21 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                myApp.mDeviceUi.getDeviceList();
+                if (myApp.mDeviceUi == null) {
+                    myApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    myApp.mDeviceUi.getDeviceList();
+                }
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_success) {
                 MAlert.alert(entity.getData());
-                myApp.mDeviceUi.getDeviceList();
+                if (myApp.mDeviceUi == null) {
+                    myApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    myApp.mDeviceUi.getDeviceList();
+                }
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_fail) {
                 MAlert.alert(entity.getData());

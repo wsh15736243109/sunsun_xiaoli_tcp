@@ -251,7 +251,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             window.setStatusBarColor(0xffdcdddd);
         }
         if (deviceDetailModel != null) {
-            exDev=deviceDetailModel.getEx_dev();
+            exDev = deviceDetailModel.getEx_dev();
             if (exDev.equalsIgnoreCase("AQ500")) {
                 //强制关闭AQ500、AQ700的水位异常推送、冲浪泵提示
                 int push = deviceDetailModel.getPush_cfg();
@@ -265,7 +265,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                  * currentTime:同时同步设备时间
                  */
                 userPresenter.deviceSet_806(did, currentTime, "", "", "", "", "", "", "", "", "", "", push + "", "", -1, -1, -1, -1, "");
-            } else if (exDev.equalsIgnoreCase("AQ700")||exDev.equalsIgnoreCase("AQ600")) {
+            } else if (exDev.equalsIgnoreCase("AQ700") || exDev.equalsIgnoreCase("AQ600")) {
                 int push = deviceDetailModel.getPush_cfg();
                 //仅强制关闭水位报警提示
                 if ((push & (int) Math.pow(2, 4)) == (int) Math.pow(2, 4)) {
@@ -662,9 +662,9 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 if ((Boolean) img_open.getTag()) {
                     MAlert.alert(getString(R.string.mode_ismanual));
                 } else {
-                     if (!caculateRequestTimeInternal(requestTime)) {
+                    if (!caculateRequestTimeInternal(requestTime)) {
 
-                    } else  {
+                    } else {
                         showProgressDialog(getString(R.string.posting), true);
                         userPresenter.deviceSet_806(did, "", "0", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_shoudong_success);
                     }
@@ -678,7 +678,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 if ((Boolean) img_close.getTag()) {
                     MAlert.alert(getString(R.string.mode_isauto));
                 } else {
-                    if(caculateRequestTimeInternal(requestTime)) {
+                    if (caculateRequestTimeInternal(requestTime)) {
                         showProgressDialog(getString(R.string.posting), true);
                         userPresenter.deviceSet_806(did, "", "1", "", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, mode_zidong_success);
                     }
@@ -696,7 +696,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if(caculateRequestTimeInternal(requestTime)) {
+                if (caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", "", chonglangbeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, chonglangbeng_success);
                 }
@@ -714,7 +714,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     return;
                 }
 
-                if(caculateRequestTimeInternal(requestTime)) {
+                if (caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", "", "", zhaomingdeng_status ? "0" : "1", "", "", "", "", "", "", "", "", -1, -1, -1, -1, dengguangzhaoming_success);
                 }
@@ -732,7 +732,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.changeshodongatfirst));
                     return;
                 }
-                if(caculateRequestTimeInternal(requestTime)) {
+                if (caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", shajundeng_status ? "0" : "1", "", "", "", "", "", "", "", "", "", "", -1, -1, -1, -1, shajundeng_success);
                 }
@@ -744,7 +744,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 }
 //                pushStrs[4] = (shuiwei_status ? '0' : '1');
                 //水位报警
-                if(caculateRequestTimeInternal(requestTime)) {
+                if (caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", (detailModelTcp.getPush_cfg() ^ 16) + "", "", -1, -1, -1, -1, shuiwei_success);
                 }
@@ -757,7 +757,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
-                if(caculateRequestTimeInternal(requestTime)) {
+                if (caculateRequestTimeInternal(requestTime)) {
                     showProgressDialog(getString(R.string.posting), true);
                     //设备锁定
                     userPresenter.deviceSet_806(did, "", "", "", "", "", "", "", "", "", "", "", "", dev_lockStatus ? "0" : "1", -1, -1, -1, -1, lock_success);
@@ -854,7 +854,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
 
             }
 
-        }else{
+        } else {
             if (shajundeng_status) {
                 img_shajundeng.setBackgroundResource(R.drawable.uv_select);
             } else {
@@ -1117,7 +1117,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                app.mDeviceUi.getDeviceList();
+                if (app.mDeviceUi == null) {
+                    app.mXiaoLiUi.getDeviceList();
+                } else {
+                    app.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -1155,7 +1159,11 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
                 MAlert.alert(entity.getData());
                 dbManager.deleteDeviceDataByDid(did, getSp(Const.UID));
-                app.mDeviceUi.getDeviceList();
+                if (app.mDeviceUi == null) {
+                    app.mXiaoLiUi.getDeviceList();
+                } else {
+                    app.mDeviceUi.getDeviceList();
+                }
                 finish();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
                 MAlert.alert(entity.getData());

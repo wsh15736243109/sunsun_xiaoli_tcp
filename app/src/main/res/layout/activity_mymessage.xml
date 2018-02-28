@@ -13,13 +13,6 @@
 
         <!-- 内容部分， fragment切换 -->
 
-        <LinearLayout
-            android:id="@+id/content_layoutMycoll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/realyouttop"
-            android:background="@color/gray_divider"
-            android:orientation="vertical"></LinearLayout>
 
         <RelativeLayout
             android:id="@+id/realyouttop"
@@ -41,14 +34,14 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layoutMycollTiezixitong"
+                        android:id="@+id/li_system_message"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btnTiezitongzhi"
+                            android:id="@+id/btn_system_message"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -80,14 +73,14 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layoutTieluntan"
+                        android:id="@+id/li_luntan"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btnTieziluntan"
+                            android:id="@+id/btn_luntan"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -113,14 +106,14 @@
                     android:orientation="vertical">
 
                     <LinearLayout
-                        android:id="@+id/layoutTieZiHuiFukefu"
+                        android:id="@+id/li_kefu"
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
                         android:gravity="center"
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btnTieziHuifukefu"
+                            android:id="@+id/btn_kefu"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
@@ -148,6 +141,14 @@
 
             </LinearLayout>
         </RelativeLayout>
+
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/realyouttop"
+            android:background="@color/gray_divider"></FrameLayout>
     </RelativeLayout>
 
 </LinearLayout>

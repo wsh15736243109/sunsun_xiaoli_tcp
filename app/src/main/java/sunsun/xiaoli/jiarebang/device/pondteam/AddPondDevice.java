@@ -21,6 +21,7 @@ import com.itboye.pondteam.utils.SPUtils;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -69,7 +70,8 @@ public class AddPondDevice extends BaseActivity implements Observer {
         if (i == R.id.btn_match) {
             did = getCustomText(ed_device_id);
             boolean has = false;
-            for (DeviceListBean deviceListBean : myApp.mDeviceUi.arrayList) {
+            ArrayList<DeviceListBean> arrayTemp = myApp.mDeviceUi==null?myApp.mXiaoLiUi.arrayList:myApp.mDeviceUi.arrayList;
+            for (DeviceListBean deviceListBean : arrayTemp) {
                 if (did.equals(deviceListBean.getDid())) {
                     has = true;
                     break;

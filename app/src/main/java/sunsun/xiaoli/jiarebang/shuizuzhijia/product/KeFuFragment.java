@@ -393,7 +393,8 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
                     item.setMsgType(msg_type + "");
                     item.setOwnerType("1");
                     Log.v("request_params", "sendCustomerMessage_success_lastDataId" + lastDataId);
-                    item.setId((Integer.parseInt(lastDataId) + 1) + "");
+                    lastDataId = (Integer.parseInt(lastDataId) + 1) + "";
+                    item.setId(lastDataId);
                     item.setCreateTime(System.currentTimeMillis() / 1000.
                             + "");
                     lastCreateTime = System.currentTimeMillis() / 1000.

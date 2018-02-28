@@ -16,6 +16,13 @@ import java.util.Observer;
 
 public class UserPresenter extends BasePresenter implements
         IUserInfoInterface<PersonDataBean> {
+    public UserPresenter(Observer observer) {
+        super(observer);
+    }
+
+    public static String queryMyKeFuMessage_success = "_queryMyKeFuMessage_success";
+    public static String queryMyKeFuMessage_fail = "_queryMyKeFuMessage_fail";
+
     public static String cameraUnBind_success = "_cameraUnBind_success";
     public static String cameraUnBind_fail = "_cameraUnBind_fail";
     public static String deviceSet_shuiBengsuccess = "_deviceSet_shuiBengsuccess";
@@ -173,9 +180,6 @@ public class UserPresenter extends BasePresenter implements
     public static String exitCommunion_fail = "_exitcommunion_fail";
     public static String exitCommunion_success = "_exitcommunion_success";
 
-    public UserPresenter(Observer observer) {
-        super(observer);
-    }
 
     @Override
     public void getDeviceStatus(String did) {
@@ -1735,5 +1739,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.exitcommunion(uid, keFuId, create_time);
+    }
+
+    @Override
+    public void queryMyKeFuMessage(String uid, int pageNo, int pageSize) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(queryMyKeFuMessage_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(queryMyKeFuMessage_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.queryMyKeFuMessage(uid, pageNo, pageSize);
     }
 }

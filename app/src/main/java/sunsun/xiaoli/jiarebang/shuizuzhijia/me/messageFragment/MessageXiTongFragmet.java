@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.MessageBean;
+import com.itboye.pondteam.custom.ptr.BasePtr;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -16,6 +17,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.SystemAnnounceAdapter;
 
@@ -35,6 +38,8 @@ public class MessageXiTongFragmet extends LingShouBaseFragment implements Observ
     UserPresenter userPresenter;
     int startTime = -1, pageIndex = 1, pageSize = 10;
 
+    PtrFrameLayout ptr_framelayout;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_kefu_messge;
@@ -42,85 +47,98 @@ public class MessageXiTongFragmet extends LingShouBaseFragment implements Observ
 
     @Override
     protected void initData() {
+        // 设置下拉刷新的样式（可选，但如果没有Header则无法下拉刷新）
+//        SimpleHeader header = new SimpleHeader(getActivity());
+//        header.setTextColor(0xff0066aa);
+//        header.setCircleColor(0xff33bbee);
+//        xlistviewMessge.setHeadable(header);
+//
+//        // 设置加载更多的样式（可选）
+//        SimpleFooter footer = new SimpleFooter(getActivity());
+//        footer.setCircleColor(0xff33bbee);
+//        xlistviewMessge.setFootable(footer);
+//        // 下拉刷新事件回调（可选）
+//        xlistviewMessge.setOnRefreshStartListener(new ZrcListView.OnStartListener() {
+//            @Override
+//            public void onStart() {
+//                pageIndex = 1;
+//                queryMessage();
+//            }
+//        });
+//
+//        // 加载更多事件回调（可选）
+//        xlistviewMessge.setOnLoadMoreStartListener(new  ZrcListView.OnStartListener() {
+//            @Override
+//            public void onStart() {
+//                pageIndex++;
+//                queryMessage();
+//            }
+//        });
+//        xlistviewMessge.refresh(); // 主动下拉刷新
+//        xlistviewMessge.startLoadMore();
+        BasePtr.setPagedPtrStyle(ptr_framelayout);
+//        xlistviewMessge.setPullLoadEnable(false);
+//        xlistviewMessge.setPullRefreshEnable(false);
+//        xlistviewMessge.setXListViewListener(new XListView.IXListViewListener() {
+//            @Override
+//            public void onRefresh() {
+//                pageIndex = 1;
+//                queryMessage();
+//            }
+//
+//            @Override
+//            public void onLoadMore() {
+//                pageIndex++;
+//                queryMessage();
+//            }
+//        });
+//        ptr_framelayout.setLoadMore(true);
+//        ptr_framelayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+//            @Override
+//            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+//                pageIndex = 1;
+//                queryMessage();
+//            }
+//
+//            @Override
+//            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
+//                // TODO Auto-generated method stub
+//                super.onRefreshLoadMore(materialRefreshLayout);
+//
+//                pageIndex++;
+//                queryMessage();
+//
+//            }
+//        });
+        ptr_framelayout.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {
+                pageIndex++;
+                queryMessage();
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                pageIndex = 1;
+                queryMessage();
+            }
+        });
+//        xlistviewMessge.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                Log.v("request_params","ontouch");
+//                return true;
+//            }
+//        });
+        adapter = new SystemAnnounceAdapter(this, dataList, R.layout.item_systemannounce);
+        xlistviewMessge.setAdapter(adapter);
         userPresenter = new UserPresenter(this);
-        userPresenter.queryMessage(getSp(Const.UID), 6042, startTime, pageIndex, pageSize);
+        queryMessage();
     }
 
-//	@Override
-//	public void onActivityCreated(Bundle savedInstanceState) {
-//		super.onActivityCreated(savedInstanceState);
-//		tvMessge.setText(R.string.xitong_messge);
-//		xlistviewMessge.setPullRefreshEnable(false);
-//		xlistviewMessge.setPullLoadEnable(false);
-//		// xlistviewMessge.setXListViewListener(new IXListViewListener() {
-//		//
-//		// @Override
-//		// public void onRefresh() {
-//		// getData();
-//		// }
-//		//
-//		// @Override
-//		// public void onLoadMore() {
-//		// pullUp();
-//		// }
-//		//
-//		// });
-//		// adapter = new ShopCarAdapter(getApplication(), dataList, this);
-//		// xlistview.setAdapter(adapter);
-//		// adapter=onGetAdapter();
-//
-//
-//		getData();
-//
-//		/*
-//		 * xlistviewMessge.setOnItemClickListener(new OnItemClickListener() {
-//		 *
-//		 * @Override public void onItemClick(AdapterView<?> parent, View view,
-//		 * int position, long id) { position--; Intent intent=new
-//		 * Intent(getActivity(), TieZiDetailActivity.class); ZhuTiItemBean
-//		 * bean=dataList.get(position); intent.putExtra("fid", bean.getFid());
-//		 * intent.putExtra("tid", bean.getTid()); intent.putExtra("img",
-//		 * bean.getImg());
-//		 *
-//		 * intent.putExtra("author", bean.getAuthor());
-//		 * intent.putExtra("author_id", bean.getAuthorId());
-//		 *
-//		 * startActivity(intent); } });
-//		 */
-//	}
-//
-//	private void getData() {
-//		MyJsonRequest<List<MessageBean>> request = new MyJsonRequest.Builder<List<MessageBean>>()
-//				.typeKey("BY_Message_query")
-//				.apiVer("100")
-//				.param("uid",
-//						(String) SPUtils.get(App.ctx, null, SPContants.USER_ID,
-//								"")).param("msg_type", "1")
-//				.requestListener(new XRequestListener<List<MessageBean>>() {
-//
-//					@Override
-//					public void onResponse(List<MessageBean> arg0) {
-//
-//						if (arg0 != null) {
-//							dataList.addAll(arg0);
-//							adapter.notifyDataSetChanged();
-//						}
-//						if (adapter == null || arg0.size()<0) {
-//							layoutNull.setVisibility(View.VISIBLE);
-//							xlistviewMessge.setVisibility(View.GONE);
-//							textStrimg.setText("暂无系统消息");
-//						}
-//					}
-//				}).errorListener(new XErrorListener() {
-//
-//					@Override
-//					public void onErrorResponse(Exception exception, int code,
-//							String msg) {
-//
-//					}
-//				}).build();
-//		HttpRequest.getDefaultRequestQueue().add(request);
-//	}
+    private void queryMessage() {
+        userPresenter.queryMessage(getSp(Const.UID), 6042, startTime, pageIndex, pageSize);
+    }
 
     @Override
     public void onClick(View v) {
@@ -129,19 +147,21 @@ public class MessageXiTongFragmet extends LingShouBaseFragment implements Observ
 
     @Override
     public void update(Observable o, Object data) {
-        ResultEntity entity = handlerError(data);
+        ResultEntity entity = handlerError(data);//关闭刷新加载按钮
+        ptr_framelayout.refreshComplete(); // 通知加载成功
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getData());
             } else {
                 if (entity.getEventType() == UserPresenter.queryMessage_success) {
                     MessageBean messageBean = (MessageBean) entity.getData();
-                    dataList.addAll( messageBean.getList());
-                    adapter = new SystemAnnounceAdapter(this,dataList, R.layout.item_systemannounce);
-                    xlistviewMessge.setAdapter(adapter);
+                    if (pageIndex==1) {
+                        dataList.clear();
+                    }
+                    dataList.addAll(messageBean.getList());
+                    adapter.notifyDataSetChanged();
                 } else if (entity.getEventType() == UserPresenter.queryMessage_fail) {
                     MAlert.alert(entity.getData());
-
                 }
             }
         }

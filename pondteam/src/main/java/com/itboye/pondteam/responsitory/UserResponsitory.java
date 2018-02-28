@@ -42,6 +42,8 @@ import static com.itboye.pondteam.utils.MyTimeUtil.getTimeZone;
 public class UserResponsitory extends BaseNetRepository implements
         IUserInfoInterface<PersonDataBean> {
 
+    private String BY_Customer_servicehis = "BY_Customer_servicehis";
+
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
         byjsonRequest = new ByJsonRequest.Builder();
@@ -165,7 +167,6 @@ public class UserResponsitory extends BaseNetRepository implements
     private String BY_Customer_receivemsg = "BY_Customer_receivemsg";
     private String BY_Customer_onserviceask = "BY_Customer_onserviceask";
     private String BY_Customer_ask = "BY_Customer_ask";
-
 
 
     @Override
@@ -1832,7 +1833,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void exitcommunion(String uid, String keFuId,String create_time) {
+    public void exitcommunion(String uid, String keFuId, String create_time) {
         Type type = new TypeToken<String>() {
         }.getType();
         String apiVer = "100";
@@ -1844,6 +1845,24 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_Customer_ask, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void queryMyKeFuMessage(String uid, int pageNo, int pageSize) {
+        Type type = new TypeToken<ChatBean>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("page_no", pageNo);
+        map.put("uid", uid);
+        map.put("page_size", pageSize);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Customer_servicehis, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ChatBean>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

@@ -111,7 +111,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         did = getIntent().getStringExtra("did");
         userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, "");
         img_right.setBackgroundResource(R.drawable.menu);
-        if (deviceDetailModel.getWp_type().equals("4")||deviceDetailModel.getWp_type().equals("5")||deviceDetailModel.getWp_type().equals("6")) {
+        if (deviceDetailModel.getWp_type().equals("4") || deviceDetailModel.getWp_type().equals("5") || deviceDetailModel.getWp_type().equals("6")) {
             re_zaolang_choose.setVisibility(View.VISIBLE);
             lore_shuibeng_head.setBackgroundResource(R.drawable.beijingtu);
         } else {
@@ -228,7 +228,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 }
                 if (mApp.deviceShuiBengUI.isConnect) {
 //                    userPresenter.deviceSet_shuiBeng(did, -1, -1, -1, isYiChangBaoJing ? 0 : 1, -1);
-                    userPresenter.shuibengExtraUpdate(mApp.mDeviceUi.mSelectDeviceInfo.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
+                    userPresenter.shuibengExtraUpdate(deviceDetailModel.getId(), isYiChangBaoJing ? "0" : "1", -1, -1);
                 } else {
                     MAlert.alert(getString(R.string.disconnect));
                 }
@@ -260,9 +260,9 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                     return;
                 }
                 int length;
-                if (deviceDetailModel.getWp_type().equals("4")||deviceDetailModel.getWp_type().equals("5")||deviceDetailModel.getWp_type().equals("6")) {
+                if (deviceDetailModel.getWp_type().equals("4") || deviceDetailModel.getWp_type().equals("5") || deviceDetailModel.getWp_type().equals("6")) {
                     length = 9;
-                }else {
+                } else {
                     length = 4;
                 }
                 String[] liuliang = new String[length];
@@ -379,11 +379,11 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                             MAlert.alert(getString(R.string.device_name_empty));
                             return;
                         }
-                        userPresenter.updateDeviceName(mApp.mDeviceUi.mSelectDeviceInfo.getId(), nickName, "", "", "", "", -1, -1);
+                        userPresenter.updateDeviceName(deviceDetailModel.getId(), nickName, "", "", "", "", -1, -1);
                         break;
                     case 4:
                         //删除设备
-                        userPresenter.deleteDevice(mApp.mDeviceUi.mSelectDeviceInfo.getId(), getSp(Const.UID));
+                        userPresenter.deleteDevice(deviceDetailModel.getId(), getSp(Const.UID));
                         break;
                     case 5:
                         //高温报警
@@ -447,7 +447,11 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -458,7 +462,11 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_fail) {
                 MAlert.alert(entity.getData());

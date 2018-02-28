@@ -23,6 +23,7 @@ public class ChatBean implements Serializable {
     String have, servicerStatus;
 
 
+    int count;
     Spanned content;
 
     public Spanned getContent() {
@@ -79,6 +80,14 @@ public class ChatBean implements Serializable {
 
     public void setList(ArrayList<ChatItem> list) {
         this.list = list;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public static class ChatItem implements Serializable {

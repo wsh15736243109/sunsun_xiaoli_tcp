@@ -180,7 +180,12 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
             case R.id.btn_next:
                 if (smartConfigType == SmartConfigType.ADD_FINISH) {
                     mApp.addPondDeviceUI.finish();
-                    mApp.mDeviceUi.getDeviceList();
+                    if (mApp.mDeviceUi==null) {
+                        mApp.mXiaoLiUi.getDeviceList();
+                    }else
+                    {
+                        mApp.mDeviceUi.getDeviceList();
+                    }
                     finish();
                     return;
                 }
@@ -217,7 +222,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     } else {
                         int num = chdSmartConf.openSmartConfig(wifiName, wifiPass, "0");
                         if (num == 0) {
-                            autoDismissDialog = new AutoDismissDialog(this, getString(R.string.tips), getString(R.string.peizhiing), getString(R.string.cancel), getString(R.string.ok), 30000, this);
+                            autoDismissDialog = new AutoDismissDialog(this, getString(R.string.tips), getString(R.string.camera) + getString(R.string.peizhiing), getString(R.string.cancel), getString(R.string.ok), 30000, this);
                             autoDismissDialog.setCanceledOnTouchOutside(false);
                             autoDismissDialog.setOnKeyListener(this);
                             autoDismissDialog.show();
@@ -291,13 +296,24 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
      */
     private boolean hasAdd(String did) {
         boolean isAdd = false;
-        if (mApp.mDeviceUi.arrayList != null) {
-            for (int i = 0; i < mApp.mDeviceUi.arrayList.size(); i++) {
-                if (did.equals(mApp.mDeviceUi.arrayList.get(i).getDid())) {
+        if (mApp.mDeviceUi == null) {
+            for (int i = 0; i < mApp.mXiaoLiUi.arrayList.size(); i++) {
+                if (did.equals(mApp.mXiaoLiUi.arrayList.get(i).getDid())) {
                     isAdd = true;
                     break;
                 } else {
                     isAdd = false;
+                }
+            }
+        } else {
+            if (mApp.mDeviceUi.arrayList != null) {
+                for (int i = 0; i < mApp.mDeviceUi.arrayList.size(); i++) {
+                    if (did.equals(mApp.mDeviceUi.arrayList.get(i).getDid())) {
+                        isAdd = true;
+                        break;
+                    } else {
+                        isAdd = false;
+                    }
                 }
             }
         }
@@ -334,7 +350,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 hasFind = false;
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.adddevice_success) {
-                mApp.mDeviceUi.getDeviceList();//设备劣列表页面应该重新获取数据
+                if (mApp.mDeviceUi==null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                }else {
+                    mApp.mDeviceUi.getDeviceList();//设备劣列表页面应该重新获取数据
+                }
                 ///////---------------------------------如果是从806过来的，需要绑定摄像头到806上
                 if (!"".equals(aq_did) && null != aq_did) {
                     //判断是否已经在绑定之列
@@ -360,7 +380,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                         mApp.addDeviceInputWifi.finish();//关闭输入ssid页面
                         mApp.addDeviceInputWifi = null;
                     }
-                    mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                    if (mApp.mDeviceUi==null) {
+                        mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
+                    }else {
+                        mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                    }
                     finish();
                 }
 

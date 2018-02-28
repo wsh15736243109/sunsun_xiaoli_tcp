@@ -364,7 +364,11 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 return;
             }
             if (entity.getEventType() == UserPresenter.adddevice_success) {
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi==null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                }else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 dbManager.insertDeviceData(mSelectDeviceInfo.getDid(), mSelectDeviceInfo.getPwd(), getSp(Const.UID));
                 if (aq_did != null) {
                     //需要绑定
@@ -377,14 +381,22 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                         if (mApp.addDeviceUI != null) {
                             mApp.addDeviceUI.finish();
                         }
-                        mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                        if (mApp.mDeviceUi==null) {
+                            mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
+                        }else {
+                            mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                        }
                         finish();
                     }
                 } else {
                     if (mApp.addDeviceUI != null) {
                         mApp.addDeviceUI.finish();
                     }
-                    mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                    if (mApp.mDeviceUi==null) {
+                        mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
+                    }else {
+                        mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
+                    }
                     finish();
                 }
                 MAlert.alert(entity.getData());

@@ -317,7 +317,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 userPresenter.deviceSet_led(did, -1, -1, -1, "", -1, -1, -1, -1, isOpen ? 0 : 1);
                 break;
             case R.id.img_tuisong_status:
-                userPresenter.adtExtraUpdate(app.mDeviceUi.mSelectDeviceInfo.getId(), isTuiSong ? "0" : "1");
+                userPresenter.adtExtraUpdate(id, isTuiSong ? "0" : "1");
                 break;
 
         }
@@ -422,7 +422,11 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                app.mDeviceUi.getDeviceList();
+                if (app.mDeviceUi == null) {
+                    app.mXiaoLiUi.getDeviceList();
+                } else {
+                    app.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -440,7 +444,11 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.adtExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                app.mDeviceUi.getDeviceList();
+                if (app.mDeviceUi == null) {
+                    app.mXiaoLiUi.getDeviceList();
+                } else {
+                    app.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.adtExtraUpdate_fail) {
                 MAlert.alert(entity.getData());

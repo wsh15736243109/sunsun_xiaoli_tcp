@@ -77,6 +77,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     ImageView img_workstatustips;
     private TcpUtil mTcpUtil;
     private int pushCfg;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +85,8 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
         setContentView(R.layout.activity_device_qi_beng_detail);
         mApp = (App) getApplication();
         mApp.deviceQiBengUI = this;
-        shuibeng_wiget.setTag(R.id.imageloader_uri,"1");
+        shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
+        id = getIntent().getStringExtra("id");
         BasePtr.setRefreshOnlyStyle(ptr);
         ptr.setPtrHandler(new PtrDefaultHandler() {
             @Override
@@ -319,11 +321,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                             MAlert.alert(getString(R.string.device_name_empty));
                             return;
                         }
-                        userPresenter.updateDeviceName(mApp.mDeviceUi.mSelectDeviceInfo.getId(), nickName, "", "", "", "", -1, -1);
+                        userPresenter.updateDeviceName(id, nickName, "", "", "", "", -1, -1);
                         break;
                     case 4:
                         //删除设备
-                        userPresenter.deleteDevice(mApp.mDeviceUi.mSelectDeviceInfo.getId(), getSp(Const.UID));
+                        userPresenter.deleteDevice(id, getSp(Const.UID));
                         break;
                     case 5:
                         //高温报警
@@ -379,7 +381,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -390,7 +396,11 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                mApp.mDeviceUi.getDeviceList();
+                if (mApp.mDeviceUi == null) {
+                    mApp.mXiaoLiUi.getDeviceList();
+                } else {
+                    mApp.mDeviceUi.getDeviceList();
+                }
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
@@ -399,7 +409,7 @@ public class DeviceQiBengDetailActivity extends BaseActivity implements Observer
     }
 
     private void setData() {
-        txt_title.setText(mApp.mDeviceUi.mSelectDeviceInfo.getDevice_nickname());
+        txt_title.setText(deviceDetailModel.getDevice_nickname());
         isConnect = deviceDetailModel.getIs_disconnect().equals("0");
         seconds = 0;
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());

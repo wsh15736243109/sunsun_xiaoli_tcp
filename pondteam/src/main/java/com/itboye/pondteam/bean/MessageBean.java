@@ -27,7 +27,7 @@ public class MessageBean {
     public static class MessageArrayEntity {
         String content;
         String createTime;
-        MessageExtraBean extra;
+        String extra;
         String fromId;
         String msgId;
         String msgStatus;
@@ -53,11 +53,11 @@ public class MessageBean {
             this.createTime = createTime;
         }
 
-        public MessageExtraBean getExtra() {
+        public String getExtra() {
             return extra;
         }
 
-        public void setExtra(MessageExtraBean extra) {
+        public void setExtra(String extra) {
             this.extra = extra;
         }
 
