@@ -501,21 +501,15 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                if (myApp.mDeviceUi == null) {
-                    myApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    myApp.mDeviceUi.getDeviceList();
-                }
+
+                refreshDeviceList();
+
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_success) {
                 MAlert.alert(entity.getData());
-                if (myApp.mDeviceUi == null) {
-                    myApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    myApp.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_fail) {
                 MAlert.alert(entity.getData());
@@ -527,6 +521,14 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
+        }
+    }
+
+    private void refreshDeviceList() {
+        if (myApp.mDeviceUi == null) {
+            myApp.mXiaoLiUi.getDeviceList();
+        } else {
+            myApp.mDeviceUi.getDeviceList();
         }
     }
 

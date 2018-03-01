@@ -242,17 +242,20 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
             } else if (entity.getEventType() == UserPresenter.cameraUnBind_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
-
-                if (app.mDeviceUi == null) {
-                    app.mXiaoLiUi.getDeviceList();
-                } else {
-                    app.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 MAlert.alert(entity.getData());
                 txt_video.setText(nickname);
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             }
+        }
+    }
+
+    private void refreshDeviceList() {
+        if (app.mDeviceUi == null) {
+            app.mXiaoLiUi.getDeviceList();
+        } else {
+            app.mDeviceUi.getDeviceList();
         }
     }
 

@@ -54,13 +54,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_806_phdetail);
         mApp = (App) getApplication();
-        if (mApp.mDeviceUi==null) {
-            id = mApp.mXiaoLiUi.mSelectDeviceInfo.getId();
-
-
-        }else {
-            id = mApp.mDeviceUi.mSelectDeviceInfo.getId();
-        }
+        id = getIntent().getStringExtra("id");
         userPresenter = new UserPresenter(this);
         mApp.deviceAq806PhActivity = this;
         mApp.jinLiGangdetailUI.beginRequest();
@@ -82,7 +76,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                 finish();
                 break;
             case R.id.re_806phzoushi:
-                if (mApp.jinLiGangdetailUI!=null) {
+                if (mApp.jinLiGangdetailUI != null) {
                     if (deviceDetailModel == null || !mApp.jinLiGangdetailUI.isConnect) {
                         MAlert.alert(getString(R.string.disconnect));
                         return;
@@ -91,8 +85,8 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
                     intent = new Intent(this, ActivityTemperature.class);
                     intent.putExtra("isPh", true);
                     intent.putExtra("did", deviceDetailModel.getDid());
-                    intent.putExtra("topValue", phH+"");
-                    intent.putExtra("bottomValue", phL+"");
+                    intent.putExtra("topValue", phH + "");
+                    intent.putExtra("bottomValue", phL + "");
                     intent.putExtra("title", getString(R.string.ph_history));
                     startActivity(intent);
                 }
@@ -183,7 +177,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
 
     public void set806pHData() {
         deviceDetailModel = mApp.jinLiGangdetailUI.deviceDetailModel;
-        if (mApp.jinLiGangdetailUI.detailModelTcp!=null) {
+        if (mApp.jinLiGangdetailUI.detailModelTcp != null) {
             txt_806ph.setText(String.format("%.2f", mApp.jinLiGangdetailUI.detailModelTcp.getPh() / 100));
         }
         if (deviceDetailModel != null) {
@@ -212,7 +206,7 @@ public class DeviceAq806PhActivity extends BaseActivity implements Observer {
             } else {
                 img_phbaojing.setBackgroundResource(R.drawable.guan);
             }
-        }else{
+        } else {
             MAlert.alert(getString(R.string.device_error));
         }
     }

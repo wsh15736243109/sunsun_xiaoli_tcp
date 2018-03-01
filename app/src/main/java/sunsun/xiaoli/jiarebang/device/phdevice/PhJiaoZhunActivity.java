@@ -77,7 +77,7 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mApp.phJiaoZhunUI =null;
+        mApp.phJiaoZhunUI = null;
         handler.removeCallbacks(runnable);
     }
 
@@ -231,9 +231,10 @@ public class PhJiaoZhunActivity extends BaseActivity implements Observer {
                 handler.removeCallbacks(runnable);
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_success) {
-                MAlert.alert(entity.getData() + ""); if (mApp.mDeviceUi == null) {
+                MAlert.alert(entity.getData() + "");
+                if (mApp.mXiaoLiUi != null) {
                     mApp.mXiaoLiUi.getDeviceList();
-                } else {
+                } else if (mApp.mDeviceUi != null) {
                     mApp.mDeviceUi.getDeviceList();
                 }
             } else if (entity.getEventType() == UserPresenter.updateJiaoZhunTime_fail) {

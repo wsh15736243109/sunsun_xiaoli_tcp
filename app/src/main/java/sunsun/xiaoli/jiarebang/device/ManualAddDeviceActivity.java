@@ -263,9 +263,9 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.adddevice_success) {
                 MAlert.alert(entity.getData());
-                if (mApp.mDeviceUi==null) {
+                if (mApp.mXiaoLiUi!=null) {
                     mApp.mXiaoLiUi.getDeviceList();
-                }else{
+                }else if (mApp.mDeviceUi!=null){
                     mApp.mDeviceUi.getDeviceList();
                 }
                 if (aq_did != null && !"".equals(aq_did)) {
@@ -279,10 +279,10 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         if (mApp.addDeviceUI != null) {
                             mApp.addDeviceUI.finish();
                         }
-                        if (mApp.mDeviceUi==null) {
+                        if (mApp.mXiaoLiUi!=null) {
 
                             mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                        }else {
+                        }else if (mApp.mDeviceUi!=null) {
                             mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                         }
                         //结束当前activity
@@ -291,9 +291,9 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                 } else {
                     //结束上一个activity
                     mApp.addDeviceUI.finish();
-                    if (mApp.mDeviceUi==null) {
+                    if (mApp.mXiaoLiUi!=null) {
                         mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                    }else {
+                    }else if (mApp.mDeviceUi!=null) {
                         mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                     }
                     //结束当前activity

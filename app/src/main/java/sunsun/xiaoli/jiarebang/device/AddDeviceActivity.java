@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.itboye.pondteam.base.BaseActivity;
+import com.itboye.pondteam.bean.DeviceDetailModel;
 import com.itboye.pondteam.bean.DeviceListBean;
 import com.itboye.pondteam.db.DBManager;
 import com.itboye.pondteam.presenter.UserPresenter;
@@ -31,6 +33,15 @@ import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.beans.SearchDeviceInfo;
+import sunsun.xiaoli.jiarebang.device.aq118.Aq118DetailActivity;
+import sunsun.xiaoli.jiarebang.device.jiarebang.DeviceJiaReBangDetailActivity;
+import sunsun.xiaoli.jiarebang.device.jinligang.JinLiGangDetailActivity;
+import sunsun.xiaoli.jiarebang.device.jinligang.VideoActivity;
+import sunsun.xiaoli.jiarebang.device.led.LEDDetailActivity;
+import sunsun.xiaoli.jiarebang.device.phdevice.DevicePHDetailActivity;
+import sunsun.xiaoli.jiarebang.device.pondteam.ActivityPondDeviceDetail;
+import sunsun.xiaoli.jiarebang.device.qibeng.DeviceQiBengDetailActivity;
+import sunsun.xiaoli.jiarebang.device.shuibeng.DeviceShuiBengDetailActivity;
 import sunsun.xiaoli.jiarebang.utils.DeviceType;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
@@ -46,6 +57,7 @@ import static sunsun.xiaoli.jiarebang.utils.Util.getNickName;
 @SuppressLint("NewApi")
 public class AddDeviceActivity extends BaseActivity implements Observer {
 
+    private String selectDviceType = "";
     ListView mListView;
     App mApp;
     Context mContext;
@@ -85,76 +97,131 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 mSelectDeviceInfo.setDid(did);
                 mSelectDeviceInfo.setPwd(psw);
                 mSelectDeviceInfo.setType(listItems.get(position).get("ItemDeviceType").toString());
-                if ((boolean) (listItems.get(position).get("add_status"))) {
+                AddDeviceActivity.this.selectDviceType = mSelectDeviceInfo.getType();
+                //测试版本直接进入设备详情
+                if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
+                    getDeviceData(did);
+                } else {
+                    if ((boolean) (listItems.get(position).get("add_status"))) {
+                        new AlertDialog.Builder(mContext)
+                                .setTitle(getString(R.string.tips))
+                                .setMessage(getString(R.string.hasAdd))
+                                .setPositiveButton(getString(R.string.ok), null)
+                                .show();
+                        return;
+                    }
                     new AlertDialog.Builder(mContext)
                             .setTitle(getString(R.string.tips))
-                            .setMessage(getString(R.string.hasAdd))
-                            .setPositiveButton(getString(R.string.ok), null)
-                            .show();
-                    return;
-                }
-                new AlertDialog.Builder(mContext)
-                        .setTitle(getString(R.string.tips))
-                        .setMessage(getString(R.string.make_sure_adddevice))
-                        .setPositiveButton(getString(R.string.no), null)
-                        .setNegativeButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (aq_did != null) {
-                                    boolean bindYes = hasBindAq();
-                                    if (bindYes) {
-                                        MAlert.alert(getString(R.string.hasBind));
+                            .setMessage(getString(R.string.make_sure_adddevice))
+                            .setPositiveButton(getString(R.string.no), null)
+                            .setNegativeButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (aq_did != null) {
+                                        boolean bindYes = hasBindAq();
+                                        if (bindYes) {
+                                            MAlert.alert(getString(R.string.hasBind));
+                                            return;
+                                        }
+                                    }
+                                    String type = mSelectDeviceInfo.getType();
+                                    HashMap<String, Object> hashMap = new HashMap<>();
+                                    Gson gson = new Gson();
+                                    if (type == null) {
+                                        MAlert.alert(getString(R.string.device_type_empty) + "-------->" + mSelectDeviceInfo.toString());
                                         return;
                                     }
-                                }
-                                String type = mSelectDeviceInfo.getType();
-                                HashMap<String, Object> hashMap = new HashMap<>();
-                                Gson gson = new Gson();
-                                if (type == null) {
-                                    MAlert.alert(getString(R.string.device_type_empty) + "-------->" + mSelectDeviceInfo.toString());
-                                    return;
-                                }
-                                if (mSelectDeviceInfo.getDid() == null) {
-                                    MAlert.alert(getString(R.string.did_empty));
-                                    return;
-                                }
-                                if (mSelectDeviceInfo.getDid().equals("")) {
-                                    MAlert.alert(getString(R.string.did_empty));
-                                    return;
-                                }
-                                if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
-                                    hashMap.put("pwd", mSelectDeviceInfo.getPwd());
-                                    String extra = gson.toJson(hashMap);
-                                    userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou), "chiniao_wifi_camera", extra);
-                                } else {
-                                    if (BuildConfig.APP_TYPE.equals("pondTeam")) {
-                                        hashMap.put("notify_email", 1);
+                                    if (mSelectDeviceInfo.getDid() == null) {
+                                        MAlert.alert(getString(R.string.did_empty));
+                                        return;
                                     }
-                                    hashMap.put("first_upd", System.currentTimeMillis() + "");
-                                    hashMap.put("pwd", mSelectDeviceInfo.getPwd());
-                                    String extra = gson.toJson(hashMap);
-                                    switch (deviceType) {
-                                        case DEVICE_AQ500:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng500), "S03-1", extra);
-                                            break;
-                                        case DEVICE_AQ700:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);
-                                            break;
+                                    if (mSelectDeviceInfo.getDid().equals("")) {
+                                        MAlert.alert(getString(R.string.did_empty));
+                                        return;
+                                    }
+                                    if (mSelectDeviceInfo.getDid().startsWith("SCHD")) {
+                                        hashMap.put("pwd", mSelectDeviceInfo.getPwd());
+                                        String extra = gson.toJson(hashMap);
+                                        userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou), "chiniao_wifi_camera", extra);
+                                    } else {
+                                        if (BuildConfig.APP_TYPE.equals("pondTeam")) {
+                                            hashMap.put("notify_email", 1);
+                                        }
+                                        hashMap.put("first_upd", System.currentTimeMillis() + "");
+                                        hashMap.put("pwd", mSelectDeviceInfo.getPwd());
+                                        String extra = gson.toJson(hashMap);
+                                        switch (deviceType) {
+                                            case DEVICE_AQ500:
+                                                userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng500), "S03-1", extra);
+                                                break;
+                                            case DEVICE_AQ700:
+                                                userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);
+                                                break;
 //                                        case DEVICE_SHUIZUDENG:
 //                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), type.equalsIgnoreCase("S06-1") ? "ADT-C" : "ADT-H", mSelectDeviceInfo.getType(), extra);
 //                                            break;
-                                        default:
-                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid(), type), mSelectDeviceInfo.getType(), extra);
-                                            break;
+                                            default:
+                                                userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), getNickName(mSelectDeviceInfo.getDid(), type), mSelectDeviceInfo.getType(), extra);
+                                                break;
+                                        }
                                     }
+                                    refreshDeviceList();
                                 }
-                                refreshDeviceList();
-                            }
-                        })
-                        .show();
+                            })
+                            .show();
+                }
             }
         });
         refreshDeviceList();
+    }
+
+    private void getDeviceData(String did) {
+        userPresenter.getDeviceDetailInfo(did, "0");
+    }
+
+    private void startDeviceUI(DeviceDetailModel deviceDetailModel) {
+        Intent intent = null;
+        String deviceType = selectDviceType;
+        if (deviceType.contains("S02")) {
+            //加热棒
+            intent = new Intent(this, DeviceJiaReBangDetailActivity.class);
+        } else if (deviceType.contains("S01")) {
+            //过滤桶
+            intent = new Intent(this, ActivityPondDeviceDetail.class);
+        } else if (deviceType.contains("S03")) {
+            //806
+            intent = new Intent(this, JinLiGangDetailActivity.class);
+        } else if (deviceType.contains("S04")) {
+            //aph
+            intent = new Intent(this, DevicePHDetailActivity.class);
+        } else if (deviceType.contains("S05")) {
+            //变频水泵
+            intent = new Intent(this, DeviceShuiBengDetailActivity.class);
+        } else if (deviceType.contains("S06")) {
+            //Led水族灯
+            intent = new Intent(this, LEDDetailActivity.class);
+        } else if (deviceType.contains("S07")) {
+            //CP1000
+            intent = new Intent(this, DeviceQiBengDetailActivity.class);
+        } else if (deviceType.contains("S08")) {
+            //AQ118
+            intent = new Intent(this, Aq118DetailActivity.class);
+        } else if (deviceType.contains("S09")) {
+            //变频水泵
+            intent = new Intent(this, DeviceShuiBengDetailActivity.class);
+        } else if (deviceType.contains("chiniao_wifi_camera")) {
+            //摄像头
+            intent = new Intent(this, VideoActivity.class);
+        } else {
+            MAlert.alert(getString(R.string.no_support_device));
+            return;
+        }
+        intent.putExtra("title", deviceDetailModel.getDevice_nickname());
+        intent.putExtra("did", mSelectDeviceInfo.getDid());
+        intent.putExtra("id", deviceDetailModel.getId());
+        intent.putExtra("hasPsw", true);//无密码则应该重新进入插入密码
+        intent.putExtra("detailModel", deviceDetailModel);
+        startActivityForResult(intent, 101);
     }
 
     @Override
@@ -364,9 +431,10 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 return;
             }
             if (entity.getEventType() == UserPresenter.adddevice_success) {
-                if (mApp.mDeviceUi==null) {
+                if (mApp.mXiaoLiUi != null) {
                     mApp.mXiaoLiUi.getDeviceList();
-                }else {
+                }
+                if (mApp.mDeviceUi != null) {
                     mApp.mDeviceUi.getDeviceList();
                 }
                 dbManager.insertDeviceData(mSelectDeviceInfo.getDid(), mSelectDeviceInfo.getPwd(), getSp(Const.UID));
@@ -381,9 +449,10 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                         if (mApp.addDeviceUI != null) {
                             mApp.addDeviceUI.finish();
                         }
-                        if (mApp.mDeviceUi==null) {
+                        if (mApp.mXiaoLiUi != null) {
                             mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                        }else {
+                        }
+                        if (mApp.mDeviceUi != null) {
                             mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                         }
                         finish();
@@ -392,9 +461,9 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                     if (mApp.addDeviceUI != null) {
                         mApp.addDeviceUI.finish();
                     }
-                    if (mApp.mDeviceUi==null) {
+                    if (mApp.mXiaoLiUi != null) {
                         mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                    }else {
+                    } else if (mApp.mDeviceUi != null){
                         mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                     }
                     finish();
@@ -406,6 +475,11 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 finish();
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.cameraBind_fail) {
+                MAlert.alert(entity.getData());
+            } else if (entity.getEventType() == UserPresenter.getdeviceinfosuccess) {
+                DeviceDetailModel deviceDetailModel = (DeviceDetailModel) entity.getData();
+                startDeviceUI(deviceDetailModel);
+            } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
             }
         }

@@ -422,11 +422,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                if (app.mDeviceUi == null) {
-                    app.mXiaoLiUi.getDeviceList();
-                } else {
-                    app.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -444,11 +440,7 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.adtExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                if (app.mDeviceUi == null) {
-                    app.mXiaoLiUi.getDeviceList();
-                } else {
-                    app.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.adtExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
@@ -463,6 +455,14 @@ public class LEDDetailActivity extends BaseActivity implements Observer {
             } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_success) {
                 ledType = "ADT-C";
             }
+        }
+    }
+
+    private void refreshDeviceList() {
+        if (app.mDeviceUi == null) {
+            app.mXiaoLiUi.getDeviceList();
+        } else {
+            app.mDeviceUi.getDeviceList();
         }
     }
 

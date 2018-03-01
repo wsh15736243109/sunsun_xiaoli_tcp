@@ -50,6 +50,11 @@ public class GotoTaoBaoUtil {
 
     public static void startActivity(Activity activity, String url) {
         if (GotoTaoBaoUtil.checkPackage("com.taobao.taobao")) {
+            if (url.startsWith("https")) {
+                url = url.replace("https", "taobao");
+            } else {
+
+            }
             Intent intent = new Intent();
             intent.setAction("android.intent.action.VIEW");
             Uri uri = Uri.parse(url);

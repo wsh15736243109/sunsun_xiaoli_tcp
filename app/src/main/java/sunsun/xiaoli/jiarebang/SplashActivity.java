@@ -55,11 +55,11 @@ public class SplashActivity extends LingShouBaseActivity {
             img_splash.setBackgroundResource(R.drawable.splash_leihu);
         } else if (SpContants.APP_TYPE.equals("pondTeam")) {
             img_splash.setBackgroundResource(R.drawable.splash_pondteam);
-        }else if (SpContants.APP_TYPE.equals("森森新零售")) {
+        } else if (SpContants.APP_TYPE.equals("森森新零售") || SpContants.APP_TYPE.equals("水族之家")) {
 //            setStatusBarColor(getResources().getColor(R.color.main_lingshou_orange));
             img_splash.setBackgroundResource(R.drawable.splash_lingshou);
         }
-        System.out.println(SpContants.APP_TYPE+"getPackageName()"+getPackageName());
+        System.out.println(SpContants.APP_TYPE + "getPackageName()" + getPackageName());
         if (getPackageName().contains("pondlink")) {
             img_splash.setBackgroundResource(R.drawable.pondlink_splash);
         }
@@ -82,7 +82,7 @@ public class SplashActivity extends LingShouBaseActivity {
 //        notificationManager.notify(0, notification);
 //    }
 
-//    以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
+    //    以下代码可以跳转到应用详情，可以通过应用详情跳转到权限界面(6.0系统测试可用)
     private void getAppDetailSettingIntent(Context context) {
         Intent localIntent = new Intent();
         localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -90,9 +90,9 @@ public class SplashActivity extends LingShouBaseActivity {
 //            localIntent.setAction("com.android.settings.SubSettings");
 //            localIntent.setData(Uri.fromParts("package", getPackageName(), null));
 //        } else if (Build.VERSION.SDK_INT <= 8) {
-            localIntent.setAction(Intent.ACTION_VIEW);
-            localIntent.setClassName("com.android.settings","com.android.settings.SubSettings");
-            localIntent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+        localIntent.setAction(Intent.ACTION_VIEW);
+        localIntent.setClassName("com.android.settings", "com.android.settings.SubSettings");
+        localIntent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
 //        }
         startActivity(localIntent);
     }

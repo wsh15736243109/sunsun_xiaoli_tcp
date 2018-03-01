@@ -180,10 +180,9 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
             case R.id.btn_next:
                 if (smartConfigType == SmartConfigType.ADD_FINISH) {
                     mApp.addPondDeviceUI.finish();
-                    if (mApp.mDeviceUi==null) {
+                    if (mApp.mXiaoLiUi != null) {
                         mApp.mXiaoLiUi.getDeviceList();
-                    }else
-                    {
+                    } else if (mApp.mDeviceUi != null) {
                         mApp.mDeviceUi.getDeviceList();
                     }
                     finish();
@@ -296,7 +295,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
      */
     private boolean hasAdd(String did) {
         boolean isAdd = false;
-        if (mApp.mDeviceUi == null) {
+        if (mApp.mXiaoLiUi != null) {
             for (int i = 0; i < mApp.mXiaoLiUi.arrayList.size(); i++) {
                 if (did.equals(mApp.mXiaoLiUi.arrayList.get(i).getDid())) {
                     isAdd = true;
@@ -305,7 +304,7 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                     isAdd = false;
                 }
             }
-        } else {
+        } else if (mApp.mDeviceUi != null) {
             if (mApp.mDeviceUi.arrayList != null) {
                 for (int i = 0; i < mApp.mDeviceUi.arrayList.size(); i++) {
                     if (did.equals(mApp.mDeviceUi.arrayList.get(i).getDid())) {
@@ -350,9 +349,9 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 hasFind = false;
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.adddevice_success) {
-                if (mApp.mDeviceUi==null) {
+                if (mApp.mXiaoLiUi != null) {
                     mApp.mXiaoLiUi.getDeviceList();
-                }else {
+                } else if (mApp.mDeviceUi != null) {
                     mApp.mDeviceUi.getDeviceList();//设备劣列表页面应该重新获取数据
                 }
                 ///////---------------------------------如果是从806过来的，需要绑定摄像头到806上
@@ -380,9 +379,9 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                         mApp.addDeviceInputWifi.finish();//关闭输入ssid页面
                         mApp.addDeviceInputWifi = null;
                     }
-                    if (mApp.mDeviceUi==null) {
+                    if (mApp.mXiaoLiUi != null) {
                         mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                    }else {
+                    } else if (mApp.mDeviceUi != null) {
                         mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                     }
                     finish();

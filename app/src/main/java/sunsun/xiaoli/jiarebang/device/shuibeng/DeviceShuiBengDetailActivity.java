@@ -447,11 +447,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                if (mApp.mDeviceUi == null) {
-                    mApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    mApp.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -462,11 +458,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                if (mApp.mDeviceUi == null) {
-                    mApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    mApp.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.shuibengExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
@@ -479,6 +471,14 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
+        }
+    }
+
+    private void refreshDeviceList() {
+        if (mApp.mXiaoLiUi != null) {
+            mApp.mXiaoLiUi.getDeviceList();
+        } else if (mApp.mDeviceUi != null){
+            mApp.mDeviceUi.getDeviceList();
         }
     }
 

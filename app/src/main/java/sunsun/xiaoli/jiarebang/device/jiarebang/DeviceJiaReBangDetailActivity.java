@@ -525,31 +525,19 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                if (myApp.mDeviceUi == null) {
-                    myApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    myApp.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
                 MAlert.alert(entity.getData());
-                if (myApp.mDeviceUi == null) {
-                    myApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    myApp.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 finish();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_success) {
                 MAlert.alert(entity.getData());
-                if (myApp.mDeviceUi == null) {
-                    myApp.mXiaoLiUi.getDeviceList();
-                } else {
-                    myApp.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             } else if (entity.getEventType() == UserPresenter.jiaReBangExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
@@ -561,6 +549,14 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
+        }
+    }
+
+    private void refreshDeviceList() {
+        if (myApp.mXiaoLiUi != null) {
+            myApp.mXiaoLiUi.getDeviceList();
+        } else if (myApp.mDeviceUi != null){
+            myApp.mDeviceUi.getDeviceList();
         }
     }
 

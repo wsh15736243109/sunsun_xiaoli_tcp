@@ -526,6 +526,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                     return;
                 }
                 intent = new Intent(this, DeviceAq806PhActivity.class);
+                intent.putExtra("id", id);
                 intent.putExtra("did", did);
                 startActivity(intent);
                 break;
@@ -1117,11 +1118,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
                 MAlert.alert(entity.getData());
-                if (app.mDeviceUi == null) {
-                    app.mXiaoLiUi.getDeviceList();
-                } else {
-                    app.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 beginRequest();
             } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
                 MAlert.alert(entity.getData());
@@ -1159,11 +1156,7 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
                 MAlert.alert(entity.getData());
                 dbManager.deleteDeviceDataByDid(did, getSp(Const.UID));
-                if (app.mDeviceUi == null) {
-                    app.mXiaoLiUi.getDeviceList();
-                } else {
-                    app.mDeviceUi.getDeviceList();
-                }
+                refreshDeviceList();
                 finish();
             } else if (entity.getEventType() == UserPresenter.deleteDevice_fail) {
                 MAlert.alert(entity.getData());
@@ -1176,6 +1169,15 @@ public class JinLiGangDetailActivity extends BaseTwoActivity implements Observer
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
             }
+        }
+    }
+
+    private void refreshDeviceList() {
+        if (app.mXiaoLiUi != null) {
+            app.mXiaoLiUi.getDeviceList();
+        }
+        if (app.mDeviceUi != null) {
+            app.mDeviceUi.getDeviceList();
         }
     }
 

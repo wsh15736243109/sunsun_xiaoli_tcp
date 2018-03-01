@@ -55,7 +55,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     private String provinceName;
 
     PtrFrameLayout ptrFrame_shop;
-    private ArrayList<NavigationBean.NavigationDetail> navigationDetailArrayList=new ArrayList<>();
+    private ArrayList<NavigationBean.NavigationDetail> navigationDetailArrayList = new ArrayList<>();
     private ShopAdapter adapter;
 
     @Override
@@ -75,8 +75,14 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (navigationBean != null) {
                     if (navigationBean.getList() != null) {
-                        GotoTaoBaoUtil.startActivity(getActivity(), navigationBean.getList().get(position).getTaobao_store_url());
+                        String s = navigationBean.getList().get(position).getTaobao_store_url();
+                        //跳转淘宝
+
+//                        s = "https://sensen.tmall.com"; s = "taobao://sensen.tmall.com";
+                        GotoTaoBaoUtil.startActivity(getActivity(), s);
+//                        GotoTaoBaoUtil.startActivity(getActivity(), navigationBean.getList().get(position).getTaobao_store_url());
                     }
+
                 }
             }
         });
@@ -185,7 +191,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     MAlert.alert(entity.getData());
                 } else if (entity.getEventType() == UserPresenter.branchSearch_success) {
                     navigationBean = (NavigationBean) entity.getData();
-                    if (page==1) {
+                    if (page == 1) {
                         navigationDetailArrayList.clear();
                     }
                     navigationDetailArrayList.addAll(navigationBean.getList());

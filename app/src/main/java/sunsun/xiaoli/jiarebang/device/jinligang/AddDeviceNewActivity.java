@@ -108,7 +108,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
                                     int position, long id) {
                 deviceType = deviceTypes[position];
                 if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
-                    startActivity(new Intent(AddDeviceNewActivity.this, AddDeviceActivity.class));
+                    startActivity(new Intent(AddDeviceNewActivity.this, AddDeviceActivity.class).putExtra("device",deviceType));
                 } else {
                     showPopwindow();
                 }
