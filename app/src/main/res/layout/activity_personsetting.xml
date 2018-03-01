@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/DIMEN_10DP"
-                    android:text="昵称"
+                    android:text=""
                     android:textSize="@dimen/DIMEN_16DP"
                     android:textColor="@color/persontextcolor" />
 
@@ -165,6 +165,7 @@
 
 
             <RelativeLayout
+                android:visibility="gone"
                 android:id="@+id/relayoutUpdate"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"

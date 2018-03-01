@@ -25,6 +25,13 @@ android {
 //            storePassword 'android'
 //        }
 
+        sunsun_xiaoli_test_debug {
+            keyAlias '小鲤智能'
+            keyPassword 'android'
+            storeFile file('../sunsun_xiaoli_test.jks')
+            storePassword 'android'
+        }
+
         sunsun_xiaoli_debug {
             keyAlias '森森小鲤'
             keyPassword 'android'
@@ -159,6 +166,23 @@ android {
             versionCode 104
 
         }
+
+        xiaoli_test {
+            signingConfig signingConfigs.sunsun_xiaoli_debug
+            manifestPlaceholders = [PACKAGE: "com.itboye.xiaolitest", str: "releaseStr", package_name: "com.itboye.xiaolitest", UMENG_applicationId: "com.itboye.xiaolitest", ENVIRONMENT: "xiaoli", app_icon: "@drawable/device_002", UMENG_APPKEY: "58cb6076677baa0aa300014f", UMENG_MESSAGE_SECRET: "af2c2bd3297da0dfd34bb23f14db362b", APP_ID: ""]
+            applicationId "com.itboye.xiaolitest"
+            resValue "string", "app_name", "小鲤智能测试版"
+            resValue "bool", "isrRank", 'true'
+//            dimension "xiaoli"
+            buildConfigField("String", "WX_APP_ID", '"wx2f783978dc970b72"')
+            buildConfigField("String", "UMENG_ALIAS", '"sunsun_xiaoli"')
+            buildConfigField("String", "APP_TYPE", '"小鲤智能测试版"')
+            buildConfigField("boolean", "IS_CHINESE", 'false')
+            targetSdkVersion 22
+            testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+            versionCode 101
+            versionName '1.0.1'
+        }
     }
     buildTypes {
         release {
@@ -180,6 +204,7 @@ android {
 
         debug {
 //            signingConfig signingConfigs.sunsun_xiaoli_debug
+//            signingConfig signingConfigs.sunsun_xiaoli_test_debug
             signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
@@ -268,7 +293,6 @@ dependencies {
     compile project(path: ':recyclerview-swipe')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation files('libs/commons-lang-2.3.jar')
-    implementation 'com.cjj.materialrefeshlayout:library:1.3.0'
 }
 
 apply plugin: 'kotlin-android'

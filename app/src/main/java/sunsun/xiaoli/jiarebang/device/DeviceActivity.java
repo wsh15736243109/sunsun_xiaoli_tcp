@@ -491,7 +491,6 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 break;
             case R.id.txt_exist:
                 alert = new AlertDialog.Builder(this);
-                alert.setTitle(getString(R.string.tips));
                 alert.setMessage(getString(R.string.make_sure_exit));
                 alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override

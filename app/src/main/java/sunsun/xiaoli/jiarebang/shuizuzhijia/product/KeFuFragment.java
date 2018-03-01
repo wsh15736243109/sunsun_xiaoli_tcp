@@ -159,7 +159,7 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
 
         @Override
         public void run() {
-            getMessage();
+//            getMessage();
             getHistory();
             handler.sendEmptyMessage(1);
         }
@@ -308,13 +308,13 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
 
     @Override
     public void uploadSuccess(UploadImageBean response) {
-        MAlert.alert("成功" + response);
+        MAlert.alert("图片上传成功");
         sendMessage(response.getData().get(0).getId() + "", 2);
     }
 
     @Override
     public void uploadFail(VolleyError error) {
-        MAlert.alert("失败" + error.toString());
+        MAlert.alert("图片上传失败");
 
     }
 
@@ -460,7 +460,7 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
                     adapter.notifyDataSetChanged();
                     id_swipe_ly.setRefreshing(false);
                 } else if (entity.getEventType() == UserPresenter.getCustomerHistory_fail) {
-                    MAlert.alert(entity.getData());
+//                    MAlert.alert(entity.getData());
                     id_swipe_ly.setRefreshing(false);
                 }
             }

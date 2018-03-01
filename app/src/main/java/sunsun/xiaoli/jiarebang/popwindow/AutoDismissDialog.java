@@ -33,7 +33,7 @@ public class AutoDismissDialog extends ProgressDialog implements DialogInterface
         this.context = context;
         this.timeOutSeconds = timeOutSeconds;
         this.smartConfigListener = smartConfigListener;
-        setTitle(title);
+//        setTitle(title);
         setMessage(msg);
 //        setButton(BUTTON_POSITIVE, buttonRight, this);
 //        setButton(BUTTON_NEGATIVE, buttonLeft, this);

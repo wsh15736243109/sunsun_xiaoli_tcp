@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.itboye.pondteam.base.BaseActivity;
+import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.shuizuzhijia.me.messageFragment.KeFuMeFragment;
@@ -100,6 +101,7 @@ public class MyNotifyMessageActivity extends BaseActivity implements
     }
 
     private void clickTabLuntanLayout() {
+        MAlert.alert("敬请期待");
         transaction = getSupportFragmentManager().beginTransaction();
         hideFragment(transaction);
         if (lunTanFragmet == null) {

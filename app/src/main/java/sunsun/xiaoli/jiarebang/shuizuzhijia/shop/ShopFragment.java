@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.BannerBean;
 import com.itboye.pondteam.bean.NavigationBean;
+import com.itboye.pondteam.custom.ptr.BasePtr;
 import com.itboye.pondteam.presenter.UserPresenter;
 import com.itboye.pondteam.utils.Const;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import in.srain.cube.views.ptr.PtrDefaultHandler2;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.ShopAdapter;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
@@ -51,6 +54,10 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     private String cityName;
     private String provinceName;
 
+    PtrFrameLayout ptrFrame_shop;
+    private ArrayList<NavigationBean.NavigationDetail> navigationDetailArrayList=new ArrayList<>();
+    private ShopAdapter adapter;
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_aquarium_shop;
@@ -59,6 +66,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     @Override
     protected void initData() {
         initTop();
+        initPtrFrameLayout();
         locationUtil = new LocationUtil(getActivity(), this);
         userPresenter = new UserPresenter(this);
         userPresenter.getBanners(6233);
@@ -74,12 +82,32 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
         });
     }
 
+    private void initPtrFrameLayout() {
+        BasePtr.setPagedPtrStyle(ptrFrame_shop);
+        ptrFrame_shop.setPtrHandler(new PtrDefaultHandler2() {
+            @Override
+            public void onLoadMoreBegin(PtrFrameLayout frame) {
+                page++;
+                queryShop();
+            }
+
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                page = 1;
+                queryShop();
+            }
+        });
+    }
+
     private void initTop() {
         txt_exist.setText(getString(R.string.position_ing));
         txt_title.setText(getString(R.string.shop_xianshang));
         txt_title.setTextColor(getResources().getColor(R.color.main_green));
         img_back.setVisibility(View.GONE);
         txt_exist.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.jiantou_down, 0);
+
+        adapter = new ShopAdapter(this, navigationDetailArrayList, R.layout.item_shop);
+        list_shop.setAdapter(adapter);
     }
 
 
@@ -130,6 +158,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     @Override
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
+        ptrFrame_shop.refreshComplete();
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());
@@ -137,26 +166,30 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                 if (entity.getEventType() == UserPresenter.getBanners_success) {
                     bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
 
-                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(2).getImg(), img_shop_first);
-                    img_shop_first.setTag(R.id.tag_first, bannerBeanArrayList.get(2).getUrl());
-                    img_shop_first.setTag(R.id.tag_second, bannerBeanArrayList.get(2).getUrl_type());
-
-                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), img_shop_third);
-                    img_shop_third.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
-                    img_shop_third.setTag(R.id.tag_second, bannerBeanArrayList.get(0).getUrl_type());
-
-                    XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBeanArrayList.get(1).getImg(), img_shop_second);
-                    img_shop_second.setTag(R.id.tag_first, bannerBeanArrayList.get(1).getUrl());
-                    img_shop_second.setTag(R.id.tag_second, bannerBeanArrayList.get(1).getUrl_type());
+                    for (BannerBean bannerBean : bannerBeanArrayList) {
+                        if (bannerBean.getTitle().equals("top")) {
+                            XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBean.getImg(), img_shop_first);
+                            img_shop_first.setTag(R.id.tag_first, bannerBean.getUrl());
+                            img_shop_first.setTag(R.id.tag_second, bannerBean.getUrl_type());
+                        } else if (bannerBean.getTitle().equals("left")) {
+                            XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBean.getImg(), img_shop_second);
+                            img_shop_second.setTag(R.id.tag_first, bannerBean.getUrl());
+                            img_shop_second.setTag(R.id.tag_second, bannerBean.getUrl_type());
+                        } else if (bannerBean.getTitle().equals("right")) {
+                            XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBean.getImg(), img_shop_third);
+                            img_shop_third.setTag(R.id.tag_first, bannerBean.getUrl());
+                            img_shop_third.setTag(R.id.tag_second, bannerBean.getUrl_type());
+                        }
+                    }
                 } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
                     MAlert.alert(entity.getData());
                 } else if (entity.getEventType() == UserPresenter.branchSearch_success) {
                     navigationBean = (NavigationBean) entity.getData();
-                    if (navigationBean != null) {
-                        list_shop.setAdapter(new ShopAdapter(this, navigationBean.getList(), R.layout.item_shop));
-                    } else {
-                        MAlert.alert("出错了");
+                    if (page==1) {
+                        navigationDetailArrayList.clear();
                     }
+                    navigationDetailArrayList.addAll(navigationBean.getList());
+                    adapter.notifyDataSetChanged();
                 } else if (entity.getEventType() == UserPresenter.branchSearch_fail) {
                     MAlert.alert(entity.getData());
                 }
@@ -173,6 +206,8 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             this.cityNo = Util.queryCityNo(cityName);
             this.cityName = cityName;
             this.provinceName = provinceName;
+            this.lng = lng;
+            this.lat = lat;
 //            area = Util.queryDistrictNo(areaName);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -180,8 +215,14 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     txt_exist.setText(cityName);
                 }
             });
-            userPresenter.branchSearch(this.cityNo, area, lng, lat, page, size);
+            queryShop();
         }
+    }
+
+    private double lng, lat;
+
+    private void queryShop() {
+        userPresenter.branchSearch(this.cityNo, area, lng, lat, page, size);
     }
 
     @Override

@@ -21,6 +21,7 @@ import com.itboye.pondteam.base.BaseActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import sunsun.xiaoli.jiarebang.BuildConfig;
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.AddDeviceAdapter;
 import sunsun.xiaoli.jiarebang.app.App;
@@ -106,7 +107,11 @@ public class AddDeviceNewActivity extends BaseActivity implements
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 deviceType = deviceTypes[position];
-                showPopwindow();
+                if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
+                    startActivity(new Intent(AddDeviceNewActivity.this, AddDeviceActivity.class));
+                } else {
+                    showPopwindow();
+                }
 
             }
         });

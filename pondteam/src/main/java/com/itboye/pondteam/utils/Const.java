@@ -105,6 +105,8 @@ public class Const {
 
     public static String webUrl = "http://" + xiaoli_wrapUrl + "/web.php/web";
 
+    //关于小鲤
+    public static String aboutXiaoLi = "http://" + xiaoli_wrapUrl + "/web.php/web/about";
     //[关于森森]
     public static String aboutMe = "http://" + lingshou_wrapUrl + "/web.php/web/about";
     //[使用条款与协议]

@@ -18,6 +18,7 @@ import java.util.TimeZone;
 
 import sunsun.xiaoli.jiarebang.app.App;
 import sunsun.xiaoli.jiarebang.device.DeviceActivity;
+import sunsun.xiaoli.jiarebang.device.jinligang.AddDeviceNewActivity;
 import sunsun.xiaoli.jiarebang.device.jinligang.LoginActivity;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.LoginedState;
@@ -109,23 +110,27 @@ public class SplashActivity extends LingShouBaseActivity {
     private void startTimer() {
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
-                if (hasLogined) {
-                    LoginController.setLoginState(new LoginedState());
-                    if (SpContants.APP_TYPE.equals("森森新零售")) {
-                        startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
-                    } else if(SpContants.APP_TYPE.equals("水族之家")){
-                        startActivity(new Intent(getApplicationContext(), AquariumHomeMainActivity.class));
-                    }else {
-                        startActivity(new Intent(getApplicationContext(), DeviceActivity.class));
-                    }
+                if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
+                    startActivity(new Intent(getApplicationContext(), AddDeviceNewActivity.class));
                 } else {
-                    LoginController.setLoginState(new UnLoginState());
-                    if (SpContants.APP_TYPE.equals("森森新零售")) {
-                        startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
-                    }else if(SpContants.APP_TYPE.equals("水族之家")){
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    if (hasLogined) {
+                        LoginController.setLoginState(new LoginedState());
+                        if (SpContants.APP_TYPE.equals("森森新零售")) {
+                            startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
+                        } else if (SpContants.APP_TYPE.equals("水族之家")) {
+                            startActivity(new Intent(getApplicationContext(), AquariumHomeMainActivity.class));
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), DeviceActivity.class));
+                        }
                     } else {
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        LoginController.setLoginState(new UnLoginState());
+                        if (SpContants.APP_TYPE.equals("森森新零售")) {
+                            startActivity(new Intent(getApplicationContext(), LingShouMainActivity.class));
+                        } else if (SpContants.APP_TYPE.equals("水族之家")) {
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        } else {
+                            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                        }
                     }
                 }
                 finish();

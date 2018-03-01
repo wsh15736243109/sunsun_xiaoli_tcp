@@ -348,7 +348,6 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                 break;
             case R.id.txt_exist:
                 alert = new AlertDialog.Builder(getActivity());
-                alert.setTitle(getString(R.string.tips));
                 alert.setMessage(getString(R.string.make_sure_exit));
                 alert.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                     @Override

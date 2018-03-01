@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.utils.Const;
+import com.itboye.pondteam.utils.loadingutil.MAlert;
 
 import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.device.jinligang.ForgetPasswordActivity;
@@ -25,7 +26,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
 
     ImageView roundview;
 
-    TextView tvname, txt_title, txt_exist,tvaq;
+    TextView tvname, txt_title, txt_exist, tvaq;
 
     ImageView img_back;
 
@@ -42,7 +43,7 @@ public class AquariumMeFragment extends LingShouBaseFragment {
     private void setMyData() {
         XGlideLoaderNew.displayImageCircular(getActivity(), getSp(Const.HEAD), roundview);
         tvname.setText(getSp(Const.NICK));
-        tvaq.setText(String.format(getString(R.string.device_numer),getSp(Const.USER_DEVICE_NUMBER)));
+        tvaq.setText(String.format(getString(R.string.device_numer), getSp(Const.USER_DEVICE_NUMBER)));
     }
 
     private void initTop() {
@@ -74,9 +75,10 @@ public class AquariumMeFragment extends LingShouBaseFragment {
                 startActivity(new Intent(getActivity(), MyNotifyMessageActivity.class));
                 break;
             case R.id.re_forum:
+                MAlert.alert("敬请期待");
                 break;
             case R.id.re_about_xiaoli:
-                startActivity(new Intent(getActivity(), WebActivity.class).putExtra("title", "").putExtra("url", "http://dx.bankbaoxian.com/shortX/#/shortXZJ"));
+                startActivity(new Intent(getActivity(), WebActivity.class).putExtra("title", "关于小鲤").putExtra("url", Const.aboutXiaoLi));
 
                 break;
         }
