@@ -1676,11 +1676,12 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void branchSearch(String city, String area, double longValue, double lati, int page, int size) {
+    public void branchSearch(int all,String city, String area, double longValue, double lati, int page, int size) {
         Type type = new TypeToken<NavigationBean>() {
         }.getType();
         String apiVer = "100";
         Map<String, Object> map = new HashMap<>();
+        map.put("all", all);
         map.put("city", city);
         if (area != null) {
             map.put("area", area);
@@ -1863,6 +1864,22 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_Customer_servicehis, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ChatBean>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void branchSearchAll(int all) {
+        Type type = new TypeToken<ArrayList<NavigationBean.NavigationDetail>>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("all", all);
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(BY_Branch_search, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<ArrayList<NavigationBean.NavigationDetail>>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

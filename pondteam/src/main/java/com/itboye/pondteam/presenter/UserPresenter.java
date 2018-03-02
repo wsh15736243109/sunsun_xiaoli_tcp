@@ -16,6 +16,9 @@ import java.util.Observer;
 
 public class UserPresenter extends BasePresenter implements
         IUserInfoInterface<PersonDataBean> {
+    public static String branchSearchAll_fail="_branchSearchAll_fail";
+    public static String branchSearchAll_success="_branchSearchAll_success";
+
     public UserPresenter(Observer observer) {
         super(observer);
     }
@@ -1526,7 +1529,7 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void branchSearch(String city, String area, double longValue, double lati, int page, int size) {
+    public void branchSearch(int all,String city, String area, double longValue, double lati, int page, int size) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
                     @Override
@@ -1546,7 +1549,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.branchSearch(city, area, longValue, lati, page, size);
+        user.branchSearch(all,city, area, longValue, lati, page, size);
     }
 
     @Override
@@ -1763,5 +1766,29 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.queryMyKeFuMessage(uid, pageNo, pageSize);
+    }
+
+    @Override
+    public void branchSearchAll(int all) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(branchSearchAll_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(branchSearchAll_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.branchSearchAll(all);
     }
 }

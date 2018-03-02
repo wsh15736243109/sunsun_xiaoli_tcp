@@ -509,7 +509,7 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param page
      * @param size
      */
-    void branchSearch(String city, String area, double longValue, double lati, int page, int size);
+    void branchSearch(int all,String city, String area, double longValue, double lati, int page, int size);
 
     /**
      * 修改个人资料
@@ -562,4 +562,10 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param pageSize
      */
     void queryMyKeFuMessage(String uid, int pageNo, int pageSize);
+
+    /**
+     * 查询全国所有门店
+     * @param all 1：所有  0:部分
+     */
+    void branchSearchAll(int all);
 }

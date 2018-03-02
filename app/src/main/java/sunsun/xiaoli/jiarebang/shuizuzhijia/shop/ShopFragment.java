@@ -228,7 +228,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     private double lng, lat;
 
     private void queryShop() {
-        userPresenter.branchSearch(this.cityNo, area, lng, lat, page, size);
+        userPresenter.branchSearch(0, this.cityNo, area, lng, lat, page, size);
     }
 
     @Override
@@ -237,6 +237,6 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
         this.cityName = city;
         this.provinceName = province;
         txt_exist.setText(city);
-        userPresenter.branchSearch(cityNo, null, -1, -1, page, size);
+        userPresenter.branchSearch(0, cityNo, null, -1, -1, page, size);
     }
 }

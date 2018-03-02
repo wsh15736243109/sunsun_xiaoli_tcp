@@ -38,6 +38,7 @@ import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -208,28 +209,37 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                     if (navigationBean != null) {
                         if (navigationBean.getList().size() > 0) {
                             setStoreDetail(navigationBean.getList().get(0));
-                            setMapData();
+                            setMapData(navigationBean.getList());
                         }
                     } else {
                         MAlert.alert("出错了");
                     }
                 } else if (entity.getEventType() == UserPresenter.branchSearch_fail) {
                     MAlert.alert(entity.getData());
+                } else if (entity.getEventType() == UserPresenter.branchSearchAll_success) {
+                    ArrayList<NavigationBean.NavigationDetail> arrayList = (ArrayList<NavigationBean.NavigationDetail>) entity.getData();
+                    setStoreDetail(arrayList.get(0));
+                    setMapData(arrayList);
+                } else if (entity.getEventType() == UserPresenter.branchSearchAll_fail) {
+                    MAlert.alert(entity.getData());
                 }
             }
         }
     }
 
-    private void setMapData() {
-        ArrayList<NavigationBean.NavigationDetail> navigationDetailArrayList = navigationBean.getList();
+    private void setMapData(List<NavigationBean.NavigationDetail> navigationDetailArrayList) {
         Bundle bundle;
-        // 将View转换为BitmapDescriptor
+//        // 将View转换为BitmapDescriptor
         LatLng ll = new LatLng(navigationDetailArrayList.get(0).getLat(),
                 navigationDetailArrayList.get(0).getLng());
         MapStatusUpdate u = MapStatusUpdateFactory
                 .newLatLngZoom(ll, zoom); // 设置地图中心点以及缩放级别
         baiduMap.animateMapStatus(u);
+
+        MAlert.alert(navigationDetailArrayList.size());
+
         for (int i = 0; i < navigationDetailArrayList.size(); i++) {
+
             bundle = new Bundle();
             bundle.putSerializable("model", navigationDetailArrayList.get(i));
             MarkerOptions markerOptions = new MarkerOptions()
@@ -241,6 +251,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                     .title(navigationDetailArrayList.get(i).getName())
                     .zIndex(5).draggable(true).extraInfo(bundle);
             baiduMap.addOverlay(markerOptions);
+//            descriptor.recycle();
         }
     }
 
@@ -268,10 +279,13 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                 }
             });
 //            area = Util.queryDistrictNo(areaName);
-            userPresenter.branchSearch(cityNo, area, lng, lat, page, size);
+            all = 0;
+            userPresenter.branchSearch(all, cityNo, area, lng, lat, page, size);
         }
     }
 
+    private int all = 0;
+    boolean isAll = false;
     OnMapStatusChangeListener onMapStatusChangeListener = new OnMapStatusChangeListener() {
 
         @Override
@@ -284,12 +298,17 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
         public void onMapStatusChangeFinish(MapStatus arg0) {
             // TODO Auto-generated method stub
             System.out.println(arg0.zoom + "缩放onMapStatusChangeFinish");
-//            if (arg0.zoom<=14) {
-//                getStoreList(cityCode, 1);
-//            }
-//            else{
-//                getStoreList(cityCode, 0);
-//            }
+
+            if (arg0.zoom <= 14 && isAll == false) {
+                all = 1;
+                zoom = arg0.zoom;
+                isAll = true;
+                userPresenter.branchSearchAll(all);
+            } else {
+                isAll = false;
+                all = 0;
+//                userPresenter.branchSearch(all, cityNo, area, lng, lat, page, size);
+            }
         }
 
         @Override
@@ -390,6 +409,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
         this.cityName = city;
         this.provinceName = province;
         txt_exist.setText(city);
-        userPresenter.branchSearch(cityNo, null, -1, -1, page, size);
+        all = 0;
+        userPresenter.branchSearch(all, cityNo, null, -1, -1, page, size);
     }
 }
