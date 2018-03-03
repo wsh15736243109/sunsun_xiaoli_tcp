@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -35,6 +34,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import sunsun.xiaoli.jiarebang.R;
+import sunsun.xiaoli.jiarebang.custom.My2dMapView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressFragment;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
@@ -70,7 +70,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 
     String latLongString, areacode, area;
 
-    com.amap.api.maps2d.MapView bmapsView = null;
+    My2dMapView bmapsView = null;
     protected float zoom = 10;
 
     //    protected NavigationBean navi;
@@ -202,9 +202,12 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 //            }
 //        });
 //        bmapsView.showZoomControls(false);// 隐藏缩放按钮
-//        // 隐藏logo
-        ViewGroup child = (ViewGroup) bmapsView.getChildAt(0);//地图框架
-        child.getChildAt(3).setVisibility(View.GONE);//logo
+//        // 隐藏logo/算了，隐藏不掉
+//        UiSettings uiSettings=baiduMap.getUiSettings();
+//        uiSettings.setLogoPosition(-7);
+//        baiduMap.
+//        ViewGroup child = (ViewGroup) bmapsView.getChildAt(0);//地图框架
+//        child.getChildAt(3).setVisibility(View.GONE);//logo
 //        UiSettings uiSettings = baiduMap.getUiSettings();
 //        uiSettings.setLogoPosition(-50);
 //        View child = bmapsView.getChildAt(1);

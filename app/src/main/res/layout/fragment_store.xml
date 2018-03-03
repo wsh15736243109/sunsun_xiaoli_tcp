@@ -13,7 +13,7 @@
         android:layout_height="250dp"
         android:orientation="vertical" >
 
-        <com.amap.api.maps2d.MapView
+        <sunsun.xiaoli.jiarebang.custom.My2dMapView
             android:id="@+id/bmapsView"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
