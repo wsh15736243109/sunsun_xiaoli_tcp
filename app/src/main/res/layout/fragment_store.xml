@@ -13,10 +13,10 @@
         android:layout_height="250dp"
         android:orientation="vertical" >
 
-        <com.baidu.mapapi.map.MapView
+        <com.amap.api.maps2d.MapView
             android:id="@+id/bmapsView"
             android:layout_width="fill_parent"
-            android:layout_height="250dp"
+            android:layout_height="match_parent"
             android:clickable="true" />
     </RelativeLayout>
 

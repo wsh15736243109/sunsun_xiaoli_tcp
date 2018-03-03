@@ -1,5 +1,6 @@
 package sunsun.xiaoli.jiarebang.device.shuibeng;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -313,7 +314,6 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         }
 
     }
-
     private void showAlert(final TextView txt_liuliangchoose, String title, String[] msg) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
 //        alert.setTitle(title);
@@ -560,11 +560,16 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     long responseDataTime = 0;
     long requestTime = 0;
 
+    @SuppressLint("ResourceType")
     public void setZaoLangStatus(int we) {
         if (we == 1) {
             tv_zaolang_zhouqi_gear.setText(getString(R.string.zaolang_open));
+            txt_liuliangchoose.setText(getResources().getColor(R.color.gray_6c7bb));
+            re_liuliang_choose.setEnabled(false);
         } else {
             tv_zaolang_zhouqi_gear.setText(getString(R.string.zaolang_close));
+            txt_liuliangchoose.setText(getResources().getColor(R.color.main_green));
+            re_liuliang_choose.setEnabled(true);
         }
     }
 

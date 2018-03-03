@@ -4,32 +4,24 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.ZoomControls;
 
+import com.amap.api.maps2d.AMap;
+import com.amap.api.maps2d.CameraUpdateFactory;
+import com.amap.api.maps2d.model.CameraPosition;
+import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
+import com.amap.api.maps2d.model.MarkerOptions;
 import com.baidu.location.LocationClient;
-import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BaiduMap.OnMapStatusChangeListener;
-import com.baidu.mapapi.map.BitmapDescriptor;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
-import com.baidu.mapapi.map.InfoWindow;
-import com.baidu.mapapi.map.MapPoi;
-import com.baidu.mapapi.map.MapStatus;
-import com.baidu.mapapi.map.MapStatusUpdate;
-import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
-import com.baidu.mapapi.map.Marker;
-import com.baidu.mapapi.map.MarkerOptions;
-import com.baidu.mapapi.model.LatLng;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.NavigationBean;
 import com.itboye.pondteam.db.DBManager;
@@ -78,7 +70,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 
     String latLongString, areacode, area;
 
-    MapView bmapsView = null;
+    com.amap.api.maps2d.MapView bmapsView = null;
     protected float zoom = 10;
 
     //    protected NavigationBean navi;
@@ -98,6 +90,14 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     private String cityNo;
     private String cityName;
     private String provinceName;
+    Bundle savedInstanceState;
+    private ArrayList<Marker> markerArrayList = new ArrayList<>();
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -106,8 +106,9 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 
     @Override
     protected void initData() {
+        bmapsView.onCreate(savedInstanceState);
         userPresenter = new UserPresenter(this);
-        descriptor = BitmapDescriptorFactory
+        descriptor = com.amap.api.maps2d.model.BitmapDescriptorFactory
                 .fromBitmap(BitmapFactory
                         .decodeResource(getActivity().getResources(),
                                 R.drawable.map_descriptor2));
@@ -126,80 +127,122 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     }
 
     private void initMapViewEvent() {
-        baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+        baiduMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+
+            }
 
             @Override
-            public boolean onMarkerClick(Marker arg0) {
-                //更改下方的信息
-                Bundle model = arg0.getExtraInfo();
-                navi = (NavigationBean.NavigationDetail) model.get("model");
-                // 创建InfoWindow展示的view
-                baiduMap.hideInfoWindow();
-                Button button = new Button(getActivity()
-                        .getApplicationContext());
-                button.setPadding(5, 5, 5, 5);
-                button.setBackgroundColor(Color.WHITE);
-                button.setText(navi.getName());
-                button.setTextColor(Color.parseColor("#000000"));
-                // 定义用于显示该InfoWindow的坐标点 .
-                LatLng pt = new LatLng(arg0.getPosition().latitude, arg0
-                        .getPosition().longitude);
-                // 创建InfoWindow , 传入 view， 地理坐标， y 轴偏移量
-                InfoWindow mInfoWindow = new InfoWindow(button, pt, -47);
+            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                System.out.println(cameraPosition.zoom + "缩放onMapStatusChangeFinish");
 
-                // 显示InfoWindow
-                baiduMap.showInfoWindow(mInfoWindow);
-                setStoreDetail(navi);
-                return true;
+                if (cameraPosition.zoom <= 8 && isAll == false) {
+                    showProgressDialog("正在查询全国门店", true);
+                    all = 1;
+//                zoom = arg0.zoom;
+                    isAll = true;
+                    userPresenter.branchSearchAll(all);
+                } else if (cameraPosition.zoom > 8 && isAll) {
+                    showProgressDialog("正在查询" + cityName + "下的门店", true);
+                    MAlert.alert("searchPart");
+                    isAll = false;
+                    all = 0;
+                    userPresenter.branchSearch(all, cityNo, area, lng, lat, page, size);
+                }
             }
         });
-        baiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
-
+        baiduMap.setOnMarkerClickListener(new AMap.OnMarkerClickListener() {
             @Override
-            public boolean onMapPoiClick(MapPoi arg0) {
-                // TODO Auto-generated method stub
+            public boolean onMarkerClick(Marker marker) {
+                NavigationBean.NavigationDetail navigationDetail = (NavigationBean.NavigationDetail) marker.getObject();
+                setStoreDetail(navigationDetail);
                 return false;
             }
-
-            @Override
-            public void onMapClick(LatLng arg0) {
-                // TODO Auto-generated method stub
-                baiduMap.hideInfoWindow();
-            }
         });
-        bmapsView.showZoomControls(false);// 隐藏缩放按钮
-        // 隐藏logo
-        View child = bmapsView.getChildAt(1);
-        if (child != null
-                && (child instanceof ImageView || child instanceof ZoomControls)) { // 隐藏百度地图LOGO
-            child.setVisibility(View.INVISIBLE);
-        }
-        baiduMap.setOnMarkerDragListener(new BaiduMap.OnMarkerDragListener() {
-
-            @Override
-            public void onMarkerDragStart(Marker arg0) {
-                // TODO Auto-generated method stub
-                baiduMap.hideInfoWindow();
-            }
-
-            @Override
-            public void onMarkerDragEnd(Marker arg0) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onMarkerDrag(Marker arg0) {
-                // TODO Auto-generated method stub
-
-            }
-        });
-        baiduMap.setOnMapStatusChangeListener(onMapStatusChangeListener);
+//        baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
+//
+//            @Override
+//            public boolean onMarkerClick(Marker arg0) {
+//                //更改下方的信息
+//                Bundle model = arg0.getExtraInfo();
+//                navi = (NavigationBean.NavigationDetail) model.get("model");
+//                // 创建InfoWindow展示的view
+//                baiduMap.hideInfoWindow();
+//                Button button = new Button(getActivity()
+//                        .getApplicationContext());
+//                button.setPadding(5, 5, 5, 5);
+//                button.setBackgroundColor(Color.WHITE);
+//                button.setText(navi.getName());
+//                button.setTextColor(Color.parseColor("#000000"));
+//                // 定义用于显示该InfoWindow的坐标点 .
+//                LatLng pt = new LatLng(arg0.getPosition().latitude, arg0
+//                        .getPosition().longitude);
+//                // 创建InfoWindow , 传入 view， 地理坐标， y 轴偏移量
+//                InfoWindow mInfoWindow = new InfoWindow(button, pt, -47);
+//
+//                // 显示InfoWindow
+//                baiduMap.showInfoWindow(mInfoWindow);
+//                setStoreDetail(navi);
+//                return true;
+//            }
+//        });
+//        baiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
+//
+//            @Override
+//            public boolean onMapPoiClick(MapPoi arg0) {
+//                // TODO Auto-generated method stub
+//                return false;
+//            }
+//
+//            @Override
+//            public void onMapClick(LatLng arg0) {
+//                // TODO Auto-generated method stub
+//                baiduMap.hideInfoWindow();
+//            }
+//        });
+//        bmapsView.showZoomControls(false);// 隐藏缩放按钮
+//        // 隐藏logo
+        ViewGroup child = (ViewGroup) bmapsView.getChildAt(0);//地图框架
+        child.getChildAt(3).setVisibility(View.GONE);//logo
+//        UiSettings uiSettings = baiduMap.getUiSettings();
+//        uiSettings.setLogoPosition(-50);
+//        View child = bmapsView.getChildAt(1);
+//        if (child != null
+//                && (child instanceof ImageView || child instanceof ZoomControls)) { // 隐藏百度地图LOGO
+//            child.setVisibility(View.INVISIBLE);
+//        }
+//        baiduMap.setOnMarkerDragListener(new BaiduMap.OnMarkerDragListener() {
+//
+//            @Override
+//            public void onMarkerDragStart(Marker arg0) {
+//                // TODO Auto-generated method stub
+//                baiduMap.hideInfoWindow();
+//            }
+//
+//            @Override
+//            public void onMarkerDragEnd(Marker arg0) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//
+//            @Override
+//            public void onMarkerDrag(Marker arg0) {
+//                // TODO Auto-generated method stub
+//
+//            }
+//        });
+//        baiduMap.setOnMapStatusChangeListener(onMapStatusChangeListener);
     }
 
     @Override
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
+        try {
+            closeProgressDialog();
+        } catch (Exception e) {
+
+        }
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());
@@ -228,30 +271,30 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     }
 
     private void setMapData(List<NavigationBean.NavigationDetail> navigationDetailArrayList) {
-        Bundle bundle;
-//        // 将View转换为BitmapDescriptor
         LatLng ll = new LatLng(navigationDetailArrayList.get(0).getLat(),
                 navigationDetailArrayList.get(0).getLng());
-        MapStatusUpdate u = MapStatusUpdateFactory
-                .newLatLngZoom(ll, zoom); // 设置地图中心点以及缩放级别
-        baiduMap.animateMapStatus(u);
-
-        MAlert.alert(navigationDetailArrayList.size());
-
+        baiduMap.moveCamera(CameraUpdateFactory.changeLatLng(ll));
+        for (Marker marker : markerArrayList) {
+            marker.remove();
+        }
+        baiduMap.invalidate();//刷新地图
+        MAlert.alert("当前一共找到" + navigationDetailArrayList.size() + "条数据");
+        markerArrayList = new ArrayList<>();
         for (int i = 0; i < navigationDetailArrayList.size(); i++) {
-
-            bundle = new Bundle();
-            bundle.putSerializable("model", navigationDetailArrayList.get(i));
-            MarkerOptions markerOptions = new MarkerOptions()
-                    .position(
-                            new LatLng(navigationDetailArrayList.get(i)
-                                    .getLat(), navigationDetailArrayList
-                                    .get(i).getLng()))
-                    .icon(descriptor)
-                    .title(navigationDetailArrayList.get(i).getName())
-                    .zIndex(5).draggable(true).extraInfo(bundle);
-            baiduMap.addOverlay(markerOptions);
-//            descriptor.recycle();
+            NavigationBean.NavigationDetail navigationDetail = navigationDetailArrayList.get(i);
+            MarkerOptions markerOption = new MarkerOptions();
+            com.amap.api.maps2d.model.LatLng latLng = new com.amap.api.maps2d.model.LatLng(navigationDetail.getLat(), navigationDetail.getLng());
+            markerOption.position(latLng);
+            markerOption.title(navigationDetail.getAddress());
+//                    .snippet(navigationDetail.getAddressDetail() + ": " + navigationDetail.getLat() + ", " + navigationDetail.getLng());
+//"西安市：34.341568, 108.940174"
+            markerOption.draggable(true);//设置Marker可拖动
+            markerOption.icon(descriptor);
+            // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+//            markerOption.setFlat(true);//设置marker平贴地图效果
+            Marker marker = baiduMap.addMarker(markerOption);
+            marker.setObject(navigationDetail);
+            markerArrayList.add(marker);
         }
     }
 
@@ -286,37 +329,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
 
     private int all = 0;
     boolean isAll = false;
-    OnMapStatusChangeListener onMapStatusChangeListener = new OnMapStatusChangeListener() {
 
-        @Override
-        public void onMapStatusChangeStart(MapStatus arg0) {
-            // TODO Auto-generated method stub
-//            System.out.println(arg0.zoom+"缩放onMapStatusChangeStart");
-        }
-
-        @Override
-        public void onMapStatusChangeFinish(MapStatus arg0) {
-            // TODO Auto-generated method stub
-            System.out.println(arg0.zoom + "缩放onMapStatusChangeFinish");
-
-            if (arg0.zoom <= 14 && isAll == false) {
-                all = 1;
-                zoom = arg0.zoom;
-                isAll = true;
-                userPresenter.branchSearchAll(all);
-            } else {
-                isAll = false;
-                all = 0;
-//                userPresenter.branchSearch(all, cityNo, area, lng, lat, page, size);
-            }
-        }
-
-        @Override
-        public void onMapStatusChange(MapStatus arg0) {
-            // TODO Auto-generated method stub
-//            System.out.println(arg0.zoom+"缩放onMapStatusChange");
-        }
-    };
 
     @Override
     public void onDestroy() {
@@ -398,10 +411,10 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     protected String phone;
     protected String contactName;
     protected String mobile;
-    BitmapDescriptor descriptor = null;
+    com.amap.api.maps2d.model.BitmapDescriptor descriptor = null;
 
 
-    BaiduMap baiduMap;
+    AMap baiduMap;
 
     @Override
     public void onGetinforListener(String province, String city, String district, String provinceNo, String cityNo, String districtNo) {

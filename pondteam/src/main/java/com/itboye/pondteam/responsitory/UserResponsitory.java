@@ -17,6 +17,7 @@ import com.itboye.pondteam.bean.NavigationBean;
 import com.itboye.pondteam.bean.PersonDataBean;
 import com.itboye.pondteam.bean.PondTeamMostNewModel;
 import com.itboye.pondteam.bean.ProductBean;
+import com.itboye.pondteam.bean.StoreBean;
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.interfaces.IUserInfoInterface;

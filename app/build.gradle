@@ -293,6 +293,7 @@ dependencies {
     compile project(path: ':recyclerview-swipe')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation files('libs/commons-lang-2.3.jar')
+    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
 }
 
 apply plugin: 'kotlin-android'
