@@ -265,14 +265,17 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                     //加热棒
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_jiarebang : R.drawable.off_jiarebang);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03")) {
-                    //806
+                    //AQ806
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_aq : R.drawable.off_aq806);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-1")) {
-                    //500
+                    //AQ500
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_500 : R.drawable.off_aq500);
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-2")) {
-                    //700
+                    //AQ700
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_700 : R.drawable.off_aq700);
+                } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-3")) {
+                    //AQ600
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_600 : R.drawable.off_aq600);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S04")) {
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_ph : R.drawable.off_ph);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S05")) {
@@ -635,7 +638,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         mListView.setAdapter(listItemsAdapter);
         img_back.setVisibility(View.GONE);
         txt_exist.setText(getString(R.string.exist_login));
-        userPresenter.getBanners(6079);
+        userPresenter.getBanners(Const.XIAOLI_TOP_BANNER_POSITION);
         initSwipListView();
         mContext = getActivity();
         mReadyExit = false;

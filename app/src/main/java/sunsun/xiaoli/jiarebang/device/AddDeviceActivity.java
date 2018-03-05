@@ -157,6 +157,9 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                                             case DEVICE_AQ700:
                                                 userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), "S03-2", extra);
                                                 break;
+                                            case DEVICE_AQ600:
+                                                userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng600), "S03-3", extra);
+                                                break;
 //                                        case DEVICE_SHUIZUDENG:
 //                                            userPresenter.addDevice(getSp(Const.UID), mSelectDeviceInfo.getDid(), type.equalsIgnoreCase("S06-1") ? "ADT-C" : "ADT-H", mSelectDeviceInfo.getType(), extra);
 //                                            break;
@@ -271,6 +274,11 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                         continue;
                     }
                     break;
+                case DEVICE_AQ600:
+                    if (!deviceInfo.getType().equalsIgnoreCase("S03-3")) {
+                        continue;
+                    }
+                    break;
                 case DEVICE_AQ118:
                     if (!deviceInfo.getType().equalsIgnoreCase("S08")) {
                         continue;
@@ -376,6 +384,8 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 map.put("ItemIcon", R.drawable.device_500);
             } else if (deviceInfo.getType().equalsIgnoreCase("S03-2")) {
                 map.put("ItemIcon", R.drawable.device_700);
+            } else if (deviceInfo.getType().equalsIgnoreCase("S03-3")) {
+                map.put("ItemIcon", R.drawable.device_600);
             } else if (deviceInfo.getType().equalsIgnoreCase("S04")) {
                 map.put("ItemIcon", R.drawable.device_ph);
             } else if (deviceInfo.getType().startsWith("S05")) {
@@ -463,7 +473,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                     }
                     if (mApp.mXiaoLiUi != null) {
                         mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                    } else if (mApp.mDeviceUi != null){
+                    } else if (mApp.mDeviceUi != null) {
                         mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                     }
                     finish();

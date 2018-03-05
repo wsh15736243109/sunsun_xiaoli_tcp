@@ -275,6 +275,9 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                         case DEVICE_AQ700:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng700), type, extra);
                             break;
+                        case DEVICE_AQ600:
+                            userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), App.getInstance().getString(R.string.device_zhineng600), type, extra);
+                            break;
                         default:
                             userPresenter.addDevice(getSp(Const.UID), searchDeviceInfo.getDid(), getNickName(searchDeviceInfo.getDid(), type), type, extra);
                             break;
@@ -604,6 +607,11 @@ public class ActivityStepThree extends BaseActivity implements Observer, OnSmart
                 break;
             case DEVICE_AQ700:
                 if (!deviceInfo.getType().equalsIgnoreCase("S03-2")) {
+                    return;
+                }
+                break;
+            case DEVICE_AQ600:
+                if (!deviceInfo.getType().equalsIgnoreCase("S03-3")) {
                     return;
                 }
                 break;

@@ -68,6 +68,9 @@ public class ActivityStepFirst extends BaseActivity {
             case DEVICE_AQ118:
                 txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng118));
                 break;
+            case DEVICE_AQ600:
+                txt_title.setText(getString(R.string.add) + MyApplication.getInstance().getResources().getString(R.string.device_zhineng600));
+                break;
             case DEVICE_JIAREBANG:
                 txt_description.setText(Html.fromHtml(getResources().getString(R.string.smartconfig_tip_jiarebang)));
                 img.setBackgroundResource(R.drawable.add_jiarebangnew);

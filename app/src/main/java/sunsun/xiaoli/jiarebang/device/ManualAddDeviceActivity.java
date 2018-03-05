@@ -124,6 +124,12 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                             return;
                         }
                         break;
+                    case DEVICE_AQ600:
+                        if (!did.startsWith("S036")) {
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng600)));
+                            return;
+                        }
+                        break;
                     case DEVICE_AQ118:
                         if (!did.startsWith("S08")) {
                             MAlert.alert(String.format(getString(R.string.devicetype_error), App.getInstance().getString(R.string.device_zhineng118)));
@@ -168,7 +174,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         break;
                     case DEVICE_QIBENG:
                         if (!did.startsWith("S07")) {
-                            MAlert.alert(String.format(getString(R.string.devicetype_error), BuildConfig.APP_TYPE.equals("小绵羊智能") ?MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng):MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng)));
+                            MAlert.alert(String.format(getString(R.string.devicetype_error), BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng)));
                             return;
                         }
                         break;
@@ -191,7 +197,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         return;
                     }
                 } else {
-                    if (mApp.mDeviceUi==null) {
+                    if (mApp.mDeviceUi == null) {
                         if (mApp.mXiaoLiUi.arrayList != null) {
                             for (DeviceListBean deviceListBean : mApp.mXiaoLiUi.arrayList) {
                                 if (deviceListBean.getDid().contains(did)) {
@@ -200,7 +206,7 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                                 }
                             }
                         }
-                    }else {
+                    } else {
                         if (mApp.mDeviceUi.arrayList != null) {
                             for (DeviceListBean deviceListBean : mApp.mDeviceUi.arrayList) {
                                 if (deviceListBean.getDid().contains(did)) {
@@ -241,6 +247,9 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         case DEVICE_AQ700:
                             userPresenter.addDevice(getSp(Const.UID), did, nickName, "S03-2", extra);
                             break;
+                        case DEVICE_AQ600:
+                            userPresenter.addDevice(getSp(Const.UID), did, nickName, "S03-3", extra);
+                            break;
                         case DEVICE_SHUIZUDENG:
                             userPresenter.addDevice(getSp(Const.UID), did, nickName, "S06-1", extra);
                             break;
@@ -263,9 +272,9 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
             }
             if (entity.getEventType() == UserPresenter.adddevice_success) {
                 MAlert.alert(entity.getData());
-                if (mApp.mXiaoLiUi!=null) {
+                if (mApp.mXiaoLiUi != null) {
                     mApp.mXiaoLiUi.getDeviceList();
-                }else if (mApp.mDeviceUi!=null){
+                } else if (mApp.mDeviceUi != null) {
                     mApp.mDeviceUi.getDeviceList();
                 }
                 if (aq_did != null && !"".equals(aq_did)) {
@@ -279,10 +288,10 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                         if (mApp.addDeviceUI != null) {
                             mApp.addDeviceUI.finish();
                         }
-                        if (mApp.mXiaoLiUi!=null) {
+                        if (mApp.mXiaoLiUi != null) {
 
                             mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                        }else if (mApp.mDeviceUi!=null) {
+                        } else if (mApp.mDeviceUi != null) {
                             mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                         }
                         //结束当前activity
@@ -291,9 +300,9 @@ public class ManualAddDeviceActivity extends BaseActivity implements Observer {
                 } else {
                     //结束上一个activity
                     mApp.addDeviceUI.finish();
-                    if (mApp.mXiaoLiUi!=null) {
+                    if (mApp.mXiaoLiUi != null) {
                         mApp.mXiaoLiUi.mListView.smoothScrollToPosition(0);
-                    }else if (mApp.mDeviceUi!=null) {
+                    } else if (mApp.mDeviceUi != null) {
                         mApp.mDeviceUi.mListView.smoothScrollToPosition(0);
                     }
                     //结束当前activity

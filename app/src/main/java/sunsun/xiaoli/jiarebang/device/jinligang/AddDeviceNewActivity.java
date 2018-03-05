@@ -56,6 +56,7 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.device_500,
             R.drawable.device_700,
             R.drawable.device_118,
+            R.drawable.device_600,
             R.drawable.device_jiarebang,
             R.drawable.device_ph,
             R.drawable.device_shuibeng,
@@ -70,13 +71,14 @@ public class AddDeviceNewActivity extends BaseActivity implements
             R.drawable.add_device_52, R.drawable.add_device_52,
             R.drawable.add_device_52, R.drawable.add_device_52,
             R.drawable.add_device_52, R.drawable.add_device_52,
-            R.drawable.add_device_52, R.drawable.add_device_52,
+            R.drawable.add_device_52, R.drawable.add_device_52,R.drawable.add_device_52,
             R.drawable.add_device_52, R.drawable.add_device_52, R.drawable.add_device_52};
 
     DeviceType deviceTypes[] = {DeviceType.DEVICE_AQ806,
             DeviceType.DEVICE_AQ500,
             DeviceType.DEVICE_AQ700,
             DeviceType.DEVICE_AQ118,
+            DeviceType.DEVICE_AQ600,
             DeviceType.DEVICE_JIAREBANG,
             DeviceType.DEVICE_PH,
             DeviceType.DEVICE_SHUIBENG,

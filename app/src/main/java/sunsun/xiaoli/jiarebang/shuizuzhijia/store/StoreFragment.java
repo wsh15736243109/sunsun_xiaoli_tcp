@@ -39,6 +39,8 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressFragment;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
 
+import static sunsun.xiaoli.jiarebang.utils.GPSUtil.bd09_To_Gcj02;
+
 /**
  * 门店
  *
@@ -274,8 +276,9 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     }
 
     private void setMapData(List<NavigationBean.NavigationDetail> navigationDetailArrayList) {
-        LatLng ll = new LatLng(navigationDetailArrayList.get(0).getLat(),
+        double[] latLng = bd09_To_Gcj02(navigationDetailArrayList.get(0).getLat(),
                 navigationDetailArrayList.get(0).getLng());
+        LatLng ll = new LatLng(latLng[0], latLng[1]);
         baiduMap.moveCamera(CameraUpdateFactory.changeLatLng(ll));
         for (Marker marker : markerArrayList) {
             marker.remove();
@@ -286,8 +289,9 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
         for (int i = 0; i < navigationDetailArrayList.size(); i++) {
             NavigationBean.NavigationDetail navigationDetail = navigationDetailArrayList.get(i);
             MarkerOptions markerOption = new MarkerOptions();
-            com.amap.api.maps2d.model.LatLng latLng = new com.amap.api.maps2d.model.LatLng(navigationDetail.getLat(), navigationDetail.getLng());
-            markerOption.position(latLng);
+            latLng = bd09_To_Gcj02(navigationDetail.getLat(), navigationDetail.getLng());
+            com.amap.api.maps2d.model.LatLng latLngs = new com.amap.api.maps2d.model.LatLng(latLng[0], latLng[1]);
+            markerOption.position(latLngs);
             markerOption.title(navigationDetail.getAddress());
 //                    .snippet(navigationDetail.getAddressDetail() + ": " + navigationDetail.getLat() + ", " + navigationDetail.getLng());
 //"西安市：34.341568, 108.940174"

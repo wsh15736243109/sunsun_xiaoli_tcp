@@ -413,6 +413,9 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-2")) {
                     //700
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_700 : R.drawable.off_aq700);
+                } else if (arrayList.get(i).getDevice_type().equalsIgnoreCase("S03-3")) {
+                    //600
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_600 : R.drawable.off_aq600);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S04")) {
                     map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_ph : R.drawable.off_ph);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S05")) {

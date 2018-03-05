@@ -371,6 +371,8 @@
     <string name="device_zhineng806">Smart Monitoring AQ-806</string>
     <string name="device_zhineng700">Smart Monitoring AQ-700</string>
     <string name="device_zhineng500">Smart Monitoring AQ-500</string>
+    <string name="device_zhineng118">Temperature Controller AQ-118</string>
+    <string name="device_zhineng600">Smart Monitoring AQ-600</string>
     <string name="device_zhinengjiarebang">Remote Smart heater rod</string>
     <string name="device_yuancheng_ph">Smart PH temperature detector</string>
     <string name="device_zhinengbianpinshuibeng">Smart Frequency variation pump</string>
@@ -378,7 +380,6 @@
     <string name="device_zhinengshexiangtou">Smart hd camera</string>
     <string name="device_shuizudeng">Smart aquarium lamp</string>
     <string name="device_zhinengqibeng">Intelligent ac/dc air pump</string>
-    <string name="device_zhineng118">Temperature Controller AQ-118</string>
     <string name="device_weishiqing">Aquarium smart feeder</string>
 
     <string name="shiduansetting">Time set</string>

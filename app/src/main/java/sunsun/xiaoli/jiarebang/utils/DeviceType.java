@@ -12,6 +12,7 @@ public enum DeviceType implements Serializable{
     DEVICE_AQ500,
     DEVICE_AQ700,
     DEVICE_AQ118,
+    DEVICE_AQ600,
     DEVICE_JIAREBANG,
     DEVICE_PH,
     DEVICE_SHUIBENG,

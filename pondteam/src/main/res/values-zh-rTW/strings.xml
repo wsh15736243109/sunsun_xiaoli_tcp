@@ -377,6 +377,8 @@
     <string name="device_zhinengshexiangtou">小鯉智能攝像頭</string>
     <string name="device_shuizudeng">智能水族燈</string>
     <string name="device_zhineng500">智能監控AQ-500</string>
+    <string name="device_zhineng118">智能溫度控制器AQ-118</string>
+    <string name="device_zhineng600">智能監控AQ-600</string>
     <string name="shiduansetting">時段設置</string>
     <string name="shuizhisuanjiansetting">水質酸堿設定</string>
     <string name="ph_806baojingkaiguan">pH報警開關</string>
@@ -661,7 +663,6 @@
     <string name="produceter_message">产品信息</string>
     <string name="produceter_video">视频浏览</string>
     <string name="produceter_rengong">人工客服</string>
-    <string name="device_zhineng118">智能溫度控制器AQ-118</string>
     <string name="store_query">门店查询</string>
     <string name="shop_xianshang">森森线上购物</string>
     <string name="device_zhinengyangqibeng">智能交直流氧氣泵</string>

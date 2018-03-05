@@ -69,7 +69,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
         initPtrFrameLayout();
         locationUtil = new LocationUtil(getActivity(), this);
         userPresenter = new UserPresenter(this);
-        userPresenter.getBanners(6233);
+        userPresenter.getBanners(Const.SHOP_TOP_BANNER_POSITION);
         list_shop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

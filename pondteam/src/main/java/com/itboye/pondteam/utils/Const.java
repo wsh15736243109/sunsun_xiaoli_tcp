@@ -72,6 +72,8 @@ public class Const {
     public static String imagePath;
     public static String patten = "yyyyMMdd";
     public static String language = "";
+    public static int XIAOLI_TOP_BANNER_POSITION = 6079;//xiaoliFragment顶部广告位
+    public static int SHOP_TOP_BANNER_POSITION = 6233;//购物顶部三张图片广告位
 
     public Const() {
 
