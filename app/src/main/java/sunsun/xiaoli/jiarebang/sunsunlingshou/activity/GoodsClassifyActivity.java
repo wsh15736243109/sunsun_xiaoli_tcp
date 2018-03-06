@@ -32,7 +32,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.baseadapter.MyListViewAdapter2;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
-import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
+import sunsun.xiaoli.jiarebang.utils.WebUtil;
 
 import static sunsun.xiaoli.jiarebang.sunsunlingshou.utils.UiUtils.initTitlebarStyle1;
 
@@ -110,7 +110,7 @@ public class GoodsClassifyActivity extends LingShouBaseActivity implements Obser
         list_item_2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                GotoTaoBaoUtil.startActivity(GoodsClassifyActivity.this, Const.TAOBAO_TEST_URL);
+                WebUtil.startActivityForTaoBao(GoodsClassifyActivity.this, Const.TAOBAO_TEST_URL);
 //                startActivity(new Intent(GoodsClassifyActivity.this, GoodDetailActivity.class).putExtra("id", goodsList.getList().get(position).getId()).putExtra("store_id", goodsList.getList().get(position).getStore_id()));
             }
         });

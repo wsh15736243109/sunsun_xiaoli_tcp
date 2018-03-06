@@ -233,6 +233,10 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
                 }
                 break;
             case R.id.addImg:
+                if (keFuId == null) {
+                    MAlert.alert("当前客服繁忙，请稍后再试");
+                    return;
+                }
                 openLibrary();
                 break;
             case R.id.addEmoj:
@@ -484,6 +488,7 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
 
         adapter.notifyDataSetChanged();
         lv.setSelection(lv.getBottom());
+        et_input.setText("");
     }
 
     @Override
@@ -495,7 +500,9 @@ public class KeFuFragment extends LingShouBaseFragment implements OnRefreshListe
     // /聊天退出
     private void destroyQueue() {
         handler.removeCallbacks(runnable);
-        userPresenter.exitcommunion(uid, keFuId, (lastCreateTime) + "");
+        if (keFuId != null) {
+            userPresenter.exitcommunion(uid, keFuId, (lastCreateTime) + "");
+        }
     }
 
     private void setKeFuStatus(KefuBeans kefuStatus) {

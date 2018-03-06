@@ -51,9 +51,9 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.utils.LunBoHelper;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentActionBar;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.widget.TranslucentScrollView;
-import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
+import sunsun.xiaoli.jiarebang.utils.WebUtil;
 import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
 import static com.itboye.pondteam.utils.Const.CITY_CODE;
@@ -358,7 +358,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+                WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
 //                startActivity(new Intent(getActivity(), AppointmentInstallStepOneActivity.class).putExtra("type", 5));
                 break;
             case R.id.btn_qingli:
@@ -366,7 +366,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
                     startActivity(new Intent(getActivity(), LingShouSwitchLoginOrRegisterActivity.class));
                     return;
                 }
-                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+                WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
 //                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
 //                intent.putExtra("type", 3);
 //                intent.putExtra("title", "鱼缸清理");
@@ -384,7 +384,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
 //                intent.putExtra("title", "活体购买");
 //                intent.putExtra("type", 2);
 //                startActivity(intent);
-                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+                WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
                 break;
             case R.id.btn_zaojingzhuangshi:
                 if (getSp(Const.UID).equals("")) {
@@ -392,7 +392,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
                     return;
                 }
 
-                GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+                WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
 //                intent = new Intent(getActivity(), YuGangCleanOrHuoTiBuyStepOneActivity.class);
 //                intent.putExtra("title", "造景装饰");
 //                intent.putExtra("type", 4);
@@ -489,7 +489,7 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
             index = 2;
             setTabSelection(index);
         } else if (t.equals("连锁")) {
-            GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+            WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
         }
     }
 
@@ -523,12 +523,12 @@ public class HomeFragmentVersionNew extends LingShouBaseFragment implements Tran
     public void onItemClick(int position) {
         //
         if (t.equals("商品")) {
-            GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+            WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
 //            startActivity(new Intent(getActivity(), GoodDetailActivity.class).putExtra("id", goodsList.getList().get(position).getId()).putExtra("store_id", goodsList.getList().get(position).getStore_id()));
         } else if (t.equals("硬件")) {
 
         } else {
-            GotoTaoBaoUtil.startActivity(getActivity(), Const.TAOBAO_TEST_URL);
+            WebUtil.startActivityForTaoBao(getActivity(), Const.TAOBAO_TEST_URL);
 //            Intent intent = new Intent(getActivity(), GoodsClassifyActivity.class);
 //            intent.putExtra("model", bean.getList().get(position));
 //            intent.putExtra("store_id", bean.getList().get(position).getId());
