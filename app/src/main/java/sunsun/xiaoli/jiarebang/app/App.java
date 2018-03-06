@@ -286,16 +286,16 @@ public class App extends MyApplication {
         name = new String[]{
                 getString(R.string.device_zhineng806),
                 getString(R.string.device_zhineng500),
+                getString(R.string.device_zhineng600),
                 getString(R.string.device_zhineng700),
                 getString(R.string.device_zhineng118),
-                getString(R.string.device_zhineng600),
                 getString(R.string.device_zhinengjiarebang),
                 getString(R.string.device_yuancheng_ph),
                 getString(R.string.device_zhinengbianpinshuibeng),
                 getString(R.string.device_chitangguolv),
                 BuildConfig.APP_TYPE.equals("小绵羊智能") ? getString(R.string.device_zhinengshexiangtou_yihu) : getString(R.string.device_zhinengshexiangtou),
                 getString(R.string.device_shuizudeng),
-                BuildConfig.APP_TYPE.equals("小绵羊智能") ?MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng):MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng),
+                BuildConfig.APP_TYPE.equals("小绵羊智能") ? MyApplication.getInstance().getResources().getString(R.string.device_zhinengyangqibeng) : MyApplication.getInstance().getResources().getString(R.string.device_zhinengqibeng),
                 getString(R.string.device_weishiqing)};
     }
 

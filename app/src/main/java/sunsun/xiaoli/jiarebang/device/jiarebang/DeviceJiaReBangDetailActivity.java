@@ -555,7 +555,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
     private void refreshDeviceList() {
         if (myApp.mXiaoLiUi != null) {
             myApp.mXiaoLiUi.getDeviceList();
-        } else if (myApp.mDeviceUi != null){
+        } else if (myApp.mDeviceUi != null) {
             myApp.mDeviceUi.getDeviceList();
         }
     }
@@ -565,60 +565,60 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         setDeviceTitle(deviceDetailModel.getDevice_nickname());
         double wenduValue = 0;
-        if (detailModelTcp != null) {
-            mNewTempValue = Double.parseDouble(detailModelTcp.getT_set()) / 10;
-            wenduValue = detailModelTcp.getT() / 10;
-            int startPo1 = ("" + wenduValue).length();
-            int endPo1 = (wenduValue + "℃").length();
-            ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
-            int fault = Integer.parseInt(Integer.toBinaryString(detailModelTcp.getFault()));
-            String strFault = getAppointNumber(fault, 4);
-            char[] faultBinary = strFault.toCharArray();
-            StringBuffer str = new StringBuffer();
-            boolean hasError = false;
-            for (int i = 0; i < faultBinary.length; i++) {
-                if (faultBinary[i] == '1') {
-                    hasError = true;
-                    break;
-                } else {
-                    hasError = false;
-                }
-            }
-            String strTemp = "";
-            if (hasError) {
-                strTemp = getString(R.string.run_error);
+//        if (detailModelTcp != null) {
+        mNewTempValue = Double.parseDouble(detailModelTcp == null ? deviceDetailModel.getT_set() : detailModelTcp.getT_set()) / 10;
+        wenduValue = detailModelTcp == null ? deviceDetailModel.getT() : detailModelTcp.getT() / 10;
+        int startPo1 = ("" + wenduValue).length();
+        int endPo1 = (wenduValue + "℃").length();
+        ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
+        int fault = Integer.parseInt(Integer.toBinaryString(detailModelTcp == null ? deviceDetailModel.getFault() : detailModelTcp.getFault()));
+        String strFault = getAppointNumber(fault, 4);
+        char[] faultBinary = strFault.toCharArray();
+        StringBuffer str = new StringBuffer();
+        boolean hasError = false;
+        for (int i = 0; i < faultBinary.length; i++) {
+            if (faultBinary[i] == '1') {
+                hasError = true;
+                break;
             } else {
-                int startPo3 = getString(R.string.total_power).length(), endPo3 = 0;
-                endPo3 = getString(R.string.total_power).length() + (detailModelTcp.getPwr() + "").length();
-                if (detailModelTcp.getPwr() == 0) {
-                    //恒温状态
-                    strTemp = getString(R.string.run_hengwen) + " ";
-                } else {
-                    //加热棒运行正常
-                    strTemp = getString(R.string.run_normal) + " ";
-                }
-//                setColorfulValue(startPo3, endPo3, R.color.aq_orange,, txt_gonglv);
-            }
-            int startPo2 = getString(R.string.jiarebang).length();
-            int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
-            setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) : getString(R.string.total_power) + detailModelTcp.getPwr() + "W"), txt_status);
-            img_progress.setMaxCount(35);
-            if (wenduValue < 20) {
-                img_progress.setCurrentCount(20);
-            } else if (wenduValue > 35) {
-                img_progress.setCurrentCount(35);
-            } else {
-                img_progress.setCurrentCount((float) wenduValue);
-            }
-
-            img_progress.invalidate();
-            //设置固件更新UI
-            if (myApp.updateActivityUI != null) {
-                if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                    myApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
-                }
+                hasError = false;
             }
         }
+        String strTemp = "";
+        if (hasError) {
+            strTemp = getString(R.string.run_error);
+        } else {
+            int startPo3 = getString(R.string.total_power).length(), endPo3 = 0;
+            endPo3 = getString(R.string.total_power).length() + (detailModelTcp == null ? deviceDetailModel.getPwr() + "" : detailModelTcp.getPwr() + "").length();
+            if ((detailModelTcp == null ? deviceDetailModel.getPwr() : detailModelTcp.getPwr()) == 0) {
+                //恒温状态
+                strTemp = getString(R.string.run_hengwen) + " ";
+            } else {
+                //加热棒运行正常
+                strTemp = getString(R.string.run_normal) + " ";
+            }
+//                setColorfulValue(startPo3, endPo3, R.color.aq_orange,, txt_gonglv);
+        }
+        int startPo2 = getString(R.string.jiarebang).length();
+        int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
+        setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) : getString(R.string.total_power) + detailModelTcp.getPwr() + "W"), txt_status);
+        img_progress.setMaxCount(35);
+        if (wenduValue < 20) {
+            img_progress.setCurrentCount(20);
+        } else if (wenduValue > 35) {
+            img_progress.setCurrentCount(35);
+        } else {
+            img_progress.setCurrentCount((float) wenduValue);
+        }
+
+        img_progress.invalidate();
+        //设置固件更新UI
+        if (myApp.updateActivityUI != null) {
+            if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                myApp.updateActivityUI.setProgress(detailModelTcp == null ? deviceDetailModel.getUpd_state() + "" : detailModelTcp.getUpd_state() + "");
+            }
+        }
+//        }
 
 //        Bit0：加热棒过温异常
 //        Bit1：温度传感器1异常
@@ -627,7 +627,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         wenDuBaoJingStatus = (deviceDetailModel.getTemp_alert() == 1 ? true : false);
         gongZuoZhuangTaiTongtZhiStatus = (deviceDetailModel.getIs_state_notify() == 1 ? true : false);
         try {
-            if (deviceDetailModel.getExtra()!=null) {
+            if (deviceDetailModel.getExtra() != null) {
                 JSONObject jsonObject = new JSONObject(deviceDetailModel.getExtra());
                 if (jsonObject.has("abnormal")) {
                     int exceptionValue = jsonObject.getInt("abnormal");

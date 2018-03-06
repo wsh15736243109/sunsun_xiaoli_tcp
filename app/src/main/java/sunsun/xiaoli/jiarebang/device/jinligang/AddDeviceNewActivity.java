@@ -54,9 +54,9 @@ public class AddDeviceNewActivity extends BaseActivity implements
     int url[] = {
             R.drawable.device_aq,
             R.drawable.device_500,
+            R.drawable.device_600,
             R.drawable.device_700,
             R.drawable.device_118,
-            R.drawable.device_600,
             R.drawable.device_jiarebang,
             R.drawable.device_ph,
             R.drawable.device_shuibeng,
@@ -76,9 +76,9 @@ public class AddDeviceNewActivity extends BaseActivity implements
 
     DeviceType deviceTypes[] = {DeviceType.DEVICE_AQ806,
             DeviceType.DEVICE_AQ500,
+            DeviceType.DEVICE_AQ600,
             DeviceType.DEVICE_AQ700,
             DeviceType.DEVICE_AQ118,
-            DeviceType.DEVICE_AQ600,
             DeviceType.DEVICE_JIAREBANG,
             DeviceType.DEVICE_PH,
             DeviceType.DEVICE_SHUIBENG,
@@ -117,6 +117,9 @@ public class AddDeviceNewActivity extends BaseActivity implements
 
             }
         });
+        if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
+            img_back.setVisibility(View.GONE);
+        }
     }
 
     @Override
