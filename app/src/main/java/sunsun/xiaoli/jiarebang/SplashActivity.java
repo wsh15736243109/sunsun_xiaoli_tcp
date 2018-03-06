@@ -111,7 +111,11 @@ public class SplashActivity extends LingShouBaseActivity {
         handler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
-                    startActivity(new Intent(getApplicationContext(), AddDeviceNewActivity.class));
+                    if (hasLogined) {
+                        startActivity(new Intent(getApplicationContext(), AddDeviceNewActivity.class));
+                    }else{
+                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    }
                 } else {
                     if (hasLogined) {
                         LoginController.setLoginState(new LoginedState());

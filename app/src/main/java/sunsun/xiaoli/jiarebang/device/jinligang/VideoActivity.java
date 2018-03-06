@@ -627,7 +627,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
 //                            SystemClock.sleep(2000);
 //                            Intent intent = new Intent(VideoActivity.this, ImageDetailActivity.class);
 //                            intent.putExtra("img", imagePath);
-//                            startActivity(intent);
+//                            startActivityForTaoBao(intent);
 //                        }
 //                    });
 //
@@ -761,7 +761,7 @@ public class VideoActivity extends BaseTwoActivity implements Observer, VideoInt
                 showPopwindow(8);
 //                intent = new Intent(this, ActivityStepFirst.class);
 //                intent.putExtra("device_type", "摄像头");
-//                startActivity(intent);
+//                startActivityForTaoBao(intent);
                 break;
             case R.id.img_right:
                 popupWindow.showAtLocation(v, Gravity.BOTTOM

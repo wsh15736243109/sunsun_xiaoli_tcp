@@ -62,7 +62,11 @@ public class TcpUtil {
      * @param msg     0：did  1:uid  2:t
      */
     public TcpUtil(Handler handler, String... msg) {
+        if (msg[1].equals("")) {
+            msg[1] = "0";
+        }
         this.msg = String.format(baseStr, msg[2], msg[0], msg[1]);
+        System.out.println("TCP 接收数据 >" + this.msg);
 //        "{\"t\": \""+msg[3]+"\",\"did\": \""+msg[0]+"\",\"token\": \"123456\",\"uid\": \""+msg[1]+"\"}";
         this.handler = handler;
     }

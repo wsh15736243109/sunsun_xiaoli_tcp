@@ -202,7 +202,7 @@ public class DeviceActivity extends BaseActivity implements Observer, SwipeRefre
                 loadingDialog = new ProgressDialog(DeviceActivity.this);
 //                if (currentDid.startsWith("S09")) {
 //                    //喂食器调跳转
-//                    startActivity(new Intent(DeviceActivity.this, WeiShiQiDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
+//                    startActivityForTaoBao(new Intent(DeviceActivity.this, WeiShiQiDetailActivity.class).putExtra("id", mSelectDeviceInfo.getId()).putExtra("did", currentDid));
 //                    return;
 //                }
                 if (!BuildConfig.APP_TYPE.equals("pondTeam")) {

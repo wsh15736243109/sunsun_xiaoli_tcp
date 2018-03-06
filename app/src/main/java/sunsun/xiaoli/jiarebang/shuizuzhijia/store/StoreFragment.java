@@ -284,7 +284,7 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
             marker.remove();
         }
         baiduMap.invalidate();//刷新地图
-        MAlert.alert("当前一共找到" + navigationDetailArrayList.size() + "条数据");
+//        MAlert.alert("当前一共找到" + navigationDetailArrayList.size() + "条数据");
         markerArrayList = new ArrayList<>();
         for (int i = 0; i < navigationDetailArrayList.size(); i++) {
             NavigationBean.NavigationDetail navigationDetail = navigationDetailArrayList.get(i);

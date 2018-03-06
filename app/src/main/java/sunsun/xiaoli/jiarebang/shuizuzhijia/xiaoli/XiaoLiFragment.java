@@ -70,16 +70,18 @@ import sunsun.xiaoli.jiarebang.logincontroller.LoginController;
 import sunsun.xiaoli.jiarebang.logincontroller.UnLoginState;
 import sunsun.xiaoli.jiarebang.popwindow.SureDeleteDialog;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
-import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
+import sunsun.xiaoli.jiarebang.utils.WebUtil;
+import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
+import static com.itboye.pondteam.utils.Const.TAOBAO_URL;
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
 
 
 /**
  */
 @SuppressLint("NewApi")
-public class XiaoLiFragment extends LingShouBaseFragment implements Observer, SwipeRefreshLayout.OnRefreshListener {
+public class XiaoLiFragment extends LingShouBaseFragment implements Observer, SwipeRefreshLayout.OnRefreshListener, LocationUtil.OnLocationResult {
     int count = 0;
     int cnt = 0;
     App mApp;
@@ -120,6 +122,10 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
 
     View viewHeader;
     private RatioImageView ratioImageView;
+    private LocationUtil locationUtil;
+    private double lat;
+    private double lng;
+    private ArrayList<BannerBean> bannerBeanArrayList;
 
     public void showPushMessage() {
         mApp.showPushMessage(getActivity(), ummessage);
@@ -368,12 +374,32 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                 alert.show();
                 break;
             case R.id.img_header:
-                String url = v.getTag(R.id.tag_first) + "";
-                String urlType = v.getTag(R.id.tag_second) + "";
-                if (urlType.equals("6070")) {
-                    GotoTaoBaoUtil.startActivity(getActivity(), url);
-                }
+                gotoTaoBao();
                 break;
+        }
+    }
+
+    private void gotoTaoBao() {
+        if (bannerBeanArrayList == null) {
+//            MAlert.alert("缺失商品id");
+            return;
+        }
+        if (bannerBeanArrayList.size() <= 0) {
+//            MAlert.alert("没有s");
+            return;
+        }
+        if (lng == 0 || lat == 0) {
+//            MAlert.alert("没有s");
+            return;
+        }
+        String url = "";
+        String urlType = bannerBeanArrayList.get(0).getUrl_type();
+        if (urlType.equals("6071")) {
+            url = String.format(TAOBAO_URL, lng, lat, bannerBeanArrayList.get(0).getUrl());
+            WebUtil.startActivityForTaoBao(getActivity(), url);
+        } else if (urlType.equals("6070")) {
+            url = bannerBeanArrayList.get(0).getUrl();
+            WebUtil.startActivityForUrl(getActivity(), url, "详情");
         }
     }
 
@@ -511,9 +537,12 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                     }
                 }, 2000);
             } else if (entity.getEventType() == UserPresenter.getBanners_success) {
-                ArrayList<BannerBean> bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
+                bannerBeanArrayList = (ArrayList<BannerBean>) entity.getData();
                 XGlideLoader.displayImage(getActivity(), Const.imgSunsunUrl + bannerBeanArrayList.get(0).getImg(), ratioImageView);
-                ratioImageView.setTag(R.id.tag_first, bannerBeanArrayList.get(0).getUrl());
+//                if (!bannerBeanArrayList.get(0).getUrl().equals("")) {
+//                    ratioImageView.setTag(R.id.tag_first, url);
+//
+//                }
                 ratioImageView.setTag(R.id.tag_second, bannerBeanArrayList.get(0).getUrl_type());
                 ratioImageView.setOnClickListener(this);
             } else if (entity.getEventType() == UserPresenter.getBanners_fail) {
@@ -609,6 +638,8 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         nodata = (RelativeLayout) footerView.findViewById(R.id.nodata);
         btn_addnew = (Button) footerView.findViewById(R.id.btn_addnew);
         btn_addnew.setOnClickListener(this);
+
+        locationUtil = new LocationUtil(getActivity(), this);
         txt_add_jieshao = (TextView) footerView.findViewById(R.id.txt_add_jieshao);
         viewHeader = View.inflate(getActivity(), R.layout.imageview, null);
         ratioImageView = (RatioImageView) viewHeader.findViewById(R.id.img_header);
@@ -637,7 +668,9 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         mListView.addFooterView(footerView);
         mListView.setAdapter(listItemsAdapter);
         img_back.setVisibility(View.GONE);
-        txt_exist.setText(getString(R.string.exist_login));
+//        txt_exist.setText(getString(R.string.exist_login));
+        txt_exist.setVisibility(View.GONE);
+        txt_ceshu.setVisibility(View.GONE);
         userPresenter.getBanners(Const.XIAOLI_TOP_BANNER_POSITION);
         initSwipListView();
         mContext = getActivity();
@@ -739,5 +772,13 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                 return true;
             }
         });
+    }
+
+    @Override
+    public void getLatAndLng(String provinceName, String cityName, double lat, double lng, String areaName) {
+        this.lat = lat;
+        this.lng = lng;
+//        String url=String.format(TAOBAO_URL,lng,lat,bannerBeanArrayList.get(0).getUrl());
+//        ratioImageView.setTag(R.id.tag_first, url);
     }
 }

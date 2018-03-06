@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                 showProgressDialog(getString(R.string.requesting), true);
                 userPresenter.login(country, userName, userPass, "");
 //                intent = new Intent(LoginActivity.this, AddPondDevice.class);
-//                startActivity(intent);
+//                startActivityForTaoBao(intent);
 //                onShowDlog();
                 break;
             case R.id.txt_forget_pass:
@@ -139,7 +139,10 @@ public class LoginActivity extends BaseActivity implements Observer, IAreaCodeSe
                     if (SpContants.APP_TYPE.equals("水族之家")) {
                         Intent intent = new Intent(this, AquariumHomeMainActivity.class);
                         startActivity(intent);
-                    } else {
+                    }else  if (SpContants.APP_TYPE.equals("小鲤智能测试版")) {
+                        Intent intent = new Intent(this, AddDeviceNewActivity.class);
+                        startActivity(intent);
+                    }else {
                         Intent intent = new Intent(this, DeviceActivity.class);
                         startActivity(intent);
                     }

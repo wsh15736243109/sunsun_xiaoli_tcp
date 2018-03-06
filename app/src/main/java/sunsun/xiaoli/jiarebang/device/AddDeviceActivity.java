@@ -2,6 +2,7 @@ package sunsun.xiaoli.jiarebang.device;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -70,6 +71,7 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
     String aq_did;
     TextView txt_title_2;
     DeviceType deviceType;
+    private ProgressDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,9 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
                 AddDeviceActivity.this.selectDviceType = mSelectDeviceInfo.getType();
                 //测试版本直接进入设备详情
                 if (BuildConfig.APP_TYPE.equals("小鲤智能测试版")) {
+                    loadingDialog = new ProgressDialog(AddDeviceActivity.this);
+                    loadingDialog.setMessage("获取设备信息中，请稍后");
+                    loadingDialog.show();
                     getDeviceData(did);
                 } else {
                     if ((boolean) (listItems.get(position).get("add_status"))) {
@@ -435,6 +440,11 @@ public class AddDeviceActivity extends BaseActivity implements Observer {
     @Override
     public void update(Observable o, Object data) {
         ResultEntity entity = handlerError(data);
+        if (loadingDialog != null) {
+            if (loadingDialog.isShowing()) {
+                loadingDialog.dismiss();
+            }
+        }
         if (entity != null) {
             if (entity.getCode() != 0) {
                 MAlert.alert(entity.getMsg());

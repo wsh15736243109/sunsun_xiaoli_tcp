@@ -13,7 +13,7 @@ import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.web.WebActivity;
  * Created by Administrator on 2018/1/5.
  */
 
-public class GotoTaoBaoUtil {
+public class WebUtil {
     /**
      * 检测该包名所对应的应用是否存在
      *
@@ -48,8 +48,11 @@ public class GotoTaoBaoUtil {
 
     }
 
-    public static void startActivity(Activity activity, String url) {
-        if (GotoTaoBaoUtil.checkPackage("com.taobao.taobao")) {
+    public static void startActivityForTaoBao(Activity activity, String url) {
+        if ("".equals(url) || url == null) {
+            return;
+        }
+        if (WebUtil.checkPackage("com.taobao.taobao")) {
             if (url.startsWith("https")) {
                 url = url.replace("https", "taobao");
             } else {
@@ -66,5 +69,15 @@ public class GotoTaoBaoUtil {
             intent.putExtra("title", "");
             activity.startActivity(intent);
         }
+    }
+
+    public static void startActivityForUrl(Activity activity, String url, String title){
+        if ("".equals(url) || url == null) {
+            return;
+        }
+        Intent intent = new Intent(activity, WebActivity.class);
+        intent.putExtra("title",title);
+        intent.putExtra("url",url);
+        activity.startActivity(intent);
     }
 }

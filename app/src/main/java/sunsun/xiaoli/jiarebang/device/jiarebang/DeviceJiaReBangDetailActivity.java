@@ -29,7 +29,6 @@ import com.itboye.pondteam.utils.DeviceStatusShow;
 import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Observable;
@@ -176,7 +175,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            userPresenter.getDeviceOnLineState(did, getSp(Const.UID));
+            userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
             handler.postDelayed(runnable, Const.getOnlinStateIntervalTime);
         }
     };
@@ -545,6 +544,7 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
                 DeviceDetailModel detailModel = (DeviceDetailModel) entity.getData();
                 isConnect = detailModel.getIs_disconnect().equals("0");
                 DeviceStatusShow.setDeviceStatus(device_status, detailModel.getIs_disconnect());
+                setDeviceData();
             } else if (entity.getEventType() == UserPresenter.getDeviceOnLineState_fail) {
                 isConnect = false;
                 DeviceStatusShow.setDeviceStatus(device_status, "2");
@@ -627,12 +627,14 @@ public class DeviceJiaReBangDetailActivity extends BaseActivity implements Obser
         wenDuBaoJingStatus = (deviceDetailModel.getTemp_alert() == 1 ? true : false);
         gongZuoZhuangTaiTongtZhiStatus = (deviceDetailModel.getIs_state_notify() == 1 ? true : false);
         try {
-            JSONObject jsonObject = new JSONObject(deviceDetailModel.getExtra());
-            if (jsonObject.has("abnormal")) {
-                int exceptionValue = jsonObject.getInt("abnormal");
-                yiChangBaoJingStatus = (exceptionValue == 1 ? true : false);
+            if (deviceDetailModel.getExtra()!=null) {
+                JSONObject jsonObject = new JSONObject(deviceDetailModel.getExtra());
+                if (jsonObject.has("abnormal")) {
+                    int exceptionValue = jsonObject.getInt("abnormal");
+                    yiChangBaoJingStatus = (exceptionValue == 1 ? true : false);
+                }
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         th = deviceDetailModel.getTemp_max();

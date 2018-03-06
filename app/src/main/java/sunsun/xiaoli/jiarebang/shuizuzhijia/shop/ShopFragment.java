@@ -25,11 +25,12 @@ import sunsun.xiaoli.jiarebang.R;
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.ShopAdapter;
 import sunsun.xiaoli.jiarebang.custom.RatioImageView;
 import sunsun.xiaoli.jiarebang.sunsunlingshou.activity.me.AddressFragment;
-import sunsun.xiaoli.jiarebang.utils.GotoTaoBaoUtil;
+import sunsun.xiaoli.jiarebang.utils.WebUtil;
 import sunsun.xiaoli.jiarebang.utils.LocationUtil;
 import sunsun.xiaoli.jiarebang.utils.Util;
 import sunsun.xiaoli.jiarebang.utils.XGlideLoader;
 
+import static com.itboye.pondteam.utils.Const.TAOBAO_URL;
 import static com.itboye.pondteam.utils.Const.imgSunsunUrl;
 
 /**
@@ -73,16 +74,12 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
         list_shop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (navigationBean != null) {
-                    if (navigationBean.getList() != null) {
-                        String s = navigationBean.getList().get(position).getTaobao_store_url();
+                if (navigationDetailArrayList != null) {
+                        String s = navigationDetailArrayList.get(position).getTaobao_store_url();
                         //跳转淘宝
-
 //                        s = "https://sensen.tmall.com"; s = "taobao://sensen.tmall.com";
-                        GotoTaoBaoUtil.startActivity(getActivity(), s);
-//                        GotoTaoBaoUtil.startActivity(getActivity(), navigationBean.getList().get(position).getTaobao_store_url());
-                    }
-
+                        WebUtil.startActivityForTaoBao(getActivity(), s);
+//                        WebUtil.startActivityForTaoBao(getActivity(), navigationBean.getList().get(position).getTaobao_store_url());
                 }
             }
         });
@@ -129,11 +126,22 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             case R.id.img_shop_first:
             case R.id.img_shop_second:
             case R.id.img_shop_third:
-                url = v.getTag(R.id.tag_first) + "";
+                String position = v.getTag(R.id.tag_first).toString();
                 url_type = v.getTag(R.id.tag_second) + "";
-                if (url.equals("")) {
-//                    MAlert.alert("url is null");
-                    return;
+                for (BannerBean bannerBean : bannerBeanArrayList) {
+                    if (bannerBean.getTitle().equals(position)) {
+                        if (bannerBean.getUrl_type().equals("6071")) {
+                            url = String.format(TAOBAO_URL, lng, lat, bannerBean.getUrl());
+                            break;
+                        } else if (bannerBean.getUrl_type().equals("6070")) {
+                            //直接跳转web
+                            url = bannerBean.getUrl();
+                            break;
+                        } else if (bannerBean.getUrl_type().equals("")) {
+                            url = "";
+                            break;
+                        }
+                    }
                 }
                 goToTaoBao(url, url_type);
                 break;
@@ -151,11 +159,12 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     }
 
     private void goToTaoBao(String url, String url_type) {
-        if (url_type.equals("6070")) {
+        if (url_type.equals("6071")) {
             //跳转链接(淘宝店铺)
-            GotoTaoBaoUtil.startActivity(getActivity(), url);
-        } else if (url_type.equals("6071")) {
-            //商品详情
+            WebUtil.startActivityForTaoBao(getActivity(), url);
+        } else if (url_type.equals("6070")) {
+            //直接webView
+            WebUtil.startActivityForUrl(getActivity(), url,"详情");
         } else if (url_type.equals("6072")) {
             //帖子详情
         }
@@ -175,15 +184,18 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     for (BannerBean bannerBean : bannerBeanArrayList) {
                         if (bannerBean.getTitle().equals("top")) {
                             XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBean.getImg(), img_shop_first);
-                            img_shop_first.setTag(R.id.tag_first, bannerBean.getUrl());
+//                            img_shop_first.setTag(R.id.tag_first, bannerBean.getUrl());
+                            img_shop_first.setTag(R.id.tag_first, bannerBean.getTitle());
                             img_shop_first.setTag(R.id.tag_second, bannerBean.getUrl_type());
                         } else if (bannerBean.getTitle().equals("left")) {
                             XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBean.getImg(), img_shop_second);
-                            img_shop_second.setTag(R.id.tag_first, bannerBean.getUrl());
+//                            img_shop_second.setTag(R.id.tag_first, bannerBean.getUrl());
+                            img_shop_second.setTag(R.id.tag_first, bannerBean.getTitle());
                             img_shop_second.setTag(R.id.tag_second, bannerBean.getUrl_type());
                         } else if (bannerBean.getTitle().equals("right")) {
                             XGlideLoader.displayImage(getActivity(), imgSunsunUrl + bannerBean.getImg(), img_shop_third);
-                            img_shop_third.setTag(R.id.tag_first, bannerBean.getUrl());
+//                            img_shop_third.setTag(R.id.tag_first, bannerBean.getUrl());
+                            img_shop_third.setTag(R.id.tag_first, bannerBean.getTitle());
                             img_shop_third.setTag(R.id.tag_second, bannerBean.getUrl_type());
                         }
                     }

@@ -60,7 +60,7 @@ public class Const {
     public static final String YOUHUIQUAN_CHANGE = "charge_change";
     public static final String AREA_CODE = "area_code";
     public static final String TAOBAO_TEST_URL = "taobao://sensen.tmall.com/shop/view_shop.htm?spm=a220m.1000862.1000730.2.53db85dfFeR7TR&user_number_id=2090072497&rn=29c3a08e12cbced4c990c69c25037967";
-    public static final String TAOBAO_URL = "http://dev.sale.sunsunxiaoli.com/index.php/taobao_link/index?lng=%1s&lat=%2s&g_id=%3s";
+    public static final String TAOBAO_URL = "https://api.sunsunxiaoli.com/index.php/taobao_link/index?lng=%1s&lat=%2s&g_id=%3s";
     public static String CITY_CODE = "330100";
     public static String xiaoli_wrapUrl = "api.sunsunxiaoli.com";
     public static String lingshou_wrapUrl = "dev.sale.sunsunxiaoli.com";
@@ -279,9 +279,9 @@ public class Const {
 
     public static String sendCodeType;
 
-    public static String articalWeb = "http://api.sunsunxiaoli.com/web.php/productcenter/article?id=";
-    public static String videoWeb = "http://api.sunsunxiaoli.com/web.php/productcenter/video?id=";
-    public static String XIAOLI_HEAD_UPLOAD_URL = "http://api.sunsunxiaoli.com/index.php/file/upload";
+    public static String articalWeb = "http://" + xiaoli_wrapUrl + "/web.php/productcenter/article?id=";
+    public static String videoWeb = "http://" + xiaoli_wrapUrl + "/web.php/productcenter/video?id=";
+    public static String XIAOLI_HEAD_UPLOAD_URL = "http://" + xiaoli_wrapUrl + "/index.php/file/upload";
 
     public static void setSendCodeType(String sms) {
         sendCodeType = sms;

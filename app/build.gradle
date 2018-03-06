@@ -79,8 +79,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'true')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 101
-            versionName '1.0.1'
+            versionCode 102
+            versionName '1.0.2'
         }
 
         sunsunlingshou {
