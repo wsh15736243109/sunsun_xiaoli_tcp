@@ -9,55 +9,6 @@
     <!--布局三、热门商品-->
     <include layout="@layout/incude_titlebar"></include>
 
-    <LinearLayout
-        android:id="@+id/near_store"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <!--<sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView-->
-        <!--android:id="@+id/shop_carouseview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/DIMEN_200DP"-->
-        <!--android:background="@color/red">-->
-
-        <!--</sunsun.xiaoli.jiarebang.sunsunlingshou.widget.CarouselView>-->
-        <sunsun.xiaoli.jiarebang.custom.RatioImageView
-            android:id="@+id/img_shop_first"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            app:ratio="2">
-
-        </sunsun.xiaoli.jiarebang.custom.RatioImageView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <sunsun.xiaoli.jiarebang.custom.RatioImageView
-                android:id="@+id/img_shop_second"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitXY"
-                app:ratio="2">
-
-            </sunsun.xiaoli.jiarebang.custom.RatioImageView>
-
-            <sunsun.xiaoli.jiarebang.custom.RatioImageView
-                android:id="@+id/img_shop_third"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:scaleType="fitXY"
-                app:ratio="2">
-
-            </sunsun.xiaoli.jiarebang.custom.RatioImageView>
-        </LinearLayout>
-    </LinearLayout>
-
     <in.srain.cube.views.ptr.PtrFrameLayout
         android:id="@+id/ptrFrame_shop"
         android:layout_width="match_parent"

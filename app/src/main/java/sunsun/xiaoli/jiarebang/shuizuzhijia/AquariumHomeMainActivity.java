@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.itboye.pondteam.base.BaseActivity;
 import com.itboye.pondteam.base.IsNeedClick;
@@ -175,5 +176,17 @@ public class AquariumHomeMainActivity extends BaseActivity {
 //        if (shopCartFragment != null) {
 //            transaction.hide(shopCartFragment);
 //        }
+    }
+    // 第一次按下返回键的事件
+    private long firstPressedTime;
+    @Override
+    public void onBackPressed() {
+        //sftp://root@101.37.37.167/home/git/itboye_sunsunxiaoli/public/app/app-xiaoli_test-release-1.0.1.apk
+        if (System.currentTimeMillis() - firstPressedTime < 2000) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(AquariumHomeMainActivity.this, "再按一次退出", Toast.LENGTH_SHORT).show();
+            firstPressedTime = System.currentTimeMillis();
+        }
     }
 }

@@ -24,6 +24,5 @@ class ShopAdapter(private var fragment: ShopFragment, datas: List<NavigationBean
         XGlideLoaderNew.displayImageCircular(fragment.activity, Const.imgSunsunUrl+t!!.branchImgs.split(",")[0],holder!!.getView(R.id.iv_shop))
         holder!!.setText(R.id.tv_shop_name, t!!.name)
         holder!!.setText(R.id.tv_shop_address,"地址："+t!!.addressDetail)
-        holder!!.setOnClickListener(R.id.tv_shop_enter, position,fragment)
     }
 }

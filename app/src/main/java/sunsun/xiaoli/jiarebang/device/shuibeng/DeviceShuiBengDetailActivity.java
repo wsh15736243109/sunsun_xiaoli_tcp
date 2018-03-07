@@ -314,6 +314,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
         }
 
     }
+
     private void showAlert(final TextView txt_liuliangchoose, String title, String[] msg) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
 //        alert.setTitle(title);
@@ -477,7 +478,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     private void refreshDeviceList() {
         if (mApp.mXiaoLiUi != null) {
             mApp.mXiaoLiUi.getDeviceList();
-        } else if (mApp.mDeviceUi != null){
+        } else if (mApp.mDeviceUi != null) {
             mApp.mDeviceUi.getDeviceList();
         }
     }
@@ -499,57 +500,57 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
             e.printStackTrace();
         }
         img_yichangbaojing.setBackgroundResource(isYiChangBaoJing ? R.drawable.kai : R.drawable.guan);
-        if (detailModelTcp != null) {
-            txt_gonglv.setText(detailModelTcp.getPwr() + "W");
-            String strState = "";
-            //运行状态
-            state = detailModelTcp.getState();
-            switch (state) {
-                case 0:
-                    //停机
-                    txt_status.setText(getString(R.string.stop));
-                    strState = String.format(getString(R.string.status_stop), detailModelTcp.getGear() + 1);
+//        if (detailModelTcp != null) {
+        txt_gonglv.setText((detailModelTcp == null ? deviceDetailModel.getPwr() : detailModelTcp.getPwr()) + "W");
+        String strState = "";
+        //运行状态
+        state = detailModelTcp == null ? deviceDetailModel.getState() : detailModelTcp.getState();
+        switch (state) {
+            case 0:
+                //停机
+                txt_status.setText(getString(R.string.stop));
+                strState = String.format(getString(R.string.status_stop), (detailModelTcp == null ? deviceDetailModel.getGear() : detailModelTcp.getGear()) + 1);
 //                String.format(getString(R.string.device_will), caculcateSeconds(deviceDetailModel.getFcd()));
-                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_stop);
-                    shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
-                    break;
-                case 1:
-                    //运行
-                    strState = String.format(getString(R.string.status_running), detailModelTcp.getGear() + 1);
-                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
-                    if (!shuibeng_wiget.getTag(R.id.imageloader_uri).toString().equals("0")) {
-                        GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_running);
-                        shuibeng_wiget.setTag(R.id.imageloader_uri, "0");
-                    }
-                    break;
-                case 2:
-                    //故障
-                    strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
-                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
-                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_error_noch);
-                    shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
-                    break;
-                case 3:
-                    strState = String.format(getString(R.string.device_will), caculcateSeconds(detailModelTcp.getFcd()));
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+                GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_stop);
+                shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
+                break;
+            case 1:
+                //运行
+                strState = String.format(getString(R.string.status_running), (detailModelTcp == null ? deviceDetailModel.getGear() : detailModelTcp.getGear()) + 1);
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.weishi) + "</b>"));
+                if (!shuibeng_wiget.getTag(R.id.imageloader_uri).toString().equals("0")) {
+                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_running);
+                    shuibeng_wiget.setTag(R.id.imageloader_uri, "0");
+                }
+                break;
+            case 2:
+                //故障
+                strState = getString(R.string.device_error) + "," + getString(R.string.paichu);
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.error) + "</b>"));
+                GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_error_noch);
+                shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
+                break;
+            case 3:
+                strState = String.format(getString(R.string.device_will), caculcateSeconds(detailModelTcp == null ? deviceDetailModel.getFcd() : detailModelTcp.getFcd()));
 //                strState = deviceDetailModel.getGear() + getString(R.string.status_running);
-                    txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
-                    GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_stop);
-                    shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
-                    break;
-            }
-            txt_current_status_value.setText(strState);
-            txt_liuliangchoose.setText(String.format(getString(R.string.dang), detailModelTcp.getGear() + 1));
+                txt_status.setText(Html.fromHtml("<b>" + getString(R.string.normal) + "</b>"));
+                GlidHelper.loadGif(this, shuibeng_wiget, null, R.drawable.weishi_stop);
+                shuibeng_wiget.setTag(R.id.imageloader_uri, "1");
+                break;
+        }
+        txt_current_status_value.setText(strState);
+        txt_liuliangchoose.setText(String.format(getString(R.string.dang), (detailModelTcp == null ? deviceDetailModel.getGear() : detailModelTcp.getGear()) + 1));
 //            if (mApp.zaolangUI != null) {
 ////                mApp.zaolangUI.setZaoLangData();
 //            }
 
-            if (mApp.updateActivityUI != null) {
-                if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                    mApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
-                }
+        if (mApp.updateActivityUI != null) {
+            if (mApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                mApp.updateActivityUI.setProgress(detailModelTcp == null ? deviceDetailModel.getUpd_state() + "" : detailModelTcp.getUpd_state() + "");
             }
         }
+//        }
 
         txt_weishitime.setText(seconds / 60 + getString(R.string.minute));
         txt_leijitime.setText(String.format(getString(R.string.leiji_time), deviceDetailModel.getWh()));

@@ -144,47 +144,50 @@ public class DevicePHDetailActivity extends BaseActivity implements PHUpdate.Cli
         txt_title.setText(deviceDetailModel.getDevice_nickname());
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         String extra = deviceDetailModel.getExtra();
-        try {
-            JSONObject json = new JSONObject(extra);
-            if (json.has("push_cfg")) {
-                isWenDuBaoJing = (json.getInt("push_cfg") == 2 || json.getInt("push_cfg") == 3);
-                isPhBaoJing = ((json.getInt("push_cfg") == 1 || json.getInt("push_cfg") == 3));
-            }
-            if (json.has("temp_l")) {
-                temp_l = json.getDouble("temp_l");
-                wendu_di.setText(String.format("%.1f", temp_l / 10) + "℃");
-            }
-            if (json.has("temp_h")) {
-                temp_h = json.getDouble("temp_h");
-                wendu_high.setText(String.format("%.1f", temp_h / 10) + "℃");
-            }
-            if (json.has("ph_h")) {
-                ph_h = json.getDouble("ph_h");
-                ph_high.setText(String.format("%.2f", ph_h / 100));
-            }
-            if (json.has("ph_l")) {
-                ph_l = json.getDouble("ph_l");
-                ph_low.setText(String.format("%.2f", ph_l / 100));
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        if (detailModelTcp != null) {
-            txt_ph.setText(String.format("%.2f ", detailModelTcp.getPh() / 100));
-            txt_wendu.setText(String.format("%.1f ", detailModelTcp.getT() / 10) + "℃");
-            //设置固件更新UI
-            if (myApp.updateActivityUI != null) {
-                if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                    myApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
+        if (extra != null) {
+            try {
+                JSONObject json = new JSONObject(extra);
+                if (json.has("push_cfg")) {
+                    isWenDuBaoJing = (json.getInt("push_cfg") == 2 || json.getInt("push_cfg") == 3);
+                    isPhBaoJing = ((json.getInt("push_cfg") == 1 || json.getInt("push_cfg") == 3));
                 }
-            }
+                if (json.has("temp_l")) {
+                    temp_l = json.getDouble("temp_l");
+                    wendu_di.setText(String.format("%.1f", temp_l / 10) + "℃");
+                }
+                if (json.has("temp_h")) {
+                    temp_h = json.getDouble("temp_h");
+                    wendu_high.setText(String.format("%.1f", temp_h / 10) + "℃");
+                }
+                if (json.has("ph_h")) {
+                    ph_h = json.getDouble("ph_h");
+                    ph_high.setText(String.format("%.2f", ph_h / 100));
+                }
+                if (json.has("ph_l")) {
+                    ph_l = json.getDouble("ph_l");
+                    ph_low.setText(String.format("%.2f", ph_l / 100));
+                }
 
-            if (myApp.phJiaoZhunUI != null) {
-                myApp.phJiaoZhunUI.setData();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
+
+//        if (detailModelTcp != null) {
+        txt_ph.setText(String.format("%.2f ", detailModelTcp == null ? deviceDetailModel.getPh() / 10 : detailModelTcp.getPh() / 100));
+        txt_wendu.setText(String.format("%.1f ", detailModelTcp.getT() / 10) + "℃");
+        //设置固件更新UI
+        if (myApp.updateActivityUI != null) {
+            if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                myApp.updateActivityUI.setProgress(detailModelTcp == null ? deviceDetailModel.getUpd_state() + "" : detailModelTcp.getUpd_state() + "");
+            }
+        }
+
+        if (myApp.phJiaoZhunUI != null) {
+            myApp.phJiaoZhunUI.setData();
+        }
+//        }
         img_wendubaojing.setBackgroundResource(isWenDuBaoJing ? R.drawable.kai : R.drawable.guan);
         img_phbaojing.setBackgroundResource(isPhBaoJing ? R.drawable.kai : R.drawable.guan);
 

@@ -16,6 +16,7 @@ import com.itboye.pondteam.utils.loadingutil.MAlert;
 import com.itboye.pondteam.volley.ResultEntity;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -46,7 +47,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
     LocationUtil locationUtil;
     ListView list_shop;
     private String cityNo = "";
-    private int size = 3;
+    private int size = 100;
     private int page = 1;
     private String area;
     private NavigationBean navigationBean;
@@ -75,10 +76,10 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (navigationDetailArrayList != null) {
-                        String s = navigationDetailArrayList.get(position).getTaobao_store_url();
-                        //跳转淘宝
+                    String s = navigationDetailArrayList.get(position - 1).getTaobao_store_url();
+                    //跳转淘宝
 //                        s = "https://sensen.tmall.com"; s = "taobao://sensen.tmall.com";
-                        WebUtil.startActivityForTaoBao(getActivity(), s);
+                    WebUtil.startActivityForTaoBao(getActivity(), s);
 //                        WebUtil.startActivityForTaoBao(getActivity(), navigationBean.getList().get(position).getTaobao_store_url());
                 }
             }
@@ -111,6 +112,15 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
 
         adapter = new ShopAdapter(this, navigationDetailArrayList, R.layout.item_shop);
         list_shop.setAdapter(adapter);
+
+        View headerView = View.inflate(getActivity(), R.layout.header_shop, null);
+        img_shop_first = (RatioImageView) headerView.findViewById(R.id.img_shop_first);
+        img_shop_first.setOnClickListener(this);
+        img_shop_second = (RatioImageView) headerView.findViewById(R.id.img_shop_second);
+        img_shop_second.setOnClickListener(this);
+        img_shop_third = (RatioImageView) headerView.findViewById(R.id.img_shop_third);
+        img_shop_third.setOnClickListener(this);
+        list_shop.addHeaderView(headerView);
     }
 
 
@@ -164,7 +174,7 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
             WebUtil.startActivityForTaoBao(getActivity(), url);
         } else if (url_type.equals("6070")) {
             //直接webView
-            WebUtil.startActivityForUrl(getActivity(), url,"详情");
+            WebUtil.startActivityForUrl(getActivity(), url, "详情");
         } else if (url_type.equals("6072")) {
             //帖子详情
         }
@@ -203,10 +213,20 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     MAlert.alert(entity.getData());
                 } else if (entity.getEventType() == UserPresenter.branchSearch_success) {
                     navigationBean = (NavigationBean) entity.getData();
+                    ArrayList<NavigationBean.NavigationDetail> navigationDetailArrayListTemp = navigationBean.getList();
+                    if (navigationDetailArrayListTemp != null) {
+                        Iterator<NavigationBean.NavigationDetail> iterator = navigationDetailArrayListTemp.iterator();
+                        while (iterator.hasNext()) {
+                            String url = iterator.next().getTaobao_store_url();
+                            if ("".equals(url) || url == null) {
+                                iterator.remove();
+                            }
+                        }
+                    }
                     if (page == 1) {
                         navigationDetailArrayList.clear();
                     }
-                    navigationDetailArrayList.addAll(navigationBean.getList());
+                    navigationDetailArrayList.addAll(navigationDetailArrayListTemp);
                     adapter.notifyDataSetChanged();
                 } else if (entity.getEventType() == UserPresenter.branchSearch_fail) {
                     MAlert.alert(entity.getData());

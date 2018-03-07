@@ -213,32 +213,40 @@ public class AddressSelectView extends LinearLayout implements OnWheelChangedLis
                 currentProvinceNo = province.getNumber();
             }
         }
-        // 该省份下的城市list
-        List<String> tempCityStr = new ArrayList<String>();
-        for (CityModel city : cityLv) {
-            if (city.getFatherNum() == currentProvinceNo) {
-                tempCityStr.add(city.getName());
-            }
-        }
-        if (tempCityStr.size() > 0) {
-            mCityDatas = new String[tempCityStr.size()];
-            for (int i = 0; i < tempCityStr.size(); i++) {
-                mCityDatas[i] = tempCityStr.get(i);
-            }
-            mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(context, mCityDatas));
+        if (mCurrentProvinceName.equals("重庆市") || mCurrentProvinceName.equals("北京市") || mCurrentProvinceName.equals("上海市") || mCurrentProvinceName.equals("天津市")) {
+            mCityDatas = new String[]{mCurrentProvinceName};
+            currentCityNo=currentProvinceNo;
+            mCurrentCityName = mCurrentProvinceName;
+            mViewCity.setViewAdapter(new ArrayWheelAdapter<>(context, mCityDatas));
             mViewCity.setCurrentItem(0);
-            updateAreas();
         } else {
-            mCityDatas = new String[]{""};
-            mDistrictDatas = new String[]{""};
-            currentCityNo = 0;
-            currentDistrictNo = 0;
-            mCurrentCityName = "";
-            mCurrentDistrictName = "";
-            mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(context, mCityDatas));
-            mViewCity.setCurrentItem(0);
-            mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(context, mDistrictDatas));
-            mViewDistrict.setCurrentItem(0);
+             // 该省份下的城市list
+            List<String> tempCityStr = new ArrayList<String>();
+            for (CityModel city : cityLv) {
+                if (city.getFatherNum() == currentProvinceNo) {
+                    tempCityStr.add(city.getName());
+                }
+            }
+            if (tempCityStr.size() > 0) {
+                mCityDatas = new String[tempCityStr.size()];
+                for (int i = 0; i < tempCityStr.size(); i++) {
+                    mCityDatas[i] = tempCityStr.get(i);
+                }
+                mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(context, mCityDatas));
+                mViewCity.setCurrentItem(0);
+                updateAreas();
+            } else {
+                mCityDatas = new String[]{""};
+                mDistrictDatas = new String[]{""};
+                currentCityNo = 0;
+                currentDistrictNo = 0;
+                mCurrentCityName = "";
+                mCurrentDistrictName = "";
+                mViewCity.setViewAdapter(new ArrayWheelAdapter<String>(context, mCityDatas));
+                mViewCity.setCurrentItem(0);
+                mViewDistrict.setViewAdapter(new ArrayWheelAdapter<String>(context, mDistrictDatas));
+                mViewDistrict.setCurrentItem(0);
+            }
         }
     }
 

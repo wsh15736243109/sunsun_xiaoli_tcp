@@ -20,7 +20,6 @@ import com.amap.api.maps2d.model.CameraPosition;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.baidu.location.LocationClient;
 import com.itboye.pondteam.base.LingShouBaseFragment;
 import com.itboye.pondteam.bean.NavigationBean;
 import com.itboye.pondteam.db.DBManager;
@@ -73,17 +72,11 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
     String latLongString, areacode, area;
 
     My2dMapView bmapsView = null;
-    protected float zoom = 10;
-
-    //    protected NavigationBean navi;
-    private LocationClient mLocClient;
-    public static String addrDetail_navigation;
 
     UserPresenter userPresenter;
     LocationUtil locationUtil;
 
-    int page = 1, size = 10;
-    long longValue, lati;
+    int page = 1, size = 100;
     private NavigationBean navigationBean;
     private NavigationBean.NavigationDetail navi;
 
@@ -147,10 +140,9 @@ public class StoreFragment extends LingShouBaseFragment implements OnClickListen
                     userPresenter.branchSearchAll(all);
                 } else if (cameraPosition.zoom > 8 && isAll) {
                     showProgressDialog("正在查询" + cityName + "下的门店", true);
-                    MAlert.alert("searchPart");
                     isAll = false;
                     all = 0;
-                    userPresenter.branchSearch(all, cityNo, area, lng, lat, page, size);
+                    userPresenter.branchSearch(all, cityNo, area, StoreFragment.lng, StoreFragment.lat, page, size);
                 }
             }
         });

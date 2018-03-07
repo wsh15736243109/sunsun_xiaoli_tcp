@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <sunsun.xiaoli.jiarebang.custom.RatioImageView
+        android:id="@+id/img_shop_first"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:ratio="2">
+
+    </sunsun.xiaoli.jiarebang.custom.RatioImageView>
+
+    <LinearLayout
+        android:layout_marginTop="0.1dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <sunsun.xiaoli.jiarebang.custom.RatioImageView
+            android:id="@+id/img_shop_second"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:layout_marginRight="0.1dp"
+            app:ratio="2">
+
+        </sunsun.xiaoli.jiarebang.custom.RatioImageView>
+
+        <sunsun.xiaoli.jiarebang.custom.RatioImageView
+            android:id="@+id/img_shop_third"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            app:ratio="2">
+
+        </sunsun.xiaoli.jiarebang.custom.RatioImageView>
+    </LinearLayout>
+</LinearLayout>
