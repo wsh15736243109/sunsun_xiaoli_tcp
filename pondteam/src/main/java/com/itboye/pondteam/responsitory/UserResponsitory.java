@@ -17,7 +17,6 @@ import com.itboye.pondteam.bean.NavigationBean;
 import com.itboye.pondteam.bean.PersonDataBean;
 import com.itboye.pondteam.bean.PondTeamMostNewModel;
 import com.itboye.pondteam.bean.ProductBean;
-import com.itboye.pondteam.bean.StoreBean;
 import com.itboye.pondteam.bean.TemperatureHistoryBean;
 import com.itboye.pondteam.bean.VertifyBean;
 import com.itboye.pondteam.interfaces.IUserInfoInterface;
@@ -44,6 +43,9 @@ public class UserResponsitory extends BaseNetRepository implements
         IUserInfoInterface<PersonDataBean> {
 
     private String BY_Customer_servicehis = "BY_Customer_servicehis";
+    private String By_SunsunUserDevice_updateAq118Extra = "By_SunsunUserDevice_updateAq118Extra";//AQ118额外信息修改
+    private String getHistoryTemper_aq118 = "By_SunsunAq118_queryHistoryTemp";
+    private String By_SunsunAq118_devicesCtrl = "By_SunsunAq118_devicesCtrl";
 
     public UserResponsitory(ICompleteListener iCompleteListener) {
         super(iCompleteListener);
@@ -996,6 +998,8 @@ public class UserResponsitory extends BaseNetRepository implements
                 typeKey = getHistoryTemper_aq806;
             } else if (did.startsWith("S04")) {
                 typeKey = getHistoryTemper_300Ph;
+            } else if (did.startsWith("S08")) {
+                typeKey = getHistoryTemper_aq118;
             }
         }
         byjsonRequest
@@ -1677,7 +1681,7 @@ public class UserResponsitory extends BaseNetRepository implements
     }
 
     @Override
-    public void branchSearch(int all,String city, String area, double longValue, double lati, int page, int size) {
+    public void branchSearch(int all, String city, String area, double longValue, double lati, int page, int size) {
         Type type = new TypeToken<NavigationBean>() {
         }.getType();
         String apiVer = "100";
@@ -1881,6 +1885,56 @@ public class UserResponsitory extends BaseNetRepository implements
                 .setTypeVerParamsAndReturnClass(BY_Branch_search, apiVer, map, type)
                 .requestListener(
                         new BaseSuccessReqListener<ArrayList<NavigationBean.NavigationDetail>>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void aq118ExtraUpdate(String id, double temp_l, double temp_h, int temp_on) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        if (temp_l != -1) {
+            map.put("temp_l", temp_l);
+        }
+        if (temp_h != -1) {
+            map.put("temp_h", temp_h);
+        }
+        if (temp_on != -1) {
+            map.put("temp_on", temp_on);
+        }
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(By_SunsunUserDevice_updateAq118Extra, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
+                                getListener()))
+                .errorListener(new BaseErrorListener(getListener()))
+                .desEncodeThenBuildAndSend();
+    }
+
+    @Override
+    public void deviceSet_aq118(String did, int dev_lock, int t_cfg, int d_cyc) {
+        Type type = new TypeToken<String>() {
+        }.getType();
+        String apiVer = "100";
+        Map<String, Object> map = new HashMap<>();
+        map.put("did", did);
+        if (dev_lock != -1) {
+            map.put("dev_lock", dev_lock);
+        }
+        if (t_cfg != -1) {
+            map.put("t_cfg", t_cfg);
+        }
+        if (d_cyc != -1) {
+            map.put("temp_on", d_cyc);
+        }
+        byjsonRequest
+                .setTypeVerParamsAndReturnClass(By_SunsunAq118_devicesCtrl, apiVer, map, type)
+                .requestListener(
+                        new BaseSuccessReqListener<String>(
                                 getListener()))
                 .errorListener(new BaseErrorListener(getListener()))
                 .desEncodeThenBuildAndSend();

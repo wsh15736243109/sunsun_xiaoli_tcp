@@ -667,7 +667,7 @@
     <string name="produceter_video">视频浏览</string>
     <string name="produceter_rengong">人工客服</string>
     <string name="store_query">门店查询</string>
-    <string name="shop_xianshang">森森线上购物</string>
+    <string name="shop_xianshang">森森新零售</string>
     <string name="device_zhinengyangqibeng">Intelligent ac/dc oxygen pump</string>
     <string name="product_server_center">产品服务中心</string>
     <string name="device_numer">%s个智能设备</string>
@@ -677,4 +677,6 @@
     <string name="kefumeaage">客服消息</string>
     <string name="test_string" />
     <string name="position_ing">定位中</string>
+    <string name="heating">Heating</string>
+    <string name="un_heated">Unheated</string>
 </resources>

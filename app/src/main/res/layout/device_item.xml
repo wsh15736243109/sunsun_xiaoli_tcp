@@ -25,7 +25,7 @@
         android:layout_alignTop="@+id/imageView_dev_logo"
         android:layout_toRightOf="@+id/imageView_dev_logo"
         android:paddingLeft="12dp"
-        android:text="AQ805设备"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceMedium"
 		android:textColor="#FF5F5D5D"/>
 

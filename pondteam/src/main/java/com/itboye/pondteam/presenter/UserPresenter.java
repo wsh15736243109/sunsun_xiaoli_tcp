@@ -16,8 +16,12 @@ import java.util.Observer;
 
 public class UserPresenter extends BasePresenter implements
         IUserInfoInterface<PersonDataBean> {
-    public static String branchSearchAll_fail="_branchSearchAll_fail";
-    public static String branchSearchAll_success="_branchSearchAll_success";
+    public static String branchSearchAll_fail = "_branchSearchAll_fail";
+    public static String branchSearchAll_success = "_branchSearchAll_success";
+    public static String aq118ExtraUpdate_success = "_aq118ExtraUpdate_success";
+    public static String aq118ExtraUpdate_fail = "_aq118ExtraUpdate_fail";
+    public static String deviceSet_aq118_success="_deviceSet_aq118_success";
+    public static String deviceSet_aq118_fail="_deviceSet_aq118_fail";
 
     public UserPresenter(Observer observer) {
         super(observer);
@@ -1529,7 +1533,7 @@ public class UserPresenter extends BasePresenter implements
     }
 
     @Override
-    public void branchSearch(int all,String city, String area, double longValue, double lati, int page, int size) {
+    public void branchSearch(int all, String city, String area, double longValue, double lati, int page, int size) {
         IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
                 new ICompleteListener() {
                     @Override
@@ -1549,7 +1553,7 @@ public class UserPresenter extends BasePresenter implements
 
                     }
                 });
-        user.branchSearch(all,city, area, longValue, lati, page, size);
+        user.branchSearch(all, city, area, longValue, lati, page, size);
     }
 
     @Override
@@ -1790,5 +1794,53 @@ public class UserPresenter extends BasePresenter implements
                     }
                 });
         user.branchSearchAll(all);
+    }
+
+    @Override
+    public void aq118ExtraUpdate(String id, double temp_l, double temp_h, int temp_on) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(aq118ExtraUpdate_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(aq118ExtraUpdate_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.aq118ExtraUpdate(id, temp_l, temp_h, temp_on);
+    }
+
+    @Override
+    public void deviceSet_aq118(String did, int dev_lock, int t_cfg, int d_cyc) {
+        IUserInfoInterface<PersonDataBean> user = new UserResponsitory(
+                new ICompleteListener() {
+                    @Override
+                    public void success(ResultEntity result) {
+                        result.setEventTag(Tag_Success);
+                        result.setEventType(deviceSet_aq118_success);
+                        setChanged();
+                        notifyObservers(result);
+                    }
+
+                    @Override
+                    public void failure(ResultEntity result) {
+                        result.setEventTag(Tag_Error);
+                        result.setEventType(deviceSet_aq118_fail);
+                        setChanged();
+                        notifyObservers(result);
+
+                    }
+                });
+        user.deviceSet_aq118(did, dev_lock, t_cfg, d_cyc);
     }
 }

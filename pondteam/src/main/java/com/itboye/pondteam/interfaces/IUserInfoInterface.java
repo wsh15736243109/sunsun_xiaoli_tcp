@@ -509,7 +509,7 @@ public interface IUserInfoInterface<PersonDataBean> {
      * @param page
      * @param size
      */
-    void branchSearch(int all,String city, String area, double longValue, double lati, int page, int size);
+    void branchSearch(int all, String city, String area, double longValue, double lati, int page, int size);
 
     /**
      * 修改个人资料
@@ -553,10 +553,11 @@ public interface IUserInfoInterface<PersonDataBean> {
     /**
      * 退出聊天
      */
-    void exitcommunion(String uid, String keFuId,String create_time);
+    void exitcommunion(String uid, String keFuId, String create_time);
 
     /**
      * 查询我的客服消息
+     *
      * @param uid
      * @param pageNo
      * @param pageSize
@@ -565,7 +566,12 @@ public interface IUserInfoInterface<PersonDataBean> {
 
     /**
      * 查询全国所有门店
+     *
      * @param all 1：所有  0:部分
      */
     void branchSearchAll(int all);
+
+    void aq118ExtraUpdate(String id, double temp_l, double temp_h, int temp_on);
+
+    void deviceSet_aq118(String did, int dev_lock, int t_cfg, int d_cyc);
 }

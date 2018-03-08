@@ -48,8 +48,6 @@ import sunsun.xiaoli.jiarebang.utils.TcpUtil;
 import sunsun.xiaoli.jiarebang.utils.loadingutil.CameraConsolePopupWindow;
 
 import static com.itboye.pondteam.utils.EmptyUtil.getSp;
-import static com.itboye.pondteam.utils.NumberUtils.getAppointNumber;
-import static sunsun.xiaoli.jiarebang.utils.ColoTextUtil.setColorfulValue;
 
 
 /**
@@ -65,7 +63,7 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
     CameraConsolePopupWindow popupWindow;
     RelativeLayout re_wendu_history;
     RelativeLayout re_settemperature;
-    RelativeLayout re_gaowen_sheding, re_diwen_sheding;
+    RelativeLayout re_gaowen_sheding, re_diwen_sheding, re_yichang;
     private double mNewTempValue;
     @IsNeedClick
     TextView txt_wendu_sheding_high, txt_wendu_sheding_low, txt_wendu_setting;
@@ -80,15 +78,15 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
     App myApp;
     TextView device_status;
     public boolean isConnect;
-    boolean wenDuBaoJingStatus, gongZuoZhuangTaiTongtZhiStatus, yiChangBaoJingStatus;
+    boolean wenDuBaoJingStatus, gongZuoZhuangTaiTongtZhiStatus;
+    //    yiChangBaoJingStatus;
     ImageView loading;
     PtrFrameLayout ptr;
     private String deviceType;
     TextView txt_status;
     private TcpUtil tcp;
     TextView txt_wendu_warn;
-    private int th;
-    private int tl;
+    private double th = 0, tl = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,9 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
                 Aq118DetailActivity.this, this);
         did = getIntent().getStringExtra("did");
         id = getIntent().getStringExtra("id");
-        userPresenter.deviceSet_jiarebang(did, "", "", "", "");
+//        re_settemperature.setVisibility(View.GONE);
+        re_yichang.setVisibility(View.GONE);
+        userPresenter.deviceSet_aq118(did, -1, -1, -1);
         setDeviceTitle(getIntent().getStringExtra("title"));
         threadStart();
         tcp = new TcpUtil(handData, did, getSp(Const.UID), "101");
@@ -246,7 +246,7 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
                             VersionUpdateActivity.class);
                     intent.putExtra("did", did);
                     intent.putExtra("version", deviceDetailModel.getVer());
-                    intent.putExtra("deviceType", "S02");
+                    intent.putExtra("deviceType", deviceType);
                     startActivity(intent);
                 } else {
                     MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
@@ -329,17 +329,17 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
                 }
                 break;
-            case R.id.toggle_exception_warn:
-                if (detailModelTcp == null) {
-                    return;
-                }
-                if (isConnect) {
-                    showProgressDialog(getString(R.string.requesting), false);
-                    setCheckOrUnCheck(toggle_exception_warn, !yiChangBaoJingStatus);
-                } else {
-                    MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
-                }
-                break;
+//            case R.id.toggle_exception_warn:
+//                if (detailModelTcp == null) {
+//                    return;
+//                }
+//                if (isConnect) {
+//                    showProgressDialog(getString(R.string.requesting), false);
+//                    setCheckOrUnCheck(toggle_exception_warn, !yiChangBaoJingStatus);
+//                } else {
+//                    MAlert.alert(getString(R.string.disconnect), Gravity.CENTER);
+//                }
+//                break;
             case R.id.wendu_baojing:
                 if (detailModelTcp == null) {
                     return;
@@ -374,7 +374,8 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
             userPresenter.jiaReBangExtraUpdate(id, checked ? 1 : 0);
         } else if (toggle_exception_warn.getId() == R.id.wendu_baojing) {
             //温度报警
-            userPresenter.updateDeviceName(id, "", "", "", "", "", checked ? 1 : 0, -1);
+            userPresenter.aq118ExtraUpdate(id, -1, -1, checked ? 1 : 0);
+//            userPresenter.updateDeviceName(id, "", "", "", "", "", checked ? 1 : 0, -1);
         } else if (toggle_exception_warn.getId() == R.id.toggle_jieshoustatus) {
             //接收工作状态通知
             userPresenter.updateDeviceName(id, "", "", "", "", "", -1, checked ? 1 : 0);
@@ -436,6 +437,7 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
     }
 
     float temp = 0;
+    int dev_lock, t_cfg, d_cyc;
 
     private void setWenDu(String title, final TextView textView, double mNewTempValue) {
         this.mNewTempValue = mNewTempValue;
@@ -470,20 +472,20 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
             public void onClick(View v) {
                 switch (textView.getId()) {
                     case R.id.txt_wendu_setting:
-                        userPresenter.deviceSet_jiarebang(did, temp * 10 + "", "", "", "");
+                        userPresenter.deviceSet_aq118(did, -1, (int) (temp * 10), -1);
                         break;
                     case R.id.txt_wendu_sheding_low:
-                        if (temp * 10 >= deviceDetailModel.getTemp_max()) {
-                            MAlert.alert(getString(R.string.low_tem_error));
-                            return;
-                        }
+//                        if (temp * 10 >= deviceDetailModel.getTemp_max()) {
+//                            MAlert.alert(getString(R.string.low_tem_error));
+//                            return;
+//                        }
                         setHighOrLow(false, temp);
                         break;
                     case R.id.txt_wendu_sheding_high:
-                        if (temp * 10 <= deviceDetailModel.getTemp_min()) {
-                            MAlert.alert(getString(R.string.high_tem_error));
-                            return;
-                        }
+//                        if (temp * 10 <= deviceDetailModel.getTemp_min()) {
+//                            MAlert.alert(getString(R.string.high_tem_error));
+//                            return;
+//                        }
                         setHighOrLow(true, temp);
                         break;
                 }
@@ -516,15 +518,15 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
             } else if (entity.getEventType() == UserPresenter.getdeviceinfofail) {
                 MAlert.alert(entity.getData());
                 finish();
-            } else if (entity.getEventType() == UserPresenter.deviceSet_success) {
+            } else if (entity.getEventType() == UserPresenter.deviceSet_aq118_success) {
                 MAlert.alert(entity.getData());
-            } else if (entity.getEventType() == UserPresenter.deviceSet_fail) {
+            } else if (entity.getEventType() == UserPresenter.deviceSet_aq118_fail) {
                 MAlert.alert(entity.getData());
-            } else if (entity.getEventType() == UserPresenter.update_devicename_success) {
+            } else if (entity.getEventType() == UserPresenter.aq118ExtraUpdate_success) {
                 MAlert.alert(entity.getData());
                 refreshDeviceList();
                 userPresenter.getDeviceDetailInfo(did, getSp(Const.UID));
-            } else if (entity.getEventType() == UserPresenter.update_devicename_fail) {
+            } else if (entity.getEventType() == UserPresenter.aq118ExtraUpdate_fail) {
                 MAlert.alert(entity.getData());
             } else if (entity.getEventType() == UserPresenter.deleteDevice_success) {
                 MAlert.alert(entity.getData());
@@ -562,78 +564,82 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
         DeviceStatusShow.setDeviceStatus(device_status, deviceDetailModel.getIs_disconnect());
         setDeviceTitle(deviceDetailModel.getDevice_nickname());
         double wenduValue = 0;
-        if (detailModelTcp != null) {
-            mNewTempValue = Double.parseDouble(detailModelTcp.getT_set()) / 10;
-            wenduValue = detailModelTcp.getT() / 10;
-            int startPo1 = ("" + wenduValue).length();
-            int endPo1 = (wenduValue + "℃").length();
-            ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
-            int fault = Integer.parseInt(Integer.toBinaryString(detailModelTcp.getFault()));
-            String strFault = getAppointNumber(fault, 4);
-            char[] faultBinary = strFault.toCharArray();
-            StringBuffer str = new StringBuffer();
-            boolean hasError = false;
-            for (int i = 0; i < faultBinary.length; i++) {
-                if (faultBinary[i] == '1') {
-                    hasError = true;
-                    break;
-                } else {
-                    hasError = false;
-                }
-            }
-            String strTemp = "";
-            if (hasError) {
-                strTemp = getString(R.string.run_error);
-            } else {
-                int startPo3 = getString(R.string.total_power).length(), endPo3 = 0;
-                endPo3 = getString(R.string.total_power).length() + (detailModelTcp.getPwr() + "").length();
-                if (detailModelTcp.getPwr() == 0) {
-                    //恒温状态
-                    strTemp = getString(R.string.run_hengwen) + " ";
-                } else {
-                    //加热棒运行正常
-                    strTemp = getString(R.string.run_normal) + " ";
-                }
-//                setColorfulValue(startPo3, endPo3, R.color.aq_orange,, txt_gonglv);
-            }
-            int startPo2 = getString(R.string.jiarebang).length();
-            int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
-            setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) : getString(R.string.total_power) + detailModelTcp.getPwr() + "W"), txt_status);
-            img_progress.setMaxCount(35);
-            if (wenduValue < 20) {
-                img_progress.setCurrentCount(20);
-            } else if (wenduValue > 35) {
-                img_progress.setCurrentCount(35);
-            } else {
-                img_progress.setCurrentCount((float) wenduValue);
-            }
+//        if (detailModelTcp != null) {
+        mNewTempValue = (detailModelTcp == null ? deviceDetailModel : detailModelTcp).getT_cfg() / 10;
+        wenduValue = (detailModelTcp == null ? deviceDetailModel : detailModelTcp).getT() / 10;
+        int startPo1 = ("" + wenduValue).length();
+        int endPo1 = (wenduValue + "℃").length();
+        ColoTextUtil.setDifferentSizeForTextView(startPo1, endPo1, (wenduValue + "℃"), wendu);
+//        int fault = Integer.parseInt(Integer.toBinaryString((detailModelTcp == null ? deviceDetailModel : detailModelTcp).getFault()));
+//        String strFault = getAppointNumber(fault, 4);
+//        char[] faultBinary = strFault.toCharArray();
+//        StringBuffer str = new StringBuffer();
+//        boolean hasError = false;
+//        for (int i = 0; i < faultBinary.length; i++) {
+//            if (faultBinary[i] == '1') {
+//                hasError = true;
+//                break;
+//            } else {
+//                hasError = false;
+//            }
+//        }
+        String strTemp = (detailModelTcp == null ? deviceDetailModel : detailModelTcp).getH() == 0 ? getString(R.string.un_heated) : getString(R.string.heating);
+//        if (hasError) {
+//            strTemp = getString(R.string.run_error);
+//        } else {
+//            int startPo3 = getString(R.string.total_power).length(), endPo3 = 0;
+//            endPo3 = getString(R.string.total_power).length() + ((detailModelTcp == null ? deviceDetailModel : detailModelTcp).getPwr() + "").length();
+//            if (detailModelTcp.getPwr() == 0) {
+//                //恒温状态
+//                strTemp = getString(R.string.run_hengwen) + " ";
+//            } else {
+//                //加热棒运行正常
+//                strTemp = getString(R.string.run_normal) + " ";
+//            }
+////                setColorfulValue(startPo3, endPo3, R.color.aq_orange,, txt_gonglv);
+//        }
+        int startPo2 = getString(R.string.jiarebang).length();
+        int endPo2 = (getString(R.string.jiarebang) + (strTemp)).length();
+        txt_status.setText(strTemp);
+//        setColorfulValue(startPo2, endPo2, R.color.aq_orange, getString(R.string.jiarebang) + strTemp + (hasError ? getString(R.string.paichu) : getString(R.string.total_power) + (detailModelTcp == null ? deviceDetailModel : detailModelTcp).getPwr() + "W"), txt_status);
+        img_progress.setMaxCount(35);
+        if (wenduValue < 20) {
+            img_progress.setCurrentCount(20);
+        } else if (wenduValue > 35) {
+            img_progress.setCurrentCount(35);
+        } else {
+            img_progress.setCurrentCount((float) wenduValue);
+        }
 
-            img_progress.invalidate();
-            //设置固件更新UI
-            if (myApp.updateActivityUI != null) {
-                if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
-                    myApp.updateActivityUI.setProgress(detailModelTcp.getUpd_state() + "");
-                }
+        img_progress.invalidate();
+        //设置固件更新UI
+        if (myApp.updateActivityUI != null) {
+            if (myApp.updateActivityUI.smartConfigType == SmartConfigTypeSingle.UPDATE_ING) {//==3时名用户已经点击了开始更新，这里开始更新按钮进度
+                myApp.updateActivityUI.setProgress((detailModelTcp == null ? deviceDetailModel : detailModelTcp).getUpd_state() + "");
             }
         }
+//        }
 
 //        Bit0：加热棒过温异常
 //        Bit1：温度传感器1异常
 //        Bit2：温度传感器2异常
 //        Bit3：加热丝开路异常
-        wenDuBaoJingStatus = (deviceDetailModel.getTemp_alert() == 1 ? true : false);
-        gongZuoZhuangTaiTongtZhiStatus = (deviceDetailModel.getIs_state_notify() == 1 ? true : false);
+        String extra = deviceDetailModel.getExtra();
         try {
-            JSONObject jsonObject = new JSONObject(deviceDetailModel.getExtra());
-            if (jsonObject.has("abnormal")) {
-                int exceptionValue = jsonObject.getInt("abnormal");
-                yiChangBaoJingStatus = (exceptionValue == 1 ? true : false);
+            JSONObject jsonObject = new JSONObject(extra);
+            if (jsonObject.has("temp_on")) {
+                temp_on = (int) jsonObject.get("temp_on");
+                wenDuBaoJingStatus = (temp_on == 1 ? true : false);
+            }
+            if (jsonObject.has("temp_h")) {
+                th = jsonObject.getDouble("temp_h");
+            }
+            if (jsonObject.has("temp_l")) {
+                tl = jsonObject.getDouble("temp_l");
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        th = deviceDetailModel.getTemp_max();
-        tl = deviceDetailModel.getTemp_min();
         if ((wenduValue < th / 10 && wenduValue > tl / 10)) {
             txt_wendu_warn.setCompoundDrawables(null, null, null, null);
         } else if ((wenduValue > th / 10 || wenduValue < tl / 10) && wenDuBaoJingStatus) {
@@ -649,30 +655,25 @@ public class Aq118DetailActivity extends BaseActivity implements Observer {
     }
 
     private void setImageViewCheckOrUnCheck(ImageView toggle_exception_warn, ImageView wendu_baojing, ImageView toggle_jieshoustatus) {
-        if (yiChangBaoJingStatus) {
-            toggle_exception_warn.setBackgroundResource(R.drawable.kai);
-        } else {
-            toggle_exception_warn.setBackgroundResource(R.drawable.guan);
-        }
         if (wenDuBaoJingStatus) {
             wendu_baojing.setBackgroundResource(R.drawable.kai);
         } else {
             wendu_baojing.setBackgroundResource(R.drawable.guan);
         }
-        if (gongZuoZhuangTaiTongtZhiStatus) {
-            toggle_jieshoustatus.setBackgroundResource(R.drawable.kai);
-        } else {
-            toggle_jieshoustatus.setBackgroundResource(R.drawable.guan);
-        }
     }
+
+    //    double temp_l, temp_h;
+    int temp_on;
 
     private void setHighOrLow(boolean isHigh, float temp) {
         if (isHigh) {
             //设置高温
-            userPresenter.updateDeviceName(id, "", "", "", "", temp * 10 + "", -1, -1);
+            userPresenter.aq118ExtraUpdate(id, -1, temp * 10, -1);
+//            userPresenter.updateDeviceName(id, "", "", "", "", temp * 10 + "", -1, -1);
         } else {
             //设置低温
-            userPresenter.updateDeviceName(id, "", "", "", temp * 10 + "", "", -1, -1);
+            userPresenter.aq118ExtraUpdate(id, temp * 10, -1, -1);
+//            userPresenter.updateDeviceName(id, "", "", "", temp * 10 + "", "", -1, -1);
         }
 //        String high = getSp(Const.high_temp);
 //        String low = getSp(Const.low_temp);

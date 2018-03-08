@@ -156,6 +156,24 @@ public class DeviceDetailModel implements Serializable {
     private int we;
     private int wg;
     private int wc;
+    private int h;
+    private int t_cfg;
+
+    public int getT_cfg() {
+        return t_cfg;
+    }
+
+    public void setT_cfg(int t_cfg) {
+        this.t_cfg = t_cfg;
+    }
+
+    public int getH() {
+        return h;
+    }
+
+    public void setH(int h) {
+        this.h = h;
+    }
 
     public int getWe() {
         return we;

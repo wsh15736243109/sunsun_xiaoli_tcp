@@ -262,7 +262,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 }
                 int length;
                 if (deviceDetailModel.getWp_type().equals("4") || deviceDetailModel.getWp_type().equals("5") || deviceDetailModel.getWp_type().equals("6")) {
-                    length = 9;
+                    length = 10;
                 } else {
                     length = 4;
                 }
@@ -309,6 +309,10 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 }
                 break;
             case R.id.re_zaolang_choose:
+                if (detailModelTcp != null) {
+                } else {
+                    detailModelTcp = deviceDetailModel;
+                }
                 startActivity(new Intent(this, ZaoLangActivity.class).putExtra("title", getString(R.string.zaolang_choose)));
                 break;
         }
@@ -565,11 +569,11 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
     public void setZaoLangStatus(int we) {
         if (we == 1) {
             tv_zaolang_zhouqi_gear.setText(getString(R.string.zaolang_open));
-            txt_liuliangchoose.setText(getResources().getColor(R.color.gray_6c7bb));
+            txt_liuliangchoose.setTextColor(getResources().getColor(R.color.gray_6c7bb));
             re_liuliang_choose.setEnabled(false);
         } else {
             tv_zaolang_zhouqi_gear.setText(getString(R.string.zaolang_close));
-            txt_liuliangchoose.setText(getResources().getColor(R.color.main_green));
+            txt_liuliangchoose.setTextColor(getResources().getColor(R.color.main_green));
             re_liuliang_choose.setEnabled(true);
         }
     }

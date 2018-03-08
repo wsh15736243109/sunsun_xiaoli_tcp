@@ -680,7 +680,7 @@
 
     <string name="guanjian">输入查询的关键字</string>
     <string name="store_query">门店查询</string>
-    <string name="shop_xianshang">森森线上购物</string>
+    <string name="shop_xianshang">森森新零售</string>
 
     <string name="jichuzhiliao">基础资料</string>
     <string name="head">头像</string>
@@ -703,4 +703,6 @@
     <string name="xlistview_footer_hint_normal">查看更多</string>
     <string name="xlistview_footer_hint_ready">松开载入更多</string>
     <string name="xlistview_footer_hint_lding">加载完毕...</string>
+    <string name="heating">加热中</string>
+    <string name="un_heated">未加热</string>
 </resources>

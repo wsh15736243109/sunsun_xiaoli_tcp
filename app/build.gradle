@@ -112,8 +112,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'false')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 138
-            versionName '1.3.8'
+            versionCode 139
+            versionName '1.3.9'
         }
         yihu {
             signingConfig signingConfigs.sunsun_yihu_debug
@@ -128,8 +128,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'true')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 109
-            versionName '1.0.9'
+            versionCode 110
+            versionName '1.1.0'
         }
         pondTeam {
             signingConfig signingConfigs.sunsun_pondteam_debug
@@ -203,9 +203,9 @@ android {
         }
 
         debug {
-//            signingConfig signingConfigs.sunsun_xiaoli_debug
+            signingConfig signingConfigs.sunsun_xiaoli_debug
 //            signingConfig signingConfigs.sunsun_xiaoli_test_debug
-            signingConfig signingConfigs.sunsun_lingshou_debug
+//            signingConfig signingConfigs.sunsun_lingshou_debug
 //            signingConfig signingConfigs.sunsun_yihu_debug
 //            signingConfig signingConfigs.sunsun_pondteam_debug
 //            signingConfig signingConfigs.sunsun_pondlink_debug

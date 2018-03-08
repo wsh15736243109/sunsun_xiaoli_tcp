@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/DIMEN_1DP"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="#EEEEEE"
         android:padding="@dimen/DIMEN_10DP">
 

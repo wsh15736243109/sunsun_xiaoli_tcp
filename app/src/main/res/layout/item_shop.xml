@@ -11,6 +11,8 @@
         android:layout_height="@dimen/DIMEN_45DP" />
 
     <LinearLayout
+        android:id="@+id/li_center"
+        android:layout_toLeftOf="@+id/img_right"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -31,10 +33,20 @@
             android:text="" />
 
         <TextView
+            android:visibility="visible"
             android:id="@+id/tv_shop_enter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="right"
             android:textColor="@color/orange500"
-            android:text="进入淘宝" />
+            android:text="点击进入" />
     </LinearLayout>
+    <ImageView
+        android:id="@+id/img_right"
+        android:layout_margin="@dimen/DIMEN_5DP"
+        android:src="@drawable/ic_right_arrow"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp" />
 </RelativeLayout>

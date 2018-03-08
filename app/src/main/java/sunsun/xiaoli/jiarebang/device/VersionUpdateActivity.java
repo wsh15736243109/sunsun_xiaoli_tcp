@@ -101,6 +101,11 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     MAlert.alert(getString(R.string.disconnect));
                     return;
                 }
+            }else if (did.startsWith("S08")) {
+                if (myApp.aq118DetailActivityUI.isConnect == false) {
+                    MAlert.alert(getString(R.string.disconnect));
+                    return;
+                }
             }
             if (model == null) {
                 MAlert.alert(getString(R.string.deviceid_error));
@@ -153,6 +158,8 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                     oldV = Float.parseFloat(myApp.ledDetailActivity.detailModel.getVer().substring(1, myApp.ledDetailActivity.detailModel.getVer().length()));
                 }else if (did.startsWith("S07")) {
                     oldV = Float.parseFloat(myApp.deviceQiBengUI.deviceDetailModel.getVer().substring(1, myApp.deviceQiBengUI.deviceDetailModel.getVer().length()));
+                }else if (did.startsWith("S08")) {
+                    oldV = Float.parseFloat(myApp.aq118DetailActivityUI.deviceDetailModel.getVer().substring(1, myApp.aq118DetailActivityUI.deviceDetailModel.getVer().length()));
                 }
                 oldV=Float.parseFloat((oldV+"").replace(".",""));
                 float newV = Float.parseFloat(model.getVersion().substring(1, model.getVersion().length()).replace(".",""));
@@ -204,8 +211,10 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
             oldV = Float.parseFloat(myApp.deviceShuiBengUI.deviceDetailModel.getVer().substring(1, myApp.deviceShuiBengUI.deviceDetailModel.getVer().length()));
         }else if (did.startsWith("S06")) {
             oldV = Float.parseFloat(myApp.ledDetailActivity.detailModel.getVer().substring(1, myApp.ledDetailActivity.detailModel.getVer().length()));
-        }else if (did.startsWith("S06")) {
+        }else if (did.startsWith("S07")) {
             oldV = Float.parseFloat(myApp.deviceQiBengUI.deviceDetailModel.getVer().substring(1, myApp.deviceQiBengUI.deviceDetailModel.getVer().length()));
+        }else if (did.startsWith("S08")) {
+            oldV = Float.parseFloat(myApp.aq118DetailActivityUI.deviceDetailModel.getVer().substring(1, myApp.aq118DetailActivityUI.deviceDetailModel.getVer().length()));
         }
         float newV = Float.parseFloat(model.getVersion().substring(1, model.getVersion().length()));
         if ((oldV == newV)) {
@@ -303,6 +312,14 @@ public class VersionUpdateActivity extends BaseActivity implements Observer {
                 }
             }else if (did.startsWith("S07")) {
                 if (myApp.deviceQiBengUI.detailModelTcp.getUpd_state() <= 0 || myApp.deviceQiBengUI.detailModelTcp.getUpd_state() == 100 || myApp.deviceQiBengUI.detailModelTcp.getUpd_state() == 101) {
+                    //当前设备还没有开始更新
+                    smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
+                } else {
+                    //当前设备正在更新中
+                    smartConfigType = SmartConfigTypeSingle.UPDATE_ING;
+                }
+            }else if (did.startsWith("S08")) {
+                if (myApp.aq118DetailActivityUI.detailModelTcp.getUpd_state() <= 0 || myApp.aq118DetailActivityUI.detailModelTcp.getUpd_state() == 100 || myApp.aq118DetailActivityUI.detailModelTcp.getUpd_state() == 101) {
                     //当前设备还没有开始更新
                     smartConfigType = SmartConfigTypeSingle.UPDATE_INIT;
                 } else {
