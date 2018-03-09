@@ -395,8 +395,10 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
         String url = "";
         String urlType = bannerBeanArrayList.get(0).getUrl_type();
         if (urlType.equals("6071")) {
-            url = String.format(TAOBAO_URL, lng, lat, bannerBeanArrayList.get(0).getUrl());
-            WebUtil.startActivityForTaoBao(getActivity(), url);
+            if (!bannerBeanArrayList.get(0).getUrl().equals("")) {
+                url = String.format(TAOBAO_URL, lng, lat, bannerBeanArrayList.get(0).getUrl());
+                WebUtil.startActivityForTaoBao(getActivity(), url);
+            }
         } else if (urlType.equals("6070")) {
             url = bannerBeanArrayList.get(0).getUrl();
             WebUtil.startActivityForUrl(getActivity(), url, "详情");

@@ -1,11 +1,10 @@
 package sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter
 import com.itboye.pondteam.bean.NavigationBean
-import com.itboye.pondteam.utils.Const
 import sunsun.xiaoli.jiarebang.R
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.baseAdapter.MutiplyCommonAdapter
 import sunsun.xiaoli.jiarebang.adapter.sunsun_2_0_adapter.baseAdapter.ViewHolder
 import sunsun.xiaoli.jiarebang.shuizuzhijia.shop.ShopFragment
-import sunsun.xiaoli.jiarebang.utils.XGlideLoaderNew
+import sunsun.xiaoli.jiarebang.utils.XGlideLoader
 
 /**
  * Created by Administrator on 2018/2/3.
@@ -21,8 +20,9 @@ class ShopAdapter(private var fragment: ShopFragment, datas: List<NavigationBean
     }
 
     override fun convert(holder: ViewHolder?, t: NavigationBean.NavigationDetail?, type: Int, position: Int) {
-        XGlideLoaderNew.displayImageCircular(fragment.activity, Const.imgSunsunUrl+t!!.branchImgs.split(",")[0],holder!!.getView(R.id.iv_shop))
+//        XGlideLoaderNew.displayImageCircular(fragment.activity, Const.imgSunsunUrl+t!!.branchImgs.split(",")[0],holder!!.getView(R.id.iv_shop))
+        XGlideLoader.displayImage(fragment.activity, R.drawable.taobao,holder!!.getView(R.id.iv_shop))
         holder!!.setText(R.id.tv_shop_name, t!!.name)
-        holder!!.setText(R.id.tv_shop_address,"地址："+t!!.addressDetail)
+        holder!!.setText(R.id.tv_shop_address,"地址地址地址地址地址地址地址地址地址："+t!!.addressDetail)
     }
 }

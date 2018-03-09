@@ -25,15 +25,15 @@
             android:layout_height="wrap_content"
             android:text="" />
 
-        <TextView
+        <sunsun.xiaoli.jiarebang.custom.MyTextView
             android:id="@+id/tv_shop_address"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:text="" />
 
         <TextView
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/tv_shop_enter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

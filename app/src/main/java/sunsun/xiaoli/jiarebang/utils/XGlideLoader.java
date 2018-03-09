@@ -27,7 +27,18 @@ public class XGlideLoader {
         Glide.with(context).load(imgPath).fitCenter().error(R.drawable.default_img).placeholder(R.drawable.default_img).into(imageView);
         Log.v("request_params", "displayImage 图片路径"+imgPath);
     }
+    /**
+     * 单图片查看--加载图片
+     *
+     * @param context
+     * @param path
+     * @param imageView
+     */
+    public static void displayImage(Context context, int path, ImageView imageView) {
 
+        Glide.with(context).load(path).fitCenter().error(R.drawable.default_img).placeholder(R.drawable.default_img).into(imageView);
+        Log.v("request_params", "displayImage 图片路径"+path);
+    }
     /**
      * 单图片查看--加载图片
      *
