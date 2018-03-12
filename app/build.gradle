@@ -112,8 +112,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'false')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 139
-            versionName '1.3.9'
+            versionCode 140
+            versionName '1.4.0'
         }
         yihu {
             signingConfig signingConfigs.sunsun_yihu_debug
@@ -128,8 +128,8 @@ android {
             buildConfigField("boolean", "IS_CHINESE", 'true')
             targetSdkVersion 22
             testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
-            versionCode 110
-            versionName '1.1.0'
+            versionCode 111
+            versionName '1.1.1'
         }
         pondTeam {
             signingConfig signingConfigs.sunsun_pondteam_debug

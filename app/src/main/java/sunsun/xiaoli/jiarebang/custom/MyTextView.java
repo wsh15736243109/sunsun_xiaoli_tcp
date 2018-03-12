@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.TextView;
 
 /**
@@ -33,6 +34,21 @@ public class MyTextView extends TextView {
         // TODO Auto-generated constructor stub
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.v("request_params","要改变");
+    }
+
+    public boolean isExceed() {
+        return isExceed;
+    }
+
+    public void setExceed(boolean exceed) {
+        isExceed = exceed;
+        invalidate();
+    }
+
     boolean isExceed = false;
 
     @Override
@@ -55,7 +71,7 @@ public class MyTextView extends TextView {
         Rect rectContent = new Rect();
         getPaint().getTextBounds(content, 0, content.length(), rectContent);
         if (count == 1) {
-            if (getPaint().measureText(getText().toString()) + width >= getRight()) {
+            if (getPaint().measureText(getText().toString()) + width+6 >= getRight()) {
                 if (isExceed == false) {
                     setHeight(getHeight() * 2);
                     isExceed = true;
@@ -78,7 +94,14 @@ public class MyTextView extends TextView {
 
             } else {
                 if (isExceed == false) {
-                    setHeight(getHeight() + getHeight());
+                    String result = "";
+                    for (int i = 0; i < 2; i++) {
+                        int start = getLayout().getLineStart(i);
+                        int end = getLayout().getLineEnd(i);
+                        result += getText().toString().substring(start, end);
+                    }
+                    setText(result);
+                    setHeight(getHeight() + getHeight()/2);
                     isExceed = true;
                 } else {
                 }
@@ -92,6 +115,9 @@ public class MyTextView extends TextView {
 
             }
         }
-        canvas.drawText(text, getRight() - width - getPaddingRight(), getHeight() - height / 2, mPaint);
+
+        Log.v("textView_params", "getY(): " + getY() + " getHeight():" + getHeight() + " height: " + height + " getPaddingTop(): " + getTopPaddingOffset() + " getPaddingBottom(): " + getBottomPaddingOffset());
+//        canvas.drawText(text, getRight() - width - getPaddingRight(), getY() + height, mPaint);
+        canvas.drawText(text, getRight() - width - getPaddingRight()-6, getHeight() - 6, mPaint);
     }
 }

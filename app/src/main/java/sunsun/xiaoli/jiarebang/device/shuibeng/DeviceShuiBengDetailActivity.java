@@ -264,7 +264,7 @@ public class DeviceShuiBengDetailActivity extends BaseActivity implements Observ
                 if (deviceDetailModel.getWp_type().equals("4") || deviceDetailModel.getWp_type().equals("5") || deviceDetailModel.getWp_type().equals("6")) {
                     length = 10;
                 } else {
-                    length = 4;
+                    length = 5;
                 }
                 String[] liuliang = new String[length];
                 for (int i = 0; i < liuliang.length; i++) {

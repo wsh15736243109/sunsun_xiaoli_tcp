@@ -226,8 +226,12 @@ public class ShopFragment extends LingShouBaseFragment implements Observer, Loca
                     if (page == 1) {
                         navigationDetailArrayList.clear();
                     }
-                    navigationDetailArrayList.addAll(navigationDetailArrayListTemp);
-                    adapter.notifyDataSetChanged();
+//                    navigationDetailArrayList.addAll(navigationDetailArrayListTemp);
+//                    adapter = new ShopAdapter(this, navigationDetailArrayList, R.layout.item_shop);
+                    adapter = new ShopAdapter(this, navigationDetailArrayListTemp, R.layout.item_shop);
+                    list_shop.setAdapter(adapter);
+//                    adapter.notifyData();
+//                    adapter.notifyDataSetChanged();
                 } else if (entity.getEventType() == UserPresenter.branchSearch_fail) {
                     MAlert.alert(entity.getData());
                 }

@@ -22,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import sunsun.xiaoli.jiarebang.custom.MyTextView;
+
 
 public class ViewHolder {
 	private final SparseArray<View> mViews;
@@ -285,4 +287,9 @@ public class ViewHolder {
 		view.setInputType(typeTextFlagAutoComplete);
 		return this;
 	}
+
+    public void setNeedChange(int tv_shop_address, boolean needChange) {
+		MyTextView view = (MyTextView) getView(tv_shop_address);
+		view.setExceed(needChange);
+    }
 }

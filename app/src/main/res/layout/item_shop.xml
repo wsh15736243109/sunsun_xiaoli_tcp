@@ -6,9 +6,9 @@
     <ImageView
         android:id="@+id/iv_shop"
         android:layout_margin="@dimen/DIMEN_10DP"
-        android:layout_width="@dimen/DIMEN_45DP"
+        android:layout_width="@dimen/DIMEN_60DP"
         android:layout_centerVertical="true"
-        android:layout_height="@dimen/DIMEN_45DP" />
+        android:layout_height="@dimen/DIMEN_60DP" />
 
     <LinearLayout
         android:id="@+id/li_center"
@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxLines="2"
+            android:includeFontPadding="false"
             android:text="" />
 
         <TextView

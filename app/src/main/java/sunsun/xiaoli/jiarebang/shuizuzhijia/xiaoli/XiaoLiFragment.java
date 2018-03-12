@@ -293,7 +293,7 @@ public class XiaoLiFragment extends LingShouBaseFragment implements Observer, Sw
                 } else if (arrayList.get(i).getDevice_type().startsWith("chiniao_wifi_camera")) {
                     map.put("ItemIcon", R.drawable.device_shexiangtou);
                 } else if (arrayList.get(i).getDevice_type().startsWith("S08")) {
-                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_weishiqi : R.drawable.off_weishiqi);
+                    map.put("ItemIcon", arrayList.get(i).getIs_disconnect() == 0 ? R.drawable.device_118 : R.drawable.off_aq118);
                 } else {
                     map.put("ItemIcon", R.drawable.ic_aplacher);
                 }
